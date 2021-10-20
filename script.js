@@ -1,4 +1,3 @@
-// comentário
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -25,6 +24,16 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+function createProductList(products) {
+  const items = document.getElementsByClassName('items')[0];
+
+  products.forEach((product) => {
+    const { id: sku, title: name, thumbnail: image } = product;
+    const productElement = createProductItemElement({ sku, name, image });
+    items.appendChild(productElement);
+  });
+}
+
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
@@ -41,4 +50,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+window.onload = async () => {
+  const products = await fetchProducts('computador');
+  createProductList(products);
+};

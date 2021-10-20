@@ -22,10 +22,11 @@ describe('1 - Teste a função fecthProducts', () => {
     fetchProducts(parameterPC);
     expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=computador');
   })
-  /*
-  it('Test if fetchProducts(computador) equals to computadorSearch', () => {
-    const functionCall = fetchProducts(parameterPC);
-    expect(fetchProducts(functionCall)).toBe(computadorSearch);
+  
+  it('Test if fetchProducts(computador) equals to computadorSearch',async () => {
+    const products = await fetchProducts(parameterPC);
+    expect(products).toBe(computadorSearch);
+  
   })
-  */
+
 });

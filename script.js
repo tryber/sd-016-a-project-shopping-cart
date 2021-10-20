@@ -1,3 +1,5 @@
+const { fetchProducts } = require('./helpers/fetchProducts');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -23,6 +25,15 @@ function createProductItemElement({ sku, name, image }) {
 
   return section;
 }
+
+const productData = () => {
+  const data = fetchProducts();
+  const sectionWithAllProducts = document.querySelector('.items');
+  data.forEach((element) =>
+    sectionWithAllProducts.appendChild(createProductItemElement(element)));  
+};
+
+productData();
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;

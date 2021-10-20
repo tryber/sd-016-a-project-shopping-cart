@@ -42,10 +42,12 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-fetchProducts('computador').then((value) => value.forEach((product) => {
-  const { id: sku, title: name, thumbnail: image } = product;
-  const itens = document.querySelector('.items');
-  itens.appendChild(createProductItemElement({ sku, name, image }));
-}));
-
-window.onload = () => {};
+window.onload = () => { 
+  fetchProducts('computador')
+  .then((value) => value
+  .forEach((product) => {
+    const { id: sku, title: name, thumbnail: image } = product;
+    const itens = document.querySelector('.items');
+    itens.appendChild(createProductItemElement({ sku, name, image }));
+  }));
+};

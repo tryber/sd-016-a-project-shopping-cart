@@ -1,3 +1,5 @@
+// const { fetchProducts } = require("./helpers/fetchProducts");
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -15,7 +17,6 @@ function createCustomElement(element, className, innerText) {
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -23,6 +24,20 @@ function createProductItemElement({ sku, name, image }) {
 
   return section;
 }
+
+const createProductItemElementFromFetchProduct = async (products) => {
+  const sectionItems = document.querySelector('.items');
+  const data = await fetchProducts(products);
+  data.results.forEach(({ id, title, thumbnail }) => {
+    const obj = {
+      sku: id,
+      name: title,
+      image: thumbnail,
+    };
+    const item = createProductItemElement(obj);
+    sectionItems.appendChild(item);
+  });
+};
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
@@ -40,4 +55,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+window.onload = () => {
+  createProductItemElementFromFetchProduct('computador');
+};

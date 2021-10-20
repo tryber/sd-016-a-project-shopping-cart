@@ -1,9 +1,9 @@
-const fetchProducts = async (callback, query) => {
+const fetchProducts = async (query) => {
   const url = `https://api.mercadolibre.com/sites/MLB/search?q=${query}`;
-  const response = await callback(url);
-  const data = await response.json();
+  const result = fetch(url)
+    .then((r) => r.json());
 
-  return data;
+  return result;
 };
 
 if (typeof module !== 'undefined') {

@@ -27,7 +27,7 @@ function createProductItemElement({ sku, name, image }) {
 }
 
 const productData = () => {
-  const data = fetchProducts();
+  const data = fetchProducts('computador');
   const sectionWithAllProducts = document.querySelector('.items');
   data.forEach((element) =>
     sectionWithAllProducts.appendChild(createProductItemElement(element)));  

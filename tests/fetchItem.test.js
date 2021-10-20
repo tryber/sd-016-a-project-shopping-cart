@@ -18,4 +18,11 @@ describe('2 - Teste a função fecthItem', () => {
     fetchItem("MLB1615760527");
     expect(fetch).toHaveBeenCalledWith("https://api.mercadolibre.com/items/MLB1615760527");
   });
+
+  it("fetchItem retorna o resultado esperado quando pesquisa por \"computador\"", () => {
+    fetchItem("MLB1615760527")
+      .then((res) =>
+        expect(res).toEqual(item)
+      );
+  });
 });

@@ -24,9 +24,9 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
   return section;
 };
 
-function getSkuFromProductItem (item) {
+function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-};
+}
 
 const cartItemClickListener = () => {
   // coloque seu código aqui
@@ -50,7 +50,7 @@ const fetchUrl = async () => {
       sectionItems.appendChild(createProductItemElement({ id, title, thumbnail }));
     });
   } catch (error) {
-    window.alert("Ocorreu um erro, Desculpa vamos verificar!!");
+    window.alert'(`Ocorreu um erro, Desculpa vamos verificar!!`);
   }
 };
 

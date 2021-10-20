@@ -32,7 +32,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqu
+  return containerCartItems.removeChild(event.target);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {

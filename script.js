@@ -40,4 +40,14 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+const itensSection = document.querySelector('.items');
+
+window.onload = () => { 
+  fetchProducts('computador')
+    .then((data) => {
+      data.forEach((result) => {
+      const { id: sku, title: name, thumbnail: image } = result;
+      itensSection.appendChild(createProductItemElement({ sku, name, image }));
+    });
+  });
+};

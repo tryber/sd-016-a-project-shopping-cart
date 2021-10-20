@@ -10,4 +10,9 @@ describe('2 - Teste a função fecthItem', () => {
      expect(typeof fetchItem).toBe("function");
    });
 
+   it("Teste se a função fetchItem é chamada", async () => {
+    expect.assertions(1);
+    await fetchItem("MLB1615760527");
+    expect(fetch).toHaveBeenCalled();
+   });
 });

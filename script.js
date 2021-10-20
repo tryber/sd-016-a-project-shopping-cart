@@ -40,4 +40,25 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+window.onload = () => {
+
+ };
+
+ fetchProducts('computadores')
+ // .then((producList) => console.log(producList));
+ .then((productData) => productData.results)
+ .then((productList) => {
+  console.log(productList);
+  const productMapObj = productList.map((product) => {
+    const formatedObj = {
+      sku: product.id,
+      name: product.title,
+      image: product.thumbnail,
+    };
+    return formatedObj;
+  });
+  const items = document.querySelector('.items');
+  productMapObj.forEach((product) => items.appendChild(createProductItemElement(product)));
+ });
+
+ // .then ((productLIst) => productLIst.)

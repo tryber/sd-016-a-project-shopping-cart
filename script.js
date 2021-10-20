@@ -50,7 +50,7 @@ const fetchUrl = async () => {
       sectionItems.appendChild(createProductItemElement({ id, title, thumbnail }));
     });
   } catch (error) {
-    window.alert'(`Ocorreu um erro, Desculpa vamos verificar!!`);
+    window.alert('Ocorreu um erro, Desculpa vamos verificar!!');
   }
 };
 

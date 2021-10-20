@@ -1,5 +1,3 @@
-const { fetchProducts } = require('./helpers/fetchProducts');
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -14,23 +12,23 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ id, title, thumbnail }) {
   const section = document.createElement('section');
   section.className = 'item';
 
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('span', 'item__sku', id));
+  section.appendChild(createCustomElement('span', 'item__title', title));
+  section.appendChild(createProductImageElement(thumbnail));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
 }
 
-const productData = () => {
-  const data = fetchProducts('computador');
+const productData = async () => {
+  const data = await fetchProducts('computador');
+  const { results } = data;
   const sectionWithAllProducts = document.querySelector('.items');
-  data.forEach((element) =>
-    sectionWithAllProducts.appendChild(createProductItemElement(element)));  
+  results.forEach((result) => sectionWithAllProducts.appendChild(createProductItemElement(result)));
 };
 
 productData();

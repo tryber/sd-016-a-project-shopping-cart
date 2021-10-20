@@ -28,4 +28,12 @@ describe('1 - Teste a função fecthProducts', () => {
     fetchProducts("computador")
       .then((res) => expect(res).toEqual(computadorSearch));
   })
+
+  it('Testa se, ao não passar argumentos joga uma exceção', () => {
+
+    // trecho de código retirado da pullrequest de Pedro Mendes
+    fetchProducts().catch((error) => {
+      expect(error).toThrow('You mustt provide an url');
+    });
+  })
 });

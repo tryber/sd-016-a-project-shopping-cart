@@ -25,4 +25,10 @@ describe('1 - Teste a função fecthProducts', () => {
         expect(res).toEqual(computadorSearch)
       );
   });
+
+  it('se nenhum argumento for passado retorne um erro', async () => {
+    fetchProducts().catch((err) => {
+      expect(err).toThrow('You must provide an url');
+    });
+  });
 });

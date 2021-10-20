@@ -5,6 +5,7 @@ const item = require('../mocks/item');
 window.fetch = jest.fn(fetchSimulator);
 
 describe('2 - Teste a função fecthItem', () => {
-  // implemente seus testes aqui
-  fail('Teste vazio');
+  it("fetchItem é uma função", () => {
+    expect(typeof fetchItem === 'function').toBeTruthy();
+  });
 });

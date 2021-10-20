@@ -41,9 +41,9 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 async function createComputerList() {
-  const computerList = await fetchProducts();
+  const computerList = await fetchProducts('computer');
 
-  computerList.forEach((computer) => {
+  computerList.results.forEach((computer) => {
     const skuNameImage = {
       sku: computer.id,
       name: computer.title,

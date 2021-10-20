@@ -10,16 +10,26 @@ describe('1 - Teste a função fecthProducts', () => {
     expect(typeof fetchProducts).toBe('function');
   })
 
-  it('Teste da função fetchProducts', async () => {
+  it("Teste da função fetchProducts, se ela é chamada", async () => {
     expect.assertions(1);
-    await fetchProducts('computador');
+    await fetchProducts("computador");
     expect(fetch).toHaveBeenCalled();
   });
-
-  it('Teste da função fetchProducts', async () => {
+  
+  it('Teste da função fetchProducts recebendo parametro', async () => {
     expect.assertions(1);
-    await fetchProducts('computador');
-    expect(computadorSearch).toHaveBeenCalled();
+    await fetchProducts("computador")
+    
+    expect(fetch).toHaveBeenCalledWith(
+      "https://api.mercadolibre.com/sites/MLB/search?q=computador"
+    );
   });
+
+  // it('Teste da função fetchProducts', async () => {
+  //   expect.assertions(1);
+  //   await fetchProducts('computador');
+  //   expect(computadorSearch).toHaveBeenCalled();
+  // });
+
 
 });

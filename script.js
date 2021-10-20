@@ -1,3 +1,5 @@
+const { fetchItem } = require("./helpers/fetchItem");
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -32,13 +34,13 @@ function createProductItemElement({ sku, name, image }) {
 //   // coloque seu código aqui
 // }
 
-// function createCartItemElement({ sku, name, salePrice }) {
-//   const li = document.createElement('li');
-//   li.className = 'cart__item';
-//   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-//   li.addEventListener('click', cartItemClickListener);
-//   return li;
-// }
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
 
 async function addItemsToScreen() {
   const data = await fetchProducts('computador');
@@ -50,6 +52,19 @@ async function addItemsToScreen() {
     const image = r.thumbnail;
     const section = createProductItemElement({ sku, name, image });
     itemsSection.appendChild(section);
+  });
+}
+
+async function addItemsToCart(id) {
+  const data = await fetchItem(id);
+
+  data.results.forEach((r) => {
+    const cartSection = document.querySelector('.cart__items');
+    const sku = r.id;
+    const name = r.title;
+    const salePrice = r.price;
+    const li = createCartItemElement({ sku, name, salePrice });
+    cartSection.appendChild(li);
   });
 }
 

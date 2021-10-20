@@ -3,10 +3,10 @@ const fetchProducts = async (callback, query) => {
   try {
     const datas = await callback(url);
     const values = await datas.json().then((value) => value);
+    return values.results;
   } catch (error) {
-    throw new Error('You must provide an url')
+    throw new Error('You must provide an url');
   }
-  return values.results;
 };
 
 if (typeof module !== 'undefined') {

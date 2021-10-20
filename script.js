@@ -1,3 +1,5 @@
+// const { fetchProducts } = require("./helpers/fetchProducts");
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -13,6 +15,7 @@ function createCustomElement(element, className, innerText) {
 }
 
 function createProductItemElement({ sku, name, image }) {
+  console.log(sku, name, image);
   const section = document.createElement('section');
   section.className = 'item';
 

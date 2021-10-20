@@ -44,7 +44,8 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 fetchProducts('computador').then((value) => value.forEach((product) => {
   const { id: sku, title: name, thumbnail: image } = product;
-  createProductItemElement({ sku, name, image });
+  const itens = document.querySelector('.items');
+  itens.appendChild(createProductItemElement({ sku, name, image }));
 }));
 
 window.onload = () => {};

@@ -1,8 +1,7 @@
-const fetchItem = async (query) => {
-  const url = `https://api.mercadolibre.com/sites/MLB/search?q=${query}`;
+const fetchItem = async (id) => {
+  const url = `https://api.mercadolibre.com/items/${id}`
   const datas = fetch(url);
-  const values = await datas.then((data) => data.json()).then((value) =>
-    value.results).catch((error) => console.log(error));
+  const values = await datas.then((data) => data.json());
   return values;
 };
 

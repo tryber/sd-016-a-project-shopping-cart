@@ -6,7 +6,5 @@ window.fetch = jest.fn(fetchSimulator);
 
 describe('2 - Teste a função fecthItem', () => {
   // implemente seus testes aqui
-  test('testa se a fetchItem é uma função.', () => {
-    
-  })
+  
 });

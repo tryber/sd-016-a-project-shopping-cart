@@ -42,9 +42,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { 
-  const results = fetchItem('computador');
-  results.then((result) => {
+window.onload = () => {
+  fetchProducts(fetch, 'computador').then((result) => {
     result.forEach((data) => {
       const { id: sku, title: name, thumbnail: image } = data;
       createProductItemElement({ sku, name, image });

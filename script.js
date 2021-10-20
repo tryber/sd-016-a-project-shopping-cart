@@ -14,6 +14,7 @@ function createCustomElement(element, className, innerText) {
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
+  // adiciona a classe pai
   const sectionFather = document.querySelector('.items');
   section.className = 'item';
 
@@ -25,12 +26,6 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   sectionFather.appendChild(section);
   return section;
 }
-
-fetchProducts('computador').then((value) => {
-  value.forEach((element) => {
-    createProductItemElement(element);
-  });
-});
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
@@ -48,4 +43,10 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+window.onload = () => {
+  const getProducts = fetchProducts('computador').then((value) => {
+    value.forEach((element) => {
+      createProductItemElement(element);
+    });
+  });
+};

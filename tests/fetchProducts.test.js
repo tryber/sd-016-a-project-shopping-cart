@@ -7,7 +7,13 @@ window.fetch = jest.fn(fetchSimulator);
 describe('1 - Teste a função fecthProducts', () => {
   it("fetchProducts é uma funcão", () => {
     expect(typeof fetchProducts === 'function').toBeTruthy();
-  })
+  });
+
+  it('fetch foi chamado', () => {
+    fetchProducts('computador');
+    expect(fetch).toHaveBeenCalled();
+  });
+
   it("fetchProducts retorna o resultado esperado quando pesquisa por \"computador\"", () => {
     fetchProducts("computador")
       .then((res) =>

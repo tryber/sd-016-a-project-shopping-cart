@@ -13,4 +13,9 @@ describe('2 - Teste a função fecthItem', () => {
     fetchItem("MLB1615760527");
     expect(fetch).toHaveBeenCalled();
   });
+
+  it("se o fetch foi chamado com o enpoint", () => {
+    fetchItem("MLB1615760527");
+    expect(fetch).toHaveBeenCalledWith("https://api.mercadolibre.com/items/MLB1615760527");
+  });
 });

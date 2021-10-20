@@ -29,11 +29,14 @@ describe('1 - Teste a função fecthProducts', () => {
       .then((res) => expect(res).toEqual(computadorSearch));
   })
 
-  it('Testa se, ao não passar argumentos joga uma exceção', () => {
+  it('Testa se, ao não passar argumentos lança uma exceção', async () => {
 
-    // trecho de código retirado da pullrequest de Pedro Mendes
-    fetchProducts().catch((error) => {
-      expect(error).toThrow('You mustt provide an url');
-    });
+    // trecho de código retirado do colega Adran Carnavale
+    try {
+      await fetchProducts();
+    } catch (error) {
+      expect(error).toEqual(new Error('You must provide an url'));
+    };
+
   })
 });

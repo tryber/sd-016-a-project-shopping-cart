@@ -43,8 +43,7 @@ function createProductItemElement({ sku, name, image }) {
 
 const createPage = async () => {
   try {
-    const computerList = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador');
-    const data = await computerList.json();
+    const data = await fetchProducts('computador');
     const itemSection = document.querySelector('.items');
     await data.results.forEach((product) => {
       const { id: sku, title: name, thumbnail: image } = product;

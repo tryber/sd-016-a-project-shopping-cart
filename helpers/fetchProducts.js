@@ -1,14 +1,12 @@
-const fetchProducts = (pruduto) => {
-  // const API_URL = `https://api.mercadolibre.com/sites/MLB/search?q=${pruduto}`;
-  // fetch(API_URL, { headers: { Accept: 'application/json' } })
+const fetchProducts = (produto) => {
+  const API_URL = `https://api.mercadolibre.com/sites/MLB/search?q=${produto}`;
+  fetch(API_URL, { headers: { Accept: 'application/json' } })
+    .then((response) => response.json()
+    .then((data) => data.results)
+    // .catch((error) => error);
+  }
 
-  fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${pruduto}`)
-    .then((response) => response.json())
-    .then((data) => (data.results));
-    .catch((error) => error); 
-};
-
-window.onload = () => fetchProducts();
+window.onload = () => fetchProducts('computador');
 
 if (typeof module !== 'undefined') {
   module.exports = {

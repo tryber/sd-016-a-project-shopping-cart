@@ -46,8 +46,8 @@ window.onload = () => {
   const results = fetchItem('computador');
   results.then((result) => {
     result.forEach((data) => {
-      const { id: sku, title: name, thumbnail: image} = data;
+      const { id: sku, title: name, thumbnail: image } = data;
       createProductItemElement({ sku, name, image });
-    })
-  })
+    });
+  });
 };

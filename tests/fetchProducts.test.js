@@ -12,8 +12,7 @@ describe('1 - Teste a função fecthProducts', () => {
 
   it('Tests if fetch is correctly called', async () => {
     expect.assertions(1);
-    const result = window.fetch;
     fetchProducts('computador');
-    expect(result).toHaveBeenCalled();
+    expect(fetch).toHaveBeenCalled();
   });
 });

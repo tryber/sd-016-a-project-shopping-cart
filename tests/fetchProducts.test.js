@@ -15,7 +15,7 @@ describe('1 - Teste a função fecthProducts', () => {
     
     expect(window.fetch).toHaveBeenCalled();
   });
-  it('Quando chamada com o argumento `computador`, retorna o endpoint esperado', async () => {
+  it('Quando chamada com o argumento `computador`, utiliza o endpoint esperado', async () => {
     expect.assertions(1);
     await fetchProducts('computador');
     const endpoint = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
@@ -35,7 +35,6 @@ describe('1 - Teste a função fecthProducts', () => {
     try {
       await fetchProducts();
     } catch (error) {
-      console.log('oiii');
       expect(error).toEqual(thrownError);
     }
   });

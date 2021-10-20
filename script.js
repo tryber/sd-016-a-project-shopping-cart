@@ -1,3 +1,5 @@
+// const { fetchItem } = require("./helpers/fetchItem");
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -41,13 +43,21 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 const itensSection = document.querySelector('.items');
+const ol = document.querySelector('.cart__items');
 
 window.onload = () => { 
   fetchProducts('computador')
     .then((data) => {
-      data.forEach((result) => {
+      data.results.forEach((result) => {
       const { id: sku, title: name, thumbnail: image } = result;
       itensSection.appendChild(createProductItemElement({ sku, name, image }));
     });
   });
+
+  fetchItem('MLB1341706310')
+    .then((data1) => {
+      console.log(data1);
+      const { category_id: sku, title: name, price: salePrice } = data1;
+      ol.appendChild(createCartItemElement({ sku, name, salePrice }));
+    });
 };

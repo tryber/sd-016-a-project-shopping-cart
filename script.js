@@ -55,9 +55,10 @@ const itemToCart = async (item) => {
   cartContainer.appendChild(createCartItemElement(data));
 };
 
-document.addEventListener('click', (target) => {
-  if (target.classList.includes('item__add')) {
-    itemToCart('MLB1615760527');
+document.addEventListener('click', (event) => {
+  if (event.target.classList.contains('item__add')) {
+    const item = event.target.parentNode.firstChild;
+    itemToCart(item.innerText);
   }
 });
 

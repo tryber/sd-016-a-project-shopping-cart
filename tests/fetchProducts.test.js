@@ -4,16 +4,23 @@ const computadorSearch = require('../mocks/search');
 
 window.fetch = jest.fn(fetchSimulator);
 
+console.log(fetchSimulator('https://api.mercadolibre.com/items/MLB1615760527'));
+
 describe('1 - Teste a função fecthProducts', () => {
 
-  it('Testa se fetchProducts é uma função', () => {
+  it('Testa se é uma função', () => {
 
     expect(typeof fetchProducts).toBe('function');
   })
 
-  it('Executa a função fetchProducts com o argumento "computador" e testa se fetch foi chamada', () => {
+  it('Executa a função com o argumento "computador" e testa se fetch foi chamada', () => {
 
     fetchProducts('computador');
-    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalled();
+  })
+
+  it('Testa endpoint de fetch com o argumento "computador"', () => {
+
+
   })
 });

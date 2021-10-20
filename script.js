@@ -40,4 +40,13 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+const addItem = async (productName) => {
+  const product = await fetchProducts(productName);
+  const { results } = product;
+  const listOfItems = document.querySelector('.items');
+
+  const { id: sku, title: name, thumbnail: image } = results[1];
+  listOfItems.appendChild(createProductItemElement({ sku, name, image }));
+};
+
 window.onload = () => { };

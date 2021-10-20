@@ -24,7 +24,9 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
   return section;
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+function getSkuFromProductItem (item) {
+  return item.querySelector('span.item__sku').innerText;
+};
 
 const cartItemClickListener = () => {
   // coloque seu código aqui
@@ -49,7 +51,7 @@ const fetchUrl = async () => {
     });
   } catch (error) {
     window.alert("Ocorreu um erro, Desculpa vamos verificar!!");
-  };
+  }
 };
 
 window.onload = () => {

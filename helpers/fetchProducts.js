@@ -1,4 +1,4 @@
-let fetchProducts = (computador) => `https://api.mercadolibre.com/sites/MLB/search?q=${computador}`;
+const fetchProducts = (computador) => `https://api.mercadolibre.com/sites/MLB/search?q=${computador}`;
 
 const getFetchProducts = async (computador) => {
   const url = fetchProducts(computador);

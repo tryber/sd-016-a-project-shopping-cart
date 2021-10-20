@@ -15,4 +15,11 @@ describe('2 - Teste a função fecthItem', () => {
     await fetchItem("MLB1615760527");
     expect(fetch).toHaveBeenCalled();
    });
+  
+   it("Teste se a função fetchItem é chamada", async () => {
+    expect.assertions(1);
+    await fetchItem("MLB1615760527");
+    expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/items/MLB1615760527');
+   });
 });
+

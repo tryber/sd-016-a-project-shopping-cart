@@ -1,3 +1,5 @@
+// const { fetchProducts } = require("./helpers/fetchProducts");
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -15,7 +17,6 @@ function createCustomElement(element, className, innerText) {
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -39,5 +40,21 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+const createPage = async () => {
+  try {
+    const computerList = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador');
+    const data = await computerList.json();
+    const itemSection = document.querySelector('.items');
+    await data.results.forEach((product) => {
+      const { id: sku, title: name, thumbnail: image } = product;
+      itemSection.appendChild(createProductItemElement({ sku, name, image }));
+    });
+  } catch (error) {
+    console.log(`Ocorreu um erro: ${error}`);
+  }
+};
+
+createPage();
 
 window.onload = () => { };

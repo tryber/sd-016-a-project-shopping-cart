@@ -25,7 +25,7 @@ describe('1 - Teste a função fecthProducts', () => {
     );
   });
 
-  it('Teste da função fetchProducts', async () => {
+  it('Teste da função fetchProducts, se retorna um objeto com os dados da categoria pesquisada', async () => {
     expect.assertions(1);
     // await fetchProducts('computador');
     expect(await fetchProducts("computador")).toEqual(computadorSearch);

@@ -1,4 +1,6 @@
 const containerProducts = document.querySelector('.items');
+const containerCartItems = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -48,4 +50,11 @@ window.onload = () => {
        createProductItemElement({ sku, name, image }),
      );
   }));
+
+  fetchItem('MLB1341706310').then((data) => {
+    const { category_id: sku, title: name, price: salePrice } = data;
+    containerCartItems.appendChild(
+      createCartItemElement({ sku, name, salePrice }),
+);
+  });
 };

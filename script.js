@@ -49,12 +49,16 @@ function createCartItemElement({ id, title, price }) {
   return li;
 }
 
-const addsItemToCart = async () => {
-  const data = await fetchItem('MLB1615760527');
+const itemToCart = async (item) => {
+  const data = await fetchItem(item);
   const cartContainer = document.querySelector('.cart__items');
   cartContainer.appendChild(createCartItemElement(data));
 };
 
-addsItemToCart();
+document.addEventListener('click', (target) => {
+  if (target.classList.includes('item__add')) {
+    itemToCart('MLB1615760527');
+  }
+});
 
 window.onload = () => { };

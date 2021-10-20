@@ -1,3 +1,4 @@
+const containerProducts = document.querySelector('.items');
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -40,4 +41,11 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+window.onload = () => { 
+  fetchProducts('computador').then((data) => data.results.forEach((element) => {
+    const { id: sku, title: name, thumbnail: image } = element;
+     containerProducts.appendChild(
+       createProductItemElement({ sku, name, image }),
+     );
+  }));
+};

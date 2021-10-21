@@ -5,7 +5,7 @@ const item = require('../mocks/item');
 window.fetch = jest.fn(fetchSimulator);
 
   describe('1 - Teste a função fecthProducts', () => {
-    fetchItems('MLB1615760527')
+    // fetchItems('MLB1615760527')
     // cada valor de it foi copiado do README
     it('Testa se fetchItem é uma função', async () => {
       expect.assertions(1);
@@ -14,11 +14,11 @@ window.fetch = jest.fn(fetchSimulator);
       expect(typeOfFetchProducts).toBe('function');
     });
   
-    it('2 - Execute a função fetchItem com o argumento "computador" e teste se fetch foi chamada', () => {
+    it('2 - Execute a função fetchItem com o argumento do item "MLB1615760527" e teste se fetch foi chamada', () => {
       expect.assertions(1);
       // haveBennCalled teste se alguma função foi chamada antes
       // na prática fetch sempre é chamado na função, mesmo sem url
-      await fetchItems('MLB1615760527')
+      fetchItem('MLB1615760527');
       expect(fetch).toHaveBeenCalled();
     });
   
@@ -32,19 +32,19 @@ window.fetch = jest.fn(fetchSimulator);
       expect(fetch).toHaveBeenCalledWith(argumentOfFetchItems);
     });
   
-    it('4 - Teste se o retorno da função fetchItem com o argumento "computador" é uma estrutura de dados igual ao objeto computadorSearch, que já está importado no arquivo.', async () => {
+    it('4 - Teste se o retorno da função fetchItem com o argumento do item "MLB1615760527" é uma estrutura de dados igual ao objeto item que já está importado no arquivo', async () => {
       // expectativa de estrutura de dados igual -- toequal
       expect.assertions(1);
-      fetchItems('MLB1615760527').toHaveBeenCalled(async(value) => {
-        const results =  await fetchItems('MLB1615760527');
+      // fetchItem('MLB1615760527').toHaveBeenCalled(async(value) => {
+      const fetchProductsURL =  await fetchItem('MLB1615760527');
       // feito a partir do video do Bernardo
-        expect(results).toEqual(computadorSearch);
-      })
+      expect(fetchProductsURL).toEqual(item);
+      // })
     });
   
     it('5 - Teste se, ao chamar a função fetchItem sem argumento, retorna um erro com a mensagem: You must provide an url', async () => {
       const error = new Error ('You must provide an url');
-      const result = await fetchItems();
+      const result = await fetchItem();
       expect(result).toEqual(error);
   
     });

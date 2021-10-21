@@ -1,6 +1,3 @@
-const createClearCartButton = document.createElement('button');
-createClearCartButton.classList.add('empty-cart');
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -37,6 +34,15 @@ const addItemToCart = async (sku) => {
   const { title: name, price: salePrice } = fetchResponse;
   createCartItemElement({ sku, name, salePrice });
 };
+
+// fuction clearProductsInTheCart() {
+  // questão similar com a aula do Zeze, quando a lista de moedas era zerada
+  // const olProductsInCart = document.querySelectorAll('.cart__items')
+  // olProductsInCart.forEach((product) => product.parentElement.removeChild(product));
+//}
+
+// const clearCartButton = document.querySelector('.empty-cart');
+// clearCartButton.addEventListener('click', removeItemOfCart);
 
 // desestruturação do objeto para acessar as propriedades
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {

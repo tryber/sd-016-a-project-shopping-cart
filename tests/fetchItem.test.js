@@ -10,4 +10,10 @@ describe('2 - Teste a função fetchItem', () => {
     expect.assertions(1);
     expect(fetchItem).toBeInstanceOf(Function);
   });
+
+  it('Executa a função fetchItem com o argumento "MLB1615760527" e testa se "fetch" foi chamada', async () => {
+    expect.assertions(1);
+    await fetchItem('MLB1615760527');
+    expect(fetch).toHaveBeenCalled();
+  });
 });

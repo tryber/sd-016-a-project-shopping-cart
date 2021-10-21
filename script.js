@@ -45,11 +45,11 @@ function cartItemClickListener(event) {
   const floats = string.match(regex).map(function (v) { return parseFloat(v); }); // codigo retirado de https://stackoverflow.com/questions/17374893/how-to-extract-floating-numbers-from-strings-in-javascript para auxiliar na resolucao
   moneySpent -= floats.at(-1); // at(-1) retirado de https://stackoverflow.com/questions/3216013/get-the-last-item-in-an-array para auxiliar na resolucao
   // atualizar na tela;
-  theDisplayPrice.innerText = `Total Price: $${moneySpent}`;
+  theDisplayPrice.innerText = moneySpent;
   // remover o objeto
   theObject.remove();
   if (document.querySelectorAll('.cart__item').length === 0) {
-    theDisplayPrice.innerText = 'Total Price: $0.00';
+    theDisplayPrice.innerText = '0';
   }
 }
 
@@ -74,7 +74,7 @@ async function addToCart(id) {
   whereToAppend.appendChild(theLi);
   // Adicionando o preco  no total
   moneySpent += theObjectToAdd.salePrice;
-  theDisplayPrice.innerText = `Total Price: $${moneySpent}`;
+  theDisplayPrice.innerText = moneySpent;
 }
 
 function getAllBtnsAndAdd() {

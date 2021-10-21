@@ -21,7 +21,8 @@ describe('1 - Teste a função fecthProducts', () => {
 
   test('Se ao chamar fetchProducts(computador) retorna um objeto igual ao computadorSearch', async () => {
     const functionFetch = await fetchProducts('computador');
-    expect(functionFetch).toMatchObject(computadorSearch);
+    expect(functionFetch).toEqual(computadorSearch);
+
   })
 
   test('Se ao chamar a função sem parametro retorna um erro', async () => {

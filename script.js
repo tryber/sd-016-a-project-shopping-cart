@@ -13,7 +13,8 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  event.target.remove()
+  //ajuda do miyazaki
 }
 
 function createCartItemElement({ sku, name, salePrice }) {

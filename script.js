@@ -25,6 +25,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   olItens.appendChild(li);
+  // help do Brunão
+  saveCartItems();
 }
 
 const getIdAndGetCartItem = async (sku) => {
@@ -50,7 +52,6 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 
   buttonEventAdd.addEventListener('click', () => {
     getIdAndGetCartItem(sku);
-    saveCartItems();
   });
   sectionFather.appendChild(section);
 }
@@ -60,7 +61,6 @@ function getSkuFromProductItem(item) {
 }
 
 window.onload = () => {
-  getSavedCartItems();
   const getProducts = fetchProducts('computador').then((value) => {
     value.results.forEach((element) => {
       createProductItemElement(element);

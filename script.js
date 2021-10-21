@@ -33,13 +33,9 @@ const loadsProductsList = async () => {
 
 loadsProductsList();
 
- function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
 function cartItemClickListener(element) {
   element.parentNode.removeChild(element);
-  delCartItems(element.id);
+  saveCartItems(element);
 }
 
  document.addEventListener('click', (event) => {
@@ -75,7 +71,6 @@ document.addEventListener('click', (event) => {
 window.onload = () => {
   // https://stackoverflow.com/questions/41271092/how-to-loop-through-localstorage-values/41271203
   const items = getSavedCartItems();
-  console.log(items);
   if (items.length === 0) {
     return 1;
   }

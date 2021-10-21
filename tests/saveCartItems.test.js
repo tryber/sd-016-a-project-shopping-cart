@@ -8,7 +8,6 @@ Object.defineProperty(window, 'localStorage', {
 
 describe('4 - Teste a função saveCartItems', () => {
   it('Tests if localStorage.setItem is correctly called', async () => {
-    expect.assertions(1);
     saveCartItems('<ol><li>Item</li></ol>'); 
     expect(localStorage.setItem).toHaveBeenCalled();
   });

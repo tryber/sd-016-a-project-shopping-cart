@@ -1,6 +1,6 @@
 let elements = [];
 
-const delStorage = (productId) => {
+const delCartItems = (productId) => {
   const arr = Object.values(localStorage)[0].split(',');
     for (let i = 0; i < arr.length; i += 1) {
       if (arr[i] === productId) {
@@ -11,16 +11,12 @@ const delStorage = (productId) => {
     localStorage.setItem('cartItem', arr);
 };
 
-const saveCartItems = (productId, order) => {
-  if (order === 'save') {
-    elements.push(productId);
-    localStorage.setItem('cartItem', elements);
-  }
-  if (order === 'del') {
-    delStorage(productId);
-  }  
+const saveCartItems = (productId) => {
+  elements.push(productId);
+  localStorage.setItem('cartItem', elements);
 };
 
 if (typeof module !== 'undefined') {
   module.exports = saveCartItems;
+  module.exports = delCartItems;
 }

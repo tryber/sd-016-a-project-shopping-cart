@@ -4,6 +4,10 @@ const computadorSearch = require('../mocks/search');
 
 window.fetch = jest.fn(fetchSimulator);
 
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
 describe('1 - Teste a função fetchProducts', () => {
   // implemente seus testes aqui
   it('Testa se fetchProducts é uma função', () => {

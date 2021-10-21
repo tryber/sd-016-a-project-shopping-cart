@@ -1,13 +1,7 @@
 let elements = [];
 
-const saveCartItems = (productId, order) => {
-  if (order === 'save') {
-    elements.push(productId);
-    localStorage.setItem('cartItem', elements);
-    console.log(localStorage);
-  }
-  if (order === 'del') {
-    const arr = Object.values(localStorage)[0].split(',');
+const delStorage = (productId) => {
+  const arr = Object.values(localStorage)[0].split(',');
     for (let i = 0; i < arr.length; i += 1) {
       if (arr[i] === productId) {
         arr.splice(i, 1);
@@ -15,7 +9,15 @@ const saveCartItems = (productId, order) => {
     }
     elements = arr;
     localStorage.setItem('cartItem', arr);
-    console.log(localStorage);
+};
+
+const saveCartItems = (productId, order) => {
+  if (order === 'save') {
+    elements.push(productId);
+    localStorage.setItem('cartItem', elements);
+  }
+  if (order === 'del') {
+    delStorage(productId);
   }  
 };
 

@@ -1,9 +1,9 @@
-const fetchProducts = async (callback, query) => {
+const fetchProducts = async (query) => {
   const url = `https://api.mercadolibre.com/sites/MLB/search?q=${query}`;
   try {
-    const datas = await callback(url);
+    const datas = await fetch(url);
     const values = await datas.json().then((value) => value);
-    return values.results;
+    return values;
   } catch (error) {
     throw new Error('You must provide an url');
   }

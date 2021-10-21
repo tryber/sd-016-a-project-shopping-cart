@@ -43,8 +43,8 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 window.onload = () => {
-  fetchProducts(fetch, 'computador').then((result) => {
-    result.forEach((data) => {
+  fetchProducts('computador').then((response) => {
+    response.results.forEach((data) => {
       const { id: sku, title: name, thumbnail: image } = data;
       createProductItemElement({ sku, name, image });
     });

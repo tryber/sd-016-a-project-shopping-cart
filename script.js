@@ -4,6 +4,8 @@ const cartItems = document.querySelector('section .cart__items');
 const totalPrice = document.querySelector('.sub-total .total-price');
 const emptyCardButton = document.querySelector('.empty-cart');
 const loadingMessage = document.querySelector('.loading');
+const searchInput = document.getElementById('search');
+const searchButton = document.getElementById('search-button');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -134,6 +136,22 @@ const emptyCard = () => {
   updateTotalPrice();
 };
 
+const removeAllItems = () => {
+  items.innerHTML = '';
+  body.appendChild(loadingMessage);
+};
+
+const search = () => {
+  const term = searchInput.value;
+  removeAllItems();
+  fetchProducts(term)
+    .then((data) => {
+      setProducts(data.results);
+      body.removeChild(loadingMessage);
+    });
+  searchInput.value = '';
+};
+
 body.addEventListener('click', (e) => {
   if (e.target.classList.contains('item__add')) {
     e.preventDefault();
@@ -145,6 +163,13 @@ body.addEventListener('click', (e) => {
   if (e.target.classList.contains('cart__item')) {
     e.preventDefault();
     removeFromCart(e);
+  }
+});
+
+searchButton.addEventListener('click', search);
+searchInput.addEventListener('keyup', (e) => {
+  if (e.key === 'Enter') {
+    search();
   }
 });
 

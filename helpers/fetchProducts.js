@@ -1,4 +1,4 @@
-const fetchProducts = async (arg) => {
+const fetchProducts = (arg) => {
   // seu código aqui
   if (typeof arg === 'undefined') {
     return new Error('You must provide an url');

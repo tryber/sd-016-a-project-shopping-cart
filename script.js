@@ -40,6 +40,8 @@ const displayOnScreen = async () => {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
+  const clickedItem = event.target.parentNode;
+  clickedItem.removeChild(event.target); 
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {

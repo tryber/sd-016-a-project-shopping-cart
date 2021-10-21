@@ -3,7 +3,7 @@ const { fetchProducts } = require('../helpers/fetchProducts');
 const computadorSearch = require('../mocks/search');
 
 window.fetch = jest.fn(fetchSimulator);
-
+//obs: Testes desenvolvido com auxílio vídeo Bernardo Salgueiro
 describe('1 - Teste a função fecthProducts', () => {
   it('Verificar se deve ser uma função', () => {
     expect(typeof fetchProducts).toBe('function');
@@ -17,7 +17,7 @@ describe('1 - Teste a função fecthProducts', () => {
   fetchProducts('computador');
   expect(fetch).toHaveBeenCalledWith(endpoint);
   });
-  it('Verifica se o retorno da função é um objeto igaul a computadorSearch', async () => {
+  it('Verifica se o retorno da função é um objeto igual a computadorSearch', async () => {
    const results = await fetchProducts('computador');
    expect(results).toEqual(computadorSearch);
   });

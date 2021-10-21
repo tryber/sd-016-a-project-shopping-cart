@@ -32,6 +32,7 @@ function cartItemClickListener(event) {
   // coloque seu código aqui ()
 }
 
+// eslint-disable-next-line no-unused-vars
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -55,5 +56,5 @@ async function searchProducts(product) {
 }
 
 window.onload = () => { 
-  searchProducts('computador')
+  searchProducts('computador');
 };

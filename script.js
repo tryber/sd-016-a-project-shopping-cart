@@ -50,6 +50,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 
   buttonEventAdd.addEventListener('click', () => {
     getIdAndGetCartItem(sku);
+    saveCartItems();
   });
   sectionFather.appendChild(section);
 }
@@ -59,6 +60,7 @@ function getSkuFromProductItem(item) {
 }
 
 window.onload = () => {
+  getSavedCartItems();
   const getProducts = fetchProducts('computador').then((value) => {
     value.results.forEach((element) => {
       createProductItemElement(element);

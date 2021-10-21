@@ -1,5 +1,6 @@
 const sectionItems = document.querySelector('.items');
 const olCart = document.querySelector('.cart__items');
+const totalPrice = document.querySelector('.total-price');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -15,15 +16,24 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function cartItemClickListener(event) {
-  event.target.remove();
+function itemRemove(elem) {
+  elem.remove();
   saveCartItems('cartItems', olCart.innerHTML);
+  fetchItem(elem.id).then((item) => {
+    totalPrice.innerText = (parseFloat(totalPrice.innerText) * 100 - item.price * 100) / 100;
+  });
+}
+
+function cartItemClickListener(event) {
+  itemRemove(event.target);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.id = sku;
+  totalPrice.innerText = (parseFloat(totalPrice.innerText) * 100 + salePrice * 100) / 100;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
@@ -52,7 +62,7 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-window.onload = () => {
+function getProducts() {
   fetchProducts('computador').then((res) => {
     res.results.forEach(
       (produt) => sectionItems.appendChild(
@@ -62,10 +72,22 @@ window.onload = () => {
       ),
     );
   });
+}
+
+function getCartItems() {
   olCart.innerHTML = getSavedCartItems('cartItems');
-  document.addEventListener('click', (event) => {
-    if (event.target.className === 'cart__item') {
-      event.target.remove();
-    }
+  const cartItems = document.querySelectorAll('.cart__item');
+  cartItems.forEach((elem) => {
+    elem.addEventListener('click', (event) => {
+      itemRemove(event.target);
+    });
+    fetchItem(elem.id).then((item) => {
+      totalPrice.innerText = (parseFloat(totalPrice.innerText) * 100 + item.price * 100) / 100;
+    });
   });
+}
+
+window.onload = () => {
+  getProducts();
+  getCartItems();
 };

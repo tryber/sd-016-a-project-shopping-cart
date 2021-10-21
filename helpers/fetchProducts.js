@@ -1,9 +1,6 @@
 const fetchProducts = (product) => {
-  if (!product) {
-    const error = new Error('You must provide an url');
-    return error.message;
-  }
-
+  const erro = new Error('You must provide an url');
+  if (!product) return erro.message;
   const API_URL = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
   return fetch(API_URL)
     .then((response) => response.json())

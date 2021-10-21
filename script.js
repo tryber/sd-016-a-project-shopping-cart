@@ -14,12 +14,9 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function cartItemClickListener(element, id) {
-  element.addEventListener('click', async () => {
-    const item = await fetchItem(id);
-    const { id: sku, title: name, price: salePrice } = item;
-    cartItem.appendChild(createCartItemElement({ sku, name, salePrice }));
-  });
+// eventlistener para remover produtos do carrinho
+function cartItemClickListener(element) {
+
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -34,7 +31,12 @@ function createCartButton(id) {
   const b = document.createElement('button');
   b.className = 'item__add';
   b.innerText = 'Adicionar ao carrinho';
-  cartItemClickListener(b, id);
+  
+  b.addEventListener('click', async () => {
+    const item = await fetchItem(id);
+    const { id: sku, title: name, price: salePrice } = item;
+    cartItem.appendChild(createCartItemElement({ sku, name, salePrice }));
+  });
 
   return b;
 }

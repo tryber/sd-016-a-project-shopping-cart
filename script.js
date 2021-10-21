@@ -16,7 +16,7 @@ function createCustomElement(element, className, innerText) {
 
 // eventlistener para remover produtos do carrinho
 function cartItemClickListener(element) {
-
+  element.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {

@@ -16,13 +16,14 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ sku, name, image, price }) {
   const section = document.createElement('section');
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('span', 'item__price', `R$ ${price}`));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
@@ -55,10 +56,11 @@ const setHigherQualityImages = () => {
 
 const setProducts = (products) => {
   products.forEach((product) => {
-    const { id: sku, title: name, thumbnail: image } = product;
+    const { id: sku, title: name, price, thumbnail: image } = product;
     const infos = {
       sku,
       name,
+      price,
       image,
     };
     const item = createProductItemElement(infos);

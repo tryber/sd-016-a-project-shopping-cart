@@ -36,6 +36,11 @@
   width: 100%;
 }
 
+.item .item__price {
+  text-align: center;
+  padding: 7px 0;
+}
+
 .item .item__add {
   background-color: green;
   border: 0;

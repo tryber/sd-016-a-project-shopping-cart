@@ -6,17 +6,11 @@ const fetchItem = async (id) => {
     return Promise.reject(new Error('You must provide an url'));
   }
 
-  try {
-    const response = await fetch(endpoint);
-    const data = await response.json();
-    
-    console.log(data);
-  } catch (error) {
-    console.log('Erro na função fetchItem: ', error);
-  }
+  const response = await fetch(endpoint);
+  const data = await response.json();
+  
+  console.log(data);
 };
-
-fetchItem('MLB1341706310');
 
 if (typeof module !== 'undefined') {
   module.exports = {

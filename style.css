@@ -7,6 +7,7 @@
 
 body {
   font-family: Montserrat, sans-serif;
+  background-color: #eee;
 }
 
 .container {
@@ -25,14 +26,14 @@ body {
 }
 
 .item {
-  border: 2px solid blue;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   height: auto;
-  margin: 5px;
-  width: 200px;
+  margin: 1rem;
+  width: 250px;
+  background-color: #fff;
 }
 
 .item .item__sku {
@@ -41,12 +42,13 @@ body {
 
 .item .item__title {
   flex-grow: 1;
-  padding: 10px;
+  padding: 20px 10px;
   text-align: center;
 }
 
 .item .item__image {
   width: 100%;
+  padding: 0 0.5rem;
 }
 
 .item .item__price {
@@ -55,24 +57,47 @@ body {
 }
 
 .item .item__add {
-  background-color: green;
+  background-color: rgb(88, 114, 199);
   border: 0;
   cursor: pointer;
   margin: 0;
-  padding: 5px;
+  margin-top: 0.5rem;
+  padding: 1rem;
+  transition-duration: 0.2s;
+  color: #eee;
+  border: 2px solid rgb(88, 114, 199);
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
 }
+
+.item .item__add:hover {
+  background-color: #fff;
+  color: rgb(54, 54, 54);
+}
+
+.item .item__add:active {
+  border-color: rgb(73, 95, 167);
+  background-color: #eee;
+  color: rgb(54, 54, 54);
+} 
 
 .cart {
   display: flex;
   flex-basis: 30%;
   flex-flow: column wrap;
-  background-color: #eee;
+  background-color: rgb(223, 223, 223);
 }
 
 .cart {
   flex-basis: 1;
   font-size: 16pt;
   text-align: center;
+  padding: 0 2rem;
+}
+
+.cart__item {
+  list-style-type: none;
+  margin-bottom: 1.2rem;
 }
 
 .sub-total {
@@ -83,12 +108,13 @@ body {
 
 .total-price {
   padding-left: 2px;
+  font-weight: 600;
 }
 
 .loading {
   color: rgb(54, 54, 54);
   border-radius: 1rem;
-  margin: auto;
+  margin: 50px auto;
   position: fixed;
   left: 32%;
 }
@@ -104,4 +130,26 @@ body {
 
 .products-header {
   flex-basis: 71%;
+}
+
+.empty-cart {
+  width: 50%;
+  margin: 2rem auto;
+  margin-bottom: 3rem;
+  padding: 1rem;
+  font-size: 1rem;
+  border: 2px solid rgb(88, 114, 199);
+  border-radius: 0.3rem;
+  transition-duration: 0.2s;
+}
+
+.empty-cart:hover {
+  cursor: pointer;
+  background-color: rgb(88, 114, 199);
+  color: #eee;
+}
+
+.empty-cart:active {
+  border-color: rgb(73, 95, 167);;
+  background-color: rgb(73, 95, 167);
 }

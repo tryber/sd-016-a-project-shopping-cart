@@ -32,10 +32,10 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 // FUNÇÃO QUE CRIA OS COMPUTADORES
 const createComputers = () => {
   // o then é porque está esperando uma promessa
-  fetchProducts('computador').then( (response) => {
+  fetchProducts('computador').then((response) => {
     response.forEach((computador) => createProductItemElement(computador));   
-  })
-}
+  });
+};
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;

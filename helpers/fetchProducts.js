@@ -6,7 +6,7 @@ const fetchProducts = async (item) => {
   // console.log(results)
   const data = await result.json();
   // retorna uma promise
-  return data.results
+  return data.results;
 };
 
 // fetchProducts('computador')

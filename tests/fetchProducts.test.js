@@ -20,13 +20,14 @@ describe('1 - Teste a função fecthProducts', () => {
   it('Testa se o endpoint de fetch é o esperado com argumento "computador"', () => {
 
     fetchProducts('computador');
-    expect(fetch).toHaveBeenCalledWith("https://api.mercadolibre.com/sites/MLB/search?q=$computador");
+    expect(fetch).toHaveBeenCalledWith("https://api.mercadolibre.com/sites/MLB/search?q=computador");
   });
 
+  // falso positivo
   it('Testa se o retorno de fetchProducts com o argumento "computador" é o esperado', async () => {
 
-    fetchProducts("computador")
-      .then((res) => expect(res).toEqual(computadorSearch));
+    const result = await fetchProducts("computador");
+    expect(result).toEqual(computadorSearch);
   })
 
   it('Testa se, ao não passar argumentos lança uma exceção', async () => {

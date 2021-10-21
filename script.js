@@ -84,10 +84,8 @@ function createProductItemElement({ id, title, thumbnail }) {
 function removertudo() {
   const lista = returnLista();
   lista.forEach((x) => x.parentElement.removeChild(x));
+  sumOfValues();
   saveCartItems();
-}
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
 }
 async function createItens() {
   const resultados = await fetchProducts();
@@ -109,6 +107,7 @@ function loadCart() {
   }
 }
 window.onload = () => {
+  removertudo();
   loadCart(); 
   const carrinho = returnLista();
   carrinho.forEach((x) => x.addEventListener('click', cartItemClickListener));

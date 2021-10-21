@@ -29,7 +29,8 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  const olItems = document.querySelector('.cart__items');
+  olItems.removeChild(event.target);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -66,5 +67,5 @@ async function addProducts(product) {
    addCartItems(objectItem.sku);
   });
  }
- 
+
 window.onload = () => { addProducts('computador'); };

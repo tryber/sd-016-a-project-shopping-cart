@@ -12,7 +12,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
+function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -40,13 +40,15 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 // const data = require('../helpers/fetchProducts');
-async function fetchUrl() {
+async function searchProduct(product) {
   const selectItens = document.querySelector('.items');
-  const data = await fetchProducts('computador');
-      data.forEach((element) => {
-      const { id, title, thumbnail } = element;
-      selectItens.appendChild(createProductItemElement({ id, title, thumbnail }));
+  const data = await fetchProducts(product);
+      data.results.forEach((element) => {
+      const { id: sku, title: name, thumbnail: image } = element;
+      selectItens.appendChild(createProductItemElement({ sku, name, image }));
       });
 }
-fetchUrl();
-window.onload = () => { };
+
+window.onload = () => {
+  searchProduct('computador');
+ };

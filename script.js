@@ -12,6 +12,11 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function cartItemClickListener(event) {
+  // Feito com ajuda do Miyazaki durante a sala de estudos
+  event.target.remove();
+}
+
 function createCartItemElement({ sku, name, salePrice }) {
   const productCart = document.querySelector('.cart__items');
   const li = document.createElement('li');
@@ -35,11 +40,9 @@ const addItemToCart = async (sku) => {
 
 // desestruturação do objeto para acessar as propriedades
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
-  // linha já existe, cria uma section que receberá os produtos individualmente
   const section = document.createElement('section');
   // elemento pai que irá receber os computadores/produtos filhos
   const sectionOfProducts = document.querySelector('.items');
-  // linha já existente, cria a class da section 
   section.className = 'item';
   // exercicio feito durante sala de estudos
   section.appendChild(createCustomElement('span', 'item__sku', sku));
@@ -65,11 +68,6 @@ const createComputers = () => {
     response.results.forEach((computador) => createProductItemElement(computador));   
   });
 };
-
-function cartItemClickListener(event) {
-  // Feito com ajuda do Miyazaki durante a sala de estudos
-  event.target.remove();
-}
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;

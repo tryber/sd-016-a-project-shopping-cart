@@ -1,7 +1,3 @@
-const produt = fetchProducts('computador');
-console.log(produt);
-console.log(produt.then((data) => data.results));
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -44,4 +40,16 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+// help from teacher Bernardo!
+const serchProducts = async (product) => {
+  const data = await fetchProducts(product);
+  const section = document.querySelector('.items');
+  data.results.forEach((item) => {
+    const { id: sku, title: name, thumbnail: image } = item;
+    const productItem = createProductItemElement({ sku, name, image });
+    section.appendChild(productItem);
+  });
+};
+window.onload = () => {
+  serchProducts('computador');
+ };

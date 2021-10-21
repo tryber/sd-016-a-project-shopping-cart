@@ -26,7 +26,6 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   // O Bê mandou tirar!!! Tinha um "return section" aqui
 }
 
-console.log(fetchProducts());
 const fetchProductsReturn = () => fetchProducts('computador').then((value) => {
     value.results.forEach((product) => {
       createProductItemElement(product);

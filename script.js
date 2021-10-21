@@ -1,3 +1,5 @@
+const productConteiner = document.querySelector('.items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -40,8 +42,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => {
-  const productConteiner = document.querySelector('.items');
+function getProductData() {
   const arrayOfProducts = fetchProducts('computador');
   arrayOfProducts.then((productList) => {
     productList.results.forEach((product) => {
@@ -53,4 +54,8 @@ window.onload = () => {
       );
     });
   });
+}
+
+window.onload = () => {
+  getProductData();
 };

@@ -46,6 +46,15 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+async function populateCart(id) {
+  const request = await fetchItem(id);
+  const getOl = document.querySelector('.cart__items');
+  const { id: sku, title: name, price: salePrice } = request;
+  const cartList = createCartItemElement({ sku, name, salePrice });
+  getOl.appendChild(cartList);
+}
+
 window.onload = () => { 
   listOfProducts('computador');
+  populateCart('MLB1341706310');
 };

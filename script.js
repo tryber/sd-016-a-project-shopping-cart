@@ -17,6 +17,7 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   event.target.remove();
+  saveCartItems('cartItems', olCart.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -32,15 +33,18 @@ function createProductItemElement({ sku, name, image }) {
   section.className = 'item';
   const itemAdd = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   itemAdd.addEventListener('click', () =>
-    fetchItem(sku).then((item) =>
-      olCart.appendChild(createCartItemElement(
-        { sku: item.id, name: item.title, salePrice: item.price },
-      ))));
+    fetchItem(sku).then((item) => {
+      olCart.appendChild(
+        createCartItemElement({
+          sku: item.id, name: item.title, salePrice: item.price,
+        }),
+      );
+      saveCartItems('cartItems', olCart.innerHTML);
+    }));
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(itemAdd);
-
   return section;
 }
 
@@ -57,5 +61,11 @@ window.onload = () => {
         ),
       ),
     );
+  });
+  olCart.innerHTML = getSavedCartItems('cartItems');
+  document.addEventListener('click', (event) => {
+    if (event.target.className === 'cart__item') {
+      event.target.remove();
+    }
   });
 };

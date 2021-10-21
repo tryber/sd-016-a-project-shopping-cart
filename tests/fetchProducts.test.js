@@ -19,7 +19,7 @@ describe('1 - Teste a função fecthProducts', () => {
 
   it('Teste se, ao chamar a função fetchProducts com o argumento "computador", a função fetch utiliza o endpoint correto', async () => {
     expect.assertions(1);
-    await fetchProducts('wolfi');
+    await fetchProducts('computador');
     const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
     expect(fetch).toHaveBeenCalledWith(url);
   });

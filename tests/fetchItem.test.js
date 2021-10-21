@@ -24,10 +24,10 @@ describe('2 - Teste a função fecthItem', () => {
   });
 
   // falso positivo
-  it('Testa se o retorno de fetchItem com o argumento "MLB1615760527" é o esperado', () => {
+  it('Testa se o retorno de fetchItem com o argumento "MLB1615760527" é o esperado', async () => {
 
-    fetchItem("MLB1615760527")
-      .then((res) => expect(res).toEqual(3));
+    const result = await fetchItem("MLB1615760527");
+    expect(result).toEqual(item);
   })
 
   it('Testa se, ao não passar argumentos lança uma exceção', async () => {

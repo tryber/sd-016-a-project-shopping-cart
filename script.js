@@ -62,8 +62,8 @@ async function addToCart(id) {
 function getAllBtnsAndAdd() {
   const allbtns = document.querySelectorAll('.item__add'); // pegando os botoes
   allbtns.forEach((btn) => { // adicionando a funcao de pegar o valor do ID dos items clicados
-    btn.addEventListener('click', () => {
-      const id = this.target.parentElement.firstChild.innerText;
+    btn.addEventListener('click', (event) => {
+      const id = event.target.parentElement.firstChild.innerText;
       addToCart(id);
     });
   });

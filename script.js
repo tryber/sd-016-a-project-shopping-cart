@@ -1,6 +1,7 @@
 const sectionItems = document.querySelector('.items');
 const olCart = document.querySelector('.cart__items');
 const totalPrice = document.querySelector('.total-price');
+const emptyChart = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -82,6 +83,12 @@ function getCartItems() {
     });
   });
 }
+
+emptyChart.addEventListener('click', () => {
+  olCart.innerHTML = '';
+  saveCartItems('cartItems', olCart.innerHTML);
+  totalPrice.innerText = 0;
+});
 
 window.onload = () => {
   getProducts();

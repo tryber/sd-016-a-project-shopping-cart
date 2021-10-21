@@ -1,3 +1,7 @@
+const produt = fetchProducts('computador');
+console.log(produt);
+console.log(produt.then((data) => data.results));
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';

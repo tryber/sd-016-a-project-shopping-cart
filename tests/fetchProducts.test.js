@@ -10,7 +10,7 @@ describe('1 - Teste a função fecthProducts', () => {
   it('1 - Teste se fetchProducts é uma função', () => {
     expect(typeof fetchProducts).toBe('function');
   });
-  it('2 - Execute a função fetchProducts com o argumento "computador" e teste se fetch foi chamada', async () => {
+  it('2 - Execute a função fetchProducts com o argumento "computador" e teste se fetch foi chamada', () => {
     fetchProducts('computador');
     return expect(fetch).toHaveBeenCalled();      
   });
@@ -22,7 +22,11 @@ describe('1 - Teste a função fecthProducts', () => {
     const getLengthCOmputerSearch = Object.keys(computadorSearch).length
     expect(getLengthComputer).toEqual(getLengthCOmputerSearch);
   });
-  it('5 - Teste se, ao chamar a função fetchProducts sem argumento, retorna um erro com a mensagem: You must provide an url.', () => {
-
+  it('5 - Teste se, ao chamar a função fetchProducts sem argumento, retorna um erro com a mensagem: You must provide an url.', async () => {
+    try{
+      await fetchProducts();
+    } catch (error) {
+      expect(error).toEqual(new Error('You must provide an url'));
+    }
   });
 });

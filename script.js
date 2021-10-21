@@ -26,11 +26,11 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-async function captchFetch(id) {
+async function captchFetch(idItem) {
   const ol = document.querySelector('.cart__items');
-  const returnOfFetchItem = await fetchItem(id);
+  const returnOfFetchItem = await fetchItem(idItem);
   const { title: name, price: salePrice } = returnOfFetchItem;
-  ol.appendChild(createCartItemElement({ id, name, salePrice }));
+  ol.appendChild(createCartItemElement({ sku: idItem, name, salePrice }));
 }
 
 function createProductItemElement({ sku, name, image }) {

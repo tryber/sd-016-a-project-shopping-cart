@@ -1,7 +1,6 @@
 const fetchSimulator = require('../mocks/fetchSimulator');
 const { fetchItem } = require('../helpers/fetchItem');
 const item = require('../mocks/item');
-// const { fetchProducts } = require('../helpers/fetchProducts');
 
 window.fetch = jest.fn(fetchSimulator);
 

@@ -14,22 +14,6 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
-  return section;
-}
-
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
 function cartItemClickListener(event) {
   // coloque seu código aqui
 }
@@ -38,14 +22,39 @@ function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', cartItemClickListener());
   return li;
 }
 
-const itensSection = document.querySelector('.items');
-const ol = document.querySelector('.cart__items');
+async function captchFetch(id) {
+  const ol = document.querySelector('.cart__items');
+  const returnOfFetchItem = await fetchItem(id);
+  const { title: name, price: salePrice } = returnOfFetchItem;
+  ol.appendChild(createCartItemElement({ id, name, salePrice }));
+}
 
-window.onload = () => { 
+function createProductItemElement({ sku, name, image }) {
+  const section = document.createElement('section');
+  section.className = 'item';
+
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+
+  const createButton = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  createButton.addEventListener('click', () => captchFetch(sku));
+  section.appendChild(createButton);
+
+  return section;
+}
+
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+
+const itensSection = document.querySelector('.items');
+
+function addProducts() {
   fetchProducts('computador')
     .then((data) => {
       data.results.forEach((result) => {
@@ -53,11 +62,8 @@ window.onload = () => {
       itensSection.appendChild(createProductItemElement({ sku, name, image }));
     });
   });
+}
 
-  fetchItem('MLB1341706310')
-    .then((data1) => {
-      console.log(data1);
-      const { category_id: sku, title: name, price: salePrice } = data1;
-      ol.appendChild(createCartItemElement({ sku, name, salePrice }));
-    });
+window.onload = () => { 
+  addProducts();
 };

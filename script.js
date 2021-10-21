@@ -1,3 +1,11 @@
+function savethings() {
+  const lista = document.querySelectorAll('.cart__item');
+  const array = [];
+  lista.forEach((x) => array.push(x.outerHTML));
+  const enviar = JSON.stringify(array);
+  console.log(typeof enviar);
+  saveCartItems(enviar);
+}
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -21,7 +29,7 @@ function sumOfValues() {
     document.querySelector('.total-price').innerText = `Price = ${0}`;
   } else {
     const total = preços.reduce((x, y) => x + y);
-    document.querySelector('.total-price').innerText = `Price = ${total}`;
+    document.querySelector('.total-price').innerText = `${total}`;
   }
 }
 function load() {
@@ -39,7 +47,7 @@ function unload() {
 function cartItemClickListener({ target }) {
   target.parentElement.removeChild(target);
   sumOfValues();
-  saveCartItems();
+  savethings();
 }
 
 function createCustomElement(element, className, innerText) {
@@ -67,7 +75,7 @@ async function onClickAddCarrinho({ target }) {
   porNoCarrinho.addEventListener('click', cartItemClickListener);
   document.querySelector('.cart__items').appendChild(porNoCarrinho);
   sumOfValues();
-  saveCartItems();
+  savethings();
 }
 
 function createProductItemElement({ id, title, thumbnail }) {
@@ -85,10 +93,12 @@ function removertudo() {
   const lista = returnLista();
   lista.forEach((x) => x.parentElement.removeChild(x));
   sumOfValues();
-  saveCartItems();
+  savethings();
 }
+document.querySelector('.empty-cart').addEventListener('click', removertudo);
 async function createItens() {
   const resultados = await fetchProducts();
+  unload();
   const list = document.querySelector('.items');
   const sections = resultados.results.map((p) => createProductItemElement(p));
   sections.forEach((y) => list.appendChild(y));
@@ -96,6 +106,7 @@ async function createItens() {
 
 function loadCart() {
   if (localStorage.getItem('cartItems') !== null) {
+    console.log(getSavedCartItems());
     const produtos = JSON.parse(getSavedCartItems());
     console.log(produtos);
     produtos.forEach((x) => {
@@ -107,7 +118,6 @@ function loadCart() {
   }
 }
 window.onload = () => {
-  removertudo();
   loadCart(); 
   const carrinho = returnLista();
   carrinho.forEach((x) => x.addEventListener('click', cartItemClickListener));

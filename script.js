@@ -37,6 +37,7 @@ const addItemToShopCart = async (id) => {
     price,
   });
 };
+// 
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const sectionFather = document.querySelector('.items');

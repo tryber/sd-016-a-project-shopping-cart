@@ -11,8 +11,6 @@ const fetchProducts = async (query) => {
   return data.results;
 };
 
-fetchProducts('computador');
-
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchProducts,

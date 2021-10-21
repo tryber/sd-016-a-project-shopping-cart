@@ -44,12 +44,14 @@ function cartItemClickListener(event) {
 document.addEventListener('click', (event) => {
   if (event.target.classList.contains('cart__item')) {
     cartItemClickListener(event.target);
+    saveCartItems(event.target.id, 'remove');
   }
 });
 
 function createCartItemElement({ id, title, price }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
+  li.id = `${id}`;
   li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
@@ -65,7 +67,15 @@ document.addEventListener('click', (event) => {
   if (event.target.classList.contains('item__add')) {
     const item = event.target.parentNode.firstChild;
     itemToCart(item.innerText);
+    saveCartItems(item.innerText, 'save');
   }
 });
 
-window.onload = () => { };
+window.onload = () => {
+  // https://stackoverflow.com/questions/41271092/how-to-loop-through-localstorage-values/41271203
+  const items = getSavedCartItems();
+  console.log(items);
+  for (let i = 0; i < items.length; i += 1) {
+    itemToCart(items[i]);
+  }
+};

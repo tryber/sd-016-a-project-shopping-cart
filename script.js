@@ -24,8 +24,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   productCart.appendChild(li);
-  // Removido seguindo sugestão do Bernardo
-  // return li;
+  // return li; foi removido seguindo sugestão do Bernardo
 }
 
 const addItemToCart = async (sku) => {
@@ -34,8 +33,6 @@ const addItemToCart = async (sku) => {
   // console.log(fetchResponse);
   const { title: name, price: salePrice } = fetchResponse;
   createCartItemElement({ sku, name, salePrice });
-  // const productCart = document.querySelector('.cart__items');
-  // productCart.appendChild(createCartItemElement({ sku, name, salePrice }));
 };
 
 // desestruturação do objeto para acessar as propriedades
@@ -54,9 +51,8 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
     addItemToCart(sku);
   });
   section.appendChild(createAddButton);
-  // anexa as sections filhas -- os produtos -- à section pai, com class .items
+  // anexa as sections filhas -- os produtos -- à section pai, com class .items --- return section removido como sugestão do Bernardo
   sectionOfProducts.appendChild(section);
-  // return section;
 }
 
 // FUNÇÃO QUE CRIA OS COMPUTADORES
@@ -73,8 +69,10 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-// add a função fetchProduct para carregar com a page
+const createClearCartButton = document.createElement('button');
+createClearCartButton.className('empty-cart');
+
 window.onload = () => {
-  // função que carrega os computadores
   createComputers();
+  getSavedCartItems();
 };

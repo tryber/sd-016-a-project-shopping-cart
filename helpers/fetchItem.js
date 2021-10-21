@@ -7,7 +7,6 @@ const fetchItem = (itemID) =>
     const newError = 'You must provide an url';
     return newError;
     });
-;
 
 if (typeof module !== 'undefined') {
   module.exports = {

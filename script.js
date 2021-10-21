@@ -11,17 +11,30 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
-
-function createProductItemElement({ sku, name, image }) {
+// desestruturação do objeto para acessar as propriedades
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
+  // linha já existe, cria uma section que receberá os produtos individualmente
   const section = document.createElement('section');
+  // elemento pai que irá receber os computadores/produtos filhos
+  const sectionOfProducts = document.querySelector('.items');
+  // linha já existente, cria a class da section 
   section.className = 'item';
-
+  // exercicio feito durante sala de estudos
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
+  // anexa as sections filhas -- os produtos -- à section pai, com class .items
+  sectionOfProducts.appendChild(section);
   return section;
+}
+
+// FUNÇÃO QUE CRIA OS COMPUTADORES
+const createComputers = () => {
+  // o then é porque está esperando uma promessa
+  fetchProducts('computador').then( (response) => {
+    response.forEach((computador) => createProductItemElement(computador));   
+  })
 }
 
 function getSkuFromProductItem(item) {
@@ -40,4 +53,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+// add a função fetchProduct para carregar com a page
+window.onload = () => {
+  // função que carrega os computadores
+  createComputers();
+};

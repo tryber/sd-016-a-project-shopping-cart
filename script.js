@@ -1,5 +1,4 @@
 const productConteiner = document.querySelector('.items');
-const buttonList = document.getElementsByClassName('item__add');
 const cartConteiner = document.querySelector('.cart__items');
 
 function createProductImageElement(imageSource) {
@@ -13,9 +12,6 @@ function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
-  if(element === 'button'){
-      e.addEventListener('click', addToCart)
-  }
   return e;
 }
 
@@ -48,26 +44,12 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function getProductData() {
-  const arrayOfProducts = fetchProducts('computador');
-  arrayOfProducts.then((productList) => {
-    productList.results.forEach((product) => {
-      const sku = product.id;
-      const name = product.title;
-      const image = product.thumbnail;
-      productConteiner.appendChild(
-        createProductItemElement({ sku, name, image }),
-      );
-    });
-  });
-}
-
 function addToCart(event) {
   const buttonHTML = event.target;
-  const product = buttonHTML.parentNode
+  const product = buttonHTML.parentNode;
   const productId = getSkuFromProductItem(product);
   const itemObj = fetchItem(productId);
-  itemObj.then((object)=>{
+  itemObj.then((object) => {
     const sku = object.id;
     const name = object.title;
     const salePrice = object.price;
@@ -77,6 +59,25 @@ function addToCart(event) {
   });
 }
 
+function addOnClickToButton() {
+  const allButtons = document.querySelectorAll('.item__add');
+  allButtons.forEach((button) => button.addEventListener('click', addToCart));
+}
+
+async function getProductData(search) {
+  const arrayOfProducts = await fetchProducts(search);
+  arrayOfProducts.results.forEach((product) => {
+    const sku = product.id;
+    const name = product.title;
+    const image = product.thumbnail;
+    productConteiner.appendChild(
+      createProductItemElement({ sku, name, image }),
+    );
+  });
+  console.log('função');
+  addOnClickToButton();
+}
+
 window.onload = () => {
-  getProductData();
+  getProductData('computador');
 };

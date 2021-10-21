@@ -31,7 +31,6 @@ function getSkuFromProductItem(item) {
 function cartItemClickListener(event) {
   // coloque seu código aqui
 }
-
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -39,16 +38,27 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
-// const data = require('../helpers/fetchProducts');
-async function searchProduct(product) {
+
+function searchProduct(product) {
   const selectItens = document.querySelector('.items');
-  const data = await fetchProducts(product);
+  fetchProducts(product).then((data) => {
       data.results.forEach((element) => {
       const { id: sku, title: name, thumbnail: image } = element;
       selectItens.appendChild(createProductItemElement({ sku, name, image }));
       });
+    })
+}
+
+function carrinhoProduct(item = "MLB1937082776") {
+  const itemList = document.querySelector(".cart__items")
+  fetchItem(item).then((data) => {
+      const { id: sku, title: name, price: salePrice } = data;
+      itemList.appendChild(createCartItemElement({ sku, name, salePrice }));
+    })
 }
 
 window.onload = () => {
   searchProduct('computador');
+  carrinhoProduct()
+
  };

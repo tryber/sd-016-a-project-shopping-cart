@@ -6,7 +6,7 @@ window.fetch = jest.fn(fetchSimulator);
 
 describe('1 - Teste a função fetchProducts', () => {
   // implemente seus testes aqui
-  it('Testa se fetchProducts é uma função', async () => {
+  it('Testa se fetchProducts é uma função', () => {
     expect.assertions(1);
     expect(fetchProducts).toBeInstanceOf(Function);
   });

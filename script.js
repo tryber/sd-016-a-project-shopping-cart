@@ -41,7 +41,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 function loadProducts() {
-  fetchProducts()
+  fetchProducts('computador')
     .then((products) => {
       const items = document.querySelector('.items');
       products.forEach((product) => {

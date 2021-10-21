@@ -25,6 +25,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   productCart.appendChild(li);
   // return li; foi removido seguindo sugestão do Bernardo
+  saveCartItems();
 }
 
 const addItemToCart = async (sku) => {

@@ -1,3 +1,5 @@
+const { fetchItem } = require("./helpers/fetchItem");
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -22,7 +24,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   SectionItens.appendChild(section);
-  return section;
+  // return section;
 }
 const getProducts = () => {
 fetchProducts('computador').then((response) => {
@@ -31,6 +33,10 @@ fetchProducts('computador').then((response) => {
   });
 });
 };
+
+const getItems = () => {
+  fetchItem()
+}
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;

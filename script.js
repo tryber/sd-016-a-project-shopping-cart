@@ -1,5 +1,14 @@
 const getContainer = () => document.querySelector('.cart__items');
 
+document.addEventListener('click', async (event) => {
+  if (event.target.classList.contains('item__add')) {
+    const data = await fetchItem(event.target.parentNode.firstChild.innerText);
+    const priceLabel = document.querySelector('.price');
+    const productPrice = data.price;
+    priceLabel.innerText = `Price: ${productPrice}`;
+  }
+});
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';

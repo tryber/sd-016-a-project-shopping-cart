@@ -7,8 +7,8 @@ const fetchProducts = (product) => {
   const products = fetch(API_URL)
     .then((response) => response.json())
     .then((data) => data.results)
-    .catch((error) => {
-      throw new TypeError('You must provide an url')
+    .catch(() => {
+      throw new TypeError('You must provide an url');
     });
 
   return products;

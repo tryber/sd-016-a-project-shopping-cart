@@ -41,11 +41,12 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 const funcFet = () => {
-  fetchProducts('computador').then((promisse) => promisse.forEach(({id, title, thumbnail}) => {
-    const obj = { sku: id, name: title, image: thumbnail};
-    document.querySelector('.items').appendChild(createProductItemElement(obj))}));
-}
+  fetchProducts('computador').then((promisse) => promisse.forEach(({ id, title, thumbnail }) => {
+    const obj = { sku: id, name: title, image: thumbnail };
+    document.querySelector('.items').appendChild(createProductItemElement(obj));
+  }));
+};
 
 window.onload = () => {
-  funcFet()
+  funcFet();
 };

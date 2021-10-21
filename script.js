@@ -27,10 +27,12 @@ function createProductItemElement({ sku, name, image }) {
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
+getSkuFromProductItem();
 
-function cartItemClickListener(event) {
-  
+function cartItemClickListener(event) { 
+  return event;
 }
+cartItemClickListener();
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -39,6 +41,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+createCartItemElement();
+
 // Feito através do vídeo do Bê
 async function searchProducts(product) {
   const searchData = await fetchProducts(product);

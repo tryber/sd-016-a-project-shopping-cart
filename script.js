@@ -43,8 +43,8 @@ const displayOnScreen = async () => {
 function cartItemClickListener(event) {
   // coloque seu código aqui
   const clickedItem = event.target.parentNode;
-  clickedItem.removeChild(event.target);
-  saveCartItems(clickedItem.innerHTML); 
+  saveCartItems(clickedItem.innerHTML);
+  clickedItem.removeChild(event.target); 
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -89,8 +89,8 @@ window.onload = () => {
         const getSavedItems = getSavedCartItems();
         locateCart.innerHTML = getSavedItems;
         const cartItems = locateCart.children;
-        cartItems.forEach((element) => { 
-          element.addEventListener('click', cartItemClickListener);
-        });
+        for (let i = 0; i < cartItems.length; i += 1) {
+          cartItems[i].addEventListener('click', cartItemClickListener);
+        }
       });
 };

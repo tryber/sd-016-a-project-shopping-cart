@@ -11,7 +11,7 @@ const fetchProducts = async (query) => {
     const data = await response.json();
     return data.results;
   } catch (error) {
-    console.log('Something went wrong: ', error);
+    alert('Something went wrong: ', error);
   }
 };
 

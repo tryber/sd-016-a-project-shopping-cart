@@ -51,4 +51,6 @@ const addItems = async (productName) => {
 
 window.onload = () => {
   addItems('computador');
+  fetchItem('MLB1341706310')
+    .then((data) => console.log(data));
 };

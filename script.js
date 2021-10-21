@@ -27,7 +27,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 }
 
 // Ajuda do Victor Faria - Turma 11/ Emerson Moreira e Julia Barcelos(Turma 16 - For(ever))
-const addItemToCartShop = async (id) => {
+const addItemToShopCart = async (id) => {
   const listItems = await fetchItem(id);
   const { title, price } = listItems;
   createCartItemElement({
@@ -46,7 +46,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   section.appendChild(createProductImageElement(image));
   const createButton = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   createButton.addEventListener('click', () => {
-    addItemToCartShop(sku);
+    addItemToShopCart(sku);
   });
   section.appendChild(createButton);
   sectionFather.appendChild(section);

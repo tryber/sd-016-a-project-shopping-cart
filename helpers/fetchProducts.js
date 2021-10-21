@@ -1,11 +1,10 @@
-const getUrl = (productName) => `https://api.mercadolibre.com/sites/MLB/search?q=${productName}`;
-
 const fetchProducts = (productName) => {
   // seu código aqui
-  if (!productName) {
+  if (productName === undefined) {
     throw new Error('You must provide an url');
   }
-  const data = fetch(getUrl(productName))
+  const url = `https://api.mercadolibre.com/sites/MLB/search?q=${productName}`;
+  const data = fetch(url)
     .then((response) => response.json())
     .catch((error) => error);
   return data;

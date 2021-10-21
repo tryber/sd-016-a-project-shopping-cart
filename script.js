@@ -38,8 +38,14 @@ loadsProductsList();
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  event.remove();
 }
+
+document.addEventListener('click', (event) => {
+  if (event.target.classList.contains('cart__item')) {
+    cartItemClickListener(event.target);
+  }
+});
 
 function createCartItemElement({ id, title, price }) {
   const li = document.createElement('li');

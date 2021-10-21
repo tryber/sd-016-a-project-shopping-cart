@@ -1,14 +1,12 @@
 const fetchProducts = (search) => {
   // seu código aqui
   if (!search) {
-    return 'You must provide an url';
+    const newError = 'You must provide an url';
+    return newError;
   }
   return fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${search}`)
    .then((response) => response.json())
-   .catch(() => {
-    const newError = 'You must provide an url';
-    return newError;
-    });
+   .catch((error) => error);
 };
 
 if (typeof module !== 'undefined') {

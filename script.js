@@ -12,6 +12,31 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function cartItemClickListener(event) {
+  // coloque seu código aqui
+}
+
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+  const ol = document.querySelector('.cart__items');
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  ol.appendChild(li);
+  // return li;
+}
+
+// Ajuda do Victor Faria - Turma 11/ Emerson Moreira e Julia Barcelos(Turma 16 - For(ever))
+const addItemToCartShop = async (id) => {
+  const listItems = await fetchItem(id);
+  const { title, price } = listItems;
+  createCartItemElement({
+    id,
+    title,
+    price,
+  });
+};
+
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const sectionFather = document.querySelector('.items');
   const section = document.createElement('section');
@@ -19,9 +44,13 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  const createButton = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  createButton.addEventListener('click', () => {
+    addItemToCartShop(sku);
+  });
+  section.appendChild(createButton);
   sectionFather.appendChild(section);
-  return section;
+  // return section; -- o Bê mandou tirar
 }
 
 const listProducts = () => fetchProducts('computador').then((value) => {
@@ -32,18 +61,6 @@ const listProducts = () => fetchProducts('computador').then((value) => {
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-}
-
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
-
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
 }
 
 window.onload = () => { listProducts(); };

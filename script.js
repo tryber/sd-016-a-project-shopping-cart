@@ -50,8 +50,17 @@ function countTotalPrice() {
   } 
 }
 
+function clearCart() {
+  const emptyCart = document.querySelector('.empty-cart');
+  emptyCart.addEventListener('click', () => {
+    const cartItems = document.querySelector('.cart__items');
+    const totalPrice = document.querySelector('.total-price');
+    cartItems.innerHTML = '';
+    totalPrice.innerHTML = 0;
+  });
+}
+
 function cartItemClickListener(event) {
-  // coloque seu código aqui
   event.target.remove();
   countTotalPrice();
 }
@@ -111,4 +120,5 @@ window.onload = () => {
   addProductOnCart();
   JSON.parse(getSavedCartItems());
   loadLS();
+  clearCart();
 };

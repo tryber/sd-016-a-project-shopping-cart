@@ -3,7 +3,6 @@ const fetchProducts = (products) => {
   .then((data) => data.json())
   .catch((error) => error);
 };
-//fetchProducts();
 
 if (typeof module !== 'undefined') {
   module.exports = {

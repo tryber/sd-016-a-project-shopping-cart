@@ -4,6 +4,7 @@
 // const { fetchItem } = require("./helpers/fetchItem");
 // const { fetchItem } = require("./helpers/fetchItem");
 // const { fetchProducts } = require("./helpers/fetchProducts");
+
 let moneySpent = 0;
 const theDisplayPrice = document.querySelector('.total-price');
 const whereToAppend = document.querySelector('.cart__items');
@@ -43,9 +44,8 @@ function cartItemClickListener(event) {
   // const regex = /[+-]?\d+(\.\d+)?/g;
   // const string = theObject.innerText;
   // const floats = string.match(regex).map(function (v) { return parseFloat(v); }); // codigo retirado de https://stackoverflow.com/questions/17374893/how-to-extract-floating-numbers-from-strings-in-javascript para auxiliar na resolucao
-  // moneySpent = ((moneySpent)*100 - (floats.at(-1))*100)/100; // at(-1) retirado de https://stackoverflow.com/questions/3216013/get-the-last-item-in-an-array para auxiliar na resolucao (number1*100 - number2*100) / 100
+  // moneySpent = ((moneySpent)*100 - (floats.at(-1))*100)/100; // at(-1) retirado de https://stackoverflow.com/questions/3216013/get-the-last-item-in-an-array para auxiliar na resolucao // ideia do *100 / 100 retirada da dúvida do Joao Melo https://app.slack.com/client/TMDDFEPFU/C02A8CKT31U/thread/C02A8CKT31U-1634835831.056600
   // theDisplayPrice.innerText = moneySpent;
-
   theObject.remove();
   // if (document.querySelectorAll('.cart__item').length === 0) {
   //   theDisplayPrice.innerText = '0';

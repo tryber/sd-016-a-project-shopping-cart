@@ -19,8 +19,15 @@ describe('1 - Teste a função fecthProducts', () => {
     expect(fetch).toHaveBeenCalledWith("https://api.mercadolibre.com/sites/MLB/search?q=computador")
   })
 
-  it('Verifica se o retorno da função com o argumento computador é uma estrutura igual ao objeto computadorSearch', async () => {
-    const 
-    })
+  it('Verifica se o retorno da função com o argumento computador é uma estrutura igual ao objeto computadorSearch', () => {
+    const getElementComputador = Object.keys('computador').length;
+    const getElementProductComputador = Object.keys(computadorSearch).length;
+    expect(getElementComputador).toEqual(getElementProductComputador);
+  })
+
+  it('Verifica se a função sem argumento retorna um erro', async () => {
+    const error = new Error ('You must provide an url')
+    const result = await fetchProducts();
+    expect(result).toEqual(error);
   })
 });

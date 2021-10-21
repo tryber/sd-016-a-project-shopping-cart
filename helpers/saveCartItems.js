@@ -8,7 +8,7 @@ const delStorage = (productId) => {
       }
     }
     elements = arr;
-    localStorage.setItem('cartItem', arr);;
+    localStorage.setItem('cartItem', arr);
 };
 
 const saveCartItems = (productId, order) => {

@@ -87,7 +87,7 @@ async function getCreateItems(item) {
 }
 
 function emptyTheCart() {
-  const allItemsInTheCart = document.querySelectorAll(".cart__item");
+  const allItemsInTheCart = document.querySelectorAll('.cart__item');
   for (let i = 0; i < allItemsInTheCart.length; i += 1) {
     allItemsInTheCart[i].remove();
   }

@@ -70,5 +70,5 @@ createPage();
 
 window.onload = () => {
   createPage('computador');
-  inputCartItem();
+  // inputCartItem();
 };

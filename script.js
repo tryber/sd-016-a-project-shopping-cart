@@ -42,7 +42,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 async function searchProducts(query) {
   await fetchProducts(query)
-    .then((value) => value
+    .then((value) => value.result
     .forEach((product) => {
       const { id: sku, title: name, thumbnail: image } = product;
       const itens = document.querySelector('.items');

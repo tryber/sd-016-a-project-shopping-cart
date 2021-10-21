@@ -1,5 +1,10 @@
 // const { fetchProducts } = require("./helpers/fetchProducts");
 
+// const { fetchItem } = require("./helpers/fetchItem");
+
+// const { fetchItem } = require("./helpers/fetchItem");
+// const { fetchProducts } = require("./helpers/fetchProducts");
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -42,6 +47,28 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+async function addToCart(id) {
+  const result = await fetchItem(id); // Pegando os dados
+  const theObjectToAdd = { // criando um objeto com os dados
+    sku: result.id,
+    name: result.title,
+    salePrice: result.price,
+  };
+  console.log(theObjectToAdd);
+  const whereToAppend = document.querySelector('.cart__items');
+  whereToAppend.appendChild(createCartItemElement(theObjectToAdd));
+}
+
+function getAllBtnsAndAdd() {
+  const allbtns = document.querySelectorAll('.item__add'); // pegando os botoes
+  allbtns.forEach((btn) => { // adicionando a funcao de pegar o valor do ID dos items clicados
+    btn.addEventListener('click', () => {
+      const id = this.target.parentElement.firstChild.innerText;
+      addToCart(id);
+    });
+  });
+}
+
 async function getCreateItems(item) {
   const dataResult = await fetchProducts(item);
 
@@ -54,6 +81,7 @@ async function getCreateItems(item) {
     const theProduct = createProductItemElement(theResult);
     document.querySelector('.items').appendChild(theProduct);
   });
+  getAllBtnsAndAdd();
 }
 
 window.onload = () => { 

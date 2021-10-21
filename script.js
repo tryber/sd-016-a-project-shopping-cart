@@ -79,5 +79,5 @@ function addEventListenerToProductButtons() {
 window.onload = () => {
   addItemsToScreen()
     .then(() => { addEventListenerToProductButtons(); })
-    .then(() => { getSavedCartItems() });
+    .then(() => { getSavedCartItems(); });
 };

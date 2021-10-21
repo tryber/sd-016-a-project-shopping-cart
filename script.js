@@ -1,3 +1,4 @@
+// Código elaborado com a colaboração de Laura Fumagalli e Priscila Silva
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -32,7 +33,7 @@ function cartItemClickListener(event) {
   // coloque seu código aqui
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ id: sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -40,8 +41,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function loadProducts() {
-  fetchProducts('computador')
+async function loadProducts() {
+  await fetchProducts('computador')
     .then((products) => {
       const items = document.querySelector('.items');
       products.forEach((product) => {
@@ -51,6 +52,23 @@ function loadProducts() {
     });
 }
 
-window.onload = async () => {
+async function addProductOnCart() {
+  const product = await fetchProducts('computador');
+  const ol = document.querySelector('ol');
+
+  document.querySelectorAll('.item__add').forEach((btn) => {
+    btn.addEventListener('click', (event) => {
+      const productObj = {
+        id: event.target.parentElement.firstChild.innerText,
+        name: event.target.previousSibling.previousSibling.innerText,
+      };
+      productObj.salePrice = product.find(({ id }) => id === productObj.id).price;
+      ol.appendChild(createCartItemElement(productObj));
+    });
+  });
+}
+
+window.onload = () => {
   loadProducts();
+  addProductOnCart();
 };

@@ -13,10 +13,12 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  // ajuda do Miyazaki
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
+  // ajuda na sala 03 (ForEver)
   const olItens = document.querySelector('.cart__items');
   const li = document.createElement('li');
   li.className = 'cart__item';

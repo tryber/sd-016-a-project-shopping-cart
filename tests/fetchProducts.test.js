@@ -22,15 +22,12 @@ describe('1 - Teste a função fecthProducts', () => {
   test('Se ao chamar fetchProducts(computador) retorna um objeto igual ao computadorSearch', async () => {
     const functionFetch = await fetchProducts('computador');
     expect(functionFetch).toEqual(computadorSearch);
-
   })
 
   test('Se ao chamar a função sem parametro retorna um erro', async () => {
-    try {
-      await fetchProducts();
-    } catch (error) { 
-      expect(error).toEqual(new Error('You must provide an url'));
-    }
-  })
+    const functionFetch =  await fetchProducts();
+    expect(functionFetch).toEqual(new Error('You must provide an url'));
+   })
+ 
 
 });

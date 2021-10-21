@@ -6,13 +6,9 @@ const fetchProducts = async (query) => {
     return Promise.reject(new Error('You must provide an url'));
   }
 
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data.results;
-  } catch (error) {
-    alert('Something went wrong: ', error);
-  }
+  const response = await fetch(url);
+  const data = await response.json();
+  return data.results;
 };
 
 fetchProducts('computador');

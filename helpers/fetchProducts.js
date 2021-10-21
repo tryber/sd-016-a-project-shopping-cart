@@ -1,5 +1,5 @@
 const fetchProducts = async (query) => {
-  const url = `https://api.mercadolibre.com/sites/MLB/search?q=$${query}`;
+  const url = `https://api.mercadolibre.com/sites/MLB/search?q=${query}`;
 
   // trecho de código retirado do colega Adran Carnavale
   if (url.endsWith('undefined')) {
@@ -8,7 +8,7 @@ const fetchProducts = async (query) => {
 
   const response = await fetch(url);
   const data = await response.json();
-  return data.results;
+  return data;
 };
 
 if (typeof module !== 'undefined') {

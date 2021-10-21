@@ -12,22 +12,6 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
-  return section;
-}
-
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
 function cartItemClickListener(event) {
   // coloque seu código aqui
 }
@@ -40,8 +24,35 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+async function addToCart(sku) {
+  const productClicked = await fetchItem(sku);
+  const { title: name, price: salePrice } = productClicked;
+  const getOl = document.querySelector('.cart__items');
+  getOl.appendChild(createCartItemElement({ sku, name, salePrice }));
+}
+
+function createProductItemElement({ sku, name, image }) {
+  const section = document.createElement('section');
+  section.className = 'item';
+  
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  
+  const addButton = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  addButton.addEventListener('click', () => addToCart(sku));
+  section.appendChild(addButton);
+
+  return section;
+}
+
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+
 async function buildProductItem() {
   const productsList = await fetchProducts('computador');
+  const getSection = document.querySelector('.items');
   productsList.forEach((elem) => {
     const productObject = {
       sku: elem.id,
@@ -49,7 +60,6 @@ async function buildProductItem() {
       image: elem.thumbnail,
     };
     const element = createProductItemElement(productObject);
-    const getSection = document.querySelector('.items');
     getSection.appendChild(element);
   });
 }

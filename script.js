@@ -63,7 +63,8 @@ async function addItemsToCart(id) {
   const salePrice = data.price;
   const li = createCartItemElement({ sku, name, salePrice });
   cartSection.appendChild(li);
-  saveCartItems(li);
+  console.log(cartSection);
+  saveCartItems(cartSection.innerHTML);
 }
 
 function addEventListenerToProductButtons() {
@@ -79,5 +80,13 @@ function addEventListenerToProductButtons() {
 window.onload = () => {
   addItemsToScreen()
     .then(() => { addEventListenerToProductButtons(); })
-    .then(() => { getSavedCartItems(); });
+    .then(() => {
+      const itemList = getSavedCartItems();
+      const cartSection = document.querySelector('.cart__items');
+      cartSection.innerHTML = itemList;
+      const cartItems = cartSection.children;
+      for (let index = 0; index < cartItems.length; index += 1) {
+        cartItems[index].addEventListener('click', cartItemClickListener);
+      }
+    });
 };

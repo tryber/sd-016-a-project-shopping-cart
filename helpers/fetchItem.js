@@ -3,7 +3,8 @@ const fetchItem = (id) => {
   const getId = `https://api.mercadolibre.com/items/${id}`;
   const getIdProduct = fetch(getId)
     .then((response) => response.json())
-    .then((data) => (data));
+    .then((data) => (data))
+    .catch((erro) => erro);
   return getIdProduct;
 };
 

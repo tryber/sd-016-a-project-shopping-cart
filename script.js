@@ -24,9 +24,15 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+const fetchObject = async () => {
+  const arrayfull = await fetchProducts('computador');
+  return arrayfull.results.forEach((arr) => {
+    const section = document.querySelector('.items');
+    const result = createProductItemElement(arr);
+    section.appendChild(result);
+  });
+};
+fetchObject();
 
 function cartItemClickListener(event) {
   // coloque seu código aqui

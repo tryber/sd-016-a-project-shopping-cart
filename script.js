@@ -29,7 +29,8 @@ function createProductItemElement({ sku, name, image }) {
 // }
 
 function cartItemClickListener(event) {
-  console.log(event.target);
+  const parent = event.target.parentNode;
+  parent.removeChild(event.target);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {

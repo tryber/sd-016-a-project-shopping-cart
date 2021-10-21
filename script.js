@@ -17,6 +17,7 @@ function createCustomElement(element, className, innerText) {
 // eventlistener para remover produtos do carrinho
 function cartItemClickListener(element) {
   element.target.remove();
+  saveCartItems(cartItem.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -36,6 +37,7 @@ function createCartButton(id) {
     const item = await fetchItem(id);
     const { id: sku, title: name, price: salePrice } = item;
     cartItem.appendChild(createCartItemElement({ sku, name, salePrice }));
+    saveCartItems(cartItem.innerHTML);
   });
 
   return b;
@@ -67,6 +69,16 @@ async function searchProducts(query) {
     }));
 }
 
+function loadCartItems() {
+  const storedCartItems = getSavedCartItems();
+  cartItem.innerHTML = storedCartItems;
+  Object.keys(cartItem.children)
+    .forEach((elem) => {
+      cartItem.children[elem].addEventListener('click', cartItemClickListener);
+    });
+}
+
 window.onload = () => { 
   searchProducts('computador');
+  loadCartItems();
 };

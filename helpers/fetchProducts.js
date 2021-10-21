@@ -1,7 +1,7 @@
 const fetchProducts = (query) => fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${query}`)
   .then((response) => response.json())
-  .catch((error) => 'You must provide an url');
- 
+  .catch((error) => (error));
+    
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchProducts,

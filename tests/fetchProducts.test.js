@@ -19,7 +19,9 @@ describe('1 - Teste a função fecthProducts', () => {
   it('Teste se o retorno da função `fetchProducts` com o argumento "computador" é uma estrutura de dados igual ao objeto `computadorSearch`', async () => {
     expect(await fetchProducts('computador')).toBe(computadorSearch);
   })
-  it('Teste se, ao chamar a função `fetchProducts` sem argumento, retorna um erro com a mensagem: `You must provide an url`.', async () => {
-    expect(await fetchProducts()).toBe('You must provide an url')
+  it('Verifica o retorno de um erro', async () => {
+    const trowError = new Error('You must provide an url');
+    const result = await fetchProducts();
+    expect(result).toEqual(trowError);
   })
 });

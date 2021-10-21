@@ -1,5 +1,13 @@
-const fetchProducts = () => {
-  // seu código aqu
+const fetchProducts = async (produto) => {
+  try {
+    const response = await fetch(
+      `https://api.mercadolibre.com/sites/MLB/search?q=${produto}`,
+    );
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    return new Error('You must provide an url');
+  }
 };
 
 if (typeof module !== 'undefined') {

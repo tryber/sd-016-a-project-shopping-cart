@@ -38,17 +38,36 @@ const displayOnScreen = async () => {
 //   return item.querySelector('span.item__sku').innerText;
 // }
 
-// function cartItemClickListener(event) {
-//   // coloque seu código aqui
-// }
+function cartItemClickListener(event) {
+  // coloque seu código aqui
+}
 
-// function createCartItemElement({ sku, name, salePrice }) {
-//   const li = document.createElement('li');
-//   li.className = 'cart__item';
-//   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-//   li.addEventListener('click', cartItemClickListener);
-//   return li;
-// }
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
+const addToCart = async (itemId) => {
+  const data = await fetchItem(itemId);
+  const cartContainer = document.querySelector('.cart__items');
+  const { id, title, price } = data;
+  const listItem = createCartItemElement({ id, title, price });
+  cartContainer.appendChild(listItem);
+  console.log(listItem);
+}
+
+const addButton = () => {
+  const storeItem = document.querySelectorAll('.item__add');
+  storeItem.forEach((element) => {
+    element.addEventListener('click', (evt) => {
+      const itemNode = evt.target.parentNode.firstChild.innerHTML;
+      addToCart(itemNode);
+    });
+  });
+} 
 
 if (typeof module !== 'undefined') {
   module.exports = {
@@ -57,5 +76,9 @@ if (typeof module !== 'undefined') {
 }
 
 window.onload = () => { 
-  displayOnScreen();
+  displayOnScreen()
+    .then(() => { addButton(); })
+      .then(() => {
+                
+      })
 };

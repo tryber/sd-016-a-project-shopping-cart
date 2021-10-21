@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Montserrat, sans-serif;
+}
+
 .container {
   position: relative;
   display: flex;
@@ -10,6 +21,7 @@
   flex-basis: 70%;
   flex-wrap: wrap;
   justify-content: center;
+  margin-top: 2rem;
 }
 
 .item {
@@ -54,9 +66,10 @@
   display: flex;
   flex-basis: 30%;
   flex-flow: column wrap;
+  background-color: #eee;
 }
 
-.cart .cart__title {
+.cart {
   flex-basis: 1;
   font-size: 16pt;
   text-align: center;
@@ -78,4 +91,17 @@
   margin: auto;
   position: fixed;
   left: 32%;
+}
+
+.header {
+  display: flex;
+  width: 100%;
+  background-color: rgb(76, 122, 173);
+  color: #eee;
+  font-size: 1.5rem;
+  padding: 1rem 2rem;
+}
+
+.products-header {
+  flex-basis: 71%;
 }

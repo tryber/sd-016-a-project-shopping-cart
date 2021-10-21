@@ -1,3 +1,5 @@
+const getCartContainer = () => document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -41,7 +43,8 @@ const displayOnScreen = async () => {
 function cartItemClickListener(event) {
   // coloque seu código aqui
   const clickedItem = event.target.parentNode;
-  clickedItem.removeChild(event.target); 
+  clickedItem.removeChild(event.target);
+  saveCartItems(clickedItem.innerHTML); 
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -54,11 +57,12 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 
 const addToCart = async (itemId) => {
   const data = await fetchItem(itemId);
-  const cartContainer = document.querySelector('.cart__items');
+  const cartContainer = getCartContainer();
   const { id, title, price } = data;
   const listItem = createCartItemElement({ id, title, price });
   cartContainer.appendChild(listItem);
   console.log(listItem);
+  saveCartItems(cartContainer.innerHTML);
 };
 
 const addButton = () => {
@@ -81,6 +85,12 @@ window.onload = () => {
   displayOnScreen()
     .then(() => { addButton(); })
       .then(() => {
-
+        const locateCart = getCartContainer();
+        const getSavedItems = getSavedCartItems();
+        locateCart.innerHTML = getSavedItems;
+        const cartItems = locateCart.children;
+        cartItems.forEach((element) => { 
+          element.addEventListener('click', cartItemClickListener);
+        });
       });
 };

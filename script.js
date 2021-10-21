@@ -1,5 +1,3 @@
-const saveCartItems = require("./helpers/saveCartItems");
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -80,5 +78,6 @@ function addEventListenerToProductButtons() {
 
 window.onload = () => {
   addItemsToScreen()
-    .then(() => { addEventListenerToProductButtons(); });
+    .then(() => { addEventListenerToProductButtons(); })
+    .then(() => { getSavedCartItems() });
 };

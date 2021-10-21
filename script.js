@@ -41,3 +41,5 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 window.onload = () => { };
+
+//initial commit

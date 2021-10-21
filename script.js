@@ -58,27 +58,30 @@ async function createComputerList() {
 async function addItemToCart(event) {
   const eventSection = event.target.parentElement;
   const fetchItemData = await fetchItem(getSkuFromProductItem(eventSection));
-  
+
   const skuNameSalePrice = {
     sku: fetchItemData.id,
     name: fetchItemData.title,
     salePrice: fetchItemData.price,
   };
-  
+
   const newLiItem = createCartItemElement(skuNameSalePrice);
   const elementFather = document.querySelector('.cart__items');
   elementFather.appendChild(newLiItem);
 }
 
-async function addListenersToButtons() {
-  await createComputerList();
+function addListenersToButtons() {
   const buttonsAddToCart = document.querySelectorAll('.item__add');
   buttonsAddToCart.forEach((button) => {
     button.addEventListener('click', addItemToCart);
   });
 }
 
-window.onload = () => {
-  createComputerList();
+async function generatePage() {
+  await createComputerList();
   addListenersToButtons();
+}
+
+window.onload = () => {
+  generatePage();
 };

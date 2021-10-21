@@ -56,6 +56,8 @@ async function loadProducts() {
 async function addProductOnCart() {
   const product = await fetchProducts('computador');
   const ol = document.querySelector('ol');
+  const productsLS = [];
+  saveCartItems(productsLS);
 
   document.querySelectorAll('.item__add').forEach((btn) => {
     btn.addEventListener('click', (event) => {
@@ -65,11 +67,26 @@ async function addProductOnCart() {
       };
       productObj.salePrice = product.find(({ id }) => id === productObj.id).price;
       ol.appendChild(createCartItemElement(productObj));
+
+      productsLS.push(productObj);
+      saveCartItems(productsLS);
     });
   });
+}
+
+function loadLS() {
+  if (JSON.parse(getSavedCartItems())) {
+    const ol = document.querySelector('ol');
+  
+    JSON.parse(getSavedCartItems()).forEach((item) => {
+      ol.appendChild(createCartItemElement(item)); 
+    }); 
+  }
 }
 
 window.onload = () => {
   loadProducts();
   addProductOnCart();
+  JSON.parse(getSavedCartItems());
+  loadLS();
 };

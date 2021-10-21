@@ -74,5 +74,4 @@ window.onload = () => {
   const items = getSavedCartItems();
   const cartContainer = document.querySelector('.cart__items');
   cartContainer.innerHTML = items;
-
 };

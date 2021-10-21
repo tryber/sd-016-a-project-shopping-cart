@@ -45,13 +45,13 @@ function createProductItemElement({ sku, name, image }) {
 //   console.log('oi');
 // }
 
-function inputCartItem() {
-  // const olCart = document.querySelector('.cart__items');
-  // const buttons = document.querySelectorAll('.item__add');
-  // buttons.addEventListener('click', (button) => {
-  //   console.log(button.parentElement.firstElementChild);
-  // });
-}
+// function inputCartItem() {
+//   // const olCart = document.querySelector('.cart__items');
+//   // const buttons = document.querySelectorAll('.item__add');
+//   // buttons.addEventListener('click', (button) => {
+//   //   console.log(button.parentElement.firstElementChild);
+//   // });
+// }
 
 const createPage = async (product) => {
   try {

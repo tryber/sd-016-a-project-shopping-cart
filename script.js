@@ -1,11 +1,12 @@
 // const { fetchProducts } = require("./helpers/fetchProducts");
-
+// const getSavedCartItems = require("./helpers/getSavedCartItems");
+// const saveCartItems = require("./helpers/saveCartItems");
 // const { fetchItem } = require("./helpers/fetchItem");
-
 // const { fetchItem } = require("./helpers/fetchItem");
 // const { fetchProducts } = require("./helpers/fetchProducts");
 let moneySpent = 0;
 const theDisplayPrice = document.querySelector('.total-price');
+const whereToAppend = document.querySelector('.cart__items');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -49,6 +50,7 @@ function cartItemClickListener(event) {
   // if (document.querySelectorAll('.cart__item').length === 0) {
   //   theDisplayPrice.innerText = '0';
   // }
+  saveCartItems(whereToAppend.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -66,10 +68,10 @@ async function addToCart(id) {
     name: result.title,
     salePrice: result.price,
   };
-  const whereToAppend = document.querySelector('.cart__items');
   const theLi = createCartItemElement(theObjectToAdd);
-  theLi.addEventListener('click', cartItemClickListener);
+  // theLi.addEventListener('click', cartItemClickListener);
   whereToAppend.appendChild(theLi);
+  saveCartItems(whereToAppend.innerHTML); // adiciona aquilo que ta dentro do whereToAppend em uma chave.
   // // Adicionando o preco  no total
   // moneySpent += theObjectToAdd.salePrice;
   // theDisplayPrice.innerText = moneySpent;
@@ -111,6 +113,14 @@ function emptyTheCart() {
 }
 
 window.onload = () => { 
+  // onload colocar tuod que ta na key carItem dentor do html de wheretoappend
+  const allItems = getSavedCartItems();
+  whereToAppend.innerHTML = allItems;
+  // adicionando a funcao de excluir para todos os elementos salvor
+  for (let i = 0; i < whereToAppend.children.length; i += 1) {
+    whereToAppend.children[i].addEventListener('click', cartItemClickListener);
+  }
+
   getCreateItems('computador');
   const emptyButton = document.querySelector('.empty-cart');
   emptyButton.addEventListener('click', emptyTheCart);

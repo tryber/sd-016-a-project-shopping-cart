@@ -26,7 +26,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 const getId = async (sku) => {
  const idInfos = await fetchItem(sku);
- const { title: name, salePrice } = idInfos;
+ const { title: name, price: salePrice } = idInfos;
  createCartItemElement({ sku, name, salePrice });
 };
 

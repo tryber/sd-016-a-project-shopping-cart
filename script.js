@@ -72,9 +72,11 @@ document.addEventListener('click', (event) => {
 
 // localStorage.clear();
 
- window.onload = () => {
+window.onload = () => {
   // https://stackoverflow.com/questions/41271092/how-to-loop-through-localstorage-values/41271203
   const items = getSavedCartItems();
-  console.log(items);
-  items.forEach((item) => itemToCart(item));
+  if (items === null) {
+    return 0;
+  }
+  items.split(',').forEach((item) => itemToCart(item));
 };

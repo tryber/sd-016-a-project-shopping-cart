@@ -1,6 +1,6 @@
 const getSavedCartItems = () => {
-  const result = Object.values(localStorage)[0].split(',');
-  return result;
+ const itens = localStorage.getItem('cartItem');
+ return itens;
 };
 
 if (typeof module !== 'undefined') {

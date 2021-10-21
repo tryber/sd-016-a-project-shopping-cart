@@ -31,7 +31,7 @@ const loadProducts = () => {
       createProductItemElement(item);
     });
   });
-}
+};
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;

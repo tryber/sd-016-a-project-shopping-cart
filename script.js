@@ -23,6 +23,20 @@ function createProductItemElement({ sku, name, image }) {
 
   return section;
 }
+// Código elaborado com a ajuda do Ricardo Carvalho, Turma 16A For(ever).
+async function buildProductItem(product) {
+  const getSection = document.querySelector('.items');
+  const productsList = await fetchProducts(product);
+  productsList.forEach((element) => {
+    const productObj = { 
+      sku: element.id, 
+      name: element.title, 
+      image: element.thumbnail,
+     };
+    const items = createProductItemElement(productObj);
+    getSection.appendChild(items);
+  });
+}
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
@@ -40,4 +54,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+window.onload = async () => {
+  await buildProductItem('computador');
+ };

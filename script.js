@@ -74,10 +74,13 @@ async function getProductData(search) {
       createProductItemElement({ sku, name, image }),
     );
   });
-  console.log('função');
+}
+
+async function asyncAwait() {
+  await getProductData('computador');
   addOnClickToButton();
 }
 
 window.onload = () => {
-  getProductData('computador');
+  asyncAwait();
 };

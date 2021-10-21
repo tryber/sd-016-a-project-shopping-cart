@@ -36,21 +36,48 @@ const displayOnScreen = async () => {
   });
 };
 
+const createPriceElement = () => {
+  const cart = document.querySelector('.cart');
+  const totalPriceElement = document.createElement('span');
+  totalPriceElement.className = 'total-price';
+  totalPriceElement.innerHTML = 'R$: 0';
+  cart.appendChild(totalPriceElement);
+};
+
 // function getSkuFromProductItem(item) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
 
+const totalPriceCalculus = () => {
+  const cart = getCartContainer();
+  const cartItemsPrice = cart.children;
+  const totalPriceElement = document.querySelector('.total-price');
+  if (cartItemsPrice.length > 0) {
+    let total = 0;
+    for (let i = 0; i < cartItemsPrice.length; i += 1) {
+      const curr = cartItemsPrice[i];
+      const productPrice = Number(curr.className);
+      total += productPrice;
+      totalPriceElement.innerHTML = `${total}`;
+    }
+  } else {
+    totalPriceElement.innerHTML = 'R$ 0';
+  }
+};
+
 function cartItemClickListener(event) {
   // coloque seu código aqui
   const clickedItem = event.target.parentNode;
+  clickedItem.removeChild(event.target);
+  totalPriceCalculus();
   saveCartItems(clickedItem.innerHTML);
-  clickedItem.removeChild(event.target); 
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.className = `${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
@@ -61,7 +88,7 @@ const addToCart = async (itemId) => {
   const { id, title, price } = data;
   const listItem = createCartItemElement({ id, title, price });
   cartContainer.appendChild(listItem);
-  console.log(listItem);
+  totalPriceCalculus();
   saveCartItems(cartContainer.innerHTML);
 };
 
@@ -92,5 +119,9 @@ window.onload = () => {
         for (let i = 0; i < cartItems.length; i += 1) {
           cartItems[i].addEventListener('click', cartItemClickListener);
         }
+      })
+      .then(() => {
+        createPriceElement();
+        totalPriceCalculus();
       });
 };

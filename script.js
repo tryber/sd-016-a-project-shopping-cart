@@ -39,18 +39,16 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   const theObject = event.target;
-  
-  const regex = /[+-]?\d+(\.\d+)?/g;
-  const string = theObject.innerText;
-  const floats = string.match(regex).map(function (v) { return parseFloat(v); }); // codigo retirado de https://stackoverflow.com/questions/17374893/how-to-extract-floating-numbers-from-strings-in-javascript para auxiliar na resolucao
-  moneySpent -= floats.at(-1); // at(-1) retirado de https://stackoverflow.com/questions/3216013/get-the-last-item-in-an-array para auxiliar na resolucao
-  // atualizar na tela;
-  theDisplayPrice.innerText = moneySpent;
-  // remover o objeto
+  // const regex = /[+-]?\d+(\.\d+)?/g;
+  // const string = theObject.innerText;
+  // const floats = string.match(regex).map(function (v) { return parseFloat(v); }); // codigo retirado de https://stackoverflow.com/questions/17374893/how-to-extract-floating-numbers-from-strings-in-javascript para auxiliar na resolucao
+  // moneySpent = ((moneySpent)*100 - (floats.at(-1))*100)/100; // at(-1) retirado de https://stackoverflow.com/questions/3216013/get-the-last-item-in-an-array para auxiliar na resolucao (number1*100 - number2*100) / 100
+  // theDisplayPrice.innerText = moneySpent;
+
   theObject.remove();
-  if (document.querySelectorAll('.cart__item').length === 0) {
-    theDisplayPrice.innerText = '0';
-  }
+  // if (document.querySelectorAll('.cart__item').length === 0) {
+  //   theDisplayPrice.innerText = '0';
+  // }
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -72,9 +70,9 @@ async function addToCart(id) {
   const theLi = createCartItemElement(theObjectToAdd);
   theLi.addEventListener('click', cartItemClickListener);
   whereToAppend.appendChild(theLi);
-  // Adicionando o preco  no total
-  moneySpent += theObjectToAdd.salePrice;
-  theDisplayPrice.innerText = moneySpent;
+  // // Adicionando o preco  no total
+  // moneySpent += theObjectToAdd.salePrice;
+  // theDisplayPrice.innerText = moneySpent;
 }
 
 function getAllBtnsAndAdd() {

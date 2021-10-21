@@ -32,7 +32,7 @@ function cartItemClickListener(event) {
   // coloque seu código aqui
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -50,4 +50,19 @@ function appendProducts() {
     });
   });
 }
-window.onload = () => { appendProducts(); };
+
+async function priceCartItem(id) {
+  const getCartItems = document.querySelector('.cart__items');
+  const data = await fetchItem(id);
+  getCartItems.appendChild(createCartItemElement(data));
+}
+const appendItemToCart = () => document.addEventListener('click', (event) => {
+  if (event.target.classList.contains('item__add')) {
+    const item = event.target.parentNode.firstChild;
+    priceCartItem(item.innerText);
+  }
+});
+window.onload = () => { 
+  appendProducts();
+  appendItemToCart();
+};

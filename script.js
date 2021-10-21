@@ -1,4 +1,4 @@
-// const { fetchProducts } = require("./helpers/fetchProducts");
+// const { fetchItem } = require("./helpers/fetchItem");
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -29,8 +29,8 @@ function createProductItemElement({ sku, name, image }) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
 
-// function cartItemClickListener(event) {
-//   //   coloque seu código aqui
+// async function cartItemClickListener(event) {
+//   console.log('aalo');
 // }
 
 // function createCartItemElement({ sku, name, salePrice }) {
@@ -41,12 +41,24 @@ function createProductItemElement({ sku, name, image }) {
 //   return li;
 // }
 
-const createPage = async () => {
+// function consoli() {
+//   console.log('oi');
+// }
+
+function inputCartItem() {
+  // const olCart = document.querySelector('.cart__items');
+  // const buttons = document.querySelectorAll('.item__add');
+  // buttons.addEventListener('click', (button) => {
+  //   console.log(button.parentElement.firstElementChild);
+  // });
+}
+
+const createPage = async (product) => {
   try {
-    const data = await fetchProducts('computador');
+    const data = await fetchProducts(product);
     const itemSection = document.querySelector('.items');
-    await data.results.forEach((product) => {
-      const { id: sku, title: name, thumbnail: image } = product;
+    await data.results.forEach((item) => {
+      const { id: sku, title: name, thumbnail: image } = item;
       itemSection.appendChild(createProductItemElement({ sku, name, image }));
     });
   } catch (error) {
@@ -56,4 +68,7 @@ const createPage = async () => {
 
 createPage();
 
-window.onload = () => { };
+window.onload = () => {
+  createPage('computador');
+  inputCartItem();
+};

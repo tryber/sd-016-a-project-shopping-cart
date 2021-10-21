@@ -27,4 +27,10 @@ describe('2 - Teste a função fetchItem', () => {
     const correctEndpoint = 'https://api.mercadolibre.com/items/MLB1615760527';
     expect(fetch).toHaveBeenCalledWith(correctEndpoint);
   });
+
+  it('Testa se o retorno da função fetchItem com o argumento "MLB1615760527" tem a estrutura de dados adequada', async () => {
+    expect.assertions(1);
+    const response = await fetchItem('MLB1615760527');
+    expect(response).toEqual(item);
+  });
 });

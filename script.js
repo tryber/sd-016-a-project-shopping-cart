@@ -71,7 +71,18 @@ function receiveClick() {
   });
 }
 
+function emptyCart() {
+  const cartList = document.querySelector('.cart__items');
+  const emptyButton = document.querySelector('.empty-cart');
+  emptyButton.addEventListener('click', () => {
+    for (let i = cartList.children.length - 1; i >= 0; i -= 1) {
+      cartList.children[i].remove();
+    }
+  });
+}
+
 window.onload = () => {
   createPage('computador');
   receiveClick();
+  emptyCart();
 };

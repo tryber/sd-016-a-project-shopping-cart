@@ -14,6 +14,8 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
+  event.target.remove(event);
+  // credito ao amigo Miyazaki
 }
 
 function createCartItemElement({ sku, name, salePrice }) {

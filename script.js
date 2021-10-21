@@ -38,8 +38,7 @@ const addItemToCart = async (sku) => {
 // fuction clearProductsInTheCart() {
   // questão similar com a aula do Zeze, quando a lista de moedas era zerada
   // const olProductsInCart = document.querySelectorAll('.cart__items')
-  // olProductsInCart.forEach((product) => product.parentElement.removeChild(product));
-//}
+  // olProductsInCart.forEach((product) => product.parentElement.removeChild(product))}
 
 // const clearCartButton = document.querySelector('.empty-cart');
 // clearCartButton.addEventListener('click', removeItemOfCart);

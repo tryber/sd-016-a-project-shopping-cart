@@ -12,6 +12,28 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function cartItemClickListener(event) {
+  // coloque seu código aqui
+  return event;
+}
+
+function createCartItemElement({ sku, name, salePrice }) {
+  const olListCart = document.querySelector('.cart__items');
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  olListCart.appendChild(li);
+  // O Bê mandou tirar!!! Tinha um "return li" aqui
+}
+
+const addCartItem = async (sku) => {
+  const fetch = await fetchItem(sku);
+  console.log(fetch);
+  const { title: name, price: salePrice } = fetch;
+  createCartItemElement({ sku, name, salePrice });
+};
+
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   const sectionElement = document.querySelector('.items');
@@ -20,35 +42,26 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
+  const createButtonEvent = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  createButtonEvent.addEventListener('click', () => {
+    addCartItem(sku);
+  });
+  section.appendChild(createButtonEvent);
+  
   sectionElement.appendChild(section);
   // O Bê mandou tirar!!! Tinha um "return section" aqui
 }
 
 const fetchProductsReturn = () => fetchProducts('computador').then((value) => {
-    value.results.forEach((product) => {
-      createProductItemElement(product);
-    });
+  value.results.forEach((product) => {
+    createProductItemElement(product);
   });
+});
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-  console.log();
-}
-
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
-
-window.onload = () => { 
+window.onload = () => {
   fetchProductsReturn();
 };

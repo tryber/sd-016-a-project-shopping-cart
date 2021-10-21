@@ -62,8 +62,6 @@ const createPage = async (product) => {
   }
 };
 
-createPage();
-
 window.onload = () => {
   createPage('computador');
 };

@@ -1,5 +1,6 @@
 const productConteiner = document.querySelector('.items');
 const cartConteiner = document.querySelector('.cart__items');
+const storageCartArray = [];
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -41,6 +42,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  saveCartItems(li.innerText)
   return li;
 }
 
@@ -55,8 +57,9 @@ function addToCart(event) {
     const salePrice = object.price;
     cartConteiner.appendChild(
       createCartItemElement({ sku, name, salePrice }),
-    );
+    );getSavedCartItems
   });
+
 }
 
 function addOnClickToButton() {
@@ -79,6 +82,7 @@ async function getProductData(search) {
 async function asyncAwait() {
   await getProductData('computador');
   addOnClickToButton();
+  getSavedCartItems();
 }
 
 window.onload = () => {

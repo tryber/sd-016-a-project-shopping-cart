@@ -1,5 +1,3 @@
-// const { fetchProducts } = require("./helpers/fetchProducts");
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -42,12 +40,16 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+async function searchProducts(query) {
+  await fetchProducts(query)
+    .then((value) => value
+    .forEach((product) => {
+      const { id: sku, title: name, thumbnail: image } = product;
+      const itens = document.querySelector('.items');
+      itens.appendChild(createProductItemElement({ sku, name, image }));
+    }));
+}
+
 window.onload = () => { 
-  fetchProducts('computador')
-  .then((value) => value
-  .forEach((product) => {
-    const { id: sku, title: name, thumbnail: image } = product;
-    const itens = document.querySelector('.items');
-    itens.appendChild(createProductItemElement({ sku, name, image }));
-  }));
+  searchProducts('headset');
 };

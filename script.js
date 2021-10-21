@@ -1,4 +1,13 @@
 const cartItem = document.querySelector('.cart__items');
+const emptyCart = document.querySelector('.empty-cart');
+
+const priceContainer = document.querySelector('.total-price');
+
+emptyCart.addEventListener('click', () => {
+  cartItem.innerHTML = '';
+  localStorage.clear();
+  priceContainer.innerHTML = '';
+});
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -15,7 +24,6 @@ function createCustomElement(element, className, innerText) {
 }
 
 async function priceRemoveUpdater(id) {
-  const priceContainer = document.querySelector('.total-price');
   const item = await fetchItem(id);
 
   const totalPrice = parseFloat(priceContainer.innerText, 10) - parseFloat(item.price, 10);
@@ -23,7 +31,6 @@ async function priceRemoveUpdater(id) {
 }
 
 async function priceUpdater(id) {
-  const priceContainer = document.querySelector('.total-price');
   const item = await fetchItem(id);
   if (priceContainer.innerText) {
     const totalPrice = parseFloat(priceContainer.innerText, 10) + parseFloat(item.price, 10);

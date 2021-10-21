@@ -5,7 +5,7 @@ const item = require('../mocks/item');
 window.fetch = jest.fn(fetchSimulator);
 
 describe('2 - Teste a função fecthItem', () => {
-  // uhuul
+  fetchItem('MLB1615760527');
   describe('1 - Teste a função fecthProducts', () => {
 
     it('1 - Teste se fetchProducts é uma função', () => {
@@ -13,7 +13,7 @@ describe('2 - Teste a função fecthItem', () => {
     });
 
     it('2 - Execute a função fetchItem com o argumento do item "MLB1615760527" e teste se fetch foi chamada', () => {
-      fetchItem('MLB1615760527');
+
       // codigo com o auxilio de Brunão!
       expect(fetch).toHaveBeenCalled();
     });

@@ -55,7 +55,6 @@ const addToCart = async (event) => {
   const item = await fetchItem(idProduct);
   const { id: sku, title: name, price: salePrice } = item;
   cart.appendChild(createCartItemElement({ sku, name, salePrice }));
-
 };
 
 const setupAddToCart = () => {

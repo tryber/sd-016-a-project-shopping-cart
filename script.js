@@ -2,6 +2,7 @@ const sectionItems = document.querySelector('.items');
 const olCart = document.querySelector('.cart__items');
 const totalPrice = document.querySelector('.total-price');
 const emptyChart = document.querySelector('.empty-cart');
+const loading = document.querySelector('.loading');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -68,6 +69,7 @@ function getProducts() {
         ),
       ),
     );
+    loading.remove();
   });
 }
 

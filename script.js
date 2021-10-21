@@ -77,6 +77,7 @@ const addToCart = (foundProduct) => {
   const product = { sku, name, salePrice };
   const item = createCartItemElement(product);
   cartItems.appendChild(item);
+  saveCartItems(cartItems.innerHTML);
 };
 
 const getProduct = async (e) => {
@@ -89,6 +90,12 @@ const getProduct = async (e) => {
 const removeFromCart = (e) => {
   const product = e.target;
   cartItems.removeChild(product);
+  saveCartItems(cartItems.innerHTML);
+};
+
+const setSavedCart = () => {
+  const inner = getSavedCartItems();
+  cartItems.innerHTML = inner;
 };
 
 body.addEventListener('click', (e) => {
@@ -105,4 +112,6 @@ body.addEventListener('click', (e) => {
   }
 });
 
-window.onload = () => { };
+window.onload = () => { 
+  setSavedCart();
+};

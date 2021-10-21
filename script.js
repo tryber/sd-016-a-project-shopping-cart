@@ -56,13 +56,17 @@ async function priceCartItem(id) {
   const data = await fetchItem(id);
   getCartItems.appendChild(createCartItemElement(data));
 }
-const appendItemToCart = () => document.addEventListener('click', (event) => {
-  if (event.target.classList.contains('item__add')) {
-    const item = event.target.parentNode.firstChild;
-    priceCartItem(item.innerText);
-  }
-});
+function appendItemToCart() {
+  const getButton = document.querySelectorAll('.item__add');
+  getButton.forEach((element) => {
+    element.addEventListener('click', (event) => {
+      const item = event.target.parentNode.firstChild;
+      priceCartItem(item.innerText);
+    });
+  });
+}
+
 window.onload = () => { 
   appendProducts();
-  appendItemToCart();
+  setTimeout(appendItemToCart, 1000);
 };

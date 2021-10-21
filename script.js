@@ -14,10 +14,36 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+async function priceRemoveUpdater(id) {
+  const priceContainer = document.querySelector('.total-price');
+  const item = await fetchItem(id);
+
+  const totalPrice = parseFloat(priceContainer.innerText, 10) - parseFloat(item.price, 10);
+  priceContainer.innerText = totalPrice % 1 === 0 ? totalPrice.toFixed() : totalPrice.toFixed(1);  
+}
+
+async function priceUpdater(id) {
+  const priceContainer = document.querySelector('.total-price');
+  const item = await fetchItem(id);
+  if (priceContainer.innerText) {
+    const totalPrice = parseFloat(priceContainer.innerText, 10) + parseFloat(item.price, 10);
+    priceContainer.innerText = totalPrice % 1 === 0 ? totalPrice : totalPrice.toFixed(2);  
+  } else {
+    priceContainer.innerText = item.price;
+  }
+}
+
+function getSkuFromProductItem(item) {
+  const splitedName = item.innerText.split(' ');
+  return splitedName[1];
+}
+
 // eventlistener para remover produtos do carrinho
 function cartItemClickListener(element) {
   element.target.remove();
   saveCartItems(cartItem.innerHTML);
+  const elemId = getSkuFromProductItem(element.target);
+  priceRemoveUpdater(elemId);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -38,6 +64,7 @@ function createCartButton(id) {
     const { id: sku, title: name, price: salePrice } = item;
     cartItem.appendChild(createCartItemElement({ sku, name, salePrice }));
     saveCartItems(cartItem.innerHTML);
+    priceUpdater(id);
   });
 
   return b;
@@ -53,10 +80,6 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCartButton(sku));
 
   return section;
-}
-
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
 }
 
 async function searchProducts(query) {
@@ -75,6 +98,8 @@ function loadCartItems() {
   Object.keys(cartItem.children)
     .forEach((elem) => {
       cartItem.children[elem].addEventListener('click', cartItemClickListener);
+      const elemSku = getSkuFromProductItem(cartItem.children[elem]);
+      priceUpdater(elemSku);
     });
 }
 

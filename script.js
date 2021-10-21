@@ -1,3 +1,6 @@
+const createClearCartButton = document.createElement('button');
+createClearCartButton.classList.add('empty-cart');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -68,9 +71,6 @@ const createComputers = () => {
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
-
-const createClearCartButton = document.createElement('button');
-createClearCartButton.className('empty-cart');
 
 window.onload = () => {
   createComputers();

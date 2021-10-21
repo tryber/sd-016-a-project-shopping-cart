@@ -1,5 +1,3 @@
-const itemsSection = document.querySelector('.items');
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -26,7 +24,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
-const displayOnScreen = async () =>  {
+const displayOnScreen = async () => {
   const data = await fetchProducts('computador');
   data.results.forEach((element) => {
     const itemsSection = document.querySelector('.items');
@@ -52,14 +50,11 @@ const displayOnScreen = async () =>  {
 //   return li;
 // }
 
-
-
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchProducts,
   };
 }
-
 
 window.onload = () => { 
   displayOnScreen();

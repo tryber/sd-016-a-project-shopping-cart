@@ -1,3 +1,5 @@
+const { data } = require('./helpers/fetchProducts');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -12,16 +14,16 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
-  return section;
+function createProductItemElement({ sku, name, image }) {  
+    const section = document.createElement('section');
+    section.className = 'item';
+  
+    section.appendChild(createCustomElement('span', 'item__sku', sku));
+    section.appendChild(createCustomElement('span', 'item__title', name));
+    section.appendChild(createProductImageElement(image));
+    section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  
+    return section;
 }
 
 function getSkuFromProductItem(item) {
@@ -39,5 +41,10 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+data.results.forEach((product) => {
+  ({ id, title, thumbnail } = product);
+  createProductItemElement({ id, title, thumbnail });
+});
 
 window.onload = () => { };

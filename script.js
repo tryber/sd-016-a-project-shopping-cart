@@ -1,4 +1,5 @@
 const getCartContainer = () => document.querySelector('.cart__items');
+const getCleanButton = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -65,6 +66,12 @@ const totalPriceCalculus = () => {
   }
 };
 
+const cleanCart = () => {
+  getCartContainer().innerHTML = '';
+  localStorage.clear();
+  totalPriceCalculus();
+};
+
 function cartItemClickListener(event) {
   // coloque seu código aqui
   const clickedItem = event.target.parentNode;
@@ -123,5 +130,6 @@ window.onload = () => {
       .then(() => {
         createPriceElement();
         totalPriceCalculus();
+        getCleanButton.addEventListener('click', cleanCart);
       });
 };

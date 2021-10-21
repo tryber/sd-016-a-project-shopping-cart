@@ -12,9 +12,41 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-// você deve utilizar a função createProductItemElement(product) para criar os componentes HTML referentes a um produto.
-// Adicione o elemento retornado da função createProductItemElement(product) como filho do elemento <section class="items">.
-// Obs: as variáveis sku, no código fornecido, se referem aos campos id retornados pela API.
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
+
+// function cartItemClickListener(event) {
+//   // coloque seu código aqui
+// }
+
+// REQUISITO 2
+
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
+// Função desenvolvida Req.2
+
+async function buttonRequisition(product) {
+  const findTheProduct = await fetchItem(product);
+  const olItems = document.querySelector('.cart__items');
+  findTheProduct.forEach((item) => {
+    const olObject = {
+      sku: item.id,
+      name: item.title,
+      salePrice: item.price,
+    };
+    const createLi = createCartItemElement(olObject);
+    olItems.appendChild(createLi);
+  });
+}
+
+// REQUISITO 1
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
@@ -28,23 +60,7 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
-// }
-
-// function cartItemClickListener(event) {
-//   // coloque seu código aqui
-// }
-
-// function createCartItemElement({ sku, name, salePrice }) {
-//   const li = document.createElement('li');
-//   li.className = 'cart__item';
-//   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-//   li.addEventListener('click', cartItemClickListener);
-//   return li;
-// }
-
-// REQUISITO 1
+// Função desenvolvida Req.1
 async function searchProduct(product) {
   const searchResult = await fetchProducts(product);
   const sectionItems = document.querySelector('.items');
@@ -61,4 +77,5 @@ async function searchProduct(product) {
 
 window.onload = () => { 
   searchProduct('computador');
+  buttonRequisition('MLB1341706310');
 };

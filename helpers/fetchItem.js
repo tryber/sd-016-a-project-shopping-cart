@@ -1,5 +1,13 @@
-const fetchItem = () => {
-  // seu código aqui
+// const fetch = require('node-fetch');
+
+const fetchItem = (product) => {
+  const url = `https://api.mercadolibre.com/items/${product}`;
+
+  const result = fetch(url)
+   .then((response) => response.json())
+   .catch((error) => error);
+
+  return result;
 };
 
 if (typeof module !== 'undefined') {
@@ -7,3 +15,5 @@ if (typeof module !== 'undefined') {
     fetchItem,
   };
 }
+
+// console.log(fetchItem('MLB1341706310'));

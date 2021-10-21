@@ -44,7 +44,7 @@ window.onload = () => {
   const productConteiner = document.querySelector('.items');
   const arrayOfProducts = fetchProducts('computador');
   arrayOfProducts.then((productList) => {
-    productList.forEach((product) => {
+    productList.results.forEach((product) => {
       const sku = product.id;
       const name = product.title;
       const image = product.thumbnail;

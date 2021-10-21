@@ -12,9 +12,9 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+// ajuda do miyazaki na sala do zoom
 function cartItemClickListener(event) {
   event.target.remove();
-  // ajuda do miyazaki
 }
 
 function createCartItemElement({ sku, name, salePrice }) {

@@ -60,3 +60,13 @@
   font-size: 16pt;
   text-align: center;
 }
+
+.sub-total {
+  text-align: center;
+  padding: 10px;
+  display: none;
+}
+
+.total-price {
+  padding-left: 2px;
+}

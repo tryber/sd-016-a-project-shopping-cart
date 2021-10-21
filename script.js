@@ -33,7 +33,9 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 const createComputers = () => {
   // o then é porque está esperando uma promessa
   fetchProducts('computador').then((response) => {
-    response.forEach((computador) => createProductItemElement(computador));   
+    // feito com base na sala de estudos com Bernardo
+    // acessa o results do objeto maior enviado da API
+    response.results.forEach((computador) => createProductItemElement(computador));   
   });
 };
 

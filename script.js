@@ -14,15 +14,15 @@ function createCustomElement(element, className, innerText) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
 
-function cartItemClickListener() {
-  // coloque seu código aqui
+function cartItemClickListener(event) {
+  event.target.remove();
 }
 
 // function cartItemClickListener(event) {
 //   event.target.remove();
 // }
 
-// REQUISITO 2
+// REQUISITO 2 - feito com a ajuda expecional de meus queridos colegas
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');

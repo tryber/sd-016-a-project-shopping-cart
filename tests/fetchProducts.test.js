@@ -22,7 +22,7 @@ describe('1 - Teste a função fecthProducts', () => {
 
   it('Testando se o retorno da função fetchProducts com o argumento "computador" é uma estrutura de dados igual ao objeto computadorSearch, que já está importado no arquivo' , async () => {
     const expectedResult = computadorSearch;
-    const result = await fetchProducts(fetch, 'computador');
+    const result = await fetchProducts('computador');
     expect(result).toEqual(expectedResult);
   })
 

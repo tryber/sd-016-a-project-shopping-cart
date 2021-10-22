@@ -12,7 +12,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ sku, name, image }) { // { id, title, thumbnail }
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -40,4 +40,22 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+// primeiro requisito feito graças ao Bê que nos ajudou com um video passo a passo
+
+async function searchProduct(product) {
+  const data = await fetchProducts(product);
+  const sectionItems = document.querySelector('.items');
+  data.results.forEach((element) => {
+    const obj = {
+      sku: element.id,
+      name: element.title,
+      image: element.thumbnail,
+    };
+    const productItem = createProductItemElement(obj); // a função é chamada para cada um dos element que vierem no array results
+    sectionItems.appendChild(productItem);
+  });
+}
+
+window.onload = () => {
+  searchProduct('computador');
+};

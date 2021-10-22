@@ -64,6 +64,7 @@ const putInCart = (foundProduct) => { // para colocar os itens no carrinho
   const product = { sku, name, salePrice };
   const item = createCartItemElement(product);
   cart.appendChild(item);
+  saveCartItems(cart.innerHTML); // **REQUISITO 4 - para salvar no storage os itens que estao no carrinho
 };
 
 const selectProduct = async (element) => { // para selecionar os itens 
@@ -84,6 +85,7 @@ page.addEventListener('click', (element) => { // evento para acionar selectProdu
 const removeItemFromCart = (element) => { // funcao para eliminar filhos da ol no carrinho 
   const item = element.target;
   cart.removeChild(item);
+  saveCartItems(cart.innerHTML); // **REQUISITO 4 - para salvar no storage os itens que estao no carrinho
 };
 
 page.addEventListener('click', (element) => { // eliminar filhos da ol ao clicar no mesmo 
@@ -92,7 +94,14 @@ page.addEventListener('click', (element) => { // eliminar filhos da ol ao clicar
   }
   });
 
+// requisito 4
+const saveItensFromCartInStorage = () => { // mantem no html a configuracao atual dos itens que estao no carrinho
+  const inner = getSavedCartItems();
+  cart.innerHTML = inner;
+  };
+
 // implementar as funcoes na ordem dentro do window onload
 window.onload = () => { 
   searchProducts('computador');
+  saveItensFromCartInStorage();
 };

@@ -1,3 +1,5 @@
+const odinPaiDeTodos = document.querySelector('.cart__items');
+const olItens = document.querySelector('.cart__items');
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -19,14 +21,14 @@ function cartItemClickListener(event) {
 
 function createCartItemElement({ sku, name, salePrice }) {
   // ajuda na sala 03 (ForEver)
-  const olItens = document.querySelector('.cart__items');
+
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   olItens.appendChild(li);
   // help do Brunão
-  saveCartItems();
+  saveCartItems(odinPaiDeTodos.innerHTML);
 }
 
 const getIdAndGetCartItem = async (sku) => {

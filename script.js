@@ -1,5 +1,11 @@
 // const { fetchItem } = require("./helpers/fetchItem");
 
+// const getSavedCartItems = require("./helpers/getSavedCartItems");
+// const saveCartItems = require("./helpers/saveCartItems");
+
+// const getSavedCartItems = require("./helpers/getSavedCartItems");
+// const saveCartItems = require("./helpers/saveCartItems");
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -14,31 +20,36 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-// function cartItemClickListener(event) {
-//   // coloque seu código aqui
-//   const ol = document.querySelector('.cart__items');
-//   eventTarget = event.Target;
-//   ol.removeChild(eventTarget);
-//   console.log('oi');
-// }
+const ol = document.querySelector('.cart__items');
+
+function removeItemOfStorage(sku) {
+  const storage = JSON.parse(localStorage.getItem('cartItems'));
+  const cartProduct = storage.find((item) => item.sku === sku);
+  const capthIndexOfProduct = storage.indexOf(cartProduct);
+  storage.splice(capthIndexOfProduct, 1);
+  saveCartItems(JSON.stringify(storage));
+}
+
+function cartItemClickListener(event, sku) {
+  event.target.remove();
+  removeItemOfStorage(sku);
+}
 
 function createCartItemElement({ sku, name, salePrice }) {
-  const ol = document.querySelector('.cart__items');
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', (event) => {
-    eventTarget = event.target;
-    ol.removeChild(eventTarget);
-  });
+  li.addEventListener('click', (event) => cartItemClickListener(event, sku));
   return li;
 }
 
-async function captchFetch(idItem) {
-  const ol = document.querySelector('.cart__items');
-  const returnOfFetchItem = await fetchItem(idItem);
+async function captchFetch(sku) {
+  const storage = JSON.parse(getSavedCartItems()) || [];
+  const returnOfFetchItem = await fetchItem(sku);
   const { title: name, price: salePrice } = returnOfFetchItem;
-  ol.appendChild(createCartItemElement({ sku: idItem, name, salePrice }));
+  ol.appendChild(createCartItemElement({ sku, name, salePrice }));
+  storage.push({ sku, name, salePrice });
+  saveCartItems(JSON.stringify(storage));
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -72,6 +83,15 @@ function addProducts() {
   });
 }
 
+function saveInStorage() {
+  const storage = JSON.parse(getSavedCartItems());
+  storage.forEach((item) => ol.appendChild(createCartItemElement(item)));
+}
+
 window.onload = () => { 
   addProducts();
+  if (getSavedCartItems() === undefined || getSavedCartItems() === null) {
+    return localStorage.setItem('cartItems', JSON.stringify([]));
+  }
+  saveInStorage();
 };

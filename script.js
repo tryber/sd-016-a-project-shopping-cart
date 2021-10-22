@@ -13,7 +13,8 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  const li = document.querySelector('li');
+  li.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {

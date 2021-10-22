@@ -3,7 +3,7 @@ const fetchProducts = (query) => {
   const result = fetch(url)
     .then((response) => response.json())
     .then((value) => value.results)
-    .catch((error) => error);
+    .catch((error) => console.log(error));
   return result;
 };
 

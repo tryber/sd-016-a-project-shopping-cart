@@ -71,8 +71,10 @@ function addItem() {
           })
           cart.appendChild(resultProduct);
         });
+      saveCartItems();
     })
   })
+
 }
 
 window.onload = async () => {

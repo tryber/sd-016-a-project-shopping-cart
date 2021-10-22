@@ -1,3 +1,5 @@
+const sectionItens = document.querySelector('.items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -12,23 +14,8 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
-    
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-    
-  return section;
-}
-
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -39,9 +26,34 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+const adicionaAoCarrinho = async (ItemId) => {
+  const resultadoId = await fetchItem(ItemId);
+  const listaItens = document.querySelector('.cart__items');
+  const { id: sku, title: name, price: salePrice } = resultadoId;
+  const listaCarrinho = createCartItemElement({ sku, name, salePrice });
+  listaItens.appendChild(listaCarrinho);
+};
+
+function createProductItemElement({ sku, name, image }) {
+  const section = document.createElement('section');
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  const buttonAdcCarrinho = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  buttonAdcCarrinho.addEventListener('click', () => {
+    adicionaAoCarrinho();
+  });
+  section.appendChild(buttonAdcCarrinho);
+  sectionItens.appendChild(section);
+  return section;
+}
+
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+
 const listaProdutos = async (produto) => {
   const resultadoProduto = await fetchProducts(produto);
-  const sectionItens = document.querySelector('.items');
   resultadoProduto.results.forEach((element) => {
     const itensObjeto = {
       sku: element.id,
@@ -55,4 +67,4 @@ const listaProdutos = async (produto) => {
 
 window.onload = () => {
   listaProdutos('computador');
- };
+};

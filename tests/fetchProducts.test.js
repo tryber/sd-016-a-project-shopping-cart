@@ -20,8 +20,6 @@ describe('1 - Teste a função fecthProducts', () => {
     const results = await fetchProducts('computador');
     expect(results).toEqual(computadorSearch);
   });
-
-
   it('passando a função sem argumento retorna um erro', async () => {
     const expectedResult = new Error('You must provide an url');
     const functionCall = await fetchProducts();

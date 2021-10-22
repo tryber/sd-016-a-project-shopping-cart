@@ -37,7 +37,7 @@ function updatePriceCart() {
       sum += parseFloat(price);
     }
   }
-  if (sum === 0) finalPrice.innerHTML = 'Subtotal: R$ 0';
+  if (sum === 0) finalPrice.innerHTML = '0';
   if (sum !== 0) finalPrice.innerHTML = Number(sum.toFixed(2));
 }
 

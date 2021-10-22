@@ -63,7 +63,7 @@ function listProducts(search) {
   createProductItemElement(product)));
 }
 
-const cartItemsRestora = () => {
+const cartItemsRestore = () => {
   const localStorageRestore = getSavedCartItems();
   orderedList.innerHTML = localStorageRestore;
 };
@@ -77,7 +77,7 @@ const restoreEventListener = () => {
 window.onload = () => { 
   listProducts('computador');
   if (orderedList.children.length === 0) cartItemsRestore();
-  restoreEventListenerCartItem();
+  restoreEventListener();
 };
 
 // Feito com auxilio de: Renan Souza, Lucas Alves, Fabricio Martins, Rafael Feliciano, Vitor Brandao em uma sala do zoom

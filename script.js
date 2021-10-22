@@ -1,11 +1,24 @@
 const getContainer = () => document.querySelector('.cart__items');
 
+let actualTotalPrice = 0;
+
+const priceSub = (totalCurrentPrice, actualPrice) => {
+  actualTotalPrice = totalCurrentPrice - actualPrice;
+  localStorage.setItem('cartPrice', actualTotalPrice);
+  return actualTotalPrice.toFixed(2);
+};
+
+const priceSum = (totalCurrentPrice, actualPrice) => {
+  actualTotalPrice = totalCurrentPrice + actualPrice;
+  localStorage.setItem('cartPrice', actualTotalPrice);
+  return actualTotalPrice.toFixed(2);
+};
+
 document.addEventListener('click', async (event) => {
   if (event.target.classList.contains('item__add')) {
     const data = await fetchItem(event.target.parentNode.firstChild.innerText);
-    const priceLabel = document.querySelector('.price');
-    const productPrice = data.price;
-    priceLabel.innerText = `Price: ${productPrice}`;
+    const productPrice = Number(data.price);
+    return productPrice;
   }
 });
 
@@ -44,10 +57,14 @@ const loadsProductsList = async () => {
 
 loadsProductsList();
 
-function cartItemClickListener(element) {
+async function cartItemClickListener(element) {
   element.parentNode.removeChild(element);
   const cartContainer = getContainer();
   saveCartItems(cartContainer.innerHTML);
+  const price = await fetchItem(element.id);
+  const result = priceSub(actualTotalPrice, price.price);
+  const priceLabel = document.querySelector('.price');
+  priceLabel.innerText = `Total Price: ${result}`;
 }
 
  document.addEventListener('click', (event) => {
@@ -76,13 +93,34 @@ document.addEventListener('click', async (event) => {
     await itemToCart(item.innerText);
     const cartContainer = getContainer();
     saveCartItems(cartContainer.innerHTML);
+    const price = await fetchItem(event.target.parentNode.firstChild.innerText);
+    const result = priceSum(actualTotalPrice, price.price);
+    const priceLabel = document.querySelector('.price');
+    priceLabel.innerText = `Total Price: ${result}`;
   }
 });
+
+const loadsCart = () => {
+  const items = getSavedCartItems();
+  const cartContainer = getContainer();
+  cartContainer.innerHTML = items;
+};
+
+const loadsCartPrice = () => {
+  const getCartPrice = localStorage.getItem('cartPrice');
+  console.log(getCartPrice);
+  if (getCartPrice === null) {
+    const priceLabel = document.querySelector('.price');
+    priceLabel.innerText = `Total price: ${0}`;
+  } else {
+    const priceLabel = document.querySelector('.price');
+    priceLabel.innerText = `Total Price: ${getCartPrice}`;
+  }  
+};
 
 // localStorage.clear();
 
 window.onload = () => {
-  const items = getSavedCartItems();
-  const cartContainer = getContainer();
-  cartContainer.innerHTML = items;
+  loadsCart();
+  loadsCartPrice();
 };

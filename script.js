@@ -4,12 +4,13 @@ Juntos vamos lonje. */
 
 const getOl = document.querySelector('.cart__items');
 
-const createProductImageElement = (imageSource) => {
+function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
   return img;
-};
+}
+
 
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
@@ -22,14 +23,13 @@ function cartItemClickListener(event) {
   event.target.remove();
 }
 
-const createCartItemElement = ({ sku, name, salePrice }) => {
+function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-
   return li;
-};
+}
 
 async function addToCart(id) {
   const request = await fetchItem(id);

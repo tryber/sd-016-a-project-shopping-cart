@@ -106,7 +106,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 const addToCart = async (itemId) => {
   onLoad();
   const data = await fetchItem(itemId);
-  unLoad();
+  loaded();
   const cartContainer = getCartContainer();
   const { id, title, price } = data;
   const listItem = createCartItemElement({ id, title, price });

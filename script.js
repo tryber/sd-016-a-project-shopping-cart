@@ -98,6 +98,6 @@ window.onload = () => {
 function clearProductsInTheCart() {
   productCart.innerHTML = '';
   saveCartItems(productCart.innerHTML);
-};
+}
 
 clearCartButton.addEventListener('click', clearProductsInTheCart);

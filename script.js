@@ -1,6 +1,6 @@
 const containerProducts = document.querySelector('.items');
 const containerCartItems = document.querySelector('.cart__items');
-
+const isLoading = document.querySelector('.loading');
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -14,8 +14,6 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
-
-const cartItems = [];
 
 const totalValueProductsCart = () => {
   if (localStorage.getItem('cartItems') === null) {
@@ -38,8 +36,10 @@ const printValueProductsCart = () => {
 
 function cartItemClickListener(event, sku) {
   const storage = JSON.parse(getSavedCartItems()) || [];
-  const resutl = storage.filter((returnItem) => returnItem.sku !== sku);
-  saveCartItems(JSON.stringify(resutl)); 
+  const resultFind = storage.find((returnItem) => returnItem.sku === sku);
+  const resultIndex = storage.indexOf(resultFind);
+  storage.splice(resultIndex, 1);
+  saveCartItems(JSON.stringify(storage)); 
   totalValueProductsCart();
   printValueProductsCart();
   return event.target.remove();
@@ -57,7 +57,6 @@ async function addItemToCart(sku) {
   const { title: name, price: salePrice } = await fetchItem(sku);
   containerCartItems.appendChild(createCartItemElement({ sku, name, salePrice }));
   
-  // cartItems.push({ sku, name, salePrice });
   const storage = JSON.parse(getSavedCartItems()) || [];
   storage.push({ sku, name, salePrice });
   saveCartItems(JSON.stringify(storage));
@@ -86,6 +85,7 @@ const clearCartAllItems = () => {
   containerCartItems.innerHTML = '';
   elementH3Total.innerHTML = 0;
 };
+
 const btnClearAllItems = document.querySelector('.empty-cart');
 btnClearAllItems.addEventListener('click', () => {
   clearCartAllItems();
@@ -94,13 +94,13 @@ btnClearAllItems.addEventListener('click', () => {
 // function getSkuFromProductItem(item) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
-
 const renderItemsToSreen = async () => {
-  const data = await fetchProducts('computador');
+  const data = await fetchProducts('computador'); 
   data.results.forEach((element) => {
     const { id: sku, title: name, thumbnail: image } = element;
     containerProducts.appendChild(createProductItemElement({ sku, name, image }));
   });
+  isLoading.remove(); // Contribuição do colega Pedro Mendes - Turma 16 - A
 };
 renderItemsToSreen();
 

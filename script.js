@@ -1,4 +1,5 @@
 const capturarListCart = document.querySelector('.cart__items');
+const limparCarrinho = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -84,3 +85,11 @@ window.onload = () => {
   if (capturarListCart.children.length === 0) restalrarCarrinho();
   restalrarListaCarrinho();
 };
+
+function limparListaCarrinho() {
+  // Leandro Goerck
+  capturarListCart.innerHTML = '';
+  saveCartItems(capturarListCart.innerHTML);
+}
+
+limparCarrinho.addEventListener('click', limparListaCarrinho);

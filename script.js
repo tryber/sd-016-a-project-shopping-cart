@@ -1,3 +1,5 @@
+const itemElement = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -12,6 +14,25 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function cartItemClickListener(event) { 
+   return event;
+}
+cartItemClickListener();
+
+function createCartItemElement({ id, title, price }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
+async function addToCart(id) {
+  const addItem = await fetchItem(id);
+  const addItemToCart = createCartItemElement(addItem);
+  itemElement.appendChild(addItemToCart);
+}
+
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -19,8 +40,9 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
+  const buttonAddCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  buttonAddCart.addEventListener('click', () => addToCart(sku));
+  section.appendChild(buttonAddCart);
   return section;
 }
 
@@ -28,20 +50,6 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 getSkuFromProductItem();
-
-function cartItemClickListener(event) { 
-  return event;
-}
-cartItemClickListener();
-
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
-createCartItemElement();
 
 // Feito através do vídeo do Bê
 async function searchProducts(product) {

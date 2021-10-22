@@ -3,7 +3,8 @@ const ol = document.querySelector('.cart__items');
 // function clearAll() {
 //   const buttonClearAll = document.querySelector('.empty-cart');
 //   buttonClearAll.addEventListener('click', () => {
-//     ol.innerHTML = '';
+//     ol.innerText = '';
+//    // ol.innerHTML = '';
 //     });
 //   }
 // clearAll();
@@ -90,7 +91,6 @@ function saveInStorage() {
 
 window.onload = () => { 
   addProducts();
-  buttonClearAll();
   if (getSavedCartItems() === undefined || getSavedCartItems() === null) {
     return localStorage.setItem('cartItems', JSON.stringify([]));
   }

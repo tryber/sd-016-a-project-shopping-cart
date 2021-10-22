@@ -1,3 +1,4 @@
+const loading = document.querySelector('.loading');
 const ol = document.querySelector('.cart__items');
 const button = document.querySelector('.empty-cart');
 
@@ -66,6 +67,7 @@ const getProduct = () => fetchProducts('computador').then((value) => {
   value.forEach((product) => {
     createProductItemElement(product);
   });
+  loading.remove();
 });
 
 const saveAndLocalStorage = () => {

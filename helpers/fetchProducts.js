@@ -1,5 +1,7 @@
-const fetchProducts = () => {
-  // seu código aqui
+const fetchProducts = (search) => {
+  return fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${search}`)
+    .then((data) => data.json())
+    .catch((error) => error);
 };
 
 if (typeof module !== 'undefined') {

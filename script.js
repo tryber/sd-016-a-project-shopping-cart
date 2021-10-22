@@ -1,9 +1,12 @@
 const ol = document.querySelector('.cart__items');
 
-const buttonClearAll = document.querySelector('.empty-cart');
-buttonClearAll.addEventListener('click', () => {
-  ol.innerHTML = '';
-  });
+// function clearAll() {
+//   const buttonClearAll = document.querySelector('.empty-cart');
+//   buttonClearAll.addEventListener('click', () => {
+//     ol.innerHTML = '';
+//     });
+//   }
+// clearAll();
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');

@@ -1,13 +1,12 @@
 const ol = document.querySelector('.cart__items');
 
-// function clearAll() {
-//   const buttonClearAll = document.querySelector('.empty-cart');
-//   buttonClearAll.addEventListener('click', () => {
-//     ol.innerText = '';
-//    // ol.innerHTML = '';
-//     });
-//   }
-// clearAll();
+function clearAll() {
+  const buttonClearAll = document.querySelector('.empty-cart');
+  buttonClearAll.addEventListener('click', () => {
+    ol.innerText = '';
+    });
+  }
+clearAll();
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');

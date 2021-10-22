@@ -1,6 +1,21 @@
+const onLoad = () => {
+  const loadingSpan = document.createElement('p');
+  loadingSpan.style.display = 'block';
+  loadingSpan.innerText = 'carregando...';
+  loadingSpan.className = 'loading';
+  document.querySelector('.cart').appendChild(loadingSpan);
+};
+
+const loaded = () => {
+  const loadingElement = document.querySelectorAll('.loading');
+  loadingElement.forEach((x) => x.parentElement.removeChild(x));
+};
+
+// Obtem os elementos do carrinho e botao de esvaziar o carrinho
 const getCartContainer = () => document.querySelector('.cart__items');
 const getCleanButton = document.querySelector('.empty-cart');
 
+// Cria o elemento img seus atributos 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -8,6 +23,7 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+// Cria um elemento e seus atributos
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -15,24 +31,27 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
+// Cria o elemento do produto com id, imagem, nome e preço
+function createProductItemElement({ id: sku, title: name, thumbnail: image, price: productPrice }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createCustomElement('span', 'item__price', productPrice));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
   return section;
 }
 
+// Mostra na tela os produtos carregados da API
 const displayOnScreen = async () => {
+  onLoad();
   const data = await fetchProducts('computador');
+  loaded();
   data.results.forEach((element) => {
     const itemsSection = document.querySelector('.items');
-    const { id, title, thumbnail } = element;
-    const section = createProductItemElement({ id, title, thumbnail });
+    const { id, title, thumbnail, price } = element;
+    const section = createProductItemElement({ id, title, thumbnail, price });
     itemsSection.appendChild(section);
   });
 };
@@ -44,10 +63,6 @@ const createPriceElement = () => {
   totalPriceElement.innerHTML = 'R$: 0';
   cart.appendChild(totalPriceElement);
 };
-
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
-// }
 
 const totalPriceCalculus = () => {
   const cart = getCartContainer();
@@ -62,7 +77,7 @@ const totalPriceCalculus = () => {
       totalPriceElement.innerHTML = `${total}`;
     }
   } else {
-    totalPriceElement.innerHTML = 'R$ 0';
+    totalPriceElement.innerHTML = '0';
   }
 };
 
@@ -73,7 +88,6 @@ const cleanCart = () => {
 };
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
   const clickedItem = event.target.parentNode;
   clickedItem.removeChild(event.target);
   totalPriceCalculus();
@@ -88,19 +102,6 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
-
-const onLoad = () => {
-  const loadingSpan = document.createElement('p');
-  loadingSpan.style.display = 'block';
-  loadingSpan.innerText = 'carregando...';
-  loadingSpan.className = 'loading';
-  document.querySelector('.cart').appendChild(loadingSpan);
-};
-
-const unLoad = () => {
-  const loadingElement = document.querySelectorAll('.loading');
-  loadingElement.forEach((x) => x.parentElement.removeChild(x));
-};
 
 const addToCart = async (itemId) => {
   onLoad();
@@ -131,9 +132,8 @@ if (typeof module !== 'undefined') {
 }
 
 window.onload = () => { 
-  onLoad();
   displayOnScreen()
-    .then(() => { unLoad(); addButton(); })
+    .then(() => { addButton(); })
       .then(() => {
         const locateCart = getCartContainer();
         const getSavedItems = getSavedCartItems();

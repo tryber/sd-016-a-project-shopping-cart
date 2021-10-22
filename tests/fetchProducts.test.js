@@ -10,21 +10,17 @@ describe('1 - Teste a função fecthProducts', () => {
   })
 
   it('Chama a função fetchProducts com o argumento "computador" e testa se fetch foi chamada', ()=> {
-    expect.assertions(1);
-    return fetchProducts('computador')
-    .then
-    (expect(fetch).toHaveBeenCalled());
+    fetchProducts('computador');
+    expect(fetch).toHaveBeenCalled();
   })
 
-  it('Chama a função fetchProducts com o argumento "computador", testa se a função fetch utiliza o endpoint "https://api.mercadolibre.com/sites/MLB/search?q=computador";', async() => {
+  it('Chama a função fetchProducts com o argumento "computador", testa se a função fetch utiliza o endpoint correto;', async() => {
     const expectedEndpoint = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
-    expect.assertions(1);
-    const data = await fetchProducts('c');
+    fetchProducts('computador');
     expect(fetch).toHaveBeenCalledWith(expectedEndpoint);
   })
 
-  it('Testa se o retorno da função fetchProducts com o argumento "computador" é uma estrutura de dados igual ao objeto computadorSearch, que já está importado no arquivo.', async() => {
-    expect.assertions(1);
+  it('Testa se o retorno da função fetchProducts com o argumento "computador" é uma estrutura de dados igual ao objeto computadorSearch.', async() => {
     expect( await fetchProducts('computador')).toBe(computadorSearch);
   })
 

@@ -61,7 +61,7 @@ async function searchProducts(product) {
 
 // requisito 2
 const page = document.querySelector('body'); // para usar o addEventListener
-const cart = document.querySelector('section.cart'); 
+const cart = document.querySelector('ol.cart__items'); 
 
 const putInCart = (foundProduct) => { // para colocar os itens no carrinho
   const { id: sku, title: name, price: salePrice } = foundProduct;

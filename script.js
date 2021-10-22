@@ -1,10 +1,9 @@
-// const { fetchItem } = require("./helpers/fetchItem");
+const ol = document.querySelector('.cart__items');
 
-// const getSavedCartItems = require("./helpers/getSavedCartItems");
-// const saveCartItems = require("./helpers/saveCartItems");
-
-// const getSavedCartItems = require("./helpers/getSavedCartItems");
-// const saveCartItems = require("./helpers/saveCartItems");
+const buttonClearAll = document.querySelector('.empty-cart');
+buttonClearAll.addEventListener('click', () => {
+  ol.innerHTML = '';
+  });
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -19,8 +18,6 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
-
-const ol = document.querySelector('.cart__items');
 
 function removeItemOfStorage(sku) {
   const storage = JSON.parse(localStorage.getItem('cartItems'));
@@ -90,6 +87,7 @@ function saveInStorage() {
 
 window.onload = () => { 
   addProducts();
+  buttonClearAll();
   if (getSavedCartItems() === undefined || getSavedCartItems() === null) {
     return localStorage.setItem('cartItems', JSON.stringify([]));
   }

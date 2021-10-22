@@ -15,6 +15,18 @@ const priceSum = (totalCurrentPrice, actualPrice) => {
   return Number(actualTotalPrice.toFixed(2));
 };
 
+document.addEventListener('click', (event) => {
+  if (event.target.classList.contains('empty-cart')) {
+    const content = document.querySelector('.cart__items');
+    const priceContent = document.querySelector('.total-price');
+    content.innerHTML = '';
+    priceContent.innerHTML = 0;
+    localStorage.setItem('cartPrice', 0);
+    const cartContainer = getContainer();
+    saveCartItems(cartContainer.innerHTML);        
+  }
+});
+
 document.addEventListener('click', async (event) => {
   if (event.target.classList.contains('item__add')) {
     const data = await fetchItem(event.target.parentNode.firstChild.innerText);

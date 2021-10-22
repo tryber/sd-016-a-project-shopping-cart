@@ -1,3 +1,7 @@
+// const saveCartItems = require("./helpers/saveCartItems");
+// const getSavedCartItems = require("./helpers/getSavedCartItems");
+const throwItemList = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -13,8 +17,8 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  const throwItemList = document.querySelector('.cart__items');
   throwItemList.removeChild(event.target);
+  saveCartItems(throwItemList.innerHTML); 
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -32,8 +36,8 @@ const cartOfTheBuy = async (id) => {
     name: objOfTheItem.title, 
     salePrice: objOfTheItem.price,
   };
-  const listItem = document.querySelector('.cart__items');
-  listItem.appendChild(createCartItemElement(objItemList));
+  throwItemList.appendChild(createCartItemElement(objItemList));
+  saveCartItems(throwItemList.innerHTML);
 };
 
 function createProductItemElement({ sku, name, image }) {
@@ -68,6 +72,17 @@ async function getProducts(product) {
   });
 }
 
+const refreshPage = () => {
+  const getResult = getSavedCartItems();
+  throwItemList.innerHTML = getResult;
+};
+
+const restoreEventListener = () => {
+ throwItemList.addEventListener('click', cartItemClickListener);
+};
+
 window.onload = () => { 
    getProducts('computador');
+   refreshPage();
+   restoreEventListener();
 }; 

@@ -24,9 +24,9 @@ function sumPrice(arrayNumberPrice) {
    sumHTML.innerHTML = sumReduce;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
 
 function cartItemClickListener(event, sku) {
   event.target.remove();
@@ -74,13 +74,13 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-const productByName = async (paramItem) => {
-  const promisse = await fetchProducts(paramItem);
-  promisse.forEach(({ id, title, thumbnail }) => {
+const productByName = (paramItem) => {
+  fetchProducts(paramItem)
+  .then((promisse) => promisse.forEach(({ id, title, thumbnail }) => {
     const obj = { sku: id, name: title, image: thumbnail };
     document.querySelector('.items').appendChild(createProductItemElement(obj));
-  });
-  document.querySelector('.load').remove();
+  }))
+  .then(() => document.querySelector('.load').remove());
 };
 
 function getSavedWithListenner() {

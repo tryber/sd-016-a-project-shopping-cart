@@ -5,6 +5,39 @@ const computadorSearch = require('../mocks/search');
 window.fetch = jest.fn(fetchSimulator);
 
 describe('1 - Teste a função fecthProducts', () => {
-  // implemente seus testes aqui
-  fail('Teste vazio');
+
+  it('Testa se é uma função', () => {
+
+    expect(typeof fetchProducts).toBe('function');
+  })
+
+  it('Executa a função com o argumento "computador" e testa se fetch foi chamada', () => {
+
+    fetchProducts('computador');
+    expect(fetch).toHaveBeenCalled();
+  })
+
+  it('Testa se o endpoint de fetch é o esperado com argumento "computador"', () => {
+
+    fetchProducts('computador');
+    expect(fetch).toHaveBeenCalledWith("https://api.mercadolibre.com/sites/MLB/search?q=computador");
+  });
+
+  // falso positivo
+  it('Testa se o retorno de fetchProducts com o argumento "computador" é o esperado', async () => {
+
+    const result = await fetchProducts("computador");
+    expect(result).toEqual(computadorSearch);
+  })
+
+  it('Testa se, ao não passar argumentos lança uma exceção', async () => {
+
+    // trecho de código retirado do colega Adran Carnavale
+    try {
+      await fetchProducts();
+    } catch (error) {
+      expect(error).toEqual(new Error('You must provide an url'));
+    };
+
+  })
 });

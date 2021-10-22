@@ -9,12 +9,12 @@ describe('Testa a função fecthProducts', () => {
   it('Testa se fetchProducts é uma função', () => {
     expect(typeof fetchProducts).toBe('function');
   });
-  it('Testa se fetch foi chamada utilizando argumento "computador"', async () => {
-    await fetchProducts('computador')
+  it('Testa se fetch foi chamada utilizando argumento "computador"', () => {
+    fetchProducts('computador')
     expect(fetch).toHaveBeenCalled();
   });
-  it('Testa se fetch utiliza o endpoint correto', async () => {
-    await fetchProducts('computador');
+  it('Testa se fetch utiliza o endpoint correto', () => {
+    fetchProducts('computador');
     expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=computador');
   });
   it('Testa se o retorno da função fetchProducts com o argumento "computador" é uma estrutura de dados igual ao objeto computadorSearch', async () => {

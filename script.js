@@ -32,10 +32,10 @@ function createProductItemElement({ sku, name, image }) {
 
 function checkTotalPrice() {
   const cart = locateCartSection();
-  const totalPriceSpan = document.querySelector('.total-price');
+  const totalPriceSpan = document.querySelector('.total-price-span');
   const cartChildren = cart.children;
-  let totalPrice = 0;
   if (cartChildren.length > 0) {
+    let totalPrice = 0;
     for (let index = 0; index < cartChildren.length; index += 1) {
       const currentChild = cartChildren[index];
       const salePrice = Number(currentChild.className);
@@ -43,7 +43,7 @@ function checkTotalPrice() {
       totalPriceSpan.innerHTML = `Valor total: R$ ${totalPrice}`;
     }
   } else {
-    totalPriceSpan.innerHTML = `Valor total: R$ ${totalPrice}`;
+    totalPriceSpan.innerHTML = 'Valor total: R$ 0';
   }
 }
 
@@ -78,11 +78,13 @@ async function addItemsToScreen() {
 
 function createTotalPriceSpan() {
   const cart = document.querySelector('.cart');
+  const divPriceSpan = document.createElement('div');
+  divPriceSpan.className = 'total-price';
   const totalPriceSpan = document.createElement('span');
-  // totalPriceSpan.className = 'total-price';
-
+  divPriceSpan.className = 'total-price-span';
   totalPriceSpan.innerHTML = 'Valor total: R$ 0';
-  cart.appendChild(totalPriceSpan);
+  cart.appendChild(divPriceSpan);
+  divPriceSpan.appendChild(totalPriceSpan);
 }
 
 async function addItemsToCart(id) {
@@ -110,10 +112,12 @@ function addEventListenerToProductButtons() {
 
 function deleteCartItems() {
   const deleteButton = document.querySelector('.empty-cart');
+  const cartSection = locateCartSection();
   deleteButton.addEventListener('click', () => {
     const cart = locateCartSection();
     cart.innerHTML = '';
     checkTotalPrice();
+    saveCartItems(cartSection.innerHTML);
   });
 }
 

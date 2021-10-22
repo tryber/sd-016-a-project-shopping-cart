@@ -40,6 +40,7 @@ async function addToCart(itemID) {
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
+  // await section.addEventListener('click', addToCart);
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -49,6 +50,9 @@ function createProductItemElement({ sku, name, image }) {
     'Adicionar ao carrinho!',
   );
   section.appendChild(btn);
+  btn.addEventListener('click', async () => {
+    await addToCart(sku);
+  });
   return section;
 }
 

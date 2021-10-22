@@ -1,3 +1,7 @@
+// const { fetchProducts } = require("./helpers/fetchProducts"); - NAO TEM QUE IMPORTA
+
+// const { id, title } = require("./mocks/item");
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -12,7 +16,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
+const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -40,6 +44,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
+/* Como eu fiz, alterado para como o BE fez.
 const fetchUrl = async () => {
   try {
     const response = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador');
@@ -52,8 +57,22 @@ const fetchUrl = async () => {
   } catch (error) {
     window.alert('Ocorreu um erro, Desculpa vamos verificar!!');
   }
+}; */
+
+const searchProducts = async (product) => {
+  const searchData = await fetchProducts(product);
+  const sectionItems = document.querySelector('.items');
+  searchData.results.forEach((item) => {
+    const itemObject = {
+      sku: item.id,
+      name: item.title,
+      image: item.thumbnail,
+    };
+    const productItem = createProductItemElement(itemObject);
+    sectionItems.appendChild(productItem);
+  });
 };
 
 window.onload = () => {
-  fetchUrl();
+  searchProducts('computador');
 };

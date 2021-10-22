@@ -24,23 +24,32 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
-// }
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
 
-// function cartItemClickListener(event) {
-//   // coloque seu código aqui
-//   // este "event" abaixo, só foi pra fazer um pull request sem erros no lint
-//   event();
-// }
+function cartItemClickListener(event) {
+  // coloque seu código aqui
+  // este "event" abaixo, só foi pra fazer um pull request sem erros no lint
+  event();
+}
 
-// function createCartItemElement({ sku, name, salePrice }) {
-//   const li = document.createElement('li');
-//   li.className = 'cart__item';
-//   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-//   li.addEventListener('click', cartItemClickListener);
-//   return li;
-// }
+// Vamos implementar o requisito dois.
+
+function callFetchItem(id) {
+  fetchItem(id);
+}
+
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
+// Vamos implementar o requisito 01...
+// Precisei assistir ao vídeodo Bê para começar a fazer.
 const searchProducts = async (argumento) => { 
   const searchData = await fetchProducts(argumento);
   const sectionItens = document.querySelector('.items');

@@ -40,4 +40,25 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+/**
+ * Consultei o vídeo gravada pelo Bernardo Salgueiro para resolver essa parte.
+ * Link- https://app.slack.com/client/TMDDFEPFU/C02A8CKT31U/thread/C02A8CKT31U-1634781501.006900
+* */
+ 
+async function searchProducts(product) {
+  const searchData = await fetchProducts(product);
+  const sectionItems = document.querySelector('.items');
+  searchData.results.forEach((item) => {
+ const itemCatalog = {
+   sku: item.id,
+   name: item.title,
+   image: item.thumbnail,
+ };
+ const section = createProductItemElement(itemCatalog);
+ sectionItems.appendChild(section);
+  });
+}
+
+window.onload = () => { 
+  searchProducts('computador');
+};

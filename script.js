@@ -1,3 +1,5 @@
+// Código só foi possívl graças à união da classe for(ever).
+// a União faz a força!
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -31,6 +33,7 @@ async function addToCart(id) {
   const { id: sku, title: name, price: salePrice } = request;
   const cartList = createCartItemElement({ sku, name, salePrice });
   getOl.appendChild(cartList);
+  saveCartItems(getOl.innerHTML);
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
@@ -62,4 +65,5 @@ const listOfProducts = (categoria) => {
 
 window.onload = () => { 
   listOfProducts('computador');
+  // getSavedCartItems();
 };

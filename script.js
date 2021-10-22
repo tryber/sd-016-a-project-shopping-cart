@@ -1,3 +1,5 @@
+const cartList = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -26,9 +28,9 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 }
 
 async function addCartItem(id) {
-  const cartList = document.querySelector('.cart__items');
   const product = await fetchItem(id);
   cartList.appendChild(createCartItemElement(product));
+  saveCartItems(cartList.innerHTML);
   /* 
   requisito feito em uma sala de estudos
   Auxiliado por: Renan Souza, Matheus Benini, Vitor Brandão, Italo Moraes, Ju Barcelos e Rafael Feliciano
@@ -66,6 +68,13 @@ function listProducts(searchUser) {
    Auxiliado por: Renan Souza, Matheus Benini, Vitor Brandão, Fabrício Martins e Rafael Feliciano */
 }
 
+function restoreCart() {
+  cartList.innerHTML = getSavedCartItems();
+  Array.from(cartList.children).forEach((item) =>
+  item.addEventListener('click', cartItemClickListener));
+}
+
 window.onload = () => {
   listProducts('computador');
+  restoreCart();
 };

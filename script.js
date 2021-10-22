@@ -1,3 +1,5 @@
+const getOlList = () => document.querySelector('.cart__items'); 
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -72,5 +74,4 @@ async function searchProducts(product) {
 }
 window.onload = () => {
   searchProducts('computador');
-  const getOlList = () => document.querySelector('.cart__items'); 
   };

@@ -34,17 +34,15 @@ function checkTotalPrice() {
   const cart = locateCartSection();
   const totalPriceSpan = document.querySelector('.total-price-span');
   const cartChildren = cart.children;
+  let totalPrice = 0;
   if (cartChildren.length > 0) {
-    let totalPrice = 0;
     for (let index = 0; index < cartChildren.length; index += 1) {
       const currentChild = cartChildren[index];
       const salePrice = Number(currentChild.className);
       totalPrice += salePrice;
-      totalPriceSpan.innerHTML = `Valor total: R$ ${totalPrice}`;
     }
-  } else {
-    totalPriceSpan.innerHTML = 'Valor total: R$ 0';
   }
+  totalPriceSpan.innerHTML = totalPrice;
 }
 
 function cartItemClickListener(event) {

@@ -21,9 +21,13 @@ describe('1 - Teste a função fecthProducts', () => {
   });
 
   it ('Verifica se o retorno da função fetchProducts com o argumento "computador" é um objeto igual à computadorSearch', async () => {
-    expect(await fetchProducts('computador')).toEqual(computadorSearch.results);
+    expect(await fetchProducts('computador')).toEqual(computadorSearch);
   });
-  
 
+  it('Verifica se ao chamar a função fetchProducts sem argumentos retorna uma mensagem de erro', async () => {
+    const expectedError = new Error('You must provide an url');
+    const result = await fetchProducts();
+    expect(result).toEqual(expectedError);
+  });
   // fail('Teste vazio');
 });

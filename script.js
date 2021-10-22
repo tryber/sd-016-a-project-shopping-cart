@@ -86,12 +86,12 @@ const allProducts = () => {
   fetchProducts('computador').then((response) => {
     response.results.forEach((products) => createProductItemElement(products));
   });
+  loading.remove();
 };
 
 items.addEventListener('click', cartItemClickListener);
 
 window.onload = () => {
-  loading.remove();
   allProducts();
   savedCart();
   cartPrice();

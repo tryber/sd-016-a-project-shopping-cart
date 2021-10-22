@@ -1,7 +1,5 @@
-const saveCartItems = () => {
-  // seu código aqui
-};
-
-if (typeof module !== 'undefined') {
-  module.exports = saveCartItems;
-}
+// const saveCartItems = () => {
+  
+// if (typeof module !== 'undefined') {
+ // module.exports = saveCartItems;
+// }

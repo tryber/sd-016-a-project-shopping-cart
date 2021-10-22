@@ -1,6 +1,6 @@
 const getButton = document.querySelector('.empty-cart');
 const ol = document.querySelector('.cart__items');
-
+const loading = document.querySelector('.loading');
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -61,6 +61,7 @@ const listProducts = () => fetchProducts('computador').then((value) => {
   value.results.forEach((item) => {
     createProductItemElement(item);
   });
+  loading.remove();
 });
 
 function getSkuFromProductItem(item) {

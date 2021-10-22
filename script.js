@@ -91,6 +91,11 @@ function addListenersToCartItems() {
   });
 }
 
+function recreateCart() {
+  const savedCartItems = localStorage.getItem('cartItems');
+  cart.innerHTML = savedCartItems;
+}
+
 async function generatePage() {
   await createComputerList();
   addListenersToButtons();
@@ -98,6 +103,6 @@ async function generatePage() {
 
 window.onload = () => {
   generatePage();
-  getSavedCartItems();
+  recreateCart()
   addListenersToCartItems();
 };

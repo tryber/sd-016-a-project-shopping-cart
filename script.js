@@ -1,5 +1,5 @@
 const odinPaiDeTodos = document.querySelector('.cart__items');
-
+const messageLoad = document.querySelector('.loading');
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -86,10 +86,11 @@ clearAll();
 window.onload = () => {
   // help do Brunão
   if (odinPaiDeTodos.children.length === 0) verifyFunctionVoidAndRestore();
-  const getProducts = fetchProducts('computador').then((value) => {
+  fetchProducts('computador').then((value) => {
     value.results.forEach((element) => {
       createProductItemElement(element);
     });
+    messageLoad.remove();
   });
   addEventToItemSaved();
 };

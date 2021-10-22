@@ -1,6 +1,5 @@
 const productConteiner = document.querySelector('.items');
-const cartConteiner = document.querySelector('.cart__items');
-const storageCartArray = [];
+const getCart = () => document.querySelector('.cart__items');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -14,6 +13,11 @@ function createCustomElement(element, className, innerText) {
   e.className = className;
   e.innerText = innerText;
   return e;
+}
+
+function setToLocalStorage() {
+  const cartConteiner = document.querySelector('.cart__items').innerHTML;
+  saveCartItems(cartConteiner);
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -35,6 +39,7 @@ function getSkuFromProductItem(item) {
 function cartItemClickListener(event) {
   // coloque seu código aqui
   event.target.remove();
+  setToLocalStorage();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -42,7 +47,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  saveCartItems(li.innerText)
   return li;
 }
 
@@ -51,20 +55,29 @@ function addToCart(event) {
   const product = buttonHTML.parentNode;
   const productId = getSkuFromProductItem(product);
   const itemObj = fetchItem(productId);
-  itemObj.then((object) => {
+  const cartConteiner = getCart();
+  itemObj
+  .then((object) => {
     const sku = object.id;
     const name = object.title;
     const salePrice = object.price;
     cartConteiner.appendChild(
       createCartItemElement({ sku, name, salePrice }),
-    );getSavedCartItems
+    );
+  setToLocalStorage();
   });
-
 }
 
 function addOnClickToButton() {
   const allButtons = document.querySelectorAll('.item__add');
   allButtons.forEach((button) => button.addEventListener('click', addToCart));
+}
+
+function getFromLocalStorage() {
+  const cartConteiner = getCart();
+  const conteinerElements = getSavedCartItems();
+  cartConteiner.innerHTML = conteinerElements;
+  cartConteiner.addEventListener('click', cartItemClickListener);
 }
 
 async function getProductData(search) {
@@ -82,7 +95,7 @@ async function getProductData(search) {
 async function asyncAwait() {
   await getProductData('computador');
   addOnClickToButton();
-  getSavedCartItems();
+  getFromLocalStorage();
 }
 
 window.onload = () => {

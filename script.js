@@ -1,4 +1,5 @@
 const ol = document.querySelector('.cart__items');
+const clearAllBtn = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -69,17 +70,23 @@ const restoreCart = () => {
 };
 
 const resetRemoveClick = () => {
+  // https://stackoverflow.com/questions/222841/most-efficient-way-to-convert-an-htmlcollection-to-an-array
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from
   Array.from(ol.children).forEach((child) => {
     child.addEventListener('click', cartItemClickListener);
   });
 };
+
+const clearCart = () => {
+  // ajuda do Leandro Goerck na sala
+  ol.innerHTML = '';
+  saveCartItems(ol.innerHTML);
+};
+
+clearAllBtn.addEventListener('click', clearCart);
 
 window.onload = () => {
   loadProducts();
   if (ol.children.length === 0) restoreCart();
   resetRemoveClick();
 };
-
-// Array.from:
-// https://stackoverflow.com/questions/222841/most-efficient-way-to-convert-an-htmlcollection-to-an-array
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from

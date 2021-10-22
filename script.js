@@ -1,3 +1,4 @@
+const getButton = document.querySelector('.empty-cart');
 const ol = document.querySelector('.cart__items');
 
 function createProductImageElement(imageSource) {
@@ -76,6 +77,13 @@ const resetAddEventListener = () => {
     value.addEventListener('click', cartItemClickListener);
   });
 };
+
+const clearAll = () => {
+  ol.innerHTML = '';
+  saveCartItems(ol.innerHTML);
+};
+
+getButton.addEventListener('click', clearAll);
 
 window.onload = () => {
   listProducts();

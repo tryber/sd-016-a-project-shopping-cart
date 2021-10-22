@@ -55,6 +55,17 @@ async function findProducts(product) {
     });
 }
 
+function calculatePrice(cart) {
+  const children = Array.from(cart.children);
+  let total = 0;
+
+  children.forEach(async child => {
+    const search = await fetchItem(child.innerText.split(' ')[1])
+    const currentPrice = search.price;
+    console.log(currentPrice);
+  })
+}
+
 function addItem() {
   const button = document.querySelectorAll('.item__add');
   const cart = document.querySelector('ol.cart__items');
@@ -71,6 +82,7 @@ function addItem() {
           cart.appendChild(resultProduct);
         });
       saveCartItems(cart.innerHTML);
+      calculatePrice(cart);
     });
   });
 }

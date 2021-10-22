@@ -1,5 +1,4 @@
 const getSavedCartItems = require('../helpers/getSavedCartItems');
-const saveCartItems = require('../helpers/saveCartItems');
 
 Object.defineProperty(window, 'localStorage', {
   value: {

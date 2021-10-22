@@ -12,18 +12,6 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
-  return section;
-}
-
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
@@ -38,6 +26,35 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
+}
+
+async function adicionaCar(object) {
+  const valores = object.sku;
+  const itemSection = document.querySelector('.cart__items'); 
+  const data = await fetchItem(valores);
+  const itemObject = {
+    sku: data.id,
+    name: data.title,
+    salePrice: data.price,
+  };
+    const section = createCartItemElement(itemObject);
+    itemSection.appendChild(section);
+}
+
+function createProductItemElement({ sku, name, image }) {
+  const section = document.createElement('section');
+  section.className = 'item';
+
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  const createButton = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  createButton.addEventListener('click', () => {
+    adicionaCar({ sku, name, image });
+  });
+  section.appendChild(createButton);
+
+  return section;
 }
 
 async function carregaProdutos(produto) {
@@ -55,5 +72,5 @@ async function carregaProdutos(produto) {
 }
 
 window.onload = () => { 
-  carregaProdutos('compuador');
+  carregaProdutos('computador');
 };

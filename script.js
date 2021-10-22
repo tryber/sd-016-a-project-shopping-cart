@@ -40,4 +40,11 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { fetchProducts('computador'); };
+async function serchProducts(product) {
+  const searchData = await fetchProducts(product);
+  console.log(searchData);
+}
+
+window.onload = () => { 
+  serchProducts('computador');
+};

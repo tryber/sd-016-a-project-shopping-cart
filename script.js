@@ -24,26 +24,32 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-  // este "event" abaixo, só foi pra fazer um pull request sem erros no lint
-  event();
-}
+// function cartItemClickListener(event) {
+//   // coloque seu código aqui
+//   // este "event" abaixo, só foi pra fazer um pull request sem erros no lint
+//   event();
+// }
 
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
-// Commit Inicial
-createProductItemElement();
-getSkuFromProductItem();
-cartItemClickListener();
-createCartItemElement();
-window.onload = () => { };
+// function createCartItemElement({ sku, name, salePrice }) {
+//   const li = document.createElement('li');
+//   li.className = 'cart__item';
+//   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+//   li.addEventListener('click', cartItemClickListener);
+//   return li;
+// }
+const searchProducts = async (argumento) => { 
+  const searchData = await fetchProducts(argumento);
+  const sectionItens = document.querySelector('.items');
+  searchData.results.forEach((element) => {
+    const itenObject = { sku: element.id, name: element.title, image: element.thumbnail };
+    const productItem = createProductItemElement(itenObject);
+    sectionItens.appendChild(productItem);
+  });
+  return sectionItens;
+}; 
+
+window.onload = () => { searchProducts('computador'); };

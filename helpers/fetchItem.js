@@ -1,7 +1,7 @@
 const fetchItem = (parameter) => {
   // seu código aqui..
-  const url = `https://api.mercadolibre.com/items/${parameter}`;
-  return fetch(url)
+  const http = `https://api.mercadolibre.com/items/${parameter}`;
+  return fetch(http)
     .then((response) => response.json())
     .then((data) => data);
 };

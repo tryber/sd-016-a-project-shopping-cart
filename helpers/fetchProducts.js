@@ -10,9 +10,3 @@ if (typeof module !== 'undefined') {
     fetchProducts,
   };
 }
-
-if (typeof module !== 'undefined') {
-  module.exports = {
-    fetchProducts,
-  };
-}

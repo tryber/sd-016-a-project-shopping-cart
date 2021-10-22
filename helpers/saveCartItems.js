@@ -4,7 +4,7 @@ const saveCartItems = (arrayItens) => {
 
   // const arrei = [];
   // for (let i = 0; i < thor.length; i += 1) {
-  //   arrei.push(thor[i].innerText);
+  //   arrei.push(thor[i].innerText);s
   // }
   localStorage.setItem('cartItems', arrayItens);
 };

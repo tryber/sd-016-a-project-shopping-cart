@@ -80,6 +80,7 @@ const productByName = async (paramItem) => {
     const obj = { sku: id, name: title, image: thumbnail };
     document.querySelector('.items').appendChild(createProductItemElement(obj));
   });
+  document.querySelector('.load').remove();
 };
 
 function getSavedWithListenner() {

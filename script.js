@@ -66,7 +66,7 @@ function getSkuFromProductItem(item) {
 }
 
 function getLocalStorageItems() {
-  const cartObjects = getSavedCartItems();
+  const cartObjects = JSON.parse(getSavedCartItems());
   const cartContainer = document.getElementsByClassName('cart__items')[0];
 
   if (cartObjects !== undefined && cartObjects !== null) {

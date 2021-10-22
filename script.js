@@ -63,9 +63,8 @@ function createProductItemElement({ sku, name, image, price }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+const sectionContainer = document.querySelector('.container');
+const loading = document.querySelector('.loading');
 
 const createCartItems = () => {
   fetchProducts('computador').then((productList) => {
@@ -80,6 +79,7 @@ const createCartItems = () => {
       };
       sectionItems.appendChild(createProductItemElement(currentProduct));
     }
+    sectionContainer.removeChild(loading);
   });
 };
 

@@ -27,8 +27,7 @@ describe('2 - Teste a função fecthItem', () => {
   });
 
   it('se nenhum argumento for passado retorne um erro', async () => {
-    fetchItem().catch((err) => {
-      expect(err).toThrow('You must provide an url');
-    });
+    expect.assertions(1);
+    return fetchItem().catch(e => expect(e).toStrictEqual(Error('You must provide an url')));
   });
 });

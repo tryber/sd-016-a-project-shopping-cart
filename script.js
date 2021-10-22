@@ -1,17 +1,18 @@
 const getContainer = () => document.querySelector('.cart__items');
+const getTotalPrice = () => document.querySelector('.total-price');
 
 let actualTotalPrice = 0;
 
 const priceSub = (totalCurrentPrice, actualPrice) => {
   actualTotalPrice = totalCurrentPrice - actualPrice;
   localStorage.setItem('cartPrice', actualTotalPrice);
-  return actualTotalPrice.toFixed(2);
+  return Number(actualTotalPrice.toFixed(2));
 };
 
 const priceSum = (totalCurrentPrice, actualPrice) => {
   actualTotalPrice = totalCurrentPrice + actualPrice;
   localStorage.setItem('cartPrice', actualTotalPrice);
-  return actualTotalPrice.toFixed(2);
+  return Number(actualTotalPrice.toFixed(2));
 };
 
 document.addEventListener('click', async (event) => {
@@ -63,8 +64,8 @@ async function cartItemClickListener(element) {
   saveCartItems(cartContainer.innerHTML);
   const price = await fetchItem(element.id);
   const result = priceSub(actualTotalPrice, price.price);
-  const priceLabel = document.querySelector('.price');
-  priceLabel.innerText = `Total Price: ${result}`;
+  const priceLabel = document.querySelector('.total-price');
+  priceLabel.innerText = result;
 }
 
  document.addEventListener('click', (event) => {
@@ -95,8 +96,8 @@ document.addEventListener('click', async (event) => {
     saveCartItems(cartContainer.innerHTML);
     const price = await fetchItem(event.target.parentNode.firstChild.innerText);
     const result = priceSum(actualTotalPrice, price.price);
-    const priceLabel = document.querySelector('.price');
-    priceLabel.innerText = `Total Price: ${result}`;
+    const priceLabel = getTotalPrice();
+    priceLabel.innerText = result;
   }
 });
 
@@ -110,11 +111,11 @@ const loadsCartPrice = () => {
   const getCartPrice = localStorage.getItem('cartPrice');
   console.log(getCartPrice);
   if (getCartPrice === null) {
-    const priceLabel = document.querySelector('.price');
-    priceLabel.innerText = `Total price: ${0}`;
+    const priceLabel = getTotalPrice();
+    priceLabel.innerText = 0;
   } else {
-    const priceLabel = document.querySelector('.price');
-    priceLabel.innerText = `Total Price: ${getCartPrice}`;
+    const priceLabel = getTotalPrice();
+    priceLabel.innerText = getCartPrice;
   }  
 };
 

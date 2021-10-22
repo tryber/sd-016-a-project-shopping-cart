@@ -79,4 +79,5 @@ async function currentProducts(product) {
 
 window.onload = () => { 
   currentProducts('computador');
+  getSavedCartItems(cartItemClickListener);
 };

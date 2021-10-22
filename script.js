@@ -55,16 +55,13 @@ async function findProducts(product) {
     });
 }
 
-function calculatePrice(cart) {
-  const children = Array.from(cart.children);
-  let total = 0;
-
-  children.forEach(async child => {
-    const search = await fetchItem(child.innerText.split(' ')[1])
-    const currentPrice = search.price;
-    console.log(currentPrice);
-  })
+function sumPrices(cart) {
+  const listPrices = [];
+  Array.from(cart.children).forEach(item => 
+    listPrices.push(parseFloat(item.innerText.split('PRICE: $')[1])));
+  return listPrices.reduce((total, price) => total + price);
 }
+
 
 function addItem() {
   const button = document.querySelectorAll('.item__add');
@@ -82,7 +79,7 @@ function addItem() {
           cart.appendChild(resultProduct);
         });
       saveCartItems(cart.innerHTML);
-      calculatePrice(cart);
+      sumPrices(cart);
     });
   });
 }

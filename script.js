@@ -1,3 +1,5 @@
+const ol = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -28,9 +30,10 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) { // Função do click listener dos itens do Cart.
+function cartItemClickListener(event) { // remove itens do Cart.
   const olItems = document.querySelector('.cart__items');
   olItems.removeChild(event.target);
+  saveCartItems(ol.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) { // Cria os itens do Cart e adiciona click listener em todos.
@@ -49,8 +52,8 @@ async function addCartItems(id) { // Adiciona os itens clicados ao cart.
     salePrice: item.price,
   };
   const li = createCartItemElement(object);
-  const ol = document.querySelector('.cart__items');
   ol.appendChild(li);
+  saveCartItems(ol.innerHTML);
 }
 
 function addButtonItemsListenner() {
@@ -79,4 +82,21 @@ async function addProducts(product) { // Adiciona os produtos na tela.
   addButtonItemsListenner();
  }
 
-window.onload = () => { addProducts('computador'); };
+function getLocalStorage() {
+  const itemsSaved = getSavedCartItems();
+  ol.innerHTML = itemsSaved;
+}
+
+function addEventItemStotorage() {
+  Array.from(ol.children).forEach((children) => {
+    children.addEventListener('click', cartItemClickListener);
+  });
+}
+
+window.onload = () => { 
+  addProducts('computador');
+  if (ol.children.length === 0) {
+    getLocalStorage();
+  }
+  addEventItemStotorage();
+ };

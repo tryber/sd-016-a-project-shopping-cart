@@ -10,7 +10,8 @@ const fetchProducts = (produto) =>
   // }
   fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${produto}`)
     .then((response) => response.json())
-    .then((json) => json);
+    .then((json) => json)
+    .catch((error) => error);
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchProducts,

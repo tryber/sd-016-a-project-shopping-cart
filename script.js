@@ -50,8 +50,24 @@ window.onload = () => {
       container.appendChild(
         createProductItemElement({ sku: id, name: title, image: thumbnail }),
       );
-
       return true;
     });
   });
+  const olCartItems = document.querySelector('.cart__items');
+  const items = document.querySelector('.items');
+  items.addEventListener('click', (event) => {
+    if (event.target.className === 'item__add') {
+      const id = event.target.parentNode.firstChild.innerText;
+      const idItem = fetchItem(id).then(({ id, title, price }) => {
+        const data = { id, title, price };
+        const cart = createCartItemElement({
+          sku: data.id,
+          name: data.title,
+          salePrice: data.price,
+        });
+        olCartItems.appendChild(cart);
+      });
+    }
+  });
 };
+//{ sku, name, salePrice }

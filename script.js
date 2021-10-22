@@ -1,11 +1,3 @@
-// const getSavedCartItems = require("./helpers/getSavedCartItems");
-
-// const getSavedCartItems = require("./helpers/getSavedCartItems");
-
-// const getSavedCartItems = require("./helpers/getSavedCartItems");
-
-// const getSavedCartItems = require("./helpers/getSavedCartItems");
-
 const cartItems = [];
 
 function createProductImageElement(imageSource) {
@@ -96,7 +88,15 @@ const getFromLocalStorage = () => {
   }
 };
 
+const clearLocalStorage = () => {
+  localStorage.clear();
+  window.location.reload();
+};
+
 window.onload = () => {
+  const btnClearCart = document.querySelector('.empty-cart');
+
   createCartItems();
   getFromLocalStorage();
+  btnClearCart.addEventListener('click', clearLocalStorage);
 };

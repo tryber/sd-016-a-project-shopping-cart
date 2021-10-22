@@ -1,6 +1,4 @@
-const saveCartItems = () => {
-  const cartItensElement = document.querySelector('.cart__items');
-  const text = cartItensElement.innerHTML;
+const saveCartItems = (text) => {
   localStorage.setItem('cartItems', JSON.stringify(text));
 };
 

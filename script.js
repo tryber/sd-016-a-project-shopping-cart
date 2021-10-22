@@ -52,7 +52,8 @@ const createCartItemElementFromFetchItem = async (products) => {
 
   const proudctItem = createCartItemElement(obj);
   cartItems.appendChild(proudctItem);
-  saveCartItems();
+  const text = cartItems.innerHTML;
+  saveCartItems(text);
 };
 
 function getSkuFromProductItem(item) {

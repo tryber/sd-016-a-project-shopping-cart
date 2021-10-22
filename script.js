@@ -1,3 +1,19 @@
+const $body = document.body;
+const cartItems = document.querySelector('.cart__items');
+const clearButton = document.querySelector('.empty-cart');
+const itemsLocation = document.querySelector('.items');
+const $totalPrice = document.querySelector('.total-price');
+
+function totalPriceUpdate() {
+  let totalPrice = 0;
+  if (cartItems.children.length > 0) {
+    totalPrice = Array.from(cartItems.children)
+    .reduce((acc, cartItem) => (acc + parseFloat(cartItem.innerText.split('$')[1])), 0);
+  }
+  $totalPrice.innerText = `${totalPrice}`;
+  return totalPrice;
+}
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -20,7 +36,6 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
   return section;
 }
 
@@ -29,7 +44,8 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  event.target.parentNode.removeChild(event.target);
+  saveCartItems(cartItems.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -40,4 +56,64 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+function productCardClickListener(event) {
+  const elementParent = event.target.parentElement;
+
+  const sku = getSkuFromProductItem(elementParent);
+  fetchItem(sku).then((item) => {
+    const formatedItemObj = { sku: item.id, name: item.title, salePrice: item.price };
+    cartItems.appendChild(createCartItemElement(formatedItemObj));
+    saveCartItems(cartItems.innerHTML);
+    totalPriceUpdate();
+   });
+}
+
+function showLoading() {
+  itemsLocation.appendChild(createCustomElement('span', 'loading', 'carregando...'));
+}
+
+function removeLoading() {
+  const loadingItem = document.querySelector('.loading');
+  loadingItem.parentNode.removeChild(loadingItem);
+}
+
+ function addProductsOnScreen() {
+  showLoading();
+  fetchProducts('computadores')
+  .then((productData) => productData.results)
+  .then((productList) => {
+   const items = document.querySelector('.items');
+   const productMapObj = productList.map((product) => {
+     const formatedObj = { sku: product.id, name: product.title, image: product.thumbnail };
+     return formatedObj;
+   });
+   productMapObj.forEach((product) => {
+    const productElement = createProductItemElement(product);
+    const buttonElement = productElement.querySelector('button');
+    buttonElement.addEventListener('click', productCardClickListener);
+    items.appendChild(productElement);
+   });
+   removeLoading();
+  });
+}
+
+// Com ajuda do Brunão
+function restoreCartItems() {
+  cartItems.innerHTML = getSavedCartItems();
+  Array.from(cartItems.children).forEach((element) => element
+  .addEventListener('click', cartItemClickListener));
+}
+
+window.onload = () => {
+  addProductsOnScreen();
+  restoreCartItems();
+  totalPriceUpdate();
+ };
+
+function clearCartList() {
+  cartItems.innerHTML = '';
+  saveCartItems(cartItems.innerHTML);
+}
+
+clearButton.addEventListener('click', clearCartList);
+$body.addEventListener('click', totalPriceUpdate);

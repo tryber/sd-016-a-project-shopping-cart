@@ -1,4 +1,5 @@
 const ol = document.querySelector('.cart__items');
+const button = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -53,7 +54,6 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 
   buttonEvent.addEventListener('click', () => {
     getItemsProduct(sku);
-    saveCartItems();
   });
 
   section.appendChild(buttonEvent);
@@ -82,6 +82,14 @@ const removeEventListener = () => {
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
+
+// com axilio de Eduardo Myasaki.
+const bottonRemoveList = () => {
+  ol.innerHTML = '';
+  saveCartItems(ol.innerHTML);
+};
+
+button.addEventListener('click', bottonRemoveList);
 
 window.onload = () => {
   getProduct();

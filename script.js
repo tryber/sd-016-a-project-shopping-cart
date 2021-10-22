@@ -11,23 +11,6 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
-
-function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
-  return section;
-}
-
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
 function cartItemClickListener(event) {
   // coloque seu código aqui
 }
@@ -40,8 +23,37 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+async function itemToBuy(id) {
+  const cartItems = await fetchItem(id);
+  const itemsId = {
+    sku: cartItems.id,
+    name: cartItems.title,
+    salePrice: cartItems.price,     
+  };
+  const cartList = document.querySelector('.cart__items');
+  cartList.appendChild(createCartItemElement(itemsId));
+}
+
+function createProductItemElement({ sku, name, image }) {
+  const section = document.createElement('section');
+  section.className = 'item';
+
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+const addCartButton = section
+.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+addCartButton.addEventListener('clikc', () => itemToBuy(id));
+section.appendChild(addCartButton);
+  return section;
+}
+
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+
 /**
- * Consultei o vídeo gravada pelo Bernardo Salgueiro para resolver essa parte.
+ * Consultei o vídeo gravado pelo Bernardo Salgueiro para resolver essa parte.
  * Link- https://app.slack.com/client/TMDDFEPFU/C02A8CKT31U/thread/C02A8CKT31U-1634781501.006900
 * */
  

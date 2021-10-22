@@ -27,4 +27,3 @@ describe('1 - Teste se a fecthItem é uma função', () => {
     expect(result).toEqual(expectedError);
   });
 });
-

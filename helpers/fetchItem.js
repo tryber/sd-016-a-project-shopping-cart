@@ -11,9 +11,3 @@ if (typeof module !== 'undefined') {
     fetchItem,
   };
 }
-
-if (typeof module !== 'undefined') {
-  module.exports = {
-    fetchItem,
-  };
-}

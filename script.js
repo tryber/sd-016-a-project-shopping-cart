@@ -32,8 +32,8 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-const cartItemClickListener = () => {
-  // coloque seu código aqui
+const cartItemClickListener = (event) => {
+  return event;
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -44,6 +44,12 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
+const addProductCart = async (sku) => {
+  const fetch = await fetchItem(sku);
+  console.log(fetch);
+  const { title: name, price: salePrice } = fetch;
+  createCartItemElement({ sku, name, salePrice });
+};
 /* Como eu fiz, alterado para como o BE fez.
 const fetchUrl = async () => {
   try {

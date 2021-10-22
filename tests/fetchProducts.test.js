@@ -6,10 +6,10 @@ window.fetch = jest.fn(fetchSimulator);
 
 describe('1 - Teste a função fecthProducts', () => {
   it('deve ser uma função', () => {
-    expect(typeof fetchProducts).tobe('function');
+    expect(typeof fetchProducts).toEqual('function');
   });
   it('ap chamá-la com o agurmento computador, testese fetch foi chamada', () => {
-    fetchProducts('computador')
+    fetchProducts('computador');
     expect(fetch).toHaveBeenCalled();
   });
   it('ao chamá-la com o argumento computador, testa se fecth foi chama com o endpoint correto', () => {

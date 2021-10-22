@@ -67,7 +67,7 @@ fetchProducts('computador').then((response) => {
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
-// Array.from retirado do link: https://stackoverflow.com/questions/222841/most-efficient-way-to-convert-an-htmlcollection-to-an-array
+// Array.from retirado do link https://stackoverflow.com/questions/222841/most-efficient-way-to-convert-an-htmlcollection-to-an-array
 const restoreEventListener = () => {
   const addRemoveAgain = Array.from(getListCart.children);
   addRemoveAgain.forEach((child) => {

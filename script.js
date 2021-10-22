@@ -17,7 +17,6 @@ function createCustomElement(element, className, innerText) {
 function cartItemClickListener(event) { 
    return event;
 }
-cartItemClickListener();
 
 function createCartItemElement({ id, title, price }) {
   const li = document.createElement('li');
@@ -49,7 +48,6 @@ function createProductItemElement({ sku, name, image }) {
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
-getSkuFromProductItem();
 
 // Feito através do vídeo do Bê
 async function searchProducts(product) {

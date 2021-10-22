@@ -74,4 +74,3 @@ window.onload = () => {
   searchProducts('computador');
   const getOlList = () => document.querySelector('.cart__items'); 
   };
-  

@@ -106,7 +106,18 @@ function loadCartOnLocalStorage() {
   updateCart();
 }
 
+function addListenerToButtonClearCart() {
+  const buttonClearCart = document.querySelector('.empty-cart');
+  buttonClearCart.addEventListener('click', () => {
+    const cartItems = getCartItems();
+    cartItems.innerHTML = '';
+    saveCartItems('cartItems', cartItems.outerHTML);
+    updateCart();
+  });
+}
+
 window.onload = () => {
   searchingProductsAndAddToList();
   loadCartOnLocalStorage();
+  addListenerToButtonClearCart();
 };

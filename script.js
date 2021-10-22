@@ -36,7 +36,7 @@ async function itemCarrinho(event) {
   ol.appendChild(cart);
 }
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
   const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');

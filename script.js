@@ -1,3 +1,6 @@
+// const fetchSimulator = require("./mocks/fetchSimulator");
+// const { fetchProducts } = require("./helpers/fetchProducts");
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';

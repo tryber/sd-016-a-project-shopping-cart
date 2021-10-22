@@ -1,6 +1,7 @@
 const $body = document.body;
 const cartItems = document.querySelector('.cart__items');
 const clearButton = document.querySelector('.empty-cart');
+const itemsLocation = document.querySelector('.items');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -53,15 +54,21 @@ function productCardClickListener(event) {
     const formatedItemObj = { sku: item.id, name: item.title, salePrice: item.price };
     cartItems.appendChild(createCartItemElement(formatedItemObj));
     saveCartItems(cartItems.innerHTML);
-    // return formatedItemObj;
    });
-  //  name = getNameFromProductItem(elementParent);
-  // const elementObj = { sku, name, salePrice: 555 };
+}
+
+function showLoading() {
+  itemsLocation.appendChild(createCustomElement('span', 'loading', 'carregando...'));
+}
+
+function removeLoading() {
+  const loadingItem = document.querySelector('.loading');
+  loadingItem.parentNode.removeChild(loadingItem);
 }
 
  function addProductsOnScreen() {
+  showLoading();
   fetchProducts('computadores')
-  // .then((producList) => console.log(producList));
   .then((productData) => productData.results)
   .then((productList) => {
    const items = document.querySelector('.items');
@@ -73,12 +80,13 @@ function productCardClickListener(event) {
     const productElement = createProductItemElement(product);
     const buttonElement = productElement.querySelector('button');
     buttonElement.addEventListener('click', productCardClickListener);
-    // const sku = getSkuFromProductItem(productElement);
     items.appendChild(productElement);
    });
+   removeLoading();
   });
 }
 
+// Com ajuda do Brunão
 function restoreCartItems() {
   cartItems.innerHTML = getSavedCartItems();
   Array.from(cartItems.children).forEach((element) => element

@@ -14,21 +14,25 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
-
+const cartItems = [];
 function cartItemClickListener(event) {
-  return containerCartItems.removeChild(event.target);
-  // saveCartItems(JSON.stringify(cartItems));
+  const getIdItemTarget = event.target.id;
+  const storage = JSON.parse(localStorage.getItem('cartItems'));
+  
+  const resutl = storage.filter((item) => item.sku !== getIdItemTarget);
+  saveCartItems(JSON.stringify(resutl)); 
+  return event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
+  li.id = sku;
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
-const cartItems = [];
 async function addItemToCart(sku) {
   const { title: name, price: salePrice } = await fetchItem(sku);
   containerCartItems.appendChild(createCartItemElement({ sku, name, salePrice }));
@@ -64,12 +68,9 @@ const renderItemsToSreen = async () => {
 renderItemsToSreen();
 
 window.onload = () => {
-  if (getSavedCartItems() === null) {
-    return localStorage.setItem('cartItems', JSON.stringify([]));
-  } 
-  if (getSavedCartItems() === undefined) {
-    return; 
-  }
+  if (getSavedCartItems() === null) return localStorage.setItem('cartItems', JSON.stringify([]));
+  if (getSavedCartItems() === undefined) return; 
+
   const listItemsStorage = getSavedCartItems();
   const resultGetLocalStorage = JSON.parse(listItemsStorage);
   resultGetLocalStorage.forEach((item) => {

@@ -85,8 +85,8 @@ cleanCart.addEventListener('click', () => {
 const allProducts = () => {
   fetchProducts('computador').then((response) => {
     response.results.forEach((products) => createProductItemElement(products));
+    loading.remove();
   });
-  loading.remove();
 };
 
 items.addEventListener('click', cartItemClickListener);

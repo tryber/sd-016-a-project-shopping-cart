@@ -1,4 +1,5 @@
 const getListCart = document.querySelector('.cart__items');
+const getClearButton = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -73,6 +74,13 @@ const restoreEventListener = () => {
     child.addEventListener('click', cartItemClickListener);
   });
 };
+
+function clearListButton() {
+  getListCart.innerHTML = '';
+  saveCartItems(getListCart.innerHTML);
+}
+
+getClearButton.addEventListener('click', clearListButton);
 
 window.onload = () => {
   getProducts();

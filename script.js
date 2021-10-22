@@ -40,11 +40,27 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-async function serchProducts(product) {
-  const searchData = await fetchProducts(product);
-  console.log(searchData);
+// console.log(searchData.results);
+// lembando que searchData e o resultado da funcao que importa a API do mercado Livre e que .results serve para filtrar somente esse objeto do array grandao que recebemos da API
+
+async function serchProducts(product) { // essa e uma funcao assincrona
+  const searchData = await fetchProducts(product); // ela espera receber isso 
+  // const sectionItems = document.querySelector('.items');
+
+  const sectionItems = document.querySelector('.items');
+
+  searchData.results.forEach((item) => {
+    const itemObject = {
+      sku: item.id,
+      name: item.title,
+      image: item.thumbnail,
+      // salePrice: item.price,
+    };
+    const productItem = createProductItemElement(itemObject);
+    sectionItems.appendChild(productItem);
+  });
 }
 
 window.onload = () => { 
-  serchProducts('computador');
+  serchProducts('arandela id century modern');
 };

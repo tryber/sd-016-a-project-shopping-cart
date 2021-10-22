@@ -4,13 +4,6 @@ const fetchProducts = async (query) => {
   return fetch(API_URL)
     .then((data) => data.json())
     .catch((err) => err);
-  // try {
-  //   const resolve = await fetch(API_URL);
-  //   const data = await resolve.json();
-  //   return data;
-  // } catch (error) {
-  //   return error;
-  // }
 };
 
 if (typeof module !== 'undefined') {

@@ -80,6 +80,18 @@ page.addEventListener('click', (element) => { // evento para acionar selectProdu
   }
   });
 
+// requisito 3
+const removeItemFromCart = (element) => { // funcao para eliminar filhos da ol no carrinho 
+  const item = element.target;
+  cart.removeChild(item);
+};
+
+page.addEventListener('click', (element) => { // eliminar filhos da ol ao clicar no mesmo 
+  if (element.target.classList.contains('cart__item')) {
+    removeItemFromCart(element);
+  }
+  });
+
 // implementar as funcoes na ordem dentro do window onload
 window.onload = () => { 
   searchProducts('computador');

@@ -3,6 +3,44 @@
 
 const cartItems = document.querySelector('.cart__items');
 
+let listStorage = [];
+
+const renderTotalPrice = (price) => {
+  const place = document.querySelector('.total-price');
+  place.innerHTML = price;
+};
+
+const updateSumTotalPrice = (productsObj) => {
+  const values = productsObj.map((product) => product.salePrice);
+  totalPrice = values.reduce((acc, value) => acc + value, 0);
+  renderTotalPrice(totalPrice);
+  // console.log(totalPrice);
+};
+
+const setStorageListProducts = (objProduct) => {
+  listStorage.push(objProduct);
+  localStorage.setItem('listProducts', JSON.stringify(listStorage));
+  updateSumTotalPrice(listStorage);
+  // console.log(listStorage);
+};
+
+const listStorageOnload = async () => {
+  const listOnStorage = JSON.parse(localStorage.getItem('listProducts'));
+  // console.log(listOnStorage);
+  if (await listOnStorage === null) {
+    localStorage.setItem('listProducts', '[]');
+    listStorage = [];
+  } listStorage = listOnStorage;
+  updateSumTotalPrice(listStorage);
+};
+
+const removeItem = (sku) => {
+  const indexItemToRemove = listStorage.findIndex((item) => item.sku === sku);
+  listStorage.splice(indexItemToRemove, 1);
+  localStorage.setItem('listProducts', JSON.stringify(listStorage));
+  updateSumTotalPrice(listStorage);
+};
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -55,6 +93,7 @@ const createCartItemElementFromFetchItem = async (products) => {
   cartItems.appendChild(proudctItem);
   const text = cartItems.innerHTML;
   saveCartItems(text);
+  setStorageListProducts(obj);
 };
 
 function getSkuFromProductItem(item) {
@@ -95,9 +134,16 @@ const getSavedCartItemsOnload = () => {
     const text = cartItems.innerHTML;
     localStorage.setItem('cartItems', JSON.stringify(text));
   });
+  cartItems.addEventListener('click', (element) => {
+    if (element.target.className === 'cart__item') {
+      const sku = element.target.innerText.split(' ')[1];
+      removeItem(sku);
+    }
+  });
 };
 
 window.onload = () => {
   createProductItemElementFromFetchProduct('computador');
   getSavedCartItemsOnload();
+  listStorageOnload();
 };

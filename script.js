@@ -19,7 +19,8 @@ function createProductItemElement({ sku, name, image }) { // { id, title, thumbn
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
+    .addEventListener('click', () => addToCart(sku));
 
   return section;
 }
@@ -29,8 +30,37 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui!
+  // coloque seu código aqui
 }
+
+async function addToCart(id) {
+  const cartItems = document.querySelector('.cart__items');
+  const item = await fetchItem(id);
+  const { id: sku, title: name, price: salePrice } = item;
+  cartItems.appendChild(createCartItemElement({ sku, name, salePrice }));
+}
+
+/*
+  A partir dos dados obtidos pela função fetchItem você deve utilizar a função createCartItemElement() para criar os componentes HTML referentes a um item do carrinho.
+
+1- Como vou disparar um evento?
+  qual momento eu posso inserir? -> quando criamos o elemento - createProductItemElement
+
+2- Como vou recuperar as informações de onde eu cliquei? event
+
+3- Recuperar o id de onde eu cliquei
+
+4- Chamar o fetchItem() com o id recuperado de onde eu cliquei
+
+5- Extrair as informações necessárias do retorno da fetchItem
+
+6- Adicionar no carrinho de comprar. Como fazer?
+
+- Qual elemento html (DOM) que eu devo recuperar para inserir as informações
+- Fazer a incluisão de elemento HTML criado pela função no carrinho de comprar
+
+7- Fazer testes
+*/
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -40,9 +70,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-// primeiro requisito feito graças ao Bê que nos ajudou com um video passo a passo
-
-async function searchProduct(product) {
+async function searchProduct(product) { // requisito feito graças ao Bê que nos ajudou com um video passo a passo
   const data = await fetchProducts(product);
   const sectionItems = document.querySelector('.items');
   data.results.forEach((element) => {
@@ -58,4 +86,4 @@ async function searchProduct(product) {
 
 window.onload = () => {
   searchProduct('computador');
-};
+}

@@ -1,5 +1,6 @@
 // Código só foi possívl graças à união da classe for(ever).
 // a União faz a força!
+const getOl = document.querySelector('.cart__items');
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -29,7 +30,6 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 async function addToCart(id) {
   const request = await fetchItem(id);
-  const getOl = document.querySelector('.cart__items');
   const { id: sku, title: name, price: salePrice } = request;
   const cartList = createCartItemElement({ sku, name, salePrice });
   getOl.appendChild(cartList);
@@ -59,11 +59,13 @@ const listOfProducts = (categoria) => {
   }));
 };
 
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
-// }
+function restoreCart() {
+  getOl.innerHTML = getSavedCartItems();
+}
+
+getOl.addEventListener('click', cartItemClickListener);
 
 window.onload = () => { 
   listOfProducts('computador');
-  // getSavedCartItems();
+  restoreCart();
 };

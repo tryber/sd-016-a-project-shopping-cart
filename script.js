@@ -16,7 +16,7 @@ function cartItemClickListener(event) {
   event.target.remove();
 }
 
-const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
+const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;

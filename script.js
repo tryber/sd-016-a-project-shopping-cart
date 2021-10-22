@@ -51,7 +51,7 @@ const addItemsOnScreen = async (productName) => {
 
 const addItemOnCart = async (itemId) => {
   const item = await fetchItem(itemId);
-  const cart = document.querySelector('.cart');
+  const cart = document.querySelector('.cart__items');
   const { id: sku, title: name, price: salePrice } = item;
   cart.appendChild(createCartItemElement({ sku, name, salePrice }));
 };

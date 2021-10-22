@@ -11,7 +11,6 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
-
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;

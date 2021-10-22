@@ -12,7 +12,6 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 function cartItemClickListener(event) {
- 
   return event.target.remove();
 }
 

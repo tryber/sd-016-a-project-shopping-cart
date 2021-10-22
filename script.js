@@ -29,7 +29,6 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
   return event.target.remove();
 }
 
@@ -78,5 +77,6 @@ function addItem() {
 
 window.onload = async () => {
   await findProducts('computador');
+  getSavedCartItems();
   addItem();
 };

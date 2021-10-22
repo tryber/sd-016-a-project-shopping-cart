@@ -70,4 +70,3 @@ window.onload = () => {
     }
   });
 };
-//{ sku, name, salePrice }

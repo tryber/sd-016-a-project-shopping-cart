@@ -84,12 +84,12 @@ function loadLocalStorageCart() {
   // const que recebe o valor de html salvo no local storage
   const savedData = getSavedCartItems();
   productCart.innerHTML = savedData;
-};
+}
 
+// array from baseado na seguinte fonte -- feito na sala de estudo em grupo
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from
+// https://stackoverflow.com/questions/222841/most-efficient-way-to-convert-an-htmlcollection-to-an-array
 const restoreRemoveOnClick = () => {
-  // array from baseado na seguinte fonte -- feito na sala de estudo em grupo
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from
-  //https://stackoverflow.com/questions/222841/most-efficient-way-to-convert-an-htmlcollection-to-an-array
   Array.from(productCart.children).forEach((child) => {
     child.addEventListener('click', cartItemClickListener);
   });

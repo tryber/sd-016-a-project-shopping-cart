@@ -25,10 +25,26 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+function updatePriceCart() {
+  const finalPrice = document.querySelector('.total-price');
+  const itemList = localStorage.getItem('cartItems');
+  let sum = 0;
+  if (itemList) {
+    const idWithSKU = itemList.split('<li class="cart__item">');
+    for (i = 1; i < idWithSKU.length; i += 1) {
+      const semiPrice = ((idWithSKU)[i].split(' PRICE: $'));
+      const price = (semiPrice[1].split('</li>')[0]);
+      sum += parseFloat(price);
+    }
+  }
+  finalPrice.innerText = `Subtotal: R$ ${sum.toFixed(2)}`;
+}
+
 function cartItemClickListener(event) {
   const parent = event.target.parentNode;
   event.target.remove();
   saveCartItems(parent.innerHTML);
+  updatePriceCart();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -61,12 +77,14 @@ async function addToCart(item) {
   const cartItens = getCartItems();
   cartItens.appendChild(createCartItemElement(data));
   saveCartItems(cartItens.innerHTML);
+  updatePriceCart();
 }
 
 function receiveClick() {
   document.addEventListener('click', (event) => {
     if (event.target.classList.contains('item__add')) {
       addToCart(event.target.parentNode.firstChild);
+      updatePriceCart();
     }
   });
 }
@@ -79,10 +97,20 @@ function emptyCart() {
       cartList.children[i].remove();
     }
     localStorage.removeItem('cartItems');
+    updatePriceCart();
   });
 }
 
+function createTotalPrice() {
+  const cartSection = document.querySelector('.cart');
+  const totalPrice = document.createElement('span');
+  totalPrice.innerHTML = 'Subtotal: R$ 0,00';
+  totalPrice.className = 'total-price';
+  cartSection.appendChild(totalPrice);
+}
+
 function render() {
+  createTotalPrice();
   const itemList = getSavedCartItems();
   const cartSection = getCartItems();
   cartSection.innerHTML = itemList;
@@ -90,6 +118,7 @@ function render() {
   for (let index = 0; index < cartItems.length; index += 1) {
     cartItems[index].addEventListener('click', cartItemClickListener);
   }
+  updatePriceCart();
 }
 
 window.onload = () => {

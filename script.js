@@ -79,7 +79,7 @@ async function addItemsToScreen() {
 function createTotalPriceSpan() {
   const cart = document.querySelector('.cart');
   const totalPriceSpan = document.createElement('span');
-  totalPriceSpan.className = 'total-price';
+  //totalPriceSpan.className = 'total-price';
   totalPriceSpan.innerHTML = 'Valor total: R$ 0';
   cart.appendChild(totalPriceSpan);
 }

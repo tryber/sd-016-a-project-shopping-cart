@@ -93,6 +93,13 @@ function getSavedWithListenner() {
   }
 }
 
+const btnClear = document.querySelector('.empty-cart');
+btnClear.addEventListener('click', () => {
+  document.querySelector('.total-price').innerHTML = 0; 
+  listOl.innerHTML = '';
+  saveCartItems('');
+});
+
 window.onload = () => {
   productByName('computador');
   getSavedWithListenner();

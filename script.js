@@ -14,6 +14,7 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
+  event.target.remove();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -28,6 +29,10 @@ async function addCartItem(id) {
   const cartList = document.querySelector('.cart__items');
   const product = await fetchItem(id);
   cartList.appendChild(createCartItemElement(product));
+  /* 
+  requisito feito em uma sala de estudos
+  Auxiliado por: Renan Souza, Matheus Benini, Vitor Brandão, Italo Moraes, Ju Barcelos e Rafael Feliciano
+  */
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {

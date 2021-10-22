@@ -12,6 +12,28 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function cartItemClickListener(/* event */) {
+  // remover item do carrinho
+ } 
+
+function createCartItemElement({ sku, name, salePrice }) { 
+  const classCartItems = document.querySelector('.cart__items'); 
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener); 
+  classCartItems.appendChild(li); 
+  return li;
+}
+
+const addToCart = async (id) => {
+  const classCartItems = document.querySelector('.cart__items');
+  const objectFechItem = await fetchItem(id);
+  const { id: sku, title: name, price: salePrice } = objectFechItem;
+  const cartItemCreate = createCartItemElement({ sku, name, salePrice });
+  classCartItems.appendChild(cartItemCreate);
+};
+
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -27,31 +49,9 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
+/* function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-}
-
-function cartItemClickListener(event) {
- // remover item do carrinho
-}
-
-function createCartItemElement({ sku, name, salePrice }) { // essa função recebe um objeto que será criado como li. 
-  const classCartItems = document.querySelector('.cart__items'); // por que aqui em cima e não depois que eu declaro ele? Pq eu não to pegando a li mas sim a ol que é a mãe
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener); // cada li ao ser criada já vem com um evento que ao clicar chama a função que irá remove-la
-  classCartItems.appendChild(li); // cart__item recebe como filho li
-  return li;
-}
-
-const addToCart = async (id) => {
-  const classCartItems = document.querySelector('.cart__items');
-  const objectFechItem = await fetchItem(id);
-  const { id: sku, title: name, price: salePrice } = objectFechItem;
-  const cartItemCreate = createCartItemElement({ sku, name, salePrice });
-  classCartItems.appendChild(cartItemCreate);
-};
+} */
 
 async function searchProducts(product) {
   const dataResult = await fetchProducts(product);

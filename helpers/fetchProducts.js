@@ -1,6 +1,6 @@
  const fetchProducts = (product) => {
    const link = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
-  fetch(link)
+  return fetch(link)
   .then((response) => response.json())
   .catch((error) => error);
  };

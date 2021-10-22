@@ -25,4 +25,4 @@ describe('2 - Teste a função fecthItem', () => {
     const functionCall = await fetchItem();
     expect(functionCall).toEqual(expectedResult);
   });
-});
+}); 

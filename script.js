@@ -1,4 +1,14 @@
 const locateCartSection = () => document.querySelector('.cart__items');
+const createWaitingSpan = () => {
+  const waitingSpan = document.createElement('h1');
+  waitingSpan.className = 'loading';
+  waitingSpan.innerHTML = 'carregando...';
+  document.body.appendChild(waitingSpan);
+};
+const deleteWaitingSpan = () => {
+  const waitingSpan = document.querySelector('.loading');
+  document.body.removeChild(waitingSpan);
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -120,7 +130,9 @@ function deleteCartItems() {
 }
 
 window.onload = () => {
+  createWaitingSpan();
   addItemsToScreen()
+    .then(() => { deleteWaitingSpan(); })
     .then(() => { addEventListenerToProductButtons(); })
     .then(() => {
       const itemList = getSavedCartItems();

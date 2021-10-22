@@ -17,6 +17,7 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   return containerCartItems.removeChild(event.target);
+  // saveCartItems(JSON.stringify(cartItems));
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -26,6 +27,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
 const cartItems = [];
 async function addItemToCart(sku) {
   const { title: name, price: salePrice } = await fetchItem(sku);
@@ -62,12 +64,15 @@ const renderItemsToSreen = async () => {
 renderItemsToSreen();
 
 window.onload = () => {
+  if (getSavedCartItems() === null) {
+    return localStorage.setItem('cartItems', JSON.stringify([]));
+  } 
   if (getSavedCartItems() === undefined) {
-    return;
+    return; 
   }
   const listItemsStorage = getSavedCartItems();
-  
-  JSON.parse(listItemsStorage).forEach((item) => {
+  const resultGetLocalStorage = JSON.parse(listItemsStorage);
+  resultGetLocalStorage.forEach((item) => {
     const { sku, name, salePrice } = item;
     containerCartItems.appendChild(
       createCartItemElement({ sku, name, salePrice }),

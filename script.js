@@ -1,3 +1,5 @@
+const ol = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -18,12 +20,12 @@ function cartItemClickListener(event) {
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
-  const ol = document.querySelector('.cart__items');
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   ol.appendChild(li);
+  saveCartItems(ol.innerHTML);
   // return li;
 }
 
@@ -36,7 +38,6 @@ const addItemToShopCart = async (id) => {
     title,
     price,
   });
-  saveCartItems();
 };
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
@@ -49,7 +50,6 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const createButton = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   createButton.addEventListener('click', () => {
     addItemToShopCart(sku);
-    saveCartItems();
   });
   section.appendChild(createButton);
   sectionFather.appendChild(section);
@@ -67,11 +67,18 @@ function getSkuFromProductItem(item) {
 }
 
 const saveLocalStorage = () => {
-  const ol = document.querySelector('.cart__items');
   ol.innerHTML = getSavedCartItems();
 };
 
-window.onload = () => { 
+// https://stackoverflow.com/questions/222841/most-efficient-way-to-convert-an-htmlcollection-to-an-array
+const resetAddEventListener = () => {
+  Array.from(ol.children).forEach((value) => {
+    value.addEventListener('click', cartItemClickListener);
+  });
+};
+
+window.onload = () => {
   listProducts();
-  saveLocalStorage();
+  if (ol.children.length === 0) saveLocalStorage();
+  resetAddEventListener();
 };

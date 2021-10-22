@@ -5,7 +5,7 @@ const fetchProducts = (product) =>
   .then((data) => (data))
   .catch((error) => error)
   // .then((data) => console.log(data.results))
-  );
+);
 
 if (typeof module !== 'undefined') {
   module.exports = {

@@ -52,7 +52,7 @@ async function serchProducts(product) { // essa e uma funcao assincrona
   const searchData = await fetchProducts(product); // ela espera receber isso 
   // const sectionItems = document.querySelector('.items');
 
-  const sectionItems = document.querySelector('.items');
+  const sectionItems = document.querySelector('.items'); // Alvo é a classe items no html
 
   searchData.results.forEach((item) => {
     const itemObject = {
@@ -60,12 +60,13 @@ async function serchProducts(product) { // essa e uma funcao assincrona
       name: item.title,
       image: item.thumbnail,
       // salePrice: item.price,
-    };
+    };// const { id: sku, title: name, thumbnail: image } = item;
+    
     const productItem = createProductItemElement(itemObject);
     sectionItems.appendChild(productItem);
   });
 }
 
 window.onload = () => { 
-  serchProducts('coomputador');
+  serchProducts('computador');
 };

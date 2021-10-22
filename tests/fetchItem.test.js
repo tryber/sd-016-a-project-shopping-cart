@@ -6,21 +6,25 @@ window.fetch = jest.fn(fetchSimulator);
 
 describe('2 - Teste a função fecthItem', () => {
   it("fetchItem é uma função", () => {
+    expect.assertions(1);
     expect(typeof fetchItem === 'function').toBeTruthy();
   });
 
   it("fetch foi chamado", () => {
+    expect.assertions(1);
     fetchItem("MLB1615760527");
     expect(fetch).toHaveBeenCalled();
   });
 
   it("se o fetch foi chamado com o enpoint", () => {
+    expect.assertions(1);
     fetchItem("MLB1615760527");
     expect(fetch).toHaveBeenCalledWith("https://api.mercadolibre.com/items/MLB1615760527");
   });
 
   it("fetchItem retorna o resultado esperado quando pesquisa por \"computador\"", () => {
-    fetchItem("MLB1615760527")
+    expect.assertions(1);
+    return fetchItem("MLB1615760527")
       .then((res) =>
         expect(res).toEqual(item)
       );

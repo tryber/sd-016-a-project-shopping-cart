@@ -32,10 +32,14 @@ function cartItemClickListener(event) {
   // coloque seu código aqui
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ sku, name, salePrice }) { // thumbnail, title e price
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerText = `${sku}   
+  ${name} 
+  R$${salePrice}
+  
+  `;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
@@ -55,8 +59,32 @@ async function searchProducts(product) {
   });
 }
 
+// requisito 2
+const page = document.querySelector('body'); // para usar o addEventListener
+const cart = document.querySelector('section.cart'); 
+
+const putInCart = (foundProduct) => { // para colocar os itens no carrinho
+  const { id: sku, title: name, price: salePrice } = foundProduct;
+  const product = { sku, name, salePrice };
+  const item = createCartItemElement(product);
+  cart.appendChild(item);
+};
+
+const selectProduct = async (element) => { // para selecionar os itens 
+  const product = element.target.parentElement;
+  const productId = product.firstChild.innerText;
+  const findProduct = await fetchItem(productId);
+  putInCart(findProduct);
+};
+
+page.addEventListener('click', (element) => { // evento para acionar selectProduct e jogar itens no carrinho
+  if (element.target.classList.contains('item__add')) {
+    element.preventDefault();
+    selectProduct(element);
+  }
+  });
+
+// implementar as funcoes na ordem dentro do window onload
 window.onload = () => { 
   searchProducts('computador');
 };
-
-// implementar as funcoes na ordem dentro do window onload

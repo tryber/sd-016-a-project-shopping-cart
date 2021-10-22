@@ -30,7 +30,8 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   event.target.remove();
-  saveCartItems();
+  const itemsCart = document.querySelector('.cart__items');
+  saveCartItems(itemsCart);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -55,7 +56,8 @@ const addToCart = async (event) => {
   const item = await fetchItem(idProduct);
   const { id: sku, title: name, price: salePrice } = item;
   cart.appendChild(createCartItemElement({ sku, name, salePrice }));
-  saveCartItems();
+  const itemsCart = document.querySelector('.cart__items');
+  saveCartItems(itemsCart);
 };
 
 const setupAddToCart = () => {

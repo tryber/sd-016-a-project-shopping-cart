@@ -127,7 +127,9 @@ window.onload = () => {
   .then(() => {
     createTotalPrice();
     updatePriceCart();
-  });
+  })
+  .then(() => {
   receiveClick();
   emptyCart();
+  });
 };

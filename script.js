@@ -42,7 +42,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-
 const products = fetchProducts('computador').then((product) =>
   product.results.reduce((acc, item) => {
     acc.push({

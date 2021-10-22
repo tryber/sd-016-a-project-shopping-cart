@@ -1,5 +1,18 @@
 // const { fetchItem } = require("./helpers/fetchItem");
 
+const createLoadingElement = () => {
+  const containerSection = document.querySelector('.container');
+  const loading = document.createElement('h3');
+  loading.className = 'loading';
+  loading.innerText = 'carregando...';
+  containerSection.appendChild(loading);
+};
+
+const removeLoadingElement = () => {
+  const loadingElement = document.querySelector('.loading');
+  loadingElement.remove();
+};
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -58,9 +71,11 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 
 const createPage = async (product) => {
   try {
+    createLoadingElement();
     const data = await fetchProducts(product);
+    removeLoadingElement();
     const itemSection = document.querySelector('.items');
-    await data.results.forEach((item) => {
+    data.results.forEach((item) => {
       const { id: sku, title: name, thumbnail: image } = item;
       itemSection.appendChild(createProductItemElement({ sku, name, image }));
     });
@@ -74,7 +89,9 @@ function getCartItems() {
 }
 
 async function addToCart(item) {
+  createLoadingElement();
   const data = await fetchItem(item.innerText);
+  removeLoadingElement();
   const cartItens = getCartItems();
   cartItens.appendChild(createCartItemElement(data));
   saveCartItems(cartItens.innerHTML);

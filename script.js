@@ -1,3 +1,6 @@
+const olItems = document.querySelector('.cart__items');
+const emptyCart = document.querySelector('.empty-cart');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -14,6 +17,7 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   event.target.remove();
+  saveCartItems(olItems.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -25,11 +29,12 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 const addItemToCart = async (item) => {
-  const olItems = document.querySelector('.cart__items');
   const data = await fetchItem(item);
   const { id: sku, title: name, price: salePrice } = data;
   const itemCart = createCartItemElement({ sku, name, salePrice });
   olItems.appendChild(itemCart);
+  saveCartItems(olItems.innerHTML);
+
 };
 
 function createProductItemElement({ sku, name, image }) {
@@ -42,6 +47,7 @@ function createProductItemElement({ sku, name, image }) {
   const buttonAdd = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   section.appendChild(buttonAdd);
   buttonAdd.addEventListener('click', () => addItemToCart(sku));
+  
   return section;
 }
 
@@ -60,7 +66,17 @@ const serchProducts = async (product) => {
   });
 };
 
+const saveCart = () => {
+  olItems.innerHTML = getSavedCartItems();
+};
+
+emptyCart.addEventListener('click', () => {
+  olItems.innerHTML = '';
+  saveCartItems(olItems);
+});
+
 window.onload = () => {
-  serchProducts('microondas');
-  addItemToCart('MLB1615760527');
+  serchProducts('computador');
+  // addItemToCart('MLB1615760527');
+  saveCart();
 };

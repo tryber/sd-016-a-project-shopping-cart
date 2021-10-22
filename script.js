@@ -15,12 +15,14 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 const cartItems = [];
+const findCartItems = [];
 function cartItemClickListener(event) {
   const getIdItemTarget = event.target.id;
   const storage = JSON.parse(localStorage.getItem('cartItems'));
-  
-  const resutl = storage.filter((item) => item.sku !== getIdItemTarget);
-  saveCartItems(JSON.stringify(resutl)); 
+ 
+  const resutl = storage.find((returnItem) => returnItem.sku === getIdItemTarget);
+  findCartItems.push(resutl);
+  saveCartItems(JSON.stringify(findCartItems)); 
   return event.target.remove();
 }
 

@@ -58,15 +58,15 @@ async function findProducts(product) {
 function addItem() {
   const button = document.querySelectorAll('.item__add');
   const cart = document.querySelector('ol.cart__items');
-  button.forEach(b => {
+  button.forEach(b => { // b = button
     b.addEventListener('click', async () => {
       const getId = b.parentNode.firstChild.innerText;  // get element id
       await fetchItem(getId)
         .then(result => {
-          const resultProduct = createProductItemElement({
+          const resultProduct = createCartItemElement({
             sku: result.id,
             name: result.title,
-            image: result.thumbnail,
+            salePrice: result.price,
           })
           cart.appendChild(resultProduct);
         });

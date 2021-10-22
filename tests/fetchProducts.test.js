@@ -17,5 +17,8 @@ describe('1 - Testa a função fecthProducts', () => {
       const endpoint = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
       fetchProducts('computador');
       expect(fetch).toHaveBeenCalledWith(endpoint);
-    });
+    }),
+    it('Testa se o retorno da função fetchProducts é uma estrutura de dados igual ao objeto computadorSearch', async () => {
+      expect(await fetchProducts('computador')).toBe(computadorSearch);
+    })
 });

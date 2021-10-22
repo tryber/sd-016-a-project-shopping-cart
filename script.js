@@ -15,7 +15,7 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) { 
-   return event;
+   return event.target.remove();
 }
 
 function createCartItemElement({ id, title, price }) {

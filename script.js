@@ -55,6 +55,26 @@ async function findProducts(product) {
     });
 }
 
-window.onload = () => {
-  findProducts('computador');
+function addItem() {
+  const button = document.querySelectorAll('.item__add');
+  const cart = document.querySelector('ol.cart__items');
+  button.forEach(b => {
+    b.addEventListener('click', async () => {
+      const getId = b.parentNode.firstChild.innerText;  // get element id
+      await fetchItem(getId)
+        .then(result => {
+          const resultProduct = createProductItemElement({
+            sku: result.id,
+            name: result.title,
+            image: result.thumbnail,
+          })
+          cart.appendChild(resultProduct);
+        });
+    })
+  })
+}
+
+window.onload = async () => {
+  await findProducts('computador');
+  addItem();
 };

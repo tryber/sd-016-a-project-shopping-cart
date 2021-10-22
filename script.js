@@ -17,7 +17,9 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui ()
+  const li = event.target;
+  li.innerHTML = '';
+  li.remove();
 }
 
 // eslint-disable-next-line no-unused-vars

@@ -34,7 +34,6 @@ const addItemToCart = async (item) => {
   const itemCart = createCartItemElement({ sku, name, salePrice });
   olItems.appendChild(itemCart);
   saveCartItems(olItems.innerHTML);
-
 };
 
 function createProductItemElement({ sku, name, image }) {

@@ -34,8 +34,8 @@ function checkTotalPrice() {
   const cart = locateCartSection();
   const totalPriceSpan = document.querySelector('.total-price');
   const cartChildren = cart.children;
+  let totalPrice = 0;
   if (cartChildren.length > 0) {
-    let totalPrice = 0;
     for (let index = 0; index < cartChildren.length; index += 1) {
       const currentChild = cartChildren[index];
       const salePrice = Number(currentChild.className);
@@ -43,7 +43,7 @@ function checkTotalPrice() {
       totalPriceSpan.innerHTML = `Valor total: R$ ${totalPrice}`;
     }
   } else {
-    totalPriceSpan.innerHTML = 'Valor total: R$ 0';
+    totalPriceSpan.innerHTML = `Valor total: R$ ${totalPrice}`;
   }
 }
 
@@ -79,7 +79,8 @@ async function addItemsToScreen() {
 function createTotalPriceSpan() {
   const cart = document.querySelector('.cart');
   const totalPriceSpan = document.createElement('span');
-  //totalPriceSpan.className = 'total-price';
+  // totalPriceSpan.className = 'total-price';
+
   totalPriceSpan.innerHTML = 'Valor total: R$ 0';
   cart.appendChild(totalPriceSpan);
 }

@@ -71,7 +71,7 @@ function getLocalStorage() {
 function eventCart() {
   Array.from(ol.children).forEach((element) => {
     element.addEventListener('click', cartItemClickListener);
-  })
+  });
 }
 
 window.onload = () => { 

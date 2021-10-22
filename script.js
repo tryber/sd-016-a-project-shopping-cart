@@ -52,9 +52,13 @@ const createPage = async (product) => {
   }
 };
 
+function getCartItems() {
+  return document.querySelector('.cart__items');
+}
+
 async function addToCart(item) {
   const data = await fetchItem(item.innerText);
-  const cartItens = document.querySelector('.cart__items');
+  const cartItens = getCartItems();
   cartItens.appendChild(createCartItemElement(data));
   saveCartItems(cartItens.innerHTML);
 }
@@ -68,7 +72,7 @@ function receiveClick() {
 }
 
 function emptyCart() {
-  const cartList = document.querySelector('.cart__items');
+  const cartList = getCartItems();
   const emptyButton = document.querySelector('.empty-cart');
   emptyButton.addEventListener('click', () => {
     for (let i = cartList.children.length - 1; i >= 0; i -= 1) {
@@ -80,7 +84,7 @@ function emptyCart() {
 
 function render() {
   const itemList = getSavedCartItems();
-  const cartSection = document.querySelector('.cart__items');
+  const cartSection = getCartItems();
   cartSection.innerHTML = itemList;
   const cartItems = cartSection.children;
   for (let index = 0; index < cartItems.length; index += 1) {

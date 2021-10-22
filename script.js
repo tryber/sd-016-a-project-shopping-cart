@@ -1,6 +1,8 @@
 // const { fetchProducts } = require("./helpers/fetchProducts");
 // const { fetchItem } = require("./helpers/fetchItem");
 
+const cartItems = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -41,7 +43,6 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 const createCartItemElementFromFetchItem = async (products) => {
-  const cartItems = document.querySelector('.cart__items');
   const data = await fetchItem(products);
 
   const obj = {
@@ -88,12 +89,10 @@ const createProductItemElementFromFetchProduct = async (products) => {
 
 const getSavedCartItemsOnload = () => {
   const getLocalStorage = JSON.parse(getSavedCartItems());
-  const cartItensElement = document.querySelector('.cart__items');
-  cartItensElement.innerHTML = getLocalStorage;
-  cartItensElement.addEventListener('click', cartItemClickListener);
-  cartItensElement.addEventListener('click', () => {
-    const cartList = document.querySelector('.cart__items');
-    const text = cartList.innerHTML;
+  cartItems.innerHTML = getLocalStorage;
+  cartItems.addEventListener('click', cartItemClickListener);
+  cartItems.addEventListener('click', () => {
+    const text = cartItems.innerHTML;
     localStorage.setItem('cartItems', JSON.stringify(text));
   });
 };

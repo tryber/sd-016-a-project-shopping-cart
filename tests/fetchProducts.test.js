@@ -4,7 +4,7 @@ const computadorSearch = require('../mocks/search');
 
 window.fetch = jest.fn(fetchSimulator);
 
-describe('1 - Teste a função fecthProducts', () => {
+describe('1. Teste a função fecthProducts', () => {
   it('1- Verifica se fetchProducts é uma função', () => {
     expect(typeof fetchProducts).toEqual('function');
   });

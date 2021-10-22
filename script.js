@@ -81,8 +81,19 @@ const restore = () => {
   addActionLi();
 };
 
+const clearCart = () => {
+  const buttonCart = document.querySelectorAll('.cart__item');
+  buttonCart.forEach((item) => {
+    item.remove();
+  });
+};
+
+const bntClear = document.querySelector('.empty-cart');
+
 window.onload = async () => { 
   await loadProducts();
   restore(); 
   setupAddToCart();
 };
+
+bntClear.addEventListener('click', clearCart);

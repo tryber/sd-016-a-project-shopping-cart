@@ -1,6 +1,6 @@
-//Projeto feito com a ajuda da turma,
-// Lucas Alves, Vitor Brandão, Renan Souza, Matheus Benini e JuliaBarcelos.
-// Juntos vamos lonje.
+/* Projeto feito com a ajuda da turma,
+Lucas Alves, Vitor Brandão, Renan Souza, Matheus Benini e JuliaBarcelos.
+Juntos vamos lonje. */
 
 const getOl = document.querySelector('.cart__items');
 
@@ -89,7 +89,7 @@ const searchProducts = async (product) => {
   });
 };
 
-function restoreCart () {
+function restoreCart() {
   getOl.innerHTML = getSavedCartItems();
 }
 

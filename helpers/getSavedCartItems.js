@@ -1,6 +1,6 @@
 const getSavedCartItems = () => {
-  // localStorage.getItem('cart__items')
-  // JSON.parse(localStorage.getItem('user'));
+  const productsInCart = localStorage.getItem('cartItems');
+  return productsInCart;
 };
 
 if (typeof module !== 'undefined') {

@@ -41,9 +41,13 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-const addCartButton = section
-.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-addCartButton.addEventListener('clikc', () => itemToBuy(id));
+
+  /**
+ * Consultei o repositório da Cris Souza para resolver essa parte.
+ * Link- https://github.com/tryber/sd-016-a-project-shopping-cart/pull/103/commits/f38badebf20f5af0f8f3594981dbe9f5d7e02cd7
+ */
+const addCartButton = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+addCartButton.addEventListener('click', () => itemToBuy(sku));
 section.appendChild(addCartButton);
   return section;
 }

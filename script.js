@@ -74,6 +74,15 @@ const addEventToItemSaved = () => {
   });
 };
 
+const clearAll = () => {
+  const button = document.querySelector('.empty-cart');
+  button.addEventListener('click', () => {
+    odinPaiDeTodos.innerHTML = '';
+    saveCartItems(odinPaiDeTodos.innerHTML);
+  });
+};
+
+clearAll();
 window.onload = () => {
   // help do Brunão
   if (odinPaiDeTodos.children.length === 0) verifyFunctionVoidAndRestore();

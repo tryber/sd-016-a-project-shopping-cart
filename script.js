@@ -24,8 +24,9 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-function createProductList(products) {
+function createProductList(data) {
   const items = document.getElementsByClassName('items')[0];
+  const products = data.results;
 
   products.forEach((product) => {
     const { id: sku, title: name, thumbnail: image } = product;

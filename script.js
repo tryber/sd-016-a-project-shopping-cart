@@ -19,9 +19,9 @@ function createCustomElement(element, className, innerText) {
 const listOl = document.querySelector('ol');
 
 function sumPrice(arrayNumberPrice) {
-  let sumHTML = document.querySelector('.total-price').innerText;
-  const sumReduce = arrayNumberPrice.reduce((sum, numberPrice) => sum + numberPrice.price, 0);
-   sumHTML = sumReduce;
+  const sumHTML = document.querySelector('.total-price');
+  const sumReduce = arrayNumberPrice.reduce((sum, numberPrice) => sum + numberPrice.salePrice, 0);
+   sumHTML.innerHTML = sumReduce;
 }
 
 function getSkuFromProductItem(item) {
@@ -30,11 +30,11 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event, sku) {
   event.target.remove();
-  console.log(shopCartSave, 1);
+  // console.log(shopCartSave, 1);
   shopCartSave.forEach((element, index) => {
     if (element.sku === sku) shopCartSave.splice(index, 1);
   });
-  console.log(shopCartSave, 2);
+  // console.log(shopCartSave, 2);
   sumPrice(shopCartSave);
   saveCartItems(JSON.stringify(shopCartSave));
 }

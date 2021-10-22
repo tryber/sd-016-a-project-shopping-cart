@@ -6,11 +6,8 @@ const fetchProducts = (product) => {
 
   const products = fetch(API_URL)
     .then((response) => response.json())
-    .then((data) => data.results)
-    .catch(() => {
-      throw new TypeError('You must provide an url');
-    });
-
+    .then((data) => data.results);
+    
   return products;
 };
 

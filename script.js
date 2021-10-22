@@ -1,6 +1,5 @@
 const containerProducts = document.querySelector('.items');
 const containerCartItems = document.querySelector('.cart__items');
-const isLoading = document.querySelector('.loading');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -92,17 +91,31 @@ btnClearAllItems.addEventListener('click', () => {
   clearCartAllItems();
 });
 
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
-// }
+function createIsLoading() {
+  const container = document.querySelector('main');
+  const isLoading = document.createElement('span');
+  isLoading.classList.add('loading');
+  isLoading.innerText = 'carregando...';
+  container.appendChild(isLoading);
+}
+
+function removeIsLoading() {
+  const isLoadingRemove = document.querySelector('.loading');
+  isLoadingRemove.remove(); 
+}
 
 const renderItemsToSreen = async () => {
-  const data = await fetchProducts('computador'); 
+  createIsLoading();
+
+  const data = await fetchProducts('computador');
+
   data.results.forEach((element) => {
     const { id: sku, title: name, thumbnail: image } = element;
-    containerProducts.appendChild(createProductItemElement({ sku, name, image }));
+    containerProducts.appendChild(
+      createProductItemElement({ sku, name, image }),
+    );
   });
-  isLoading.remove(); // Contribuição do colega Pedro Mendes - Turma 16 - A
+  removeIsLoading();
 };
 renderItemsToSreen();
 

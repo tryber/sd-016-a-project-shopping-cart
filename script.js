@@ -12,8 +12,17 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function updateTotalSalePrice(price, operation) {
+  const paragraph = document.getElementsByClassName('total-price')[0];
+  const totalPrice = operation === 'sum' ? parseFloat(paragraph.innerText) + price
+  : parseFloat(paragraph.innerText) - price;
+  paragraph.innerText = totalPrice.toFixed(2);
+}
+
 function cartItemClickListener(event) {
   const element = event.target;
+  // updateTotalSalePrice(values, 'sub');
+  saveCartItems(event.target);
   element.remove();
 }
 
@@ -25,20 +34,15 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function sumSalePrice(price) {
-  const paragraph = document.getElementsByClassName('total-price')[0];
-  const totalPrice = parseFloat(paragraph.innerText) + price;
-  paragraph.innerText = totalPrice;
-}
-
-function createItemsOnClick(event) {
+function createItemsOnClick(event) { // adiciona os itens no carrinho
   const listContainer = document.getElementsByClassName('cart__items')[0];
   const elementId = event.target.parentNode.firstChild.innerText;
   const data = fetchItem(elementId);
   data.then((values) => {
     const { id: sku, title: name, price: salePrice } = values;
     listContainer.appendChild(createCartItemElement({ sku, name, salePrice }));
-    sumSalePrice(salePrice);
+    updateTotalSalePrice(salePrice, 'sum');
+    saveCartItems();
   });
 }
 
@@ -74,12 +78,22 @@ function createTotalPriceElement() {
   const paragraph = document.createElement('p');
   const cart = document.getElementsByClassName('cart')[0];
   paragraph.className = 'total-price';
-  paragraph.innerText = '0';
+  paragraph.innerText = '0.00';
   paragraph.style.order = '-1';
   cart.appendChild(paragraph);
+}
+
+function getLocalStorageItems() {
+  const cartObjects = getSavedCartItems();
+  const cartContainer = document.getElementsByClassName('cart__items')[0];
+  cartObjects.forEach((object) => {
+    const { SKU: sku, name, salePrice } = object;
+    cartContainer.appendChild(createCartItemElement({ sku, name, salePrice }));
+  });
 }
 
 window.onload = () => {
   createItems();
   createTotalPriceElement();
+  getLocalStorageItems();
 };

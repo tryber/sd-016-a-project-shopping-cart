@@ -3,6 +3,7 @@ Lucas Alves, Vitor Brandão, Renan Souza, Matheus Benini e JuliaBarcelos.
 Juntos vamos lonje. */
 
 const getOl = document.querySelector('.cart__items');
+const clearButton = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -93,6 +94,13 @@ function restoreCart() {
 }
 
 getOl.addEventListener('click', cartItemClickListener);
+
+const buttonLimp = () => {
+  getOl.innerHTML = '';
+  saveCartItems(olListCart.innerHTML);
+};
+
+clearButton.addEventListener('click', buttonLimp);
 
 window.onload = () => {
   searchProducts('computador');

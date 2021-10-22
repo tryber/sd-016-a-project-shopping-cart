@@ -12,14 +12,15 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
+  const sectionItems = document.querySelector('.items');
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  sectionItems.appendChild(section);
 
   return section;
 }
@@ -40,4 +41,15 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+function listProducts(searchUser) {
+  return fetchProducts(searchUser)
+  .then((data) =>
+  data.results.forEach((product) =>
+  createProductItemElement(product)));
+  /* Requisito feito durante uma sala de estudos.
+   Auxiliado por: Renan Souza, Matheus Benini, Vitor Brandão, Fabrício Martins e Rafael Feliciano */
+}
+
+window.onload = () => {
+  listProducts('computador');
+};

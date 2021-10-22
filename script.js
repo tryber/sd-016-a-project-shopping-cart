@@ -29,7 +29,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  return event.target.remove();
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -76,6 +76,10 @@ function addItem() {
 }
 
 window.onload = async () => {
+  const cartItems = document.querySelector('ol.cart__items');
+  cartItems.addEventListener('click', () => {
+    saveCartItems();
+  });
   await findProducts('computador');
   getSavedCartItems();
   addItem();

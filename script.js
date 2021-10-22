@@ -84,7 +84,22 @@ function addButtonItemsListenner() {
   });
 }
 
+function addLoadingText() {
+  const sectionItems = document.querySelector('.items');
+  const loading = document.createElement('span');
+  loading.innerHTML = 'Carregando...';
+  loading.className = 'loading';
+  sectionItems.appendChild(loading);
+}
+
+function removeLoadingText() {
+  const section = document.querySelector('.items');
+  const span = document.querySelector('.loading');
+  section.removeChild(span); 
+}
+
 async function addProducts(product) { // Adiciona os produtos na tela.
+  addLoadingText();
   const searchProducts = await fetchProducts(product);
   searchProducts.results.forEach((item) => {
    const objectItem = {
@@ -97,6 +112,7 @@ async function addProducts(product) { // Adiciona os produtos na tela.
    section.appendChild(sectionProduct);
   });
   addButtonItemsListenner();
+  removeLoadingText();
  }
 
 function getLocalStorage() {

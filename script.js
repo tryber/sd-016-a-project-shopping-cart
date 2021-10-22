@@ -13,7 +13,7 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui  // usar quando for deletar os itens do carrinho
+  // coloque seu código aqui  
 }
 
 function getSkuFromProductItem(item) {

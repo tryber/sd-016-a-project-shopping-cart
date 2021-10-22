@@ -74,7 +74,7 @@ function getProducts() {
 }
 
 function getCartItems() {
-  olCart.innerHTML = getSavedCartItems('cartItems');
+  olCart.innerHTML = getSavedCartItems();
   const cartItems = document.querySelectorAll('.cart__item');
   cartItems.forEach((elem) => {
     elem.addEventListener('click', (event) => {

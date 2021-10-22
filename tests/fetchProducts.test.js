@@ -14,10 +14,16 @@ describe('1 - Teste a função fecthProducts', () => {
     await fetchProducts('computador')
     expect(fetch).toHaveBeenCalled();
   });
-  it ('Verifica se, ao chamar fetchProducts com o argumento "computador", a função utiliza o endpoint correto "https://api.mercadolibre.com/sites/MLB/search?q=computador', async () => {
+
+  it ('Verifica se, ao chamar fetchProducts com o argumento "computador", a função utiliza o endpoint correto', async () => {
     await fetchProducts('computador');
     expect(fetch).toHaveBeenCalledWith("https://api.mercadolibre.com/sites/MLB/search?q=computador");
   });
+
+  it ('Verifica se o retorno da função fetchProducts com o argumento "computador" é um objeto igual à computadorSearch', async () => {
+    expect(await fetchProducts('computador')).toEqual(computadorSearch.results);
+  });
+  
 
   // fail('Teste vazio');
 });

@@ -14,6 +14,7 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -57,15 +58,6 @@ const listOfProducts = (categoria) => {
 
 // function getSkuFromProductItem(item) {
 //   return item.querySelector('span.item__sku').innerText;
-// }
-
-// function clickMe() {
-//   const items = Array.from(document.getElementsByClassName('item'));
-//   items.forEach((item) => {
-//     const itemID = getSkuFromProductItem(item);
-//     const getButton = document.querySelector('.item__add');
-//     getButton.addEventListener('click', populateCart(itemID));
-//   });
 // }
 
 window.onload = () => { 

@@ -110,7 +110,6 @@ function createTotalPrice() {
 }
 
 function render() {
-  createTotalPrice();
   const itemList = getSavedCartItems();
   const cartSection = getCartItems();
   cartSection.innerHTML = itemList;
@@ -118,12 +117,17 @@ function render() {
   for (let index = 0; index < cartItems.length; index += 1) {
     cartItems[index].addEventListener('click', cartItemClickListener);
   }
-  updatePriceCart();
 }
 
 window.onload = () => {
-  createPage('computador');
-  render();
+  createPage('computador')
+  .then(() => {
+    render();
+  })
+  .then(() => {
+    createTotalPrice();
+    updatePriceCart();
+  });
   receiveClick();
   emptyCart();
 };

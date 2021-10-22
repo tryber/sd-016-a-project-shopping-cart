@@ -30,7 +30,9 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
+  event.target.remove();
 }
+
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -39,26 +41,36 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function searchProduct(product) {
+function searchProduct(product = 'computador') {
   const selectItens = document.querySelector('.items');
   fetchProducts(product).then((data) => {
       data.results.forEach((element) => {
       const { id: sku, title: name, thumbnail: image } = element;
       selectItens.appendChild(createProductItemElement({ sku, name, image }));
       });
-    })
+    });
 }
 
-function carrinhoProduct(item = "MLB1937082776") {
-  const itemList = document.querySelector(".cart__items")
-  fetchItem(item).then((data) => {
+async function cartProduct(event) {
+    const product = event.target;
+    const productId = product.parentNode;
+    const id = getSkuFromProductItem(productId);
+    const data = await fetchItem(id);
+    const itemList = document.querySelector('.cart__items');
       const { id: sku, title: name, price: salePrice } = data;
       itemList.appendChild(createCartItemElement({ sku, name, salePrice }));
-    })
 }
 
-window.onload = () => {
-  searchProduct('computador');
-  carrinhoProduct()
+function cleanButton() {
+  const clear = document.querySelector('.empty-cart');
+  clear.addEventListener('click', () => {
+    document.querySelector('.cart__items').innerHTML = '';
+  });
+}
+cleanButton();
 
+window.onload = () => {
+  searchProduct();
+  const b = document.querySelector('#body');
+  b.addEventListener('click', cartProduct);
  };

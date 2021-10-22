@@ -1,10 +1,12 @@
-const fetchItem = (id) => {
-  // seu código aqui
-  return fetch(`https://api.mercadolibre.com/items/${id}`)
-    .then((response) => response.json())
-    .then((data) => data)
-    .catch((error) => error)
-};
+async function fetchItem(id) { 
+  try {
+    const response = await fetch(`https://api.mercadolibre.com/items/${id}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+}
 
 if (typeof module !== 'undefined') {
   module.exports = {

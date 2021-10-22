@@ -16,18 +16,35 @@ function createCustomElement(element, className, innerText) {
 
 const listOl = document.querySelector('ol');
 
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+
+function cartItemClickListener(event) {
+  event.target.remove();
+  if (listOl.innerHTML !== null) saveCartItems(listOl.innerHTML);
+}
+
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
 const productById = async (idProduct) => {
   const objProduct = await fetchItem(idProduct);
   const { id: sku, title: name, price: salePrice } = objProduct;
   const objParam = { sku, name, salePrice };
   listOl.appendChild(createCartItemElement(objParam));
   saveCartItems(listOl.innerHTML);
-}
+};
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
+  
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -40,23 +57,6 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
-function cartItemClickListener(event) {
-  event.target.remove();
-  if (listOl.innerHTML !== null) saveCartItems(listOl.innerHTML)
-}
-
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
-
 const productByName = async (paramItem) => {
   const promisse = await fetchProducts(paramItem);
   promisse.forEach(({ id, title, thumbnail }) => {
@@ -65,8 +65,8 @@ const productByName = async (paramItem) => {
   });
 };
 
-function getSavedWithListenner () {
-  listOl.innerHTML = getSavedCartItems('lista');
+function getSavedWithListenner() {
+  listOl.innerHTML = getSavedCartItems('cartItems');
   if (listOl.innerHTML === null) return [];
   document.querySelectorAll('li').forEach((listItem) => {
     listItem.addEventListener('click', cartItemClickListener);

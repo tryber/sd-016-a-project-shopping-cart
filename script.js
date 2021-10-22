@@ -1,5 +1,6 @@
 const $body = document.body;
 const cartItems = document.querySelector('.cart__items');
+const clearButton = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -88,3 +89,10 @@ window.onload = () => {
   addProductsOnScreen();
   restoreCartItems();
  };
+
+function clearCartList() {
+  cartItems.innerHTML = '';
+  saveCartItems(cartItems.innerHTML);
+}
+
+ clearButton.addEventListener('click', clearCartList);

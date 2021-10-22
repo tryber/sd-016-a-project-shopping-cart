@@ -1,3 +1,9 @@
+//Projeto feito com a ajuda da turma,
+// Lucas Alves, Vitor Brandão, Renan Souza, Matheus Benini e JuliaBarcelos.
+// Juntos vamos lonje.
+
+const getOl = document.querySelector('.cart__items');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -27,10 +33,10 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 
 async function addToCart(id) {
   const request = await fetchItem(id);
-  const getOl = document.querySelector('.cart__items');
   const { id: sku, title: name, price: salePrice } = request;
   const cartList = createCartItemElement({ sku, name, salePrice });
   getOl.appendChild(cartList);
+  saveCartItems(getOl.innerHTML);
 }
 
 const createProductItemElement = ({ sku, name, image }) => {
@@ -83,6 +89,13 @@ const searchProducts = async (product) => {
   });
 };
 
+function restoreCart () {
+  getOl.innerHTML = getSavedCartItems();
+}
+
+getOl.addEventListener('click', cartItemClickListener);
+
 window.onload = () => {
   searchProducts('computador');
+  restoreCart();
 };

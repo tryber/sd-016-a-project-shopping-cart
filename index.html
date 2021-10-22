@@ -13,15 +13,21 @@
     <script src="./helpers/getSavedCartItems.js" defer></script>
   </head>
   <body>
-    <section class="container">
-      <section class="items"></section>
-      <span class="loading">carregando...</span>
-      <section class="cart">
-        <span class="cart__title">Carrinho de compras</span>
-        <button class="empty-cart">Esvaziar carrinho</button>
-        <ol class="cart__items"></ol>
-        <h3 id="cart__total" class="total-price"></h3>
+    <header class="header">
+      <h1>Trybeshopp</h1>
+    </header>
+    <main>
+      <section class="container">
+        <section class="items"></section>
+        <span class="loading">carregando...</span>
+        <section class="cart">
+          <span class="cart__title">Carrinho de compras</span>
+          <button class="empty-cart">Esvaziar carrinho</button>
+          <ol class="cart__items"></ol>
+          <h3>Subtotal: R$ <span  id="cart__total" class="total-price"></span></h3>
+        </section>
       </section>
-    </section>
+    </main>
+    <footer>Desenvolvido com muito carinho por Emerson Moreira</footer>
   </body>
 </html>

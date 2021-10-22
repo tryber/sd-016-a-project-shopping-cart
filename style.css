@@ -1,15 +1,40 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
+
+main {
+  padding-top: 70px;
+}
+
+.header {
+  background-color: green;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
 .container {
   display: flex;
   justify-content: space-around;
-  width: 100%;
+  width: 90%;
+  margin: 0px auto;
 }
 
 .items {
   display: flex;
-  flex-basis: 70%;
+  flex-basis: 50%;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -51,6 +76,10 @@ body {
   display: flex;
   flex-basis: 30%;
   flex-flow: column wrap;
+  position: fixed;
+  right: 0;
+  top: 130px;
+  width: 25%;
 }
 
 .cart .cart__title {

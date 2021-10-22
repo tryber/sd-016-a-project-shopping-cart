@@ -1,6 +1,7 @@
 const containerProducts = document.querySelector('.items');
 const containerCartItems = document.querySelector('.cart__items');
 const isLoading = document.querySelector('.loading');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -94,6 +95,7 @@ btnClearAllItems.addEventListener('click', () => {
 // function getSkuFromProductItem(item) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
+
 const renderItemsToSreen = async () => {
   const data = await fetchProducts('computador'); 
   data.results.forEach((element) => {

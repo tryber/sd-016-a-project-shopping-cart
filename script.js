@@ -13,7 +13,7 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -61,6 +61,6 @@ const serchProducts = async (product) => {
 };
 
 window.onload = () => {
-  serchProducts('computador');
+  serchProducts('microondas');
   addItemToCart('MLB1615760527');
 };

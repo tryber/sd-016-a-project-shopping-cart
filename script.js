@@ -59,22 +59,21 @@ async function findProducts(product) {
 function addItem() {
   const button = document.querySelectorAll('.item__add');
   const cart = document.querySelector('ol.cart__items');
-  button.forEach(b => { // b = button
+  button.forEach((b) => { // b = button
     b.addEventListener('click', async () => {
-      const getId = b.parentNode.firstChild.innerText;  // get element id
+      const getId = b.parentNode.firstChild.innerText; // get element id
       await fetchItem(getId)
-        .then(result => {
+        .then((result) => {
           const resultProduct = createCartItemElement({
             sku: result.id,
             name: result.title,
             salePrice: result.price,
-          })
+          });
           cart.appendChild(resultProduct);
         });
       saveCartItems();
-    })
-  })
-
+    });
+  });
 }
 
 window.onload = async () => {

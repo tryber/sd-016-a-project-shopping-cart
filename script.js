@@ -40,4 +40,22 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+async function searchProducts(product) { // definimos que essa função é assincrona
+  const arrayAllProducts = await fetchProducts(product); // e que espera o retorno de fetchProducts
+  const localSection = document.querySelector('.items'); // resgatamos o lugar onde vamos criar os itens
+
+  arrayAllProducts.results.forEach((item) => { // percorremos o array de produtos
+    const objectProducts = { // criando um objeto, orientando as chaves existentes as que serão necessarias para a função createProductItemElement
+      sku: item.id,
+      name: item.title, 
+      image: item.thumbail,
+    };
+
+    const createItens = createProductItemElement(objectProducts); // armazenamos o retorno de createProductItemElement
+    localSection.appendChild(createItens); // na section no  html, criamos o retorno de createProductItemElement
+  });
+}
+
+window.onload = () => {
+  searchProducts('computador');
+};

@@ -55,4 +55,30 @@ async function showFetchProducts(itemProduct) {
   });
 }
 
-window.onload = () => showFetchProducts('computador');
+async function addToCart(idItem) {
+  const cartItem = document.querySelector('.cart__items');
+  const fetchItemContainer = await fetchItem(idItem);
+  const infoProductObj = {
+      sku: fetchItemContainer.id,
+      name: fetchItemContainer.title,
+      salePrice: fetchItemContainer.price,
+    };
+  const forTheCart = createCartItemElement(infoProductObj);
+  cartItem.appendChild(forTheCart);
+  console.log(fetchItemContainer);
+}
+
+const buttonForAdd = () => {
+  const itemToStore = document.querySelectorAll('.item__add');
+  itemToStore.forEach((product) => {
+    product.addEventListener('click', (event) => {
+      const productToAdd = event.target.parentNode.firstChild.innerHTML;
+      addToCart(productToAdd);
+    });
+  });
+};
+
+window.onload = () => {
+  showFetchProducts('computador')
+  .then(() => buttonForAdd());
+};

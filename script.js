@@ -1,8 +1,13 @@
 function createProductImageElement(imageSource) {
+  const conteiner = document.createElement('div');
+  conteiner.className = 'conteiner_img';
+  
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
-  return img;
+  conteiner.appendChild(img);
+  // return img;
+  return conteiner;
 }
 
 function createCustomElement(element, className, innerText) {
@@ -62,5 +67,5 @@ async function serchProducts(product) { // essa e uma funcao assincrona
 }
 
 window.onload = () => { 
-  serchProducts('arandela id century modern');
+  serchProducts('coomputador');
 };

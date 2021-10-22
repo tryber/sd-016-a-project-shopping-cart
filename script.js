@@ -18,7 +18,7 @@ const priceSum = (totalCurrentPrice, actualPrice) => {
 document.addEventListener('click', (event) => {
   if (event.target.classList.contains('empty-cart')) {
     const content = document.querySelector('.cart__items');
-    const priceContent = document.querySelector('.total-price');
+    const priceContent = getTotalPrice();
     content.innerHTML = '';
     priceContent.innerHTML = 0;
     localStorage.setItem('cartPrice', 0);
@@ -76,7 +76,7 @@ async function cartItemClickListener(element) {
   saveCartItems(cartContainer.innerHTML);
   const price = await fetchItem(element.id);
   const result = priceSub(actualTotalPrice, price.price);
-  const priceLabel = document.querySelector('.total-price');
+  const priceLabel = getTotalPrice();
   priceLabel.innerText = result;
 }
 

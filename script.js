@@ -1,5 +1,6 @@
 const getContainer = () => document.querySelector('.cart__items');
 const getTotalPrice = () => document.querySelector('.total-price');
+const getLoadingElement = () => document.querySelector('.loading');
 
 let actualTotalPrice = 0;
 
@@ -15,6 +16,19 @@ const priceSum = (totalCurrentPrice, actualPrice) => {
   return Number(actualTotalPrice.toFixed(2));
 };
 
+const showsLoadingElement = () => {
+  const show = document.createElement('h2');
+  const showsParent = document.querySelector('.container');
+  show.className = 'loading';
+  show.innerText = 'CARREGANDO';
+  showsParent.appendChild(show);
+};
+
+const hidesLoadingElement = () => {
+  const hide = getLoadingElement();
+  hide.remove();
+};
+
 document.addEventListener('click', (event) => {
   if (event.target.classList.contains('empty-cart')) {
     const content = document.querySelector('.cart__items');
@@ -24,14 +38,6 @@ document.addEventListener('click', (event) => {
     localStorage.setItem('cartPrice', 0);
     const cartContainer = getContainer();
     saveCartItems(cartContainer.innerHTML);        
-  }
-});
-
-document.addEventListener('click', async (event) => {
-  if (event.target.classList.contains('item__add')) {
-    const data = await fetchItem(event.target.parentNode.firstChild.innerText);
-    const productPrice = Number(data.price);
-    return productPrice;
   }
 });
 
@@ -62,13 +68,13 @@ function createProductItemElement({ id, title, thumbnail }) {
 }
 
 const loadsProductsList = async () => {
+  showsLoadingElement();
   const data = await fetchProducts('computador');
+  hidesLoadingElement();
   const { results } = data;
   const sectionWithAllProducts = document.querySelector('.items');
   results.forEach((result) => sectionWithAllProducts.appendChild(createProductItemElement(result)));
 };
-
-loadsProductsList();
 
 async function cartItemClickListener(element) {
   element.parentNode.removeChild(element);
@@ -124,16 +130,15 @@ const loadsCartPrice = () => {
   console.log(getCartPrice);
   if (getCartPrice === null) {
     const priceLabel = getTotalPrice();
-    priceLabel.innerText = 0;
+    priceLabel.innerText = '';
   } else {
     const priceLabel = getTotalPrice();
     priceLabel.innerText = getCartPrice;
   }  
 };
 
-// localStorage.clear();
-
 window.onload = () => {
+  loadsProductsList();
   loadsCart();
   loadsCartPrice();
 };

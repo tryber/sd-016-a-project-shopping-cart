@@ -81,7 +81,7 @@ function createTotalPriceSpan() {
   const divPriceSpan = document.createElement('div');
   divPriceSpan.className = 'total-price';
   const totalPriceSpan = document.createElement('span');
-  divPriceSpan.className = 'total-price-span';
+  totalPriceSpan.className = 'total-price-span';
   totalPriceSpan.innerHTML = 'Valor total: R$ 0';
   cart.appendChild(divPriceSpan);
   divPriceSpan.appendChild(totalPriceSpan);

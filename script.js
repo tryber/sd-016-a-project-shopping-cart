@@ -1,4 +1,5 @@
 const cartItems = [];
+let sum = 0;
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -14,11 +15,14 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function cartItemClickListener(event, sku) {
+function cartItemClickListener(event, sku, price) {
+  const div = document.querySelector('.total-price');
   const findElement = cartItems.find((item) => item.sku === sku);
   const findIndexOfElement = cartItems.indexOf(findElement);
   cartItems.splice(findIndexOfElement, 1);
   saveCartItems(JSON.stringify(cartItems));
+
+  div.innerText = (sum -= price).toPrecision();
   event.target.remove();
 }
 
@@ -29,7 +33,7 @@ function createCartItemElement({ sku, name, price }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${price}`;
   getOlItemElements.appendChild(li);
 
-  li.addEventListener('click', (event) => cartItemClickListener(event, sku)); 
+  li.addEventListener('click', (event) => cartItemClickListener(event, sku, price));
 }
 
 const addItemToCart = async (sku) => {
@@ -43,14 +47,14 @@ function createProductItemElement({ sku, name, image, price }) {
   const section = document.createElement('section');
   const productSection = document.querySelector('.items');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
+  const div = document.querySelector('.total-price');
+
   buttonAddToCart.addEventListener('click', () => {
     addItemToCart(sku);
-  });
-  buttonAddToCart.addEventListener('click', () => {
+    div.innerText = (sum += price).toPrecision();
     cartItems.push({ sku, name, price });
     saveCartItems(JSON.stringify(cartItems));
   });
@@ -88,6 +92,13 @@ const getFromLocalStorage = () => {
   }
 };
 
+const divTotalPrice = () => {
+  const divContainer = document.querySelector('.price');
+  const divPrice = document.createElement('div');
+  divPrice.classList.add('total-price');
+  divContainer.appendChild(divPrice);
+};
+
 const clearLocalStorage = () => {
   localStorage.clear();
   window.location.reload();
@@ -99,4 +110,5 @@ window.onload = () => {
   createCartItems();
   getFromLocalStorage();
   btnClearCart.addEventListener('click', clearLocalStorage);
+  divTotalPrice();
 };

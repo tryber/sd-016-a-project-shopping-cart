@@ -70,7 +70,7 @@ function addItem() {
           });
           cart.appendChild(resultProduct);
         });
-      saveCartItems();
+      saveCartItems(cart.innerHTML);
     });
   });
 }
@@ -78,7 +78,7 @@ function addItem() {
 window.onload = async () => {
   const cartItems = document.querySelector('ol.cart__items');
   cartItems.addEventListener('click', () => {
-    saveCartItems();
+    saveCartItems(cartItems.innerHTML);
   });
   await findProducts('computador');
   getSavedCartItems();

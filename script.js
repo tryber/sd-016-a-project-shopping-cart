@@ -97,7 +97,7 @@ getOl.addEventListener('click', cartItemClickListener);
 
 const buttonLimp = () => {
   getOl.innerHTML = '';
-  saveCartItems(olListCart.innerHTML);
+  saveCartItems(getOl.innerHTML);
 };
 
 clearButton.addEventListener('click', buttonLimp);

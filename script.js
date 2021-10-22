@@ -1,5 +1,7 @@
 // Codigo elaborado com a colaboração de João Victor Veidz e Priscila Silva
 
+const shopCartSave = [];
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -20,16 +22,23 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
+function cartItemClickListener(event, sku) {
   event.target.remove();
-  if (listOl.innerHTML !== null) saveCartItems(listOl.innerHTML);
+  console.log(shopCartSave, 1)
+  shopCartSave.forEach((element, index) => {
+    if (element.sku === sku) shopCartSave.splice(index, 1);
+  })
+  console.log(shopCartSave, 2)
+  sumPrice(shopCartSave);
+  saveCartItems(JSON.stringify(shopCartSave));
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', (event) => cartItemClickListener(event, sku));
+  listOl.appendChild(li);
   return li;
 }
 
@@ -38,13 +47,15 @@ const productById = async (idProduct) => {
   const { id: sku, title: name, price: salePrice } = objProduct;
   const objParam = { sku, name, salePrice };
   listOl.appendChild(createCartItemElement(objParam));
-  saveCartItems(listOl.innerHTML);
+  shopCartSave.push(objParam);
+  sumPrice(shopCartSave);
+  saveCartItems(JSON.stringify(shopCartSave));
 };
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-  
+
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -66,11 +77,22 @@ const productByName = async (paramItem) => {
 };
 
 function getSavedWithListenner() {
-  listOl.innerHTML = getSavedCartItems('cartItems');
-  if (listOl.innerHTML === null) return [];
-  document.querySelectorAll('li').forEach((listItem) => {
-    listItem.addEventListener('click', cartItemClickListener);
-  });
+  const arrayParse = JSON.parse(getSavedCartItems('cartItems'));
+  if (arrayParse) {
+    shopCartSave.push(...arrayParse);
+    arrayParse.forEach((listItem) => {
+      createCartItemElement(listItem);
+    });
+    sumPrice(shopCartSave);
+  }
+}
+
+function sumPrice (arrayNumberPrice) {
+  let sumHTML = document.querySelector('.total-price').innerText;
+  const sumReduce = arrayNumberPrice.reduce((sum, numberPrice) => {
+    sum += numberPrice;
+  }, 0);
+   sumHTML = sumReduce;
 }
 
 window.onload = () => {

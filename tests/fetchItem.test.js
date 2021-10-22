@@ -22,7 +22,6 @@ describe('2 - Teste a função fecthItem', () => {
   })
 
   it('Testa se o retorno de fetch possui mesma estrutura do objeto item', async () => {
-    fetchItem('MLB1615760527');
     const expectedObject = await fetchItem('MLB1615760527');
     expect(expectedObject).toEqual(item);
   })

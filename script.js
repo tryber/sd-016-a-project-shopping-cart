@@ -14,12 +14,13 @@ function createCustomElement(element, className, innerText) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
 
-// function cartItemClickListener(event) {
-//   // coloque seu código aqui
-// }
-function cartItemClickListener(event) {
-  event.target.remove();
+function cartItemClickListener() {
+  // coloque seu código aqui
 }
+
+// function cartItemClickListener(event) {
+//   event.target.remove();
+// }
 
 // REQUISITO 2
 
@@ -30,30 +31,35 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
 // Função desenvolvida Req.2
-async function buttonRequisition(product) {
-  const findTheProduct = await fetchItem(product);
+async function buttonRequisition(sku) {
+  const findTheProduct = await fetchItem(sku);
   const olItems = document.querySelector('.cart__items');
-  findTheProduct.forEach((item) => {
-    const olObject = {
-      sku: item.id,
-      name: item.title,
-      salePrice: item.price,
-    };
-    const createLi = createCartItemElement(olObject);
-    olItems.appendChild(createLi);
-  });
+
+  const { title: name, price: salePrice } = findTheProduct;
+  const cartList = createCartItemElement({ sku, name, salePrice });
+  olItems.appendChild(cartList);
 }
+
 // REQUISITO 1
 function createProductItemElement({ sku, name, image }) {
+  const getSectionItem = document.querySelector('.items');
   const section = document.createElement('section');
   section.className = 'item';
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+
+  const newButton = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  newButton.addEventListener('click', () => {
+    buttonRequisition(sku);
+  });
+  section.appendChild(newButton);
+  getSectionItem.appendChild(section);
   return section;
 }
+
 // Função desenvolvida Req.1
 async function searchProduct(product) {
   const searchResult = await fetchProducts(product);
@@ -68,6 +74,7 @@ async function searchProduct(product) {
     sectionItems.appendChild(productItem);
   });
 }
+
 window.onload = () => { 
   searchProduct('computador');
   buttonRequisition('MLB1341706310');

@@ -20,7 +20,7 @@ function createCustomElement(element, className, innerText) {
 
 function itemRemove(elem) {
   elem.remove();
-  saveCartItems('cartItems', olCart.innerHTML);
+  saveCartItems(olCart.innerHTML);
   fetchItem(elem.id).then((item) => {
     totalPrice.innerText = (parseFloat(totalPrice.innerText) * 100 - item.price * 100) / 100;
   });
@@ -51,7 +51,7 @@ function createProductItemElement({ sku, name, image }) {
           sku: item.id, name: item.title, salePrice: item.price,
         }),
       );
-      saveCartItems('cartItems', olCart.innerHTML);
+      saveCartItems(olCart.innerHTML);
     }));
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
@@ -88,7 +88,7 @@ function getCartItems() {
 
 emptyChart.addEventListener('click', () => {
   olCart.innerHTML = '';
-  saveCartItems('cartItems', olCart.innerHTML);
+  saveCartItems(olCart.innerHTML);
   totalPrice.innerText = 0;
 });
 

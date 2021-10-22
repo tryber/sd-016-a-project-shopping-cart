@@ -39,4 +39,20 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+async function searchData(product) {
+  const result = await fetchProducts(product);
+  const items = document.querySelector('.items');
+
+  result.results.forEach((item) => {
+    const { id, title, thumbnail } = item;
+    const object = {
+      sku: id, name: title, image: thumbnail,
+    };
+    const productItem = createProductItemElement(object);
+    items.appendChild(productItem);
+  });
+}
+
+window.onload = () => {
+  searchData('computador');
+};

@@ -30,15 +30,30 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+function sumPricesOfCartItems() {
+  let total = 0;
+  Array.from(ol.children).forEach((element) => {
+     total += parseInt(element.classList[1], 10);
+  });
+ return total;
+}
+
+function addTotalSpan() {
+  const span = document.querySelector('.total');
+  span.innerHTML = `Total : R$ ${sumPricesOfCartItems()}`;
+}
+
 function cartItemClickListener(event) { // remove itens do Cart.
   const olItems = document.querySelector('.cart__items');
   olItems.removeChild(event.target);
   saveCartItems(ol.innerHTML);
+  addTotalSpan();
 }
 
 function createCartItemElement({ sku, name, salePrice }) { // Cria os itens do Cart e adiciona click listener em todos.
   const li = document.createElement('li');
   li.className = 'cart__item';
+  li.classList.add(salePrice);
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
@@ -54,6 +69,8 @@ async function addCartItems(id) { // Adiciona os itens clicados ao cart.
   const li = createCartItemElement(object);
   ol.appendChild(li);
   saveCartItems(ol.innerHTML);
+  sumPricesOfCartItems();
+  addTotalSpan();
 }
 
 function addButtonItemsListenner() {
@@ -99,4 +116,5 @@ window.onload = () => {
     getLocalStorage();
   }
   addEventItemStotorage();
+  addTotalSpan();
  };

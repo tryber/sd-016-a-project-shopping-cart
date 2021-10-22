@@ -110,6 +110,14 @@ function addEventItemStotorage() {
   });
 }
 
+function clearButtonListener() {
+  const clearButton = document.querySelector('.empty-cart');
+  clearButton.addEventListener('click', () => {
+    ol.innerHTML = '';
+    addTotalSpan();
+  });
+}
+
 window.onload = () => { 
   addProducts('computador');
   if (ol.children.length === 0) {
@@ -117,4 +125,5 @@ window.onload = () => {
   }
   addEventItemStotorage();
   addTotalSpan();
+  clearButtonListener();
  };

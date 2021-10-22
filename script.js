@@ -1,5 +1,12 @@
 const productConteiner = document.querySelector('.items');
 const getCart = () => document.querySelector('.cart__items');
+const clearButton = document.querySelector('.empty-cart');
+
+function clearCart() {
+  const cartConteiner = getCart();
+  cartConteiner.innerHTML = '';
+  localStorage.removeItem('cartItems');
+}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -100,4 +107,5 @@ async function asyncAwait() {
 
 window.onload = () => {
   asyncAwait();
+  clearButton.addEventListener('click', clearCart);
 };

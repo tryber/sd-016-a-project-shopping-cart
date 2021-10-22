@@ -17,3 +17,4 @@ describe('4 - Teste a função getSavedCartItems', () => {
     expect(localStorage.getItem).toHaveBeenCalledWith('cartItems');
   })
 });
+

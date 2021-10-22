@@ -1,4 +1,5 @@
 const ol = document.querySelector('.cart__items');
+const buttonClear = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -70,6 +71,13 @@ const restoreEventListenerCartItem = () => {
     item.addEventListener('click', cartItemClickListener);
   });
 };
+
+const cleanCart = () => {
+  ol.innerHTML = '';
+  saveCartItems(ol.innerHTML);
+};
+
+buttonClear.addEventListener('click', cleanCart);
 
 window.onload = () => {
   adiconaProdutos();

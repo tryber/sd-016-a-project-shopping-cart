@@ -1,6 +1,5 @@
-// const { fetchProducts } = require("./helpers/fetchProducts"); - NAO TEM QUE IMPORTA
-
-// const { id, title } = require("./mocks/item");
+const cartList = document.querySelector('.cart_items');
+const button = document.querySelector('.empty-cart');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -33,7 +32,8 @@ function getSkuFromProductItem(item) {
 }
 
 const cartItemClickListener = (event) => {
-  return event;
+  event.target.remove();
+  itemsSave(cartList.innerHTML);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -78,6 +78,13 @@ const searchProducts = async (product) => {
     sectionItems.appendChild(productItem);
   });
 };
+
+const clearButton = () => {
+  cartList.innerHTML = '';
+  itemsSave(cartList.innerHTML);
+};
+
+button.addEventListener('click', clearButton);
 
 window.onload = () => {
   searchProducts('computador');

@@ -3,7 +3,8 @@ const ol = document.querySelector('.cart__items');
 function clearAll() {
   const buttonClearAll = document.querySelector('.empty-cart');
   buttonClearAll.addEventListener('click', () => {
-    ol.innerText = '';
+    localStorage.removeItem('cartItems');
+    ol.innerHTML = '';
     });
   }
 clearAll();

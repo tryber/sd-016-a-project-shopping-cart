@@ -72,7 +72,7 @@ const saveCart = () => {
 
 emptyCart.addEventListener('click', () => {
   olItems.innerHTML = '';
-  saveCartItems(olItems);
+  saveCartItems(olItems.innerHTML);
 });
 
 window.onload = () => {

@@ -35,7 +35,16 @@ function cartItemClickListener(event) {
   saveCartItems(content);
 }
 
+const load = (item) => {
+  const divLoad = document.createElement('div');
+  divLoad.className = 'loading';
+  divLoad.innerText = 'carregando...';
+  item.appendChild(divLoad);
+};
+
 function createCartItemElement({ sku, name, salePrice }) {
+  const getItems = document.querySelector('.items');
+  load(getItems);
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -48,15 +57,19 @@ const loadProducts = async () => {
   const array = await fetchProducts('computador');
   array.results.forEach(({ id: sku, title: name, thumbnail: image }) => {
     getItems.appendChild(createProductItemElement({ sku, name, image }));
-  }); 
+  });
 };
+
+const sumPrices = (array) => array.reduce((crr, acc) => crr + acc);
 
 const addToCart = async (event) => {
   const cart = document.querySelector('ol');
   const idProduct = getSkuFromProductItem(event.path[1]);
+
   const item = await fetchItem(idProduct);
   const { id: sku, title: name, price: salePrice } = item;
   cart.appendChild(createCartItemElement({ sku, name, salePrice }));
+
   const itemsCart = document.querySelector('.cart__items');
   const content = itemsCart.innerHTML;
   saveCartItems(content);
@@ -90,8 +103,14 @@ const clearCart = () => {
 
 const bntClear = document.querySelector('.empty-cart');
 
+const removeLoad = async () => {
+  const getLoad = await document.querySelector('.loading'); 
+  getLoad.remove();
+};
+
 window.onload = async () => { 
   await loadProducts();
+  removeLoad();
   restore(); 
   setupAddToCart();
 };

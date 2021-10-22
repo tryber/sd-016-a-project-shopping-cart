@@ -1,4 +1,7 @@
 const fetchProducts = async (query) => {
+  const loading = document.createElement('p');
+  loading.innerHTML = 'carregando...';
+  loading.className = 'loading';
   const url = `https://api.mercadolibre.com/sites/MLB/search?q=${query}`;
 
   // trecho de código retirado do colega Adran Carnavale

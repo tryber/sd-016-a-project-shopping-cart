@@ -1,5 +1,6 @@
 const cartItem = document.querySelector('.cart__items');
 const emptyCart = document.querySelector('.empty-cart');
+const loading = document.querySelector('.loading');
 
 const priceContainer = document.querySelector('.total-price');
 
@@ -90,13 +91,14 @@ function createProductItemElement({ sku, name, image }) {
 }
 
 async function searchProducts(query) {
-  await fetchProducts(query)
-    .then((value) => value.results
-    .forEach((product) => {
+  await fetchProducts(query).then((value) => {
+    value.results.forEach((product) => {
       const { id: sku, title: name, thumbnail: image } = product;
       const itens = document.querySelector('.items');
       itens.appendChild(createProductItemElement({ sku, name, image }));
-    }));
+    });
+  });
+  loading.remove();
 }
 
 function loadCartItems() {

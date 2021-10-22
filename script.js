@@ -12,6 +12,29 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+
+function cartItemClickListener(event) {
+  // coloque seu código aqui
+}
+
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
+const addToCart = async (id) => {
+  const cartItems = document.querySelector('.cart__items');
+  const item = await fetchItem(id);
+  const { id: sku, title: name, price: salePrice } = item;
+  cartItems.appendChild(createCartItemElement({ sku, name, salePrice }));
+};
+
 function createProductItemElement({ sku, name, image }) { // { id, title, thumbnail }
   const section = document.createElement('section');
   section.className = 'item';
@@ -23,21 +46,6 @@ function createProductItemElement({ sku, name, image }) { // { id, title, thumbn
     .addEventListener('click', () => addToCart(sku));
 
   return section;
-}
-
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
-
-async function addToCart(id) {
-  const cartItems = document.querySelector('.cart__items');
-  const item = await fetchItem(id);
-  const { id: sku, title: name, price: salePrice } = item;
-  cartItems.appendChild(createCartItemElement({ sku, name, salePrice }));
 }
 
 /*
@@ -62,14 +70,6 @@ async function addToCart(id) {
 7- Fazer testes
 */
 
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
-
 async function searchProduct(product) { // requisito feito graças ao Bê que nos ajudou com um video passo a passo
   const data = await fetchProducts(product);
   const sectionItems = document.querySelector('.items');
@@ -86,4 +86,4 @@ async function searchProduct(product) { // requisito feito graças ao Bê que no
 
 window.onload = () => {
   searchProduct('computador');
-}
+};

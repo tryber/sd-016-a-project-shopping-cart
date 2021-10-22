@@ -79,6 +79,11 @@ function listenerToAllButtonsOfProducts() {
   });
 }
 
+function removeLoading() {
+  const loading = document.querySelector('.loading');
+  loading.remove();
+}
+
 function searchingProductsAndAddToList() {
   fetchProducts('computador')
     .then((data) => {
@@ -89,6 +94,7 @@ function searchingProductsAndAddToList() {
         listItems.appendChild(productElement);
       });
       listenerToAllButtonsOfProducts();
+      removeLoading();
     });
 }
 

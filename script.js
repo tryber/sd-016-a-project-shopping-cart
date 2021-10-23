@@ -22,7 +22,6 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(
     createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'),
   );
-
   return section;
 }
  
@@ -31,18 +30,34 @@ function createProductItemElement({ sku, name, image }) {
 // }
 // function cartItemClickListener(event) {
 //   // coloque seu código aqui
+//   // const selecionaCarrinho = document.querySelector('.cart')
+//   // selecionaCarrinho.appendChild(createCartItemElement);
 // }
-// function createCartItemElement({ sku, name, salePrice }) {
-//   const li = document.createElement('li');
-//   li.className = 'cart__item';
-//   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-//   li.addEventListener('click', cartItemClickListener);
-//   return li;
-// }
+
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
+function adicionarCarrinho(li) {
+  const selectOl = document.querySelector('.cart__items');
+  selectOl.appendChild(li);
+}
+
+const objetoCarrinho = (itemAtual) => ({
+  sku: itemAtual.id,
+  name: itemAtual.title,
+  salePrice: itemAtual.price, 
+});
+
 async function searchProducts(product) {
   const searchData = await fetchProducts(product);
+  console.log(searchData);
   const sectionItens = document.querySelector('.items');
-  searchData.results.forEach((item) => {
+  searchData.results.forEach(async (item, index) => {
     const cadaItem = {
       sku: item.id,
       name: item.title,
@@ -50,6 +65,11 @@ async function searchProducts(product) {
     };
   const productItem = createProductItemElement(cadaItem);    
   sectionItens.appendChild(productItem);
+  const salvarBotao = document.querySelectorAll('.item__add')[index];
+  const itemAtual = await fetchItem(item.id);
+  console.log(itemAtual);
+  salvarBotao.addEventListener('click',
+   () => adicionarCarrinho(createCartItemElement(objetoCarrinho(itemAtual))));
   });
 }
 

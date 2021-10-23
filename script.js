@@ -89,10 +89,10 @@ async function searchProduct(product) { // requisito feito graças ao Bê que no
 }
 
 const cart = () => {
-  father.innerHTML = getSavedCartItems;
+  father.innerHTML = getSavedCartItems();
 };
 
 window.onload = () => {
   searchProduct('computador');
-  if (father.children.length === 0) cart();
+  cart();
 };

@@ -94,5 +94,5 @@ const cart = () => {
 
 window.onload = () => {
   searchProduct('computador');
-  father.children.length === 0 ? cart() : '';
+  if (father.children.length === 0) cart();
 };

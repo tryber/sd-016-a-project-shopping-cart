@@ -50,6 +50,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 async function getTotalPrice(price) {
+  await price;
   totalPrice += price;
   total.innerText = `Total: R$${totalPrice}`;
 }
@@ -61,7 +62,6 @@ async function addItemToCart(id) {
   await getTotalPrice(salePrice);
   const product = createCartItemElement({ sku, name, salePrice });
   cart.appendChild(product);
-  getCartItemsUpdated();
 }
 
 // Código feito com a ajuda de Vitor Brandão, Renan Souza, Lucas Alves, Matheus Benini, Italo Moraes, Rafael Feliciano, Julia Barcelos

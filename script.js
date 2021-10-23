@@ -1,4 +1,6 @@
 const cartItems = '.cart__items';
+const total = document.querySelector('.total-price');
+let totalPrice = 0;
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -35,6 +37,13 @@ async function addItemToCart(id) {
   cart.appendChild(product);
 }
 
+async function getTotalPrice(id) {
+  const data = await fetchItem(id);
+  const { price } = data;
+  totalPrice += price;
+  total.innerText = `Total: R$${totalPrice}`;
+}
+
 // Código feito com a ajuda de Vitor Brandão, Renan Souza, Lucas Alves, Matheus Benini, Italo Moraes, Rafael Feliciano, Julia Barcelos
 function createProductItemElement({ sku, name, image }) {  
     const getSectionItems = document.querySelector('.items');
@@ -47,7 +56,10 @@ function createProductItemElement({ sku, name, image }) {
     
     const newButton = section
       .appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-    newButton.addEventListener('click', () => addItemToCart(sku));
+    newButton.addEventListener('click', () => {
+      addItemToCart(sku);
+      getTotalPrice(sku);
+      });
 
     section.appendChild(newButton);
     getSectionItems.appendChild(section);
@@ -62,6 +74,8 @@ function cleanCartList() {
     while (cartList.firstChild) {
       cartList.removeChild(cartList.firstChild);
     }
+    totalPrice = 0;
+    total.innerText = `Total: R$${totalPrice}`;
   });
 }
 

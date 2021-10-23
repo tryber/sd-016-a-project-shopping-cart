@@ -13,7 +13,8 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  
+  const cart = document.querySelector('.cart__items');
+
 }
 
 function createCartItemElement({ sku, name, salePrice }) { 
@@ -32,7 +33,7 @@ async function addItemToCart(id) {
   cart.appendChild(product);
 }
 
-//Código feito com a ajuda de Vitor Brandão, Renan Souza, Lucas Alves, Matheus Benini, Italo Moraes, Rafael Feliciano, Julia Barcelos
+// Código feito com a ajuda de Vitor Brandão, Renan Souza, Lucas Alves, Matheus Benini, Italo Moraes, Rafael Feliciano, Julia Barcelos
 function createProductItemElement({ sku, name, image }) {  
     const getSectionItems = document.querySelector('.items');
     const section = document.createElement('section');

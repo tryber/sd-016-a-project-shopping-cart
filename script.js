@@ -115,6 +115,18 @@ function addListenersToCartItems() {
   });
 }
 
+function clearCart() {
+  allPrices.splice(0, allPrices.length);
+  localStorage.setItem('total', JSON.stringify(allPrices));
+
+  totalElement.innerHTML = `${totalPurchase()}`;
+  cart.innerHTML = '';
+  saveCartItems(cart.innerHTML);
+}
+
+const clearCartButton = document.querySelector('.empty-cart');
+clearCartButton.addEventListener('click', clearCart);
+
 function recreateCart() {
   const savedCartItems = localStorage.getItem('cartItems');
   cart.innerHTML = savedCartItems;

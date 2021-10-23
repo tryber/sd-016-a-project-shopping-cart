@@ -6,8 +6,11 @@ const fetchProducts = async (query) => {
   }  
 
   try {
+    const loading = document.querySelector('.loading');
+    loading.style.display = 'block';
     const response = await fetch(url);
-    const data = await response.json();
+    const data = await response.json().then(loading.style.display = 'none');
+    
     return data;
   } catch (error) {
     throw new Error('Algo de inesperado aconteceu, tente novamente mais tarde!');

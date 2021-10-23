@@ -28,10 +28,16 @@ function createProductItemElement({ sku, name, image }) {
 // function getSkuFromProductItem(item) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
+
+function removerLista(event) {
+  const salvarOl = document.querySelector('.cart__items'); 
+  salvarOl.removeChild(event.target);
+}
+
 function cartItemClickListener(event) {
   // coloque seu código aqui
-  // const selecionaCarrinho = document.querySelector('.cart')
-  // selecionaCarrinho.appendChild(createCartItemElement);
+  const removerProduto = document.querySelector('.cart__item');
+  removerProduto.addEventListener('click', removerLista);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {

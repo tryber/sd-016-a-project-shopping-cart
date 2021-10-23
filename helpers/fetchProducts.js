@@ -8,7 +8,7 @@ const fetchProducts = async (query) => {
   try {
     const response = await fetch(url);
     const data = await response.json();
-    return data.results;
+    return data;
   } catch (error) {
     throw new Error('Algo de inesperado aconteceu, tente novamente mais tarde!');
   }

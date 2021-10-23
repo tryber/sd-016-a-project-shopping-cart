@@ -10,17 +10,11 @@ describe('1 - Teste a função fecthProducts', () => {
   });
 
   it('se ao chamar a função fetchProducts("computador"), a função fetch() é chamada', async () => {
-    const parentFunction = await fetchProducts("computador");
-    const childFunction = await fetch("https://api.mercadolibre.com/sites/MLB/search?q=computador");
-    
-    const data = await childFunction;
-    const result = computadorSearch;
-
-    expect(parentFunction).toEqual(result);
-    expect(childFunction).toEqual(data);
+    fetchProducts("computador");
+    expect(fetch).toHaveBeenCalled();
   });
 
-  it('ao chamar a função fetchProducts("computador"), a função fetch usa o endpoint ("https://api.mercadolibre.com/sites/MLB/search?q=computador")',async () => {
+  it('ao chamar a função fetchProducts("computador"), a função fetch usa o endpoint ("https://api.mercadolibre.com/sites/MLB/search?q=computador")', async () => {
     const parentFunction = await fetchProducts("computador");
     const childFunction = await fetch("https://api.mercadolibre.com/sites/MLB/search?q=computador");
     

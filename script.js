@@ -15,7 +15,7 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  getOlList.removeChild(event.target);
+  event.target.remove();
   saveCartItems(getOlList.innerHTML);
 }
 

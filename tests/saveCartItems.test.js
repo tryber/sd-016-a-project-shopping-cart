@@ -1,5 +1,3 @@
-const saveCartItems = require('../helpers/saveCartItems');
-
 Object.defineProperty(window, 'localStorage', {
   value: {
     setItem: jest.fn(),

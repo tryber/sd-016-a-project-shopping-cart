@@ -1,6 +1,15 @@
 const cartItems = '.cart__items';
 const total = document.querySelector('.total-price');
+const loading = document.querySelector('.loading');
 let totalPrice = 0;
+
+function loadingPage() {
+  loading.style.display = 'block';
+}
+
+function loaded() {
+  loading.style.display = 'none';
+}
 
 function getCartItemsUpdated() {
   const cartItemsList = document.querySelector(cartItems);
@@ -88,7 +97,11 @@ function cleanCartList() {
 }
 
 async function searchProducts(product) {
+  loadingPage();
   const data = await fetchProducts(product);
+  if (data) {
+    loaded();
+  }
   const sectionItem = document.querySelector('.items');
   data.results.forEach((productItem) => {
     const { id: sku, title: name, thumbnail: image } = productItem;

@@ -88,7 +88,6 @@ async function searchProduct(product) { // requisito feito graças ao Bê que no
     };
     const productItem = createProductItemElement(obj); // a função é chamada para cada um dos element que vierem no array results
     sectionItems.appendChild(productItem);
-    // deleteLoading();
   });
   document.querySelector('.loading').remove();
 }

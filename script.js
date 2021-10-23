@@ -1,4 +1,5 @@
 const classCartItems = document.querySelector('.cart__items');
+const carregandoPag = document.querySelector('.loading');
 const cartItems = [];
 let sumPrice = 0;
 
@@ -118,7 +119,15 @@ const getFromLocalStorage = () => {
   }
 };
 
+const Sleep = () => fetchProducts('computador').then((value) => {
+  value.results.forEach((item) => {
+    createProductItemElement(item);
+  });
+  carregandoPag.remove();
+});
+
 window.onload = () => { 
+  Sleep();
   carregaProdutos('computador');
   divPriceTotal();
   getFromLocalStorage();

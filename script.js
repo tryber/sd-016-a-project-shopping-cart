@@ -20,7 +20,7 @@ const getPrices = () => {
 };
 
 const setCartPrice = () => {
-  totalPrice.innerHTML = getPrices().reduce((acc, crr) => acc + crr); 
+  totalPrice.innerHTML = getPrices().reduce((acc, crr) => acc + crr, 0); 
 };
 
 function createCustomElement(element, className, innerText) {

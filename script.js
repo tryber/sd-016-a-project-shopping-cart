@@ -14,22 +14,20 @@ const updateSumTotalPrice = (productsObj) => {
   const values = productsObj.map((product) => product.salePrice);
   totalPrice = values.reduce((acc, value) => acc + value, 0);
   renderTotalPrice(totalPrice);
-  // console.log(totalPrice);
 };
 
 const setStorageListProducts = (objProduct) => {
   listStorage.push(objProduct);
   localStorage.setItem('listProducts', JSON.stringify(listStorage));
   updateSumTotalPrice(listStorage);
-  // console.log(listStorage);
 };
 
-const listStorageOnload = async () => {
+const listStorageOnload = () => {
   const listOnStorage = JSON.parse(localStorage.getItem('listProducts'));
-  // console.log(listOnStorage);
-  if (await listOnStorage === null) {
+  if (listOnStorage === null) {
     localStorage.setItem('listProducts', '[]');
     listStorage = [];
+    updateSumTotalPrice(listStorage);
   } listStorage = listOnStorage;
   updateSumTotalPrice(listStorage);
 };
@@ -94,6 +92,7 @@ const createCartItemElementFromFetchItem = async (products) => {
   const text = cartItems.innerHTML;
   saveCartItems(text);
   setStorageListProducts(obj);
+  listStorageOnload();
 };
 
 function getSkuFromProductItem(item) {
@@ -145,5 +144,4 @@ const getSavedCartItemsOnload = () => {
 window.onload = () => {
   createProductItemElementFromFetchProduct('computador');
   getSavedCartItemsOnload();
-  listStorageOnload();
 };

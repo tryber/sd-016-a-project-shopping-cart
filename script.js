@@ -49,19 +49,16 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-async function getTotalPrice(id) {
-  const data = await fetchItem(id);
-  if (data) {
-    const { price } = data;
-    totalPrice += price;
-    total.innerText = `Total: R$${totalPrice}`;
-  }
+async function getTotalPrice(price) {
+  totalPrice += price;
+  total.innerText = `Total: R$${totalPrice}`;
 }
 
 async function addItemToCart(id) {
   const cart = document.querySelector(cartItems);
-  const data = await fetchItem(id).then(getTotalPrice(id));
-  const { id: sku, title: name, price: salePrice } = data;
+  const data = await fetchItem(id);
+  const { id: sku, title: name, price: salePrice } = await data;
+  await getTotalPrice(salePrice);
   const product = createCartItemElement({ sku, name, salePrice });
   cart.appendChild(product);
   getCartItemsUpdated();

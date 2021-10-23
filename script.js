@@ -65,6 +65,11 @@ const callFetchProducts = () => {
   });
 };
 
+function saveItemsCart() {
+  cartItems.innerHTML = getSavedCartItems();
+}
+
 window.onload = () => {
   callFetchProducts();
+  saveItemsCart();
 };

@@ -49,15 +49,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-async function addItemToCart(id) {
-  const cart = document.querySelector(cartItems);
-  const data = await fetchItem(id);
-  const { id: sku, title: name, price: salePrice } = data;
-  const product = createCartItemElement({ sku, name, salePrice });
-  cart.appendChild(product);
-  getCartItemsUpdated();
-}
-
 async function getTotalPrice(id) {
   const data = await fetchItem(id);
   if (data) {
@@ -65,6 +56,15 @@ async function getTotalPrice(id) {
     totalPrice += price;
     total.innerText = `Total: R$${totalPrice}`;
   }
+}
+
+async function addItemToCart(id) {
+  const cart = document.querySelector(cartItems);
+  const data = await fetchItem(id).then(getTotalPrice(id));
+  const { id: sku, title: name, price: salePrice } = data;
+  const product = createCartItemElement({ sku, name, salePrice });
+  cart.appendChild(product);
+  getCartItemsUpdated();
 }
 
 // Código feito com a ajuda de Vitor Brandão, Renan Souza, Lucas Alves, Matheus Benini, Italo Moraes, Rafael Feliciano, Julia Barcelos
@@ -81,7 +81,6 @@ function createProductItemElement({ sku, name, image }) {
       .appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
     newButton.addEventListener('click', () => {
       addItemToCart(sku);
-      getTotalPrice(sku);
       });
 
     section.appendChild(newButton);

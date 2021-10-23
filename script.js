@@ -14,7 +14,7 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   const cart = document.querySelector('.cart__items');
-
+  cart.removeChild(event.target);
 }
 
 function createCartItemElement({ sku, name, salePrice }) { 
@@ -68,5 +68,4 @@ async function searchProducts(product) {
 
 window.onload = () => { 
   searchProducts('computador');
-  selectButton();
 };

@@ -17,9 +17,8 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
   // função 'cartItemClickListener'ja esta implementada na função 'createCartItemElement', com eventListener pré estabelecido,
-  // basicamente esperando uma logica de remoção. 
+  // basicamente esperando uma função de remoção. 
   event.target.remove();
   saveCartItems(ol.innerHTML);
 }
@@ -56,7 +55,8 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   buttonEvent.addEventListener('click', () => {
     getItemsProduct(sku);
   });
-
+// com a dica do Brunão criei uma constante para armazenar o botão para adicionar ao carrinho no exemplo acima
+// para que depois criar um evento para esse botão.
   section.appendChild(buttonEvent);
   sectionProduct.appendChild(section);
   return section;
@@ -68,22 +68,22 @@ const getProduct = () => fetchProducts('computador').then((value) => {
     createProductItemElement(product);
   });
   loading.remove();
-});
-
+});// ajuda de Lucas Ribeiro
 const saveAndLocalStorage = () => {
   const olCart = getSavedCartItems();
   ol.innerHTML = olCart;
 };
 
+// auxilio do Lucas Ribeiro;
 const removeEventListener = () => {
   Array.from(ol.children).forEach((value) => {
     value.addEventListener('click', cartItemClickListener);
   });
 };
 
-function getSkuFromProductItem(item) {
+/* function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-}
+} */
 
 // com axilio de Eduardo Myasaki.
 const bottonRemoveList = () => {
@@ -94,6 +94,7 @@ const bottonRemoveList = () => {
 button.addEventListener('click', bottonRemoveList);
 
 window.onload = () => {
+  // auxilio do Lucas Ribeiro;
   getProduct();
   if (ol.children.length === 0) saveAndLocalStorage();
   removeEventListener();

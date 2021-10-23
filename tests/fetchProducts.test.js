@@ -18,15 +18,14 @@ describe('1 - Teste a função fecthProducts', () => {
   it('Verifica se ao chamar a função fetchProducts com o argumento, a função fetch utiliza o endpoint', () => {
     expect(fetch).toHaveBeenCalledWith("https://api.mercadolibre.com/sites/MLB/search?q=computador")
   })
-
-  it('Verifica se o retorno da função com o argumento computador é uma estrutura igual ao objeto computadorSearch', () => {
-    const getElementComputador = Object.keys('computador').length;
-    const getElementProductComputador = Object.keys(computadorSearch).length;
-    expect(getElementComputador).toEqual(getElementProductComputador);
+// auxilio de Eduardo Myasaki.
+  it('Verifica se o retorno da função com o argumento computador é uma estrutura igual ao objeto computadorSearch', async () => {
+  // auxilio de Fumagali;
+    expect(await fetchProducts('computador')).toEqual(computadorSearch.results);
   })
 
   it('Verifica se a função sem argumento retorna um erro', async () => {
-    const messageError = new Error('You must provide an url')
+    const messageError = new Error('You must provide an url');
     try {
       await fetchProducts();
     } catch (error) {

@@ -17,13 +17,14 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ sku, name, image, salePrice }) {
   const section = document.createElement('section');
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('span', 'priceProduct', `R$ ${salePrice}`));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
@@ -33,8 +34,16 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
+async function cartItemClickListener(event) {
+  const seletctedProduct = await fetchItem(id);
+  porNoCarrinho.addEventListener('click', cartItemClickListener);
+  // const idofProduct = document.querySelector('.item__add').parentNode.children[0].innerText;
+
+// essa funçao terá como disparador do evento o click no botão .item__add. 
+// ela irá chamar a funçao getSkuFromProductItem que retorna o ID do pruduto
+// depois ela chama funcao fetchItem.js (que tem so um produto) e constroi um objeto
+// o objeto sera usado por createCartItemElement
+
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -49,19 +58,18 @@ function createCartItemElement({ sku, name, salePrice }) {
 // lembando que searchData e o resultado da funcao que importa a API do mercado Livre e que .results serve para filtrar somente esse objeto do array grandao que recebemos da API
 
 async function serchProducts(product) { // essa e uma funcao assincrona
-  const searchData = await fetchProducts(product); // ela espera receber isso 
+  const searchData = await fetchProducts(product); // chamada da funcao fetchproduts.js
   // const sectionItems = document.querySelector('.items');
 
   const sectionItems = document.querySelector('.items'); // Alvo é a classe items no html
 
-  searchData.results.forEach((item) => {
+  searchData.results.forEach((item) => { // results é palcançar os dados no array
     const itemObject = {
       sku: item.id,
       name: item.title,
       image: item.thumbnail,
-      // salePrice: item.price,
+      salePrice: item.price,
     };
-    
     const productItem = createProductItemElement(itemObject);
     sectionItems.appendChild(productItem);
   });

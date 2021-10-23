@@ -37,9 +37,17 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 let sum = 0;
 
+const divPriceTotal = () => {
+  const divContainer = document.querySelector('.price');
+  const divPrice = document.createElement('div');
+  divPrice.classList.add('total-price');
+  divContainer.appendChild(divPrice);
+};
+
 function priceTotal(price) { 
   const div = document.querySelector('.total-price');
-  div.innerText = (sum += price).toPrecision();
+  const atual = (sum += price).toPrecision();
+  div.innerText = `Subtotal: ${atual}`;
 }
 
 async function adicionaCar(object) {
@@ -91,4 +99,5 @@ async function carregaProdutos(produto) {
 
 window.onload = () => { 
   carregaProdutos('computador');
+  divPriceTotal();
 };

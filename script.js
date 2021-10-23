@@ -97,6 +97,6 @@ emptyCart.addEventListener('click', () => {
 
 window.onload = () => {
   serchProducts('computador');
-  // addItemToCart('MLB1615760527');
+  addItemToCart('MLB1615760527');
   saveCart();
 };

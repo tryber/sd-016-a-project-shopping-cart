@@ -1,3 +1,5 @@
+const cartItems = '.cart__items';
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -13,8 +15,8 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  const cart = document.querySelector('.cart__items');
-  cart.removeChild(event.target);
+  const cartShopItems = document.querySelector(cartItems);
+  cartShopItems.removeChild(event.target);
 }
 
 function createCartItemElement({ sku, name, salePrice }) { 
@@ -26,7 +28,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 async function addItemToCart(id) {
-  const cart = document.querySelector('.cart__items');
+  const cart = document.querySelector(cartItems);
   const data = await fetchItem(id);
   const { id: sku, title: name, price: salePrice } = data;
   const product = createCartItemElement({ sku, name, salePrice });
@@ -52,8 +54,15 @@ function createProductItemElement({ sku, name, image }) {
     return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
+function cleanCartList() {
+  const cartList = document.querySelector(cartItems);
+  const cleanCartListButton = document.querySelector('.empty-cart');
+  cleanCartListButton.addEventListener('click', () => {
+// Lógica da repetição while vista em https://stackoverflow.com/questions/43317676/javascript-error-uncaught-typeerror-failed-to-execute-removechild-on-node
+    while (cartList.firstChild) {
+      cartList.removeChild(cartList.firstChild);
+    }
+  });
 }
 
 async function searchProducts(product) {
@@ -68,4 +77,5 @@ async function searchProducts(product) {
 
 window.onload = () => { 
   searchProducts('computador');
+  cleanCartList();
 };

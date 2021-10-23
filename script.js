@@ -69,6 +69,13 @@ function saveItemsCart() {
   cartItems.innerHTML = getSavedCartItems();
 }
 
+function clearCart() {
+  cartItems.innerHTML = '';
+}
+
+cartItems.addEventListener('click', cartItemClickListener);
+document.querySelector('.empty-cart').addEventListener('click', clearCart);
+
 window.onload = () => {
   callFetchProducts();
   saveItemsCart();

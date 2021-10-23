@@ -61,14 +61,14 @@ body {
   flex-basis: 1;
   font-size: 16pt;
   text-align: center;
-  margin: -49px -20px 20px -20px;
+  margin: -49px -20px 0px -20px;
   border-radius: 10px;
   padding: 10px;
-  
 }
 
 .cart__items {
-  min-height: 700px;
+  overflow: scroll;
+  height: 750px;
 }
 
 .cart__item {

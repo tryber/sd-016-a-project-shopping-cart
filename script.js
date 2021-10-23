@@ -1,3 +1,5 @@
+const father = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -17,8 +19,6 @@ function getSkuFromProductItem(item) {
 }
 
 // Remova o item do carrinho de compras ao clicar nele
-
-const father = document.querySelector('.cart__items');
 
 function cartItemClickListener(event) {
   father.removeChild(event.target);
@@ -47,8 +47,10 @@ function createProductItemElement({ sku, name, image }) { // { id, title, thumbn
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
-    .addEventListener('click', () => addToCart(sku));
-
+    .addEventListener('click', () => {
+      addToCart(sku);
+      saveCartItems(father.innerHTML);
+    });
   return section;
 }
 

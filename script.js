@@ -57,14 +57,14 @@ async function searchProducts(product) {
 
 // requisito 2
 const page = document.querySelector('body'); // para usar o addEventListener
-const cart = document.querySelector('ol.cart__items'); 
+const cartItems = document.querySelector('ol.cart__items'); 
 
 const putInCart = (foundProduct) => { // para colocar os itens no carrinho
   const { id: sku, title: name, price: salePrice } = foundProduct;
   const product = { sku, name, salePrice };
   const item = createCartItemElement(product);
-  cart.appendChild(item);
-  saveCartItems(cart.innerHTML); // **REQUISITO 4 - para salvar no storage os itens que estao no carrinho
+  cartItems.appendChild(item);
+  saveCartItems(cartItems.innerHTML); // **REQUISITO 4 - para salvar no storage os itens que estao no carrinho
 };
 
 const selectProduct = async (element) => { // para selecionar os itens 
@@ -84,8 +84,8 @@ page.addEventListener('click', (element) => { // evento para acionar selectProdu
 // requisito 3
 const removeItemFromCart = (element) => { // funcao para eliminar filhos da ol no carrinho 
   const item = element.target;
-  cart.removeChild(item);
-  saveCartItems(cart.innerHTML); // **REQUISITO 4 - para salvar no storage os itens que estao no carrinho
+  cartItems.removeChild(item);
+  saveCartItems(cartItems.innerHTML); // **REQUISITO 4 - para salvar no storage os itens que estao no carrinho
 };
 
 page.addEventListener('click', (element) => { // eliminar filhos da ol ao clicar no mesmo 
@@ -97,7 +97,7 @@ page.addEventListener('click', (element) => { // eliminar filhos da ol ao clicar
 // requisito 4
 const saveItensFromCartInStorage = () => { // mantem no html a configuracao atual dos itens que estao no carrinho
   const inner = getSavedCartItems();
-  cart.innerHTML = inner;
+  cartItems.innerHTML = inner;
   };
 
 // implementar as funcoes na ordem dentro do window onload

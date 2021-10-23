@@ -75,7 +75,15 @@ selectItem.innerHTML = getSavedCartItems();
 selectItem.addEventListener('click', cartItemClickListener);
 }
 
+function clearCartItems() {
+  const getClassButton = document.querySelector('.empty-cart');
+  getClassButton.addEventListener('click', () => {
+    selectItem.innerHTML = '';
+  });
+}
+
 window.onload = () => {
   searchProducts('computador');
   restoreCartItems();
+  clearCartItems();
 };

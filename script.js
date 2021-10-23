@@ -75,6 +75,15 @@ const restauraEventListner = () => {
   listaItens.addEventListener('click', cartItemClickListener);
 };
 
+const buttonLimpaCart = document.querySelector('.empty-cart');
+
+const limpaCarrinho = () => {
+  listaItens.innerHTML = '';
+  saveCartItems(listaItens.innerHTML = '');
+};
+
+buttonLimpaCart.addEventListener('click', limpaCarrinho); 
+ 
 window.onload = () => {
   listaProdutos('computador');
   restauraCarrinho();

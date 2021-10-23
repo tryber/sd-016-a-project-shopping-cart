@@ -18,9 +18,10 @@ function getSkuFromProductItem(item) {
 
 // Remova o item do carrinho de compras ao clicar nele
 
+const father = document.querySelector('.cart__items');
+
 function cartItemClickListener(event) {
-  document.querySelector('.cart__items')
-    .removeChild(event.target);
+  father.removeChild(event.target);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -87,6 +88,11 @@ async function searchProduct(product) { // requisito feito graças ao Bê que no
   });
 }
 
+const cart = () => {
+  father.innerHTML = getSavedCartItems;
+};
+
 window.onload = () => {
   searchProduct('computador');
+  father.children.length === 0 ? cart() : '';
 };

@@ -1,14 +1,19 @@
 const cartItems = '.cart__items';
 const total = document.querySelector('.total-price');
-const loading = document.querySelector('.loading');
 let totalPrice = 0;
 
 function loadingPage() {
-  loading.style.display = 'block';
+  const h2 = document.createElement('h2');
+  h2.className = 'loading';
+  const section = document.querySelector('.items');
+  h2.innerText = 'carregando...';
+  section.appendChild(h2);
 }
 
 function loaded() {
-  loading.style.display = 'none';
+  const section = document.querySelector('.items');
+  const loading = document.querySelector('.loading');
+  section.removeChild(loading);
 }
 
 function getCartItemsUpdated() {
@@ -55,9 +60,11 @@ async function addItemToCart(id) {
 
 async function getTotalPrice(id) {
   const data = await fetchItem(id);
-  const { price } = data;
-  totalPrice += price;
-  total.innerText = `Total: R$${totalPrice}`;
+  if (data) {
+    const { price } = data;
+    totalPrice += price;
+    total.innerText = `Total: R$${totalPrice}`;
+  }
 }
 
 // Código feito com a ajuda de Vitor Brandão, Renan Souza, Lucas Alves, Matheus Benini, Italo Moraes, Rafael Feliciano, Julia Barcelos

@@ -27,9 +27,20 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   return li;
 }
 
+function setTotalPriceItem(price) {
+  if (localStorage.getItem('price')) {
+    const prices = localStorage.getItem('price');
+    const total = parseInt(prices, 10) + price;
+    localStorage.setItem('price', total);
+  } else {
+    localStorage.setItem('price', price);
+  }
+}
+
 async function addCartItem(id) {
   const product = await fetchItem(id);
   cartList.appendChild(createCartItemElement(product));
+  setTotalPriceItem(product.price);
   saveCartItems(cartList.innerHTML);
   /* 
   requisito feito em uma sala de estudos

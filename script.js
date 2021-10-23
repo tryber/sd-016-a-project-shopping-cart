@@ -1,4 +1,4 @@
-const sectionItens = document.querySelector('.items');
+const listaItens = document.querySelector('.cart__items');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -16,6 +16,7 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   event.target.remove();
+  saveCartItems(listaItens.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -23,19 +24,21 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  return li;
+  listaItens.appendChild(li);
+  saveCartItems(listaItens.innerHTML);
+  // return li;
 }
 
 const adicionaAoCarrinho = async (itemId) => {
   const resultadoId = await fetchItem(itemId);
-  const listaItens = document.querySelector('.cart__items');
   const { id: sku, title: name, price: salePrice } = resultadoId;
-  const listaCarrinho = createCartItemElement({ sku, name, salePrice });
-  listaItens.appendChild(listaCarrinho);
+  createCartItemElement({ sku, name, salePrice });
 };
 
 function createProductItemElement({ sku, name, image }) {
+  const sectionItens = document.querySelector('.items');
   const section = document.createElement('section');
+  section.className = 'item';
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -45,11 +48,7 @@ function createProductItemElement({ sku, name, image }) {
   });
   section.appendChild(buttonAdcCarrinho);
   sectionItens.appendChild(section);
-  return section;
-}
-
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
+  // return section;
 }
 
 const listaProdutos = async (produto) => {
@@ -60,11 +59,24 @@ const listaProdutos = async (produto) => {
       name: element.title,
       image: element.thumbnail,
   };
-    const itemProdutos = createProductItemElement(itensObjeto);
-    sectionItens.appendChild(itemProdutos);
+    createProductItemElement(itensObjeto);
   });
+};
+
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+
+const restauraCarrinho = () => {
+  listaItens.innerHTML = getSavedCartItems();
+};
+
+const restauraEventListner = () => {
+  listaItens.addEventListener('click', cartItemClickListener);
 };
 
 window.onload = () => {
   listaProdutos('computador');
+  restauraCarrinho();
+  restauraEventListner();
 };

@@ -24,15 +24,19 @@ function createProductItemElement({ sku, name, image }) {
   );
   return section;
 }
- 
+
 // function getSkuFromProductItem(item) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
-
-function removerLista(target) {
-  const salvarOl = document.querySelector('.cart__items'); 
+const ajust = '.cart__items';
+function removeLista(target) {
+  const salvarOl = document.querySelector(ajust);
   salvarOl.removeChild(target);
-  console.log(target);
+}
+
+function removerCarrinho() {
+  const salvarCarro = document.querySelector(ajust);
+  salvarCarro.innerHTML = '';
 }
 
 function cartItemClickListener(event) {
@@ -41,7 +45,7 @@ function cartItemClickListener(event) {
   // removeProdutos.forEach((item) => {
   //   item.addEventListener('click', removerLista);
   // });
-  removerLista(event.target);
+  removeLista(event.target);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -49,6 +53,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  const removeTudo = document.querySelector('.empty-cart');
+  removeTudo.addEventListener('click', removerCarrinho);
   return li;
 }
 
@@ -60,7 +66,7 @@ function adicionarCarrinho(li) {
 const objetoCarrinho = (itemAtual) => ({
   sku: itemAtual.id,
   name: itemAtual.title,
-  salePrice: itemAtual.price, 
+  salePrice: itemAtual.price,
 });
 
 async function searchProducts(product) {
@@ -72,12 +78,12 @@ async function searchProducts(product) {
       name: item.title,
       image: item.thumbnail,
     };
-  const productItem = createProductItemElement(cadaItem);    
-  sectionItens.appendChild(productItem);
-  const salvarBotao = document.querySelectorAll('.item__add')[index];
-  const itemAtual = await fetchItem(item.id);
-  salvarBotao.addEventListener('click',
-   () => adicionarCarrinho(createCartItemElement(objetoCarrinho(itemAtual))));
+    const productItem = createProductItemElement(cadaItem);
+    sectionItens.appendChild(productItem);
+    const salvarBotao = document.querySelectorAll('.item__add')[index];
+    const itemAtual = await fetchItem(item.id);
+    salvarBotao.addEventListener('click', () =>
+      adicionarCarrinho(createCartItemElement(objetoCarrinho(itemAtual))));
   });
 }
 

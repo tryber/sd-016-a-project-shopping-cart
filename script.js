@@ -30,8 +30,31 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+const totalElement = document.querySelector('.total-price');
+// OBSERVAÇÃO: Cypress não está avaliando o projeto ao tentar recuperar o total no localStorage
+// ao implementar esta funcionalidade, allPrices deve ser tipo "let"
+const allPrices = [];
+const reduceFunction = (accumulator, currentValue) => accumulator + currentValue;
+const totalPurchase = () => allPrices.reduce(reduceFunction, 0);
+
+function addPrice(price) {
+  allPrices.push(price);
+  totalElement.innerHTML = `${totalPurchase()}`;
+  localStorage.setItem('total', JSON.stringify(allPrices));
+}
+
+function removePrice(index) {
+  allPrices.splice(index, 1);
+  totalElement.innerHTML = `${totalPurchase()}`;
+  localStorage.setItem('total', JSON.stringify(allPrices));
+}
+
 function cartItemClickListener(event) {
   const clickedItem = event.target;
+  // ** REQUISITO **
+  const indexOfClickedItem = Array.from(cart.children).indexOf(clickedItem);
+  removePrice(indexOfClickedItem);
+
   clickedItem.remove();
 
   saveCartItems(cart.innerHTML);
@@ -70,6 +93,7 @@ async function addItemToCart(event) {
     salePrice: fetchItemData.price,
   };
 
+  addPrice(skuNameSalePrice.salePrice);
   const newLiItem = createCartItemElement(skuNameSalePrice);
   newLiItem.addEventListener('click', cartItemClickListener);
   cart.appendChild(newLiItem);
@@ -103,6 +127,9 @@ async function generatePage() {
 
 window.onload = () => {
   generatePage();
-  recreateCart()
+  recreateCart();
   addListenersToCartItems();
+  // OBSERVAÇÃO: Cypress não está avaliando o projeto ao tentar recuperar o total no localStorage
+  // allPrices = JSON.parse(localStorage.getItem('total'));
+  // totalElement.innerHTML = `${totalPurchase()}`;
 };

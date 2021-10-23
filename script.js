@@ -136,6 +136,12 @@ async function getProductData(search) {
       createProductItemElement({ sku, name, image }),
     );
   });
+  document.querySelector('.loading').remove();
+}
+
+function loadingText() {
+  const loading = createCustomElement('div', 'loading', 'Loading...');
+  productConteiner.appendChild(loading);
 }
 
 async function asyncAwait() {
@@ -145,6 +151,7 @@ async function asyncAwait() {
 }
 
 window.onload = () => {
+  loadingText();
   asyncAwait();
   clearButton.addEventListener('click', clearCart);
   createPriceText();

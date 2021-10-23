@@ -28,8 +28,17 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
+async function cartItemClickListener(event) {
+  if (event.target.classList.contains('item__add')) {
+    const itemCard = event.target.parentElement;
+    const pureitemId = `${itemCard.firstElementChild.innerText}`;
+    const itemId = pureitemId.toString();
+    const acquiredData = await fetchItem(itemId);
+    const { id: sku, title: name, price: salePrice } = acquiredData;
+    const cartItemsList = document.querySelector('.cart__items');
+    const selectedItemElement = createCartItemElement({ sku, name, salePrice });
+    cartItemsList.appendChild(selectedItemElement);
+  } 
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -40,10 +49,9 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-async function getResultFromFetch(product) {
+async function getResultFromFetchProducts(product) {
   const acquiredData = await fetchProducts(product);
   const itemsSection = document.querySelector('.items');
-  console.log(acquiredData);
   acquiredData.results.forEach((result) => {
     const { id: sku, title: name, thumbnail: image } = result;
     const returnedItemElement = createProductItemElement({ sku, name, image });
@@ -52,5 +60,6 @@ async function getResultFromFetch(product) {
 }
 
 window.onload = () => {
-  getResultFromFetch('computador');
+  getResultFromFetchProducts('computador');
+  document.addEventListener('click', cartItemClickListener);
 };

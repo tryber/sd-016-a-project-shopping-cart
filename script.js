@@ -57,11 +57,17 @@ async function findProducts(product) {
 
 function sumPrices(cart) {
   const listPrices = [];
-  Array.from(cart.children).forEach(item => 
+  Array.from(cart.children).forEach((item) =>
     listPrices.push(parseFloat(item.innerText.split('PRICE: $')[1])));
   return listPrices.reduce((total, price) => total + price);
 }
 
+function addSumPrices(cart) {
+  const totalPriceText = document.querySelector('.totalPrice');
+  const totalSum = sumPrices(cart);
+  const p = document.createTextNode(`TOTAL = ${totalSum}`);
+  totalPriceText.appendChild(p);
+}
 
 function addItem() {
   const button = document.querySelectorAll('.item__add');
@@ -79,7 +85,7 @@ function addItem() {
           cart.appendChild(resultProduct);
         });
       saveCartItems(cart.innerHTML);
-      sumPrices(cart);
+      addSumPrices(cart);
     });
   });
 }

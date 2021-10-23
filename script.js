@@ -56,6 +56,20 @@ const searchProduct = async (product) => {
   });
 };
 
+const getProduct = async (product) => {
+  const items = document.querySelectorAll('.item');
+  const buttons = document.querySelectorAll('.item__add');
+
+  buttons.forEach((button) => {
+    if (event.target === button) {
+      const cartItems = document.querySelector('.cart__items');
+      const sonsOfCartItems = button.parentElement;
+      cartItems.appendChild(sonsOfCartItems);
+      console.log(cartItems);
+    }
+  });
+};
+
 window.onload = () => {
   searchProduct('computador');
 };

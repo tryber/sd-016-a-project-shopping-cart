@@ -1,3 +1,7 @@
+body {
+  margin: 0;
+}
+
 .container {
   display: flex;
   justify-content: space-around;
@@ -37,7 +41,7 @@
 }
 
 .item .item__add {
-  background-color: green;
+  background-color: rgb(88, 88, 163);
   border: 0;
   cursor: pointer;
   margin: 0;
@@ -48,10 +52,40 @@
   display: flex;
   flex-basis: 30%;
   flex-flow: column wrap;
+  align-items: stretch;
 }
 
 .cart .cart__title {
+  font-family: cursive;
+  background-color: rgb(185, 185, 238);
   flex-basis: 1;
   font-size: 16pt;
   text-align: center;
+  margin: -49px -20px 20px -20px;
+  border-radius: 10px;
+  padding: 10px;
+  
+}
+
+.cart__items {
+  min-height: 700px;
+}
+
+.cart__item {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  margin-left: 50px;
+  text-align: right;
+  max-width: 300px;
+  list-style-position: inside;
+  border: solid black;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+h1 {
+  margin: 0;
+  background-color: rgb(111, 111, 245);
+  border: solid black;
+  padding: 5px;
 }

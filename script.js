@@ -51,7 +51,7 @@ async function searchProducts(product) { // definimos que essa função é assin
     const objectProducts = { // criando um objeto, orientando as chaves existentes as que serão necessarias para a função createProductItemElement
       sku: item.id,
       name: item.title, 
-      image: item.thumbail,
+      image: item.thumbnail,
     };
 
     const createItens = createProductItemElement(objectProducts); // armazenamos o retorno de createProductItemElement
@@ -59,6 +59,12 @@ async function searchProducts(product) { // definimos que essa função é assin
   });
 }
 
+async function searchItem(id) {
+  const objectIdItem = await fetchItem(id)
+  console.log(objectIdItem);
+}
+
 window.onload = () => {
   searchProducts('computador');
+  searchItem('MLB1341706310');
 };

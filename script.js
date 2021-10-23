@@ -1,3 +1,4 @@
+// requisito executado com o auxilio do vídeo de Bernando e mentoria de Humberto Castro
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -40,4 +41,16 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+async function searchProducts(product) {
+  const searchData = await fetchProducts(product);
+  const sectionItems = document.querySelector('.items');
+  searchData.results.forEach((item) => {
+   const itemObj = { sku: item.id, name: item.title, image: item.thumbnail };
+   const productItem = createProductItemElement(itemObj);
+   sectionItems.appendChild(productItem);
+  });
+}
+
+window.onload = () => {
+  searchProducts('computador');
+ };

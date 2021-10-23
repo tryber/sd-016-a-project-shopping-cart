@@ -46,7 +46,7 @@ async function getResultFromFetch(product) {
   console.log(acquiredData);
   acquiredData.results.forEach((result) => {
     const { id: sku, title: name, thumbnail: image } = result;
-    const returnedItemElement = createProductItemElement({sku, name, image});
+    const returnedItemElement = createProductItemElement({ sku, name, image });
     itemsSection.appendChild(returnedItemElement);
   });
 }

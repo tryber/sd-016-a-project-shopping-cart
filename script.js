@@ -26,8 +26,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-const adicionaAoCarrinho = async (ItemId) => {
-  const resultadoId = await fetchItem(ItemId);
+const adicionaAoCarrinho = async (itemId) => {
+  const resultadoId = await fetchItem(itemId);
   const listaItens = document.querySelector('.cart__items');
   const { id: sku, title: name, price: salePrice } = resultadoId;
   const listaCarrinho = createCartItemElement({ sku, name, salePrice });
@@ -41,7 +41,7 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createProductImageElement(image));
   const buttonAdcCarrinho = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   buttonAdcCarrinho.addEventListener('click', () => {
-    adicionaAoCarrinho();
+    adicionaAoCarrinho(sku);
   });
   section.appendChild(buttonAdcCarrinho);
   sectionItens.appendChild(section);

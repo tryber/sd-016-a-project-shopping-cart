@@ -16,7 +16,6 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
   event.target.remove();
 }
 
@@ -63,7 +62,12 @@ function restoreCart() {
   getOl.innerHTML = getSavedCartItems();
 }
 
+function clearCart() {
+  getOl.innerHTML = '';
+}
+
 getOl.addEventListener('click', cartItemClickListener);
+document.querySelector('.empty-cart').addEventListener('click', clearCart);
 
 window.onload = () => { 
   listOfProducts('computador');

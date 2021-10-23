@@ -33,7 +33,7 @@ function getSkuFromProductItem(item) {
 const totalElement = document.querySelector('.total-price');
 // OBSERVAÇÃO: Cypress não está avaliando o projeto ao tentar recuperar o total no localStorage
 // ao implementar esta funcionalidade, allPrices deve ser tipo "let"
-const allPrices = [];
+let allPrices = [];
 const reduceFunction = (accumulator, currentValue) => accumulator + currentValue;
 const totalPurchase = () => allPrices.reduce(reduceFunction, 0);
 
@@ -68,9 +68,11 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+const loadingElement = document.querySelector('.loading');
+
 async function createComputerList() {
   const computerList = await fetchProducts('computer');
-
+  loadingElement.remove();
   computerList.results.forEach((computer) => {
     const skuNameImage = {
       sku: computer.id,
@@ -142,6 +144,7 @@ window.onload = () => {
   recreateCart();
   addListenersToCartItems();
   // OBSERVAÇÃO: Cypress não está avaliando o projeto ao tentar recuperar o total no localStorage
-  // allPrices = JSON.parse(localStorage.getItem('total'));
-  // totalElement.innerHTML = `${totalPurchase()}`;
+  if (localStorage.getItem('cartItems') === null) localStorage.setItem('total', []);
+  allPrices = JSON.parse(localStorage.getItem('total'));
+  totalElement.innerHTML = `${totalPurchase()}`;
 };

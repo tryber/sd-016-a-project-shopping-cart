@@ -1,8 +1,11 @@
-const fetchProducts = (product) => {
-  return fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${product}`)
-  .then((data) => data.json())
-  .then((value) => value)
-  .catch((error) => error)
+const fetchProducts = async (product) => {
+  try {
+    const data = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${product}`);
+    const value = await data.json();
+    return value;
+  } catch (error) {
+    return error;
+  }
 };
 
 if (typeof module !== 'undefined') {

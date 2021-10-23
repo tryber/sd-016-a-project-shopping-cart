@@ -28,18 +28,6 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-async function cartItemClickListener(event) {
-  if (event.target.classList.contains('item__add')) {
-    const itemCard = event.target.parentElement;
-    const pureitemId = `${itemCard.firstElementChild.innerText}`;
-    const itemId = pureitemId.toString();
-    const acquiredData = await fetchItem(itemId);
-    const { id: sku, title: name, price: salePrice } = acquiredData;
-    const cartItemsList = document.querySelector('.cart__items');
-    const selectedItemElement = createCartItemElement({ sku, name, salePrice });
-    cartItemsList.appendChild(selectedItemElement);
-  } 
-}
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -47,6 +35,18 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
+}
+
+async function cartItemClickListener(event) {
+  if (event.target.classList.contains('item__add')) {
+    const itemCard = event.target.parentElement;
+    const itemId = getSkuFromProductItem(itemCard);
+    const acquiredData = await fetchItem(itemId);
+    const { id: sku, title: name, price: salePrice } = acquiredData;
+    const cartItemsList = document.querySelector('.cart__items');
+    const selectedItemElement = createCartItemElement({ sku, name, salePrice });
+    cartItemsList.appendChild(selectedItemElement);
+  } 
 }
 
 async function getResultFromFetchProducts(product) {

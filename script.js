@@ -47,7 +47,7 @@ const divPriceTotal = () => {
 function priceTotal(price) { 
   const div = document.querySelector('.total-price');
   const atual = (sum += price).toPrecision();
-  div.innerText = `Subtotal: ${atual}`;
+  div.innerText = atual;
 }
 
 async function adicionaCar(object) {
@@ -97,7 +97,17 @@ async function carregaProdutos(produto) {
   });
 }
 
+const getFromLocalStorage = () => {
+  const itemsList = JSON.parse(getSavedCartItems());
+  if (itemsList) {
+    itemsList.forEach((item) => {
+      createCartItemElement(item);
+    });
+  }
+};
+
 window.onload = () => { 
   carregaProdutos('computador');
   divPriceTotal();
+  getFromLocalStorage();
 };

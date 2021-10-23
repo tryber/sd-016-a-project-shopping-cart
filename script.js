@@ -6,13 +6,13 @@ const cartItems = document.querySelector('.cart__items');
 let listStorage = [];
 
 const renderTotalPrice = (price) => {
-  const place = document.querySelector('.total-price');
-  place.innerHTML = price;
+  const totalPriceElement = document.querySelector('.total-price');
+  totalPriceElement.innerHTML = price;
 };
 
 const updateSumTotalPrice = (productsObj) => {
-  const values = productsObj.map((product) => product.salePrice);
-  totalPrice = values.reduce((acc, value) => acc + value, 0);
+  const salePriceValues = productsObj.map((product) => product.salePrice);
+  totalPrice = salePriceValues.reduce((acc, value) => acc + value, 0);
   renderTotalPrice(totalPrice);
 };
 
@@ -22,7 +22,7 @@ const setStorageListProducts = (objProduct) => {
   updateSumTotalPrice(listStorage);
 };
 
-const listStorageOnload = () => {
+const listStorageUpdate = () => {
   const listOnStorage = JSON.parse(localStorage.getItem('listProducts'));
   if (listOnStorage === null) {
     localStorage.setItem('listProducts', '[]');
@@ -30,6 +30,13 @@ const listStorageOnload = () => {
     updateSumTotalPrice(listStorage);
   } listStorage = listOnStorage;
   updateSumTotalPrice(listStorage);
+};
+
+const listStorageOnload = () => {
+  const listOnStorage = JSON.parse(localStorage.getItem('listProducts'));
+  if (listOnStorage !== null) {
+    updateSumTotalPrice(listOnStorage);
+  }
 };
 
 const removeItem = (sku) => {
@@ -67,6 +74,7 @@ function createProductItemElement({ sku, name, image }) {
 function cartItemClickListener(event) {
   if (event.target.className === 'cart__item') {
     event.target.remove();
+    listStorageUpdate();
   }
 }
 
@@ -92,7 +100,7 @@ const createCartItemElementFromFetchItem = async (products) => {
   const text = cartItems.innerHTML;
   saveCartItems(text);
   setStorageListProducts(obj);
-  listStorageOnload();
+  listStorageUpdate();
 };
 
 function getSkuFromProductItem(item) {
@@ -144,4 +152,5 @@ const getSavedCartItemsOnload = () => {
 window.onload = () => {
   createProductItemElementFromFetchProduct('computador');
   getSavedCartItemsOnload();
+  listStorageOnload();
 };

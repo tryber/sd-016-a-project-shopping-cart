@@ -10,7 +10,6 @@ function createCustomElement(element, className, innerText) {
   e.className = className;
   e.innerText = innerText;
   return e;
-
 }
 
 function createProductItemElement({ sku, name, image }) {

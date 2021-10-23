@@ -37,6 +37,7 @@ const addToCart = async (id) => {
   const item = await fetchItem(id);
   const { id: sku, title: name, price: salePrice } = item;
   cartItems.appendChild(createCartItemElement({ sku, name, salePrice }));
+  saveCartItems(list.innerHTML); // feito em uma sala do zoom com a ajuda do Joel Almeida e Emerson Moreira
 };
 
 function createProductItemElement({ sku, name, image }) { // { id, title, thumbnail }
@@ -53,6 +54,8 @@ function createProductItemElement({ sku, name, image }) { // { id, title, thumbn
 
 /*
   A partir dos dados obtidos pela função fetchItem você deve utilizar a função createCartItemElement() para criar os componentes HTML referentes a um item do carrinho.
+
+  Sumo me ajudou fazendo essa lista:
 
 1- Como vou disparar um evento?
   qual momento eu posso inserir? -> quando criamos o elemento - createProductItemElement
@@ -87,16 +90,16 @@ async function searchProduct(product) { // requisito feito graças ao Bê que no
   });
 }
 
-const cart = () => {
-  list.innerHTML = getSavedCartItems();
-};
-
 function emptyCart() {
   document.querySelector('.empty-cart').addEventListener('click', () => {
     list.innerHTML = '';
   });
 }
 emptyCart();
+
+const cart = () => {
+  list.innerHTML = getSavedCartItems();
+};
 
 window.onload = () => {
   searchProduct('computador');

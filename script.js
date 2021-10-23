@@ -36,8 +36,9 @@ const addToCart = async (id) => {
   const cartItems = document.querySelector('.cart__items');
   const item = await fetchItem(id);
   const { id: sku, title: name, price: salePrice } = item;
+
   cartItems.appendChild(createCartItemElement({ sku, name, salePrice }));
-  saveCartItems(list.innerHTML); // feito em uma sala do zoom com a ajuda do Joel Almeida e Emerson Moreira
+  saveCartItems(list.innerHTML); // essa parte foi feita em uma sala do zoom com a ajuda do Joel Almeida e Emerson Moreira
 };
 
 function createProductItemElement({ sku, name, image }) { // { id, title, thumbnail }
@@ -103,5 +104,5 @@ const cart = () => {
 
 window.onload = () => {
   searchProduct('computador');
-  cart();
+  if (list.children.length === 0) cart();
 };

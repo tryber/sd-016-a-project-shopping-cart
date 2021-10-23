@@ -1,4 +1,6 @@
 const classCartItems = document.querySelector('.cart__items');
+const cartItems = [];
+let sumPrice = 0;
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -18,8 +20,12 @@ function getSkuFromProductItem(item) {
   
 }
 
-function cartItemClickListener(event) {
+function cartItemClickListener(event, sku) {
   // coloque seu código aqui
+  const findElement = cartItems.find((item) => item.sku === sku);
+  const findIndexOfElement = cartItems.indexOf(findElement);
+  cartItems.splice(findIndexOfElement, 1);
+  saveCartItems(JSON.stringify(cartItems));
   event.target.remove();
 }
 
@@ -35,13 +41,11 @@ function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', (event) => cartItemClickListener(event, sku));
   classCartItems.appendChild(li);
   
   return li;
 }
-
-let sum = 0;
 
 const divPriceTotal = () => {
   const divContainer = document.querySelector('.price');
@@ -52,7 +56,7 @@ const divPriceTotal = () => {
 
 function priceTotal(price) { 
   const div = document.querySelector('.total-price');
-  const atual = (sum += price).toPrecision();
+  const atual = (sumPrice += price).toPrecision();
   div.innerText = atual;
 }
 
@@ -79,6 +83,8 @@ function createProductItemElement({ sku, name, image, salePrice }) {
   const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   button.addEventListener('click', () => {
     adicionaCar({ sku, name, image });
+    cartItems.push({ sku, name, salePrice });
+    saveCartItems(JSON.stringify(cartItems));
     priceTotal(salePrice);
   });
   

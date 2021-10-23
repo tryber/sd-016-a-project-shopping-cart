@@ -20,6 +20,7 @@
   height: auto;
   margin: 5px;
   width: 200px;
+  align-items: center;
 }
 
 .item .item__sku {
@@ -59,7 +60,7 @@
 
 /* severo conteudo */
 .conteiner_img {
-  width: 100%;
+  width: 60%;
   height: 130px;
   overflow: hidden;
 }

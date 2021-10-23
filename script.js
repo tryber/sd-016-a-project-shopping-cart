@@ -60,7 +60,7 @@ async function serchProducts(product) { // essa e uma funcao assincrona
       name: item.title,
       image: item.thumbnail,
       // salePrice: item.price,
-    };// const { id: sku, title: name, thumbnail: image } = item;
+    };
     
     const productItem = createProductItemElement(itemObject);
     sectionItems.appendChild(productItem);

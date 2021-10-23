@@ -126,6 +126,15 @@ function createPriceValue() {
   priceConteiner.appendChild(priceTag);
 }
 
+function loadingText() {
+  const loading = createCustomElement('div', 'loading', 'Loading...');
+  productConteiner.appendChild(loading);
+}
+
+function removeLoadingText() {
+  document.querySelector('.loading').remove();
+}
+
 async function getProductData(search) {
   const arrayOfProducts = await fetchProducts(search);
   arrayOfProducts.results.forEach((product) => {
@@ -136,12 +145,7 @@ async function getProductData(search) {
       createProductItemElement({ sku, name, image }),
     );
   });
-  document.querySelector('.loading').remove();
-}
-
-function loadingText() {
-  const loading = createCustomElement('div', 'loading', 'Loading...');
-  productConteiner.appendChild(loading);
+  removeLoadingText();
 }
 
 async function asyncAwait() {

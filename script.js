@@ -40,4 +40,22 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+// Agradecimento especial ao Bernardo Salgueiro (Instrutor - T16) por ter feito um video ajudando a desenrolar o requisito 1.
+const searchProduct = async (product) => {
+  const search = await fetchProducts(product);
+  const items = document.querySelector('.items');
+
+  search.results.forEach((result) => {
+    const item = createProductItemElement(({
+      id: result.id,
+      name: result.title,
+      image: result.thumbnail,
+    }));
+
+    items.appendChild(item);
+  });
+};
+
+window.onload = () => {
+  searchProduct('computador');
+};

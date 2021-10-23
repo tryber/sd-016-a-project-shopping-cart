@@ -66,6 +66,10 @@ async function cartProduct(event) {
 
 function searchProduct(product = 'computador') {
   const selectItens = document.querySelector('.items');
+  const loading = document.createElement('i');
+  loading.className = 'loading';
+  loading.innerHTML = 'carregando...';
+  document.querySelector('h1').appendChild(loading);
   fetchProducts(product).then((data) => {
       data.results.forEach((element) => {
       const { id: sku, title: name, thumbnail: image } = element;
@@ -74,6 +78,7 @@ function searchProduct(product = 'computador') {
       itens.forEach((item) => {
         item.addEventListener('click', cartProduct);
       });
+      loading.remove();
     });
     });
 }

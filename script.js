@@ -17,7 +17,13 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
-  event.target.remove();
+  const itemSelected = event.target;
+  const text = itemSelected.innerText.split(' ');
+  let number = text[text.length - 1];
+  number = number.split('').filter((e) => Number(e) || e === '.' || e === '0').join('');
+  sumItems.innerText = (parseFloat(sumItems.innerText * 100) - parseFloat(number * 100)) / 100;
+  localStorage.setItem('price', sumItems.innerText);
+  itemSelected.remove();
   saveCartItems(listItems.innerHTML);
 }
 
@@ -42,7 +48,7 @@ function createCartItemElement({ sku, name, salePrice, thumbnail }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.style.listStyleImage = `url(${thumbnail})`;
-  sumItems.innerText = (parseFloat(sumItems.innerText) * 100 + salePrice * 100) / 100;
+  sumItems.innerText = (parseFloat(sumItems.innerText * 100) + parseFloat(salePrice * 100)) / 100;
   localStorage.setItem('price', sumItems.innerText);
   li.addEventListener('click', cartItemClickListener);
   return li;

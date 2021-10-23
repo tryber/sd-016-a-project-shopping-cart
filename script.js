@@ -144,7 +144,7 @@ window.onload = () => {
   recreateCart();
   addListenersToCartItems();
   // OBSERVAÇÃO: Cypress não está avaliando o projeto ao tentar recuperar o total no localStorage
-  if (localStorage.getItem('cartItems') === null) localStorage.setItem('total', []);
+  if (localStorage.getItem('cartItems') === null) return localStorage.setItem('total', []);
   allPrices = JSON.parse(localStorage.getItem('total'));
   totalElement.innerHTML = `${totalPurchase()}`;
 };

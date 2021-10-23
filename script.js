@@ -38,7 +38,7 @@ function createCartItemElement({ sku, name, salePrice, thumbnail }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.style.listStyleImage = `url(${thumbnail})`;
-  let sumItems = document.querySelector('.total-price');
+  const sumItems = document.querySelector('.total-price');
   sumItems.innerText = (parseFloat(sumItems.innerText) * 100 + salePrice * 100) / 100;
   li.addEventListener('click', cartItemClickListener);
   return li;

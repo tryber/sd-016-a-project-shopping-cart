@@ -1,5 +1,4 @@
 const getSavedCartItems = require('../helpers/getSavedCartItems');
-const saveCartItems = require('../helpers/saveCartItems');
 
 Object.defineProperty(window, 'localStorage', {
   value: {
@@ -8,8 +7,12 @@ Object.defineProperty(window, 'localStorage', {
 });
 
 describe('4 - Teste a função getSavedCartItems', () => {
-  it('Teste se, ao executar saveCartItems com o argumento <ol><li>Item</li></ol>, o método localStorage.setItem é chamado;', () => {
-    saveCartItems('<ol><li>Item</li></ol>');
-    expect(localStorage.setItem).toHaveBeenCalled();
+  it('Teste se, ao executar getSavedCartItems, o método localStorage.getItem é chamado;', () => {
+    getSavedCartItems();
+    expect(localStorage.getItem).toHaveBeenCalled();
   });
+  it('Teste se, ao executar getSavedCartItems, o método localStorage.getItem é chamado com o cartItems como parâmetro.', () => {
+    getSavedCartItems();
+    expect(localStorage.getItem).toHaveBeenCalledWith('cartItems');
+  })
 });

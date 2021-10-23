@@ -76,9 +76,6 @@ function createProductItemElement({ sku, name, image }) { // { id, title, thumbn
 
 7- Fazer testes
 */
-const deleteLoading = () => {
-  document.querySelector('.loading').remove();
-};
 
 async function searchProduct(product) { // requisito feito graças ao Bê que nos ajudou com um video passo a passo
   const data = await fetchProducts(product);
@@ -91,8 +88,9 @@ async function searchProduct(product) { // requisito feito graças ao Bê que no
     };
     const productItem = createProductItemElement(obj); // a função é chamada para cada um dos element que vierem no array results
     sectionItems.appendChild(productItem);
-    deleteLoading();
+    // deleteLoading();
   });
+  document.querySelector('.loading').remove();
 }
 
 function emptyCart() {

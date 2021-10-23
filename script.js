@@ -1,3 +1,6 @@
+const sectionItems = document.querySelector('.items');
+const cartItems = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -12,24 +15,8 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
-  return section;
-}
-
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -40,4 +27,56 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+async function addToCart(id) {
+  const request = await fetchItem(id);
+  const { id: sku, title: name, price: salePrice } = request;
+  const cartList = createCartItemElement({ sku, name, salePrice });
+  cartItems.appendChild(cartList);
+  saveCartItems(cartItems.innerHTML);
+}
+
+function createProductItemElement({ sku, name, image }) {
+  const getSectionItems = document.querySelector('.items');
+  const section = document.createElement('section');
+  section.className = 'item';
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  const clickableButton = createCustomElement('button', 'item__add', 'Adicionar ao carrinho');
+  clickableButton.addEventListener('click', () => {
+    addToCart(sku);
+  });
+  
+  section.appendChild(clickableButton);
+  getSectionItems.appendChild(section);
+  return section;
+}
+
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
+
+const callFetchProducts = () => {
+  fetchProducts('computador').then((products) => {
+    products.results.forEach((product) => {
+      const { id: sku, title: name, thumbnail: image } = product;
+      sectionItems.appendChild(createProductItemElement({ sku, name, image }));
+    });
+  });
+};
+
+function saveItemsCart() {
+  cartItems.innerHTML = getSavedCartItems();
+}
+
+function clearCart() {
+  cartItems.innerHTML = '';
+}
+
+cartItems.addEventListener('click', cartItemClickListener);
+document.querySelector('.empty-cart').addEventListener('click', clearCart);
+
+window.onload = () => {
+  callFetchProducts();
+  saveItemsCart();
+};

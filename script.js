@@ -1,4 +1,4 @@
-const getOlList = () => document.querySelector('.cart__items');
+const getOlList = document.querySelector('.cart__items');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -20,24 +20,13 @@ function cartItemClickListener(event) {
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
-  const carrinho = getOlList();
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  carrinho.appendChild(li);
-  return li;
+  getOlList.appendChild(li);  
+  saveCartItems(getOlList.innerHTML);
 }
-
-const addItemCart = async (sku) => {
-  const carrinho = getOlList();
-  const returnFetchItem = await fetchItem(sku);
-  console.log(returnFetchItem);
-  const { title: name, price: salePrice } = returnFetchItem;
-  const getList = createCartItemElement({ sku, name, salePrice });
-  console.log(getList);
-  carrinho.appendChild(getList);
-};
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
@@ -67,11 +56,16 @@ async function searchProducts(product) {
       name: item.title,
       image: item.thumbnail,
     };
-
     const productItem = createProductItemElement(itemObject);
     sectionItems.appendChild(productItem);
   });
 }
+
+const addItemCart = async (sku) => {
+  const returnFetchItem = await fetchItem(sku);
+  const { title: name, price: salePrice } = returnFetchItem;
+  createCartItemElement({ sku, name, salePrice });
+};
 
 const refreshPage = () => {
   const getResult = getSavedCartItems();
@@ -82,8 +76,17 @@ const restoreEventListener = () => {
   getOlList.addEventListener('click', cartItemClickListener);
 };
 
+const clearAllCartItems = () => {
+  const getButton = document.querySelector('.empty-cart');
+  getButton.addEventListener('click', () => {
+    getOlList.innerHTML = '';
+    saveCartItems(getOlList.innerHTML);
+  });
+};
+
 window.onload = () => {
   searchProducts('computador');
   refreshPage();
   restoreEventListener();
+  clearAllCartItems();
 };

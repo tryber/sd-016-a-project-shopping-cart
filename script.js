@@ -44,10 +44,6 @@ function createCartItemElement({ sku, name, salePrice, thumbnail }) {
   return li;
 }
 
-var saveItemCart = function(){
-}
-
-
 async function cartProduct(event) {
   const product = event.target;
   const productId = product.parentNode;
@@ -57,9 +53,6 @@ async function cartProduct(event) {
   const { id: sku, title: name, price: salePrice, thumbnail } = data;
   const item = createCartItemElement({ sku, name, salePrice, thumbnail });
   itemList.appendChild(item);
-  console.log(item);
-  saveCartItems(JSON.stringify(item))
-
 }
 
 function searchProduct(product = 'computador') {

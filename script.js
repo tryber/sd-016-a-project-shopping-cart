@@ -1,4 +1,5 @@
 const shopCart = [];
+const parent = document.querySelector('.cart__items');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -14,14 +15,27 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function cartItemClickListener(event, sku) {
-  const parent = document.querySelector('.cart__items');
-  parent.removeChild(event.target);
+function getAllPrices() {
+  const storage = JSON.parse(getSavedCartItems());
+  const itemsPrices = [];
+  storage.forEach((item) => itemsPrices.push(item.salePrice));
+  return itemsPrices;
+}
 
+function setCarPrice() {
+  const getSpanPrice = document.querySelector('.total-price');
+  const sum = getAllPrices().reduce((acc, value) => acc + value, 0);
+  getSpanPrice.innerHTML = sum;
+}
+
+function cartItemClickListener(event, sku) {
+  parent.removeChild(event.target);
+  
   const findDeletedElem = shopCart.find((prod) => prod.sku === sku);
   const indexElem = shopCart.indexOf(findDeletedElem);
   shopCart.splice(indexElem, 1);
   saveCartItems(JSON.stringify(shopCart));
+  setCarPrice();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -42,6 +56,7 @@ async function addToCart(sku) {
 
   shopCart.push({ sku, name, salePrice });
   saveCartItems(JSON.stringify(shopCart));
+  setCarPrice();
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -55,7 +70,7 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(addButton);
 
   addButton.addEventListener('click', () => addToCart(sku));
-  
+
   return section;
 }
 
@@ -81,6 +96,17 @@ function getStorage() {
   const storage = JSON.parse(getSavedCartItems());
   storage.forEach((item) => addToCart(item.sku));
 }
+
+function emptyButton() {
+  const getEmptyButton = document.querySelector('.empty-cart');
+  getEmptyButton.addEventListener('click', () => {
+    parent.innerHTML = '';
+    shopCart.splice(0, shopCart.length);
+    saveCartItems(JSON.stringify(shopCart));
+    setCarPrice();
+  });
+}
+emptyButton();
 
 window.onload = async () => {
   await buildProductItem();

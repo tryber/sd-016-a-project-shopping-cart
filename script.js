@@ -54,8 +54,13 @@ function getSkuFromProductItem(item) {
 }
 
 async function loadData(product) {
-  const result = await fetchProducts(product);
   const items = document.querySelector('.items');
+  const loading = document.createElement('span');
+  loading.className = 'loading';
+  loading.innerText = 'carregando...';
+  items.appendChild(loading);
+  const result = await fetchProducts(product);
+  items.removeChild(loading);
 
   result.results.forEach((item) => {
     const { id, title, thumbnail } = item;

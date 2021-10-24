@@ -29,7 +29,9 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
+  const cart = document.querySelector('ol.cart__items');
   event.target.remove();
+  addSumPrices(cart);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -56,6 +58,7 @@ async function findProducts(product) {
 }
 
 function sumPrices(cart) {
+  if(cart.children.length === 0) return '';
   const listPrices = [];
   Array.from(cart.children).forEach((item) =>
     listPrices.push(parseFloat(item.innerText.split('PRICE: $')[1])));
@@ -63,9 +66,10 @@ function sumPrices(cart) {
 }
 
 function addSumPrices(cart) {
-  const totalPriceText = document.querySelector('.totalPrice');
+  const totalPriceText = document.querySelector('.total-price');
   const totalSum = sumPrices(cart);
-  const p = document.createTextNode(`TOTAL = ${totalSum}`);
+  const p = document.createTextNode(`${totalSum}`);
+  totalPriceText.innerText = '';
   totalPriceText.appendChild(p);
 }
 

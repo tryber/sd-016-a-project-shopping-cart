@@ -1,4 +1,4 @@
-function cartItemClickListener(event) {
+function cartItemClickListener() {
   // coloque seu código aqui  
 }
 
@@ -25,7 +25,6 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -51,12 +50,10 @@ const chamaFetchProducts = async () => {
 }));
 };
 
-
 chamaFetchProducts();
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
-
 
 window.onload = () => { };

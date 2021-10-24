@@ -52,7 +52,7 @@ async function searchProducts(product) {
     const productItem = createProductItemElement(itemObject);
     sectionItems.appendChild(productItem);
   });
-};
+}
 
 window.onload = () => {
   searchProducts('computador');

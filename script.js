@@ -105,6 +105,13 @@ function loadingData() {
   }
 }
 
+const button = document.querySelector('.empty-cart');
+button.addEventListener('click', () => {
+  olCartItems.remove();
+  array = [];
+  saveCartItems(array);
+});
+
 window.onload = () => {
   loadingData();
   RequirementOne();

@@ -65,7 +65,7 @@ const getProduct = async (select) => {
     });
 
     cartList.appendChild(item);
-    saveCartItems();
+    saveCartItems(cartList);
   }
 };
 

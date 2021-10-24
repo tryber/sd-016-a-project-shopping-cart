@@ -44,7 +44,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) { 
   section.appendChild(createProductImageElement(image));
   const botao = (createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   botao.addEventListener('click', () => { // adiciona escutador que busca o item e joga pro carrinho
-     searchItem(sku);
+    searchItem(sku);
   });
  
   section.appendChild(botao);

@@ -50,6 +50,9 @@ const products = fetchProducts('computador').then((product) =>
     return acc;
   }, []));
 
+const cartProducts = products
+  .then((product) => console.log(product[0].sku));
+
 function appendElement(elementClass, callback) {
   products.then((product) =>
     product.forEach((productItem) => {

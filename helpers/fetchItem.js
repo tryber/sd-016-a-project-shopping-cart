@@ -4,7 +4,6 @@ const fetchItem = (id) =>
   .then((promiseJson) => promiseJson)
   .catch((error) => error);
 
-
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchItem,

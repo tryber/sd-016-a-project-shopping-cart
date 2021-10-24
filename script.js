@@ -1,8 +1,8 @@
 // const fetchSimulator = require("./mocks/fetchSimulator");
 // const { fetchProducts } = require("./helpers/fetchProducts");
 
-function cartItemClickListener(event) { // esvazia o carrinho
-  // coloque seu código aqui
+function cartItemClickListener(event) { 
+  event.target.remove(); // retira do carrinho o item clicado
 }
 
 function createCartItemElement({ sku, name, salePrice }) { // adiciona itens no carrinho

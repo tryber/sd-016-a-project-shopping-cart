@@ -107,9 +107,9 @@ function loadingData() {
 
 const button = document.querySelector('.empty-cart');
 button.addEventListener('click', () => {
-  olCartItems.remove();
-  array = [];
+  array.splice(0, array.length);
   saveCartItems(array);
+  olCartItems.innerHTML = '';
 });
 
 window.onload = () => {

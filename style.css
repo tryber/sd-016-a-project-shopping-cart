@@ -1,3 +1,50 @@
+* {
+  font-family: Ubuntu, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  display: flex;
+  color: white;
+}
+
+#header-one {
+  width: 69%;
+  background-color: yellow;
+  padding: 15px;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.img-header {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+}
+
+#header-two {
+  width: 31%;
+  background-color: gray;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#header-two p {
+  color: black;
+  margin-top: 5px;
+}
+
+main {
+  background-color: white;
+}
+
 .container {
   display: flex;
   justify-content: space-around;
@@ -46,8 +93,15 @@
 
 .cart {
   display: flex;
-  flex-basis: 30%;
+  flex-basis: 31.4%;
   flex-flow: column wrap;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.cart li {
+  list-style-type: none;
+  margin: 10px;
 }
 
 .cart .cart__title {

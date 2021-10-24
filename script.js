@@ -37,7 +37,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   return li;
 }
 
-async function itemCart(event) {
+async function itemCarrinho(event) {
   const searchSKU = getSkuFromProductItem(event.target.parentNode);
   const arrayfull = await fetchItem(searchSKU);
   const cart = createCartItemElement(arrayfull);
@@ -46,24 +46,24 @@ async function itemCart(event) {
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
-  const sections = document.createElement('section');
+  const section = document.createElement('section');
   section.className = 'item';
   const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
-  button.addEventListener('click', itemCart);
-  sections.appendChild(createCustomElement('span', 'item__sku', sku));
-  sections.appendChild(createCustomElement('span', 'item__title', name));
-  sections.appendChild(createProductImageElement(image));
-  sections.appendChild(button);
+  button.addEventListener('click', itemCarrinho);
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  section.appendChild(button);
 
-  return sections;
+  return section;
 }
 
 const fetchObject = async () => {
   const arrayfull = await fetchProducts('computador');
   arrayfull.results.forEach((arr) => {
-    const sections = document.querySelector('.items');
+    const section = document.querySelector('.items');
     const result = createProductItemElement(arr);
-    sections.appendChild(result);
+    section.appendChild(result);
   });
 };
 

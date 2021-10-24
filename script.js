@@ -47,7 +47,7 @@ async function searchProducts(product) {
     const {
        id: sku, 
        title: name, 
-       thumbnail: image 
+       thumbnail: image,
       } = item;
     const itemObject = { 
       sku,

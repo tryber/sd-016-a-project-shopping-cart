@@ -1,3 +1,4 @@
+const selectOl = document.querySelector('.cart__items');
 let totalpreço = 0;
 const preçosalvo = document.querySelector('.total-price');
 const ajust = '.cart__items';
@@ -70,8 +71,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 function adicionarCarrinho(li) {
-  const selectOl = document.querySelector('.cart__items');
   selectOl.appendChild(li);
+  saveCartItems(li);
 }
 
 const objetoCarrinho = (itemAtual) => ({
@@ -81,6 +82,9 @@ const objetoCarrinho = (itemAtual) => ({
 });
 
 async function searchProducts(product) {
+  getSavedCartItems().forEach((element) => {
+    selectOl.innerHTML += `<li>${element}</li>`;
+  });
   const searchData = await fetchProducts(product);
   const sectionItens = document.querySelector('.items');
   searchData.results.forEach(async (item, index) => {

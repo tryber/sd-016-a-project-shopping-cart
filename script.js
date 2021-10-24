@@ -12,23 +12,9 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
-  return section;
-}
-
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
 function cartItemClickListener(event) {
+  const cart = document.querySelector('.cart__items');
+  cart.removeChild(event.target);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -39,7 +25,35 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-async function searchData(product) {
+async function addToCart(event) {
+  const result = await fetchItem(event.target.id);
+  const cart = document.querySelector('.cart__items');
+
+  const { id, title, price } = result;
+  const object = { sku: id, name: title, salePrice: price };
+  cart.appendChild(createCartItemElement(object));
+}
+
+function createProductItemElement({ sku, name, image }) {
+  const section = document.createElement('section');
+  section.className = 'item';
+
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  button.addEventListener('click', addToCart);
+  button.id = sku;
+  section.appendChild(button);
+
+  return section;
+}
+
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+
+async function loadData(product) {
   const result = await fetchProducts(product);
   const items = document.querySelector('.items');
 
@@ -54,5 +68,5 @@ async function searchData(product) {
 }
 
 window.onload = () => {
-  searchData('computador');
+  loadData('computador');
 };

@@ -1,3 +1,4 @@
+// requisito executado com o auxilio da mentoria de Humberto Castro
 const fetchSimulator = require('../mocks/fetchSimulator');
 const { fetchItem } = require('../helpers/fetchItem');
 const item = require('../mocks/item');
@@ -10,8 +11,8 @@ describe('2 - Teste a função fecthItem', () => {
     expect(typeof fetchItem).toBe('function')
   });
 
-  test('ao chamar o argumento, fetch é chamada', () => {
-    fetchItem('MLB1615760527');
+  test('ao chamar o argumento MLB1615760527, fetch é chamada', () => {
+    fetchItem('item');
     expect(fetch).toHaveBeenCalled();
   });
 
@@ -26,10 +27,10 @@ describe('2 - Teste a função fecthItem', () => {
     expect(results).toEqual(item);
   });
 
-  test('Se a chamada da função fetchItem() retorna uma mensagem de erro', async () => {
-    const error = new Error ('You must provide an url');
+  test('ao chamar a função sem argumento deve retornar error', async () => {
+    const expectError = new Error('You must provide an url');
     const result = await fetchItem();
-    expect(result).toEqual(error);
+    expect(result).toEqual(expectError);
   });
 
 });

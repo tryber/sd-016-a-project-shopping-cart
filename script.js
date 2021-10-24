@@ -9,27 +9,28 @@ function createProductImageElement(imageSource) {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
-  if (element === 'button') {
-    // eslint-disable-next-line no-use-before-define
-    e.addEventListener('click', cartItemClickListener);
-  }
   return e;
 }
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
   return section;
 }
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
+}
+
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  return li;
 }
 
 function cartItemClickListener(event) {
@@ -41,17 +42,8 @@ function cartItemClickListener(event) {
           sku, name, salePrice,
         };
         const cartEl = document.querySelector('.cart__items');
-        // eslint-disable-next-line no-use-before-define
         cartEl.appendChild(createCartItemElement(objResult));
       });
-}
-
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
 }
 
 async function searchProducts(product) {
@@ -59,21 +51,19 @@ async function searchProducts(product) {
   const sectionItems = document.querySelector('.items');
   const { results } = searchData;
   results.forEach((item) => {
-    const {
-       id: sku, 
-       title: name, 
-       thumbnail: image,
-      } = item;
+    const {id: sku, title: name, thumbnail: image } = item;
     const itemObject = { 
       sku,
       name,
       image,
     }; 
     const productItem = createProductItemElement(itemObject);
+    const buttonEl = productItem.childNodes[3];
+    buttonEl.addEventListener('click', cartItemClickListener);
     sectionItems.appendChild(productItem);
   });
 }
-
+ 
 window.onload = () => { 
   searchProducts('computador');
 };

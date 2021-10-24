@@ -1,9 +1,7 @@
-const saveCartItems = () => {
+const saveCartItems = (save) => {
   // seu código aqui
   const savedCart = [];
-  const cartItems = document.querySelectorAll('.cart__item');
-
-  cartItems.forEach((item) => {
+  save.childNodes.forEach((item) => {
     savedCart.push({ product: item.innerHTML });
   });
 

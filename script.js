@@ -13,6 +13,7 @@ function ClearAllItemsOfCart() {
   const btnClear = document.querySelector('.empty-cart');
   btnClear.addEventListener('click', () => {
     olItems.innerHTML = '';
+    saveCartItems(olItems.innerHTML, 0);
   });
 }
 

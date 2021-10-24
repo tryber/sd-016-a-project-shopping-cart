@@ -29,7 +29,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  return fetch(sku);
+  return console.log('oi');
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -55,6 +55,8 @@ function appendElement(elementClass, callback) {
     product.forEach((productItem) => {
       const sectionItems = document.querySelector(elementClass);
       sectionItems.appendChild(callback(productItem));
+      const button = document.querySelector(`${elementClass} button`);
+      button.addEventListener('click', cartItemClickListener);
     }));
 }
 

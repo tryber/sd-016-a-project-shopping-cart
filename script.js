@@ -10,18 +10,7 @@ function createProductImageElement(imageSource) {
   e.className = className;
   e.innerText = innerText;
   if (element === 'button') {
-    e.addEventListener('click', (evt) => {
-      const { parentElement } = evt.target;
-      const idFind = parentElement.childNodes[0].innerText;
-      fetchItem(idFind).then((data) => {
-        const { id: sku, title: name, price: salePrice } = data;
-        const objResult = {
-          sku, name, salePrice,
-        };
-        const cartEl = document.querySelector('.cart__items');
-        cartEl.appendChild(createCartItemElement(objResult));
-      });
-    });
+    e.addEventListener('click', cartItemClickListener);
   }
   return e;
 }
@@ -42,11 +31,6 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-const cartItemClickListener = (event) => {
- // chame a função fetchItem após conseguir o id pelo event
- 
-};
-
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -54,6 +38,19 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+const cartItemClickListener = (event) => {
+ const { parentElement } = event.target;
+      const idFind = parentElement.childNodes[0].innerText;
+      fetchItem(idFind).then((data) => {
+        const { id: sku, title: name, price: salePrice } = data;
+        const objResult = {
+          sku, name, salePrice,
+        };
+        const cartEl = document.querySelector('.cart__items');
+        cartEl.appendChild(createCartItemElement(objResult));
+      });
+};
 
 async function searchProducts(product) {
   const searchData = await fetchProducts(product);

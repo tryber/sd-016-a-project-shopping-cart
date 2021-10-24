@@ -1,6 +1,7 @@
 let totalpreço = 0;
 const preçosalvo = document.querySelector('.total-price');
 const ajust = '.cart__items';
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';

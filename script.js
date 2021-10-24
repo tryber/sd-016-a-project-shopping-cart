@@ -51,7 +51,7 @@ async function searchProducts(product) {
   const sectionItems = document.querySelector('.items');
   const { results } = searchData;
   results.forEach((item) => {
-    const {id: sku, title: name, thumbnail: image } = item;
+    const { id: sku, title: name, thumbnail: image } = item;
     const itemObject = { 
       sku,
       name,

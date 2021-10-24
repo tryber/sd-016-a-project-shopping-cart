@@ -64,13 +64,13 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   const buttonItem = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
-  buttonItem.addEventListener('click', async () => { 
+  buttonItem.addEventListener('click', async () => {
     await itemProducts(sku);
     await sumPrices();
- });
+  });
   section.appendChild(buttonItem);
   saveCartItems({ sku, name, image });
-  console.log('Salva itemProducts');
+  console.log('Salva itemProducts em createProductItemElement');
   return section;
 }
 
@@ -88,8 +88,18 @@ async function searchProducts(product) {
   });
 }
 
+function emptyCart() {
+  const emptyButton = document.querySelector('.empty-cart');
+  const currentList = document.querySelector('.cart__items');
+  emptyButton.addEventListener('click', () => {
+    currentList.innerHTML = '';
+    sumPrices();
+  });
+}
+emptyCart();
+
 window.onload = () => {
- // getSavedCartItems();
+  // getSavedCartItems();
   searchProducts('computador');
   // ItemProducts('MLB1341706310');
 };

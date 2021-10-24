@@ -22,16 +22,15 @@ const getPrice = () => {
     const elementText = element.innerText;
     // slice pega os elementos a partir de uma posição inicial até a anterior da final
     const getEachPrice = elementText.slice(elementText.indexOf('PRICE: $') + 'PRICE: $'.length);
-    console.log(getEachPrice);
+    console.log(elementText.indexOf('PRICE: $'));
     newPriceCount += parseFloat(getEachPrice);
   });
   return newPriceCount;
 };
 
-function updateTotalPrice() {
-  const totalPrice = getPrice();
-  priceCount.innerText = `${totalPrice}`;
-}
+const updateTotalPrice = () => {
+  priceCount.innerText = getPrice();
+};
 
 function cartItemClickListener(event) {
   // ajuda do Miyazaki
@@ -49,8 +48,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   odinPaiDeTodos.appendChild(li);
   // help do Brunão
-  saveCartItems(odinPaiDeTodos.innerHTML);
   updateTotalPrice();
+  saveCartItems(odinPaiDeTodos.innerHTML);
 }
 
 const getIdAndGetCartItem = async (sku) => {

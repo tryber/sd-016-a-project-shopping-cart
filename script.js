@@ -28,6 +28,22 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+function sumPrices(cart) {
+  if (cart.children.length === 0) return '';
+  const listPrices = [];
+  Array.from(cart.children).forEach((item) =>
+    listPrices.push(parseFloat(item.innerText.split('PRICE: $')[1])));
+  return listPrices.reduce((total, price) => total + price);
+}
+
+function addSumPrices(cart) {
+  const totalPriceText = document.querySelector('.total-price');
+  const totalSum = sumPrices(cart);
+  const p = document.createTextNode(`${totalSum}`);
+  totalPriceText.innerText = '';
+  totalPriceText.appendChild(p);
+}
+
 function cartItemClickListener(event) {
   const cart = document.querySelector('ol.cart__items');
   event.target.remove();
@@ -57,25 +73,8 @@ async function findProducts(product) {
     });
 }
 
-function sumPrices(cart) {
-  if(cart.children.length === 0) return '';
-  const listPrices = [];
-  Array.from(cart.children).forEach((item) =>
-    listPrices.push(parseFloat(item.innerText.split('PRICE: $')[1])));
-  return listPrices.reduce((total, price) => total + price);
-}
-
-function addSumPrices(cart) {
-  const totalPriceText = document.querySelector('.total-price');
-  const totalSum = sumPrices(cart);
-  const p = document.createTextNode(`${totalSum}`);
-  totalPriceText.innerText = '';
-  totalPriceText.appendChild(p);
-}
-
-function addItem() {
+function addItem(cart) {
   const button = document.querySelectorAll('.item__add');
-  const cart = document.querySelector('ol.cart__items');
   button.forEach((b) => { // b = button
     b.addEventListener('click', async () => {
       const getId = b.parentNode.firstChild.innerText; // get element id
@@ -101,5 +100,5 @@ window.onload = async () => {
   });
   await findProducts('computador');
   getSavedCartItems();
-  addItem();
+  addItem(cartItems);
 };

@@ -1,5 +1,7 @@
 const odinPaiDeTodos = document.querySelector('.cart__items');
 const messageLoad = document.querySelector('.loading');
+const priceCount = document.querySelector('.total-price');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -14,9 +16,28 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+const getPrice = () => {
+  let newPriceCount = 0;
+  odinPaiDeTodos.childNodes.forEach((element) => {
+    const elementText = element.innerText;
+    // slice pega os elementos a partir de uma posição inicial até a anterior da final
+    const getEachPrice = elementText.slice(elementText.indexOf('PRICE: $') + 'PRICE: $'.length);
+    console.log(getEachPrice);
+    newPriceCount += parseFloat(getEachPrice);
+  });
+  return newPriceCount;
+};
+
+function updateTotalPrice() {
+  const totalPrice = getPrice();
+  priceCount.innerText = `${totalPrice}`;
+}
+
 function cartItemClickListener(event) {
   // ajuda do Miyazaki
   event.target.remove();
+  saveCartItems(odinPaiDeTodos.innerHTML);
+  updateTotalPrice();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -29,6 +50,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   odinPaiDeTodos.appendChild(li);
   // help do Brunão
   saveCartItems(odinPaiDeTodos.innerHTML);
+  updateTotalPrice();
 }
 
 const getIdAndGetCartItem = async (sku) => {
@@ -58,9 +80,9 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   sectionFather.appendChild(section);
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
 
 const verifyFunctionVoidAndRestore = () => {
   const localStorageGetSavedCartItem = getSavedCartItems();
@@ -81,8 +103,8 @@ const clearAll = () => {
     saveCartItems(odinPaiDeTodos.innerHTML);
   });
 };
-
 clearAll();
+
 window.onload = () => {
   // help do Brunão
   if (odinPaiDeTodos.children.length === 0) verifyFunctionVoidAndRestore();
@@ -93,4 +115,5 @@ window.onload = () => {
     messageLoad.remove();
   });
   addEventToItemSaved();
+  updateTotalPrice();
 };

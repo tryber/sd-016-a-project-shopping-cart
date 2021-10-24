@@ -13,14 +13,20 @@
     <script src="./helpers/getSavedCartItems.js" defer></script>
   </head>
   <body>
-    <section class="container">
-      <section class="items">
-        <span class="loading">carregando</span>
+    <header>
+      <section id="header-one">
+      <h1>Shopping cart</h1>
       </section>
+      <section id="header-two">
+        <h3 class="cart__title">Carrinho de compras</h3>
+      </section>
+    </header>
+    <section class="container">
+      <section class="items"><span class="loading">carregando</span></section>
       <section class="cart">
-        <span class="cart__title">Carrinho de compras</span>
         <button class="empty-cart">Esvaziar carrinho</button>
         <ol class="cart__items"></ol>
+        <p>SubTotal: R$ <span class="total-price">0</span></p>
       </section>
     </section>
   </body>

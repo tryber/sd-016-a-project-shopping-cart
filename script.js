@@ -10,6 +10,7 @@ function createProductImageElement(imageSource) {
   e.className = className;
   e.innerText = innerText;
   if (element === 'button') {
+    // eslint-disable-next-line no-use-before-define
     e.addEventListener('click', cartItemClickListener);
   }
   return e;
@@ -40,6 +41,7 @@ function cartItemClickListener(event) {
           sku, name, salePrice,
         };
         const cartEl = document.querySelector('.cart__items');
+        // eslint-disable-next-line no-use-before-define
         cartEl.appendChild(createCartItemElement(objResult));
       });
 }

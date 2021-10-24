@@ -44,11 +44,10 @@ const chamaFetchProducts = async () => {
   createProductItemElement(obj);
   
   document.querySelectorAll('.item__add')[index].addEventListener('click', (e) =>
-  
   fetchItem(e.target.parentNode.children[0].innerHTML)
   
-  .then((data) => createCartItemElement(({ sku: data.id, name: data.title, salePrice: data.price }))));
- 
+  .then((data) => 
+  createCartItemElement(({ sku: data.id, name: data.title, salePrice: data.price }))));
 }));
 };
 

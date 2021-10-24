@@ -5,14 +5,28 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
-function createCustomElement(element, className, innerText) {
+  function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
+  if (element === 'button') {
+    e.addEventListener('click', (evt) => {
+      const { parentElement } = evt.target;
+      const idFind = parentElement.childNodes[0].innerText;
+      fetchItem(idFind).then((data) => {
+        const { id: sku, title: name, price: salePrice } = data;
+        const objResult = {
+          sku, name, salePrice,
+        };
+        const cartEl = document.querySelector('.cart__items');
+        cartEl.appendChild(createCartItemElement(objResult));
+      });
+    });
+  }
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
+const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -22,15 +36,16 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
-}
+};
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
+const cartItemClickListener = (event) => {
+ // chame a função fetchItem após conseguir o id pelo event
+ 
+};
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -43,7 +58,8 @@ function createCartItemElement({ sku, name, salePrice }) {
 async function searchProducts(product) {
   const searchData = await fetchProducts(product);
   const sectionItems = document.querySelector('.items');
-  searchData.results.forEach((item) => {
+  const { results } = searchData;
+  results.forEach((item) => {
     const {
        id: sku, 
        title: name, 
@@ -54,7 +70,6 @@ async function searchProducts(product) {
       name,
       image,
     }; 
-
     const productItem = createProductItemElement(itemObject);
     sectionItems.appendChild(productItem);
   });

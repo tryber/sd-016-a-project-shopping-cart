@@ -1,5 +1,6 @@
 const sumItems = document.querySelector('.total-price');
 const listItems = document.querySelector('.cart__items');
+const loading = document.createElement('i');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -15,15 +16,18 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-  const itemSelected = event.target;
-  const text = itemSelected.innerText.split(' ');
+function subClickedProducts(event) {
+  const text = event.target.innerText.split(' ');
   let number = text[text.length - 1];
   number = number.split('').filter((e) => Number(e) || e === '.' || e === '0').join('');
   sumItems.innerText = (parseFloat(sumItems.innerText * 100) - parseFloat(number * 100)) / 100;
   localStorage.setItem('price', sumItems.innerText);
-  itemSelected.remove();
+}
+
+function cartItemClickListener(event) {
+  // coloque seu código aqui
+  subClickedProducts(event);
+  event.target.remove();
   saveCartItems(listItems.innerHTML);
 }
 
@@ -64,12 +68,15 @@ async function cartProduct(event) {
   saveCartItems(listItems.innerHTML);
 }
 
-function searchProduct(product = 'computador') {
-  const selectItens = document.querySelector('.items');
-  const loading = document.createElement('i');
+function createLoading() {
   loading.className = 'loading';
   loading.innerHTML = 'carregando...';
   document.querySelector('h1').appendChild(loading);
+}
+
+function searchProduct(product = 'computador') {
+  const selectItens = document.querySelector('.items');
+  createLoading();
   fetchProducts(product).then((data) => {
       data.results.forEach((element) => {
       const { id: sku, title: name, thumbnail: image } = element;
@@ -79,6 +86,7 @@ function searchProduct(product = 'computador') {
         item.addEventListener('click', cartProduct);
       });
       loading.remove();
+      document.querySelector('h1').innerText = 'TrybeShopping';
     });
     });
 }

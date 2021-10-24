@@ -42,6 +42,7 @@ body {
 
 .item .item__add {
   background-color: rgb(88, 88, 163);
+  color: antiquewhite;
   border: 0;
   cursor: pointer;
   margin: 0;
@@ -57,18 +58,21 @@ body {
 
 .cart .cart__title {
   font-family: cursive;
+  color: white;
+  font-weight: 800;
   background-color: rgb(185, 185, 238);
   flex-basis: 1;
   font-size: 16pt;
   text-align: center;
-  margin: -49px -20px 0px -20px;
-  border-radius: 10px;
+  margin: -64px 4px 0px -20px;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 45px;
   padding: 10px;
 }
 
 .cart__items {
   overflow: scroll;
-  height: 750px;
+  height: 650px;
 }
 
 .cart__item {
@@ -78,14 +82,16 @@ body {
   text-align: right;
   max-width: 300px;
   list-style-position: inside;
-  border: solid black;
+  border: solid darkblue;
   border-radius: 5px;
   padding: 10px;
 }
 
 h1 {
   margin: 0;
-  background-color: rgb(111, 111, 245);
+  margin-bottom: 15px;
+  background-color: darkblue;
+  color: white;
   border: solid black;
   padding: 5px;
 }

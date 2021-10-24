@@ -30,8 +30,9 @@ function createProductItemElement({ sku, name, image }) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
+  const cartList = document.querySelector('.cart__items');
   event.target.remove();
-  saveCartItems();
+  saveCartItems(cartList);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {

@@ -37,7 +37,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   return li;
 }
 
-async function itemCart (event) {
+async function itemCart(event) {
   const searchSKU = getSkuFromProductItem(event.target.parentNode);
   const arrayfull = await fetchItem(searchSKU);
   const cart = createCartItemElement(arrayfull);

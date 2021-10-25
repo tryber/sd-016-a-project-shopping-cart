@@ -40,10 +40,10 @@ function setTotalPriceItem(price) {
 function getTotalPrice() {
   const price = localStorage.getItem('price');
   if (document.querySelector('.total-price')) {
-    document.querySelector('.total-price').innerText = `Total: ${parseInt(price, 10)}`;
+    document.querySelector('.total-price').innerText = parseInt(price, 10);
   } else {
     const carrinho = document.querySelector('.cart');
-    carrinho.appendChild(createCustomElement('p', 'total-price', `Total: ${parseInt(price, 10)}`));
+    carrinho.appendChild(createCustomElement('p', 'total-price', parseInt(price, 10)));
   }
 }
 

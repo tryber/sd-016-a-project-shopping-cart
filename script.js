@@ -19,6 +19,7 @@ async function searchItem(sku) { // procura um item especifico
   const objectIdItem = await fetchItem(sku);
   const { title: name, price: salePrice } = objectIdItem; // desestruturamos os itens necessarios
   localOl.appendChild(createCartItemElement({ sku, name, salePrice })); // criamos o item no carrinho na ol
+  saveCartItems(localOl.innerHTML);
 }
 
 function createProductImageElement(imageSource) { // gera a imagem da vitrine
@@ -45,7 +46,6 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) { 
   const botao = (createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   botao.addEventListener('click', () => { // adiciona escutador que busca o item e joga pro carrinho
     searchItem(sku);
-    saveCartItems(localOl.innerHTML);
   });
  
   section.appendChild(botao);
@@ -67,6 +67,14 @@ async function searchProducts(product) { // função que filtra todos os produto
   });
 }
 
+const localLi = document.getElementsByTagName('li');
+
+function reloadCart() {
+  localOl.innerHTML = getSavedCartItems();
+  Object.values(localLi).forEach((item) => item.addEventListener('click', cartItemClickListener));
+}
+
 window.onload = () => {
   searchProducts('computador');
+  reloadCart();
 };

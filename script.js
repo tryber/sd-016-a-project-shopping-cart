@@ -1,4 +1,7 @@
+// Código elaborado com a ajuda do Ricardo Carvalho, Laura Fumagalli, Carlos Dartora e João (Lenny) Victor.
+
 const list = document.querySelector('.cart__items');
+const totalPrice = document.querySelector('.total-price');
 
 const localStorageList = []; // Criei um array vazio para dar push toda vez que salvar uma lista de produtos no localStorage.
 
@@ -26,6 +29,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', (event) => {
     cartItemClickListener(event);
+    const subTotalPrice = +totalPrice.innerText - salePrice; // O + antes do totalPrice.innerText está transformando a minha string em número.
+    if (subTotalPrice >= 0) totalPrice.innerText = subTotalPrice.toFixed(2);
     localStorageList.forEach((elementObj, index) => {
       if (elementObj.sku === sku) {
         localStorageList.splice(index, 1);
@@ -40,6 +45,9 @@ async function buildCarItem(sku) {
   const itemList = await fetchItem(sku);
   const { title: name, price: salePrice } = itemList;
   list.appendChild(createCartItemElement({ sku, name, salePrice }));
+  let sum = +totalPrice.innerHTML;
+  sum += salePrice;
+  totalPrice.innerHTML = sum.toFixed(2);
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -60,7 +68,6 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-// Código elaborado com a ajuda do Ricardo Carvalho, Turma 16A For(ever).
 async function buildProductItem(product) {
   const getSection = document.querySelector('.items');
   const productsList = await fetchProducts(product);

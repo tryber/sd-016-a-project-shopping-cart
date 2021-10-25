@@ -30,6 +30,10 @@ function subtractFromTotalPrice(totalPriceArray, itemSalePrice) {
   }
   console.log(totalPriceArray);
   console.log((totalPriceSubtracted - itemSalePrice).toFixed(2));
+  const finalPrice = totalPriceSubtracted - itemSalePrice;
+  const totalPriceElement = document.querySelector('.total-price');
+  const totalPriceTest = parseFloat(finalPrice.toFixed(2));
+  totalPriceElement.innerHTML = totalPriceTest;
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -90,6 +94,10 @@ async function addTotalPrice(totalPriceArray) {
       console.log(totalPriceArray);
       const totalPriceAdded = totalPriceArray.reduce((acc, curr) => acc + curr);
       console.log(totalPriceAdded.toFixed(2));
+      const totalPriceElement = document.querySelector('.total-price');
+      const totalPriceTest = parseFloat(totalPriceAdded.toFixed(2));
+      console.log(totalPriceTest);
+      totalPriceElement.innerHTML = totalPriceTest;
     });
   });
 }

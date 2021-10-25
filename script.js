@@ -49,8 +49,8 @@ async function searchProducts(product) {
       name: item.title,
       image: item.thumbnail,
     };
-    const product = createProductItemElement(object);
-    section.appendChild(product);
+    const productItem = createProductItemElement(object);
+    section.appendChild(productItem);
   });
 }
 

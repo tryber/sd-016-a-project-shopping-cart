@@ -12,32 +12,8 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
-  return section;
-}
-
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
 function cartItemClickListener(event) {
-  // coloque seu código aqui
-  // este "event" abaixo, só foi pra fazer um pull request sem erros no lint
-  event();
-}
-
-// Vamos implementar o requisito dois.
-
-function callFetchItem(id) {
-  fetchItem(id);
+ 
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -48,8 +24,35 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-// Vamos implementar o requisito 01...
+const adicionaAoCarrinho = async (itemId) => {
+  const search = await fetchItem(itemId);
+  const ol = document.querySelector('.cart__items');
+  const obj = { sku: search.id, name: search.title, salePrice: search.price };
+  const itemElement = createCartItemElement(obj);
+  ol.appendChild(itemElement);
+};
+
+function createProductItemElement({ sku, name, image }) {
+  const section = document.createElement('section');
+  section.className = 'item';
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  const addButton = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  addButton.addEventListener('click', () => {
+   adicionaAoCarrinho(sku);
+  });
+  section.appendChild(addButton);
+
+  return section;
+}
+
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
+
 // Precisei assistir ao vídeodo Bê para começar a fazer.
+
 const searchProducts = async (argumento) => { 
   const searchData = await fetchProducts(argumento);
   const sectionItens = document.querySelector('.items');
@@ -61,4 +64,6 @@ const searchProducts = async (argumento) => {
   return sectionItens;
 }; 
 
-window.onload = () => { searchProducts('computador'); };
+window.onload = async () => { 
+  searchProducts('computador'); 
+};

@@ -32,13 +32,27 @@ function createProductItemElement({ sku, name, image }) {
 //   // coloque seu código aqui
 // }
 
-// function createCartItemElement({ sku, name, salePrice }) {
-//   const li = document.createElement('li');
-//   li.className = 'cart__item';
-//   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-//   li.addEventListener('click', cartItemClickListener);
-//   return li;
-// }
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
+async function addProducts(click) {
+  const id = click.path[1].childNodes[0].innerText;
+  const getID = await fetchItem(id);
+  const oList = document.querySelector('.cart__items');
+  const { id: sku, title: name, price: salePrice } = getID;
+  const newObject = {
+    sku,
+    name,
+    salePrice,
+  };
+  const item = createCartItemElement(newObject);
+  oList.appendChild(item);
+}
 
 async function searchProducts(product) {
   const searchData = await fetchProducts(product);
@@ -51,6 +65,10 @@ async function searchProducts(product) {
     };
     const productItem = createProductItemElement(itemObject);
     sectionItems.appendChild(productItem);
+  });
+  const button = document.querySelectorAll('.item__add');
+  button.forEach((item) => {
+    item.addEventListener('click', addProducts);
   });
 }
 

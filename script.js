@@ -29,7 +29,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  return console.log('oi');
+  return console.log(event);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -50,13 +50,29 @@ const products = fetchProducts('computador').then((product) =>
     return acc;
   }, []));
 
+function getFetchItem(sku) {
+  return fetchItem(sku)
+    .then((item) => {
+      const { title: name, price: salePrice } = item;
+      return { sku, name, salePrice };
+    });
+}
+
+function productItemToCart({ sku }) {
+  const cartSection = document.querySelector('.cart__items');
+  getFetchItem(sku)
+    .then((productItem) => createCartItemElement(productItem))
+    .then((cartItem) => cartSection.appendChild(cartItem));
+  return cartSection;
+}
+
 function appendElement(elementClass, callback) {
   products.then((product) =>
-    product.forEach((productItem) => {
+    product.forEach((productItem, index) => {
       const sectionItems = document.querySelector(elementClass);
       sectionItems.appendChild(callback(productItem));
-      const button = document.querySelector(`${elementClass} button`);
-      button.addEventListener('click', cartItemClickListener);
+      const button = sectionItems.children[index].childNodes[3];
+      button.addEventListener('click', () => productItemToCart(productItem));
     }));
 }
 

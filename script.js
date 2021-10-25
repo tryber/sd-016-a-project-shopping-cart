@@ -17,13 +17,6 @@ function loaded() {
 }
 
 // Lógica criada com a ajuda de Vitor Brandao, Renan Souza, Matheus Benini, Josué, Lucas Alves
-function getStorageItems() {
-  const items = getSavedCartItems();
-  cartItems.innerHTML = items;
-  Array.from(cartItems.children).forEach((item) => {
-    item.addEventListener('click', cartItemClickListener);
-  })
-}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -98,6 +91,14 @@ function cleanCartList() {
     totalPrice = 0;
     total.innerText = `${totalPrice}`;
     saveCartItems([]);
+  });
+}
+
+function getStorageItems() {
+  const items = getSavedCartItems();
+  cartItems.innerHTML = items;
+  Array.from(cartItems.children).forEach((item) => {
+    item.addEventListener('click', cartItemClickListener);
   });
 }
 

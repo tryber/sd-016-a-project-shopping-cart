@@ -31,7 +31,9 @@ async function addToCart(event) {
 
   const { id, title, price } = result;
   const object = { sku: id, name: title, salePrice: price };
-  cart.appendChild(createCartItemElement(object));
+  const item = createCartItemElement(object);
+  cart.appendChild(item);
+  saveCartItems(cart.innerHTML);
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -74,4 +76,5 @@ async function loadData(product) {
 
 window.onload = () => {
   loadData('computador');
+  document.querySelector('.cart__items').innerHTML = getSavedCartItems();
 };

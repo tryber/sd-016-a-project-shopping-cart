@@ -9,7 +9,6 @@ function createProductImageElement(imageSource) {
 
 function cartItemClickListener(event) {
   event.target.remove();
-  saveCartItems(orderedList.innerHTML);
 }
 
 function createCustomElement(element, className, innerText) {
@@ -24,7 +23,6 @@ function createCustomElement(element, className, innerText) {
     li.className = 'cart__item';
     li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
     li.addEventListener('click', cartItemClickListener);
-    saveCartItems(orderedList.innerHTML);
     return li;
   }
 
@@ -34,6 +32,7 @@ async function addCartItem(id) {
   const { id: sku, title: name, price: salePrice } = request;
   const cartList = createCartItemElement({ sku, name, salePrice }); 
   cartItems.appendChild(cartList);
+  saveCartItems(orderedList.innerHTML);
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
@@ -63,21 +62,14 @@ function listProducts(search) {
   createProductItemElement(product)));
 }
 
-const cartItemsRestore = () => {
-  const localStorageRestore = getSavedCartItems();
-  orderedList.innerHTML = localStorageRestore;
+const restoreCart = () => {
+  orderedList.innerHTML = getSavedCartItems();  
 };
-
-const restoreEventListener = () => {
-  Array.from(orderedList.children).forEach((child) => {
-    child.addEventListener('click', cartItemClickListener);
-  });
-};
+orderedList.addEventListener('click', cartItemClickListener);
 
 window.onload = () => { 
   listProducts('computador');
-  if (orderedList.children.length === 0) cartItemsRestore();
-  restoreEventListener();
+  restoreCart();
 };
 
 // Feito com auxilio de: Renan Souza, Lucas Alves, Fabricio Martins, Rafael Feliciano, Vitor Brandao em uma sala do zoom

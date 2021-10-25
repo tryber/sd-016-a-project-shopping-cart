@@ -1,6 +1,8 @@
 // const fetchSimulator = require("./mocks/fetchSimulator");
 // const { fetchProducts } = require("./helpers/fetchProducts");
+
 const localOl = document.querySelector('ol'); // definimos o lugar da ol
+const localButtonEmptyCart = document.querySelector('.empty-cart');
 
 function cartItemClickListener(event) { 
   event.target.remove(); // retira do carrinho o item clicado
@@ -73,6 +75,13 @@ function reloadCart() {
   localOl.innerHTML = getSavedCartItems();
   Object.values(localLi).forEach((item) => item.addEventListener('click', cartItemClickListener));
 }
+
+function emptyCart() {
+  localOl.innerHTML = '';
+  saveCartItems(localOl.innerHTML);
+}
+
+localButtonEmptyCart.addEventListener('click', emptyCart);
 
 window.onload = () => {
   searchProducts('computador');

@@ -78,9 +78,17 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+function createLoading() {
+  const loadingElem = document.createElement('h2');
+  loadingElem.innerHTML = 'carregando';
+  loadingElem.className = 'loading';
+  document.body.append(loadingElem);
+}
+
 async function buildProductItem() {
-  const productsList = await fetchProducts('computador');
+  createLoading();
   const getSection = document.querySelector('.items');
+  const productsList = await fetchProducts('computador');
   productsList.forEach((obj) => {
     const productObject = {
       sku: obj.id,
@@ -90,6 +98,7 @@ async function buildProductItem() {
     const element = createProductItemElement(productObject);
     getSection.appendChild(element);
   });
+  document.querySelector('.loading').remove();
 }
 
 function getStorage() {

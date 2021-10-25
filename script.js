@@ -109,4 +109,9 @@ window.onload = async () => {
     const price = parseFloat(localStorage.getItem('price'));
     updatePrice(price, 'add');
   }
+  const loadEl = document.querySelectorAll('.loading');
+  for (let index = 0; index < loadEl.length; index += 1) {
+    const element = loadEl[index];
+    element.remove();
+  }
 };

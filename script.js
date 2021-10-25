@@ -69,8 +69,9 @@ async function searchProducts(product) {
       image,
     };
     const productItem = createProductItemElement(productObj);
-    productItem.addEventListener('click', selectedItem);
     sectionProduct.appendChild(productItem);
+    const btn = document.querySelectorAll('.item__add');
+    btn.forEach((item) => item.addEventListener('click', selectedItem));
   });
 }
 

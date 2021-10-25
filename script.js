@@ -1,6 +1,7 @@
 // Código só foi possívl graças à união da classe for(ever).
 // a União faz a força!
 const getOl = document.querySelector('.cart__items');
+const cartSection = document.querySelector('.cart');
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -17,6 +18,7 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   event.target.remove();
+  saveCartItems(getOl.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -51,12 +53,32 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
-const listOfProducts = (categoria) => {
-  fetchProducts(categoria).then((value) =>
-    value.forEach((product) => {
-    createProductItemElement(product);
-  }));
-};
+function load() {
+  const loading = document.createElement('p');
+  loading.className = 'loading';
+  loading.innerText = 'carregando...';
+  cartSection.appendChild(loading);
+}
+
+function unload() {
+  const loading = document.querySelector('.loading');
+  cartSection.removeChild(loading);
+}
+
+async function listOfProducts(categoria) {
+  load();
+  const request = await fetchProducts(categoria);
+  request.forEach((product) => createProductItemElement(product));
+  unload();
+}
+
+// const listOfProducts = (categoria) => {
+//   load();
+//   fetchProducts(categoria)
+//   .then((value) =>
+//     value.forEach((product) => createProductItemElement(product))
+//     unload);
+// };
 
 function restoreCart() {
   getOl.innerHTML = getSavedCartItems();
@@ -64,6 +86,7 @@ function restoreCart() {
 
 function clearCart() {
   getOl.innerHTML = '';
+  saveCartItems(getOl.innerHTML);
 }
 
 getOl.addEventListener('click', cartItemClickListener);

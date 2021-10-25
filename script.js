@@ -33,7 +33,7 @@ async function cartItemClickListener(event) {
   li.remove();
   await sumPrices();
   await saveCartItems(li);
-  console.log('Salva ao Remover');
+  // console.log('Salva ao Remover');
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -43,7 +43,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   saveCartItems({ sku, name, salePrice });
-  console.log('salva em createCartItemElement');
+  // console.log('salva em createCartItemElement');
   return li;
 }
 
@@ -54,7 +54,7 @@ async function itemProducts(itemsId) {
   const itemLi = createCartItemElement({ sku, name, salePrice });
   sectionItem.appendChild(itemLi);
   saveCartItems(itemsId);
-  console.log('Salva itemProducts');
+  // console.log('Salva itemProducts');
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -70,9 +70,13 @@ function createProductItemElement({ sku, name, image }) {
   });
   section.appendChild(buttonItem);
   saveCartItems({ sku, name, image });
-  console.log('Salva itemProducts em createProductItemElement');
+  // console.log('Salva itemProducts em createProductItemElement');
+  // waitLoading.value = '';
+  // waitLoading.innerText = '';
   return section;
 }
+
+const waitLoading = document.querySelector('.loading');
 
 async function searchProducts(product) {
   const searchData = await fetchProducts(product);
@@ -85,6 +89,7 @@ async function searchProducts(product) {
     };
     const productItem = createProductItemElement(itemObject);
     sectionItems.appendChild(productItem);
+    waitLoading.remove();
   });
 }
 
@@ -103,3 +108,10 @@ window.onload = () => {
   searchProducts('computador');
   // ItemProducts('MLB1341706310');
 };
+
+// function textLoading() {
+  waitLoading.innerText = 'carregando...';
+  // waitLoading.value = ''
+ // console.log(waitLoading.value);
+// }
+// textLoading();

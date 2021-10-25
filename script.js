@@ -90,6 +90,17 @@ const cartRestoration = () => {
   });
 };
 
+// REQUISITO 6
+
+const clearButton = document.querySelector('.empty-cart');
+
+const clearCart = () => {
+  getListCart.innerHTML = '';
+  saveCartItems(getListCart.innerHTML);
+};
+
+clearButton.addEventListener('click', clearCart);
+
 window.onload = () => { 
   searchProduct('computador');
   cartRestoration();

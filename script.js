@@ -2,6 +2,7 @@
 // const { fetchItem } = require("./helpers/fetchItem");
 
 const cartItems = document.querySelector('.cart__items');
+const loadElement = document.getElementById('load');
 
 let listStorage = [];
 
@@ -67,15 +68,14 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-// function loadingApi() {
-//   const loadElement = document.getElementById('load');
-//   loadElement.appendChild(load('h1', 'loading', 'carregando...'));
-// }
+function loadingApi() {
+  loadElement.appendChild(createCustomElement('h1', 'loading', 'carregando...'));
+}
 
-// function removeLoadingApi() {
-//   const loadingElement = document.querySelector('.loading');
-//   divLoad.removeChild(loadingElement);
-// }
+function removeLoadingApi() {
+  const loadingElement = document.querySelector('.loading');
+  loadElement.removeChild(loadingElement);
+}
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
@@ -104,7 +104,9 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 const createCartItemElementFromFetchItem = async (products) => {
+  loadingApi();
   const data = await fetchItem(products);
+  removeLoadingApi();
   const obj = {
     sku: data.id,
     name: data.title,
@@ -114,6 +116,7 @@ const createCartItemElementFromFetchItem = async (products) => {
   const proudctItem = createCartItemElement(obj);
   cartItems.appendChild(proudctItem);
   const text = cartItems.innerHTML;
+
   saveCartItems(text);
   setStorageListProducts(obj);
   listStorageUpdate();
@@ -136,7 +139,9 @@ const itemAddButtonAction = () => {
 
 const createProductItemElementFromFetchProduct = async (products) => {
   const sectionItems = document.querySelector('.items');
+  loadingApi();
   const data = await fetchProducts(products);
+  removeLoadingApi();
   data.results.forEach(({ id, title, thumbnail }) => {
     const obj = {
       sku: id,

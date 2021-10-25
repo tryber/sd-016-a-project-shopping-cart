@@ -21,10 +21,11 @@ const setStorageListProducts = (objProduct) => {
   const listOnStorage = JSON.parse(localStorage.getItem('listProducts'));
   if (listOnStorage === null) {
     localStorage.setItem('listProducts', '[]');
-    listStorage = [];
     updateSumTotalPrice(listStorage);
-  } listStorage = listOnStorage;
-
+  } else {
+    listStorage = listOnStorage;
+  }
+  
   listStorage.push(objProduct);
   localStorage.setItem('listProducts', JSON.stringify(listStorage));
   updateSumTotalPrice(listStorage);

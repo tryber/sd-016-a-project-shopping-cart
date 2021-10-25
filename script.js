@@ -1,5 +1,6 @@
 function cartItemClickListener(e) {
     document.querySelectorAll('.cart__items')[0].removeChild(e.target);  
+    saveCartItems(document.querySelectorAll('.cart__items')[0].innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -28,7 +29,6 @@ function createCustomElement(element, className, innerText) {
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -43,10 +43,12 @@ const chamaFetchProducts = async () => {
   createProductItemElement(obj);
   
   document.querySelectorAll('.item__add')[index].addEventListener('click', (e) =>
-  fetchItem(e.target.parentNode.children[0].innerHTML)
-  
-  .then((data) => 
-  createCartItemElement(({ sku: data.id, name: data.title, salePrice: data.price }))));
+  fetchItem(e.target.parentNode.children[0].innerHTML)  
+  .then((data) =>
+  createCartItemElement(({ sku: data.id, name: data.title, salePrice: data.price })))
+  .then(() => {
+    saveCartItems(document.querySelectorAll('.cart__items')[0].innerHTML);
+  }));
 }));
 };
 
@@ -56,4 +58,15 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-window.onload = () => { };
+function removeLocalStorEol(e) {
+  document.querySelectorAll('.cart__items')[0].removeChild(e.target);
+  saveCartItems(document.querySelectorAll('.cart__items')[0].innerHTML);
+}
+window.onload = () => {
+  document.querySelectorAll('.cart__items')[0].innerHTML = getSavedCartItems();
+  fetch('https://api.mercadolibre.com/items/MLB1532308540').then((data) => {
+    for (cont = 0; cont < document.querySelectorAll('.cart__items')[0].children.length; cont += 1) {
+    document.querySelectorAll('.cart__item')[cont].addEventListener('click', removeLocalStorEol);
+    }
+  });
+};

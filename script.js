@@ -17,6 +17,13 @@ const updateSumTotalPrice = (productsObj) => {
 };
 
 const setStorageListProducts = (objProduct) => {
+  const listOnStorage = JSON.parse(localStorage.getItem('listProducts'));
+  if (listOnStorage === null) {
+    localStorage.setItem('listProducts', '[]');
+    listStorage = [];
+    updateSumTotalPrice(listStorage);
+  } listStorage = listOnStorage;
+
   listStorage.push(objProduct);
   localStorage.setItem('listProducts', JSON.stringify(listStorage));
   updateSumTotalPrice(listStorage);
@@ -60,6 +67,16 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+// function loadingApi() {
+//   const loadElement = document.getElementById('load');
+//   loadElement.appendChild(load('h1', 'loading', 'carregando...'));
+// }
+
+// function removeLoadingApi() {
+//   const loadingElement = document.querySelector('.loading');
+//   divLoad.removeChild(loadingElement);
+// }
+
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -88,7 +105,6 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 const createCartItemElementFromFetchItem = async (products) => {
   const data = await fetchItem(products);
-
   const obj = {
     sku: data.id,
     name: data.title,
@@ -150,14 +166,12 @@ const getSavedCartItemsOnload = () => {
 };
 
 const clearAll = () => {
-  cartItems.remove();
-  const newCartItems = document.createElement('ol');
-  newCartItems.className = 'cart__items';
-  const cart = document.querySelector('.cart');
-  cart.appendChild(newCartItems);
+  const cartItemsA = document.querySelectorAll('.cart__item');
+  cartItemsA.forEach((cartItem) => cartItem.parentElement.removeChild(cartItem));
+
   listStorage = [];
   localStorage.setItem('listProducts', JSON.stringify(listStorage));
-  saveCartItems(listStorage);
+  localStorage.setItem('cartItems', JSON.stringify(listStorage));
   updateSumTotalPrice(listStorage);
 };
 

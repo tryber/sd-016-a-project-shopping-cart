@@ -14,7 +14,8 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
-
+  console.log(event);
+  event.currentTarget.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -30,9 +31,9 @@ async function fetchItemResults(itemId) {
   const sectionItens = document.querySelector('.cart__items');
   const resulcart = createCartItemElement(
     { sku: resultado.id, name: resultado.title, salePrice: resultado.price },
-    );
+  );
   sectionItens.appendChild(resulcart);
-  saveCartItems(resultado);
+  saveCartItems(sectionItens.innerHTML);
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -51,12 +52,16 @@ function createProductItemElement({ sku, name, image }) {
 }
 
 async function fetchProductsResults() {
-  const resultado = await fetchProducts('computador');
   const sectionItens = document.querySelector('.items');
-  resultado.results.forEach((item) =>
-    sectionItens.appendChild(
-      createProductItemElement({ sku: item.id, name: item.title, image: item.thumbnail }),
+ sectionItens.innerHTML =  '<ol class="loading"><li>Carregando</li></ol>'
+  setTimeout(async () => {
+    const resultado = await fetchProducts('computador');
+    sectionItens.innerHTML =  ''
+    resultado.results.forEach((item) =>
+      sectionItens.appendChild(
+        createProductItemElement({ sku: item.id, name: item.title, image: item.thumbnail }),
       ));
+  }, 2000);
 }
 
 function getSkuFromProductItem(item) {
@@ -66,12 +71,11 @@ function getSkuFromProductItem(item) {
 function startCart() {
   const cartItens = getSavedCartItems();
   const sectionItens = document.querySelector('.cart__items');
-  cartItens.forEach((item) => {
-    const resulcart = createCartItemElement(
-      { sku: item.id, name: item.title, salePrice: item.price },
-      );
-    sectionItens.appendChild(resulcart);
-  });
+  sectionItens.innerHTML = cartItens;
+  console.log(sectionItens.children);
+  for (let i = 0; i < sectionItens.children.length; i += 1) {
+    sectionItens.children[i].addEventListener('click', cartItemClickListener);
+  }
 }
 
 window.onload = () => {

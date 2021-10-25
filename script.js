@@ -19,12 +19,12 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-  function createCartItemElement({ sku, name, salePrice }) {
-    const li = document.createElement('li');
-    li.className = 'cart__item';
-    li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-    li.addEventListener('click', cartItemClickListener);
-    return li;
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
   }
 
 async function addCartItem(id) {
@@ -52,9 +52,9 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
 
 function listProducts(search) {
   return fetchProducts(search)
@@ -70,6 +70,7 @@ orderedList.addEventListener('click', cartItemClickListener);
 
 const clearCart = () => {
   orderedList.innerHTML = '';
+  saveCartItems(orderedList.innerHTML);
 };
   clearButton.addEventListener('click', clearCart);
 

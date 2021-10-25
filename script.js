@@ -15,7 +15,6 @@ function createCustomElement(element, className, innerText) {
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -35,20 +34,32 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-async function cartItemClickListener(event) {
+async function getSelectedItemInfo(selectedItem) {
+  const itemCard = selectedItem.parentElement;
+  const itemId = getSkuFromProductItem(itemCard);
+  const acquiredData = await fetchItem(itemId);
+  console.log(acquiredData);
+  return acquiredData;
+}
+
+function updateCartList (newItem) {
+  const cartItemsList = document.querySelector('.cart__items');
+  cartItemsList.appendChild(newItem);
+  saveCartItems(cartItemsList.innerHTML);
+}
+
+async function itemClickListener(event) {
   if (event.target.classList.contains('item__add')) {
-    const itemCard = event.target.parentElement;
-    const itemId = getSkuFromProductItem(itemCard);
-    const acquiredData = await fetchItem(itemId);
-    const { id: sku, title: name, price: salePrice } = acquiredData;
-    const cartItemsList = document.querySelector('.cart__items');
-    const selectedItemElement = createCartItemElement({ sku, name, salePrice });
-    cartItemsList.appendChild(selectedItemElement);
+    const itemData = await getSelectedItemInfo(event.target);
+    const { id: sku, title: name, price: salePrice } = itemData;
+    const selectedItemCartElement = createCartItemElement({ sku, name, salePrice });
+    updateCartList(selectedItemCartElement);
   }
   if (event.target.classList.contains('cart__item')) {
     const cartList = event.target.parentElement;
     const selectedItem = event.target;
     cartList.removeChild(selectedItem);
+    saveCartItems(cartList.innerHTML);
   }
 }
 
@@ -62,7 +73,16 @@ async function getResultFromFetchProducts(product) {
   });
 }
 
+function reloadCartList(storedData) {
+  if (storedData) {
+  const cartItemsList = document.querySelector('.cart__items');
+  cartItemsList.innerHTML = storedData;
+  }
+}
+
 window.onload = () => {
+  const storedData = getSavedCartItems();
+  reloadCartList(storedData);
   getResultFromFetchProducts('computador');
-  document.addEventListener('click', cartItemClickListener);
+  document.addEventListener('click', itemClickListener);
 };

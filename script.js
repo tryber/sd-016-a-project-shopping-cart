@@ -37,11 +37,22 @@ function setTotalPriceItem(price) {
   }
 }
 
+function getTotalPrice() {
+  const price = localStorage.getItem('price');
+  if (document.querySelector('.total-price')) {
+    document.querySelector('.total-price').innerText = `Total: ${parseInt(price, 10)}`;
+  } else {
+    const carrinho = document.querySelector('.cart');
+    carrinho.appendChild(createCustomElement('p', 'total-price', `Total: ${parseInt(price, 10)}`));
+  }
+}
+
 async function addCartItem(id) {
   const product = await fetchItem(id);
   cartList.appendChild(createCartItemElement(product));
   setTotalPriceItem(product.price);
   saveCartItems(cartList.innerHTML);
+  getTotalPrice();
   /* 
   requisito feito em uma sala de estudos
   Auxiliado por: Renan Souza, Matheus Benini, Vitor Brandão, Italo Moraes, Ju Barcelos e Rafael Feliciano
@@ -83,6 +94,7 @@ function restoreCart() {
   cartList.innerHTML = getSavedCartItems();
   Array.from(cartList.children).forEach((item) =>
   item.addEventListener('click', cartItemClickListener));
+  getTotalPrice();
 }
 
 window.onload = () => {

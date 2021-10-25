@@ -44,7 +44,12 @@ async function cartItemClickListener(event) {
     const cartItemsList = document.querySelector('.cart__items');
     const selectedItemElement = createCartItemElement({ sku, name, salePrice });
     cartItemsList.appendChild(selectedItemElement);
-  } 
+  }
+  if (event.target.classList.contains('cart__item')) {
+    const cartList = event.target.parentElement;
+    const selectedItem = event.target;
+    cartList.removeChild(selectedItem);
+  }
 }
 
 async function getResultFromFetchProducts(product) {

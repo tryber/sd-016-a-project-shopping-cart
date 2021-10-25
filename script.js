@@ -15,7 +15,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-const valuesSum = () => {
+const valueSum = () => {
   // ajuda do Brunão na sala do Zoom
   const totalPrice = document.querySelector('.total-price');
   const restoreStorage = getSavedCartItems();
@@ -37,7 +37,7 @@ const valuesSum = () => {
 function cartItemClickListener(event) {
   event.target.remove();
   saveCartItems(ol.innerHTML);
-  valuesSum();
+  valueSum();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -47,7 +47,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   ol.appendChild(li);
   saveCartItems(ol.innerHTML);
-  valuesSum();
+  valueSum();
 }
 
 const getID = async (sku) => {
@@ -109,5 +109,5 @@ window.onload = () => {
   loadProducts();
   if (ol.children.length === 0) restoreCart();
   resetRemoveClick();
-  valuesSum();
+  valueSum();
 };

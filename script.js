@@ -10,6 +10,7 @@ function createProductImageElement(imageSource) {
 
 function cartItemClickListener(event) {
   event.target.remove();
+  saveCartItems(orderedList.innerHTML);
 }
 
 function createCustomElement(element, className, innerText) {

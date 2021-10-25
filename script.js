@@ -13,14 +13,17 @@ function createCustomElement(element, className, innerText) {
 }
 
 // function cartItemClickListener(event) {
- 
+//   const bye = event.target;
+//   return bye.remove;
 // }
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
+  li.addEventListener('click', () => {
+    li.remove();
+  });
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  // li.addEventListener('click', cartItemClickListener);
   return li;
 }
 

@@ -10,8 +10,8 @@ function updatePrice(price, operation) {
   const prevPrice = parseFloat(priceEl.innerText);
   let total = 0;
   if (operation === 'add') {
-    total = parseFloat(prevPrice + price).toFixed(2);
-  } else total = parseFloat(prevPrice - price).toFixed(2);
+    total = parseFloat(prevPrice + price);
+  } else total = parseFloat(prevPrice - price);
   priceEl.innerText = total;
   localStorage.setItem('price', total);
 }

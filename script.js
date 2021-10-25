@@ -40,4 +40,24 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+// results.id = sku
+// title = nome do produto
+// thumbnail = imagem do produto
+// req-01 com ajuda do Bê
+async function searchProducts(product) {
+  const searchedData = await fetchProducts(product);
+  const sectionItens = document.querySelector('.items');
+  searchedData.results.forEach((item) => {
+    const productItemObject = {
+      sku: item.id,
+      name: item.title,
+      image: item.thumbnail,
+    };
+    const productItemElement = createProductItemElement(productItemObject);
+    sectionItens.appendChild(productItemElement);
+  });
+}
+
+window.onload = () => { 
+    searchProducts('computador');
+};

@@ -1,6 +1,5 @@
 const getSavedCartItems = () => {
-  const cartItemsInfo = localStorage.getItem('cart-item');
-
+  const cartItemsInfo = localStorage.getItem('cartItems');
   return cartItemsInfo;
 };
 

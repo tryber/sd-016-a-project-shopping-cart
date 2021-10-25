@@ -29,7 +29,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqu
+  // coloque seu código aqui
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -40,4 +40,20 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+async function searchProducts(product) {
+  const data = await fetchProducts(product);
+  const section = document.querySelector('.items');
+  data.results.forEach((item) => {
+    const object = {
+      sku: item.id,
+      name: item.title,
+      image: item.thumbnail,
+    };
+    const product = createProductItemElement(object);
+    section.appendChild(product);
+  });
+}
+
+window.onload = () => {
+  searchProducts('computador');
+};

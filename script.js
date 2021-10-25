@@ -102,8 +102,20 @@ function getLocalStorageItems() {
   });
 }
 
+function clearCartItems() {
+  const button = document.getElementsByClassName('empty-cart')[0];
+  const listItems = document.getElementsByClassName('cart__items')[0];
+  button.addEventListener('click', () => {
+    localStorage.clear();
+    do {
+      listItems.children[0].remove();
+    } while (listItems.children.length !== 0);
+  });
+}
+
 window.onload = () => {
   createItems();
   createTotalPriceElement();
   getLocalStorageItems();
+  clearCartItems();
 };

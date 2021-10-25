@@ -7,8 +7,10 @@
 .items {
   display: flex;
   flex-basis: 70%;
+  min-height: 100vh;
   flex-wrap: wrap;
   justify-content: center;
+  position: relative;
 }
 
 .item {
@@ -69,4 +71,11 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+p.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

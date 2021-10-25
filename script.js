@@ -1,3 +1,25 @@
+function onLoadInfo() {
+  const pageLoad = document.querySelector('.items');
+  const p = document.createElement('p');
+  p.className = 'loading';
+  p.innerText = 'Carregando...';
+  pageLoad.appendChild(p);
+  // return p;
+}
+
+function emptyCart() {
+  const emptyButton = document.querySelector('.empty-cart');
+  const currentList = document.querySelector('.cart__items');
+  emptyButton.addEventListener('click', () => {
+    currentList.innerHTML = '';
+  });
+}
+
+function cartItemClickListener(event) {
+  const li = event.target;
+  li.remove();
+}
+
 // cria os cards dos produtos
 function createProductImageElement(imageSource) {
   const conteiner = document.createElement('div');
@@ -9,12 +31,6 @@ function createProductImageElement(imageSource) {
   conteiner.appendChild(img);
   // return img;
   return conteiner;
-}
-
-function cartItemClickListener(event) {
-  const li = event.target;
-  li.innerHTML = '';
-  li.remove();
 }
 
 function createCustomElement(element, className, innerText) {
@@ -33,6 +49,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 async function addProductToCart(productID) {
+  onLoadInfo();
   const itemData = await fetchItem(productID);
   const sectionItem = document.querySelector('.cart__items');
   const { id: sku, title: name, price: salePrice } = itemData;
@@ -64,14 +81,6 @@ async function addProductToCart(productID) {
 //   p.innerText = 'Carregando...';
 //   return p;
 // }
-
-function onLoadInfo() {
-  const pageLoad = document.querySelector('.items');
-  const p = document.createElement('p');
-  p.className = 'loading';
-  p.innerText = 'Carregando...';
-  pageLoad.appendChild(p);
-}
 
 function createProductItemElement({ sku, name, image, salePrice }) {
   const section = document.createElement('section');
@@ -105,6 +114,7 @@ async function serchProducts(product) { // essa e uma funcao assincrona
 }
 
 window.onload = () => { 
-  serchProducts('computador');
+  serchProducts('aspirador robo');
   onLoadInfo();
+  emptyCart();
 };

@@ -1,6 +1,18 @@
 const ol = document.querySelector('.cart__items');
 const clearAllBtn = document.querySelector('.empty-cart');
 
+const createLoading = () => {
+  const loadMsg = document.createElement('p');
+  loadMsg.className = 'loading';
+  loadMsg.innerHTML = 'carregando...';
+  document.body.append(loadMsg);
+};
+
+const removeLoading = () => {
+  const load = document.querySelector('.loading');
+  load.remove();
+};
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -73,10 +85,12 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 }
 
 const loadProducts = () => {
+  createLoading();
   fetchProducts('computador').then((value) => {
     value.results.forEach((item) => {
       createProductItemElement(item);
     });
+    removeLoading();
   });
 };
 
@@ -112,3 +126,6 @@ window.onload = () => {
   resetRemoveClick();
   valueSum();
 };
+
+// Projeto com a colaboração de:
+// Josue Gomes Ribeiro, Lucas Fernandes, Brunao, Leonardo Ferreira, Julia Barcelos, Renan Souza, Eduardo Miyazaki, Leandro Goerck, Guilherme Duarte

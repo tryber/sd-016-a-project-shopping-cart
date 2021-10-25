@@ -1,28 +1,33 @@
+const getListCart = document.querySelector('.cart__items');
+
+// Funções básicas já implementadas para criar elementos:
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
   return img;
 }
+
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
   return e;
 }
+
 // function getSkuFromProductItem(item) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
 
 function cartItemClickListener(event) {
   event.target.remove();
+  saveCartItems(getListCart.innerHTML);
 }
 
-// function cartItemClickListener(event) {
-//   event.target.remove();
-// }
-
-// REQUISITO 2 - feito com a ajuda expecional de meus queridos colegas
+// REQUISITO 2 - feito com a ajuda expecional de meus queridos colegas:
+// Renan Souza, Lucas Alves, Matheus Benini, Italo Moraes;
+// Rafael Feliciano, Fabrício Martins e Júlia Barcelos <3
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -35,11 +40,10 @@ function createCartItemElement({ sku, name, salePrice }) {
 // Função desenvolvida Req.2
 async function buttonRequisition(sku) {
   const findTheProduct = await fetchItem(sku);
-  const olItems = document.querySelector('.cart__items');
-
   const { title: name, price: salePrice } = findTheProduct;
   const cartList = createCartItemElement({ sku, name, salePrice });
-  olItems.appendChild(cartList);
+  getListCart.appendChild(cartList);
+  saveCartItems(getListCart.innerHTML);
 }
 
 // REQUISITO 1
@@ -60,7 +64,7 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-// Função desenvolvida Req.1
+// Função desenvolvida Req.1 após assistir vídeo do Bê
 async function searchProduct(product) {
   const searchResult = await fetchProducts(product);
   const sectionItems = document.querySelector('.items');
@@ -75,7 +79,25 @@ async function searchProduct(product) {
   });
 }
 
+// REQUISITO 4 - implementado com a ajuda do colega Josué
+
+const cartRestoration = () => {
+  const localStorage = getSavedCartItems();
+  getListCart.innerHTML = localStorage;
+};
+
+const restoreCartList = () => {
+  Array.from(getListCart.children).forEach((child) => {
+    child.addEventListener('click', cartItemClickListener);
+  });
+};
+
 window.onload = () => { 
   searchProduct('computador');
-  buttonRequisition('MLB1341706310');
+
+  if (getListCart.children.length === 0) {
+    cartRestoration();
+  } else {
+    restoreCartList();
+  }
 };

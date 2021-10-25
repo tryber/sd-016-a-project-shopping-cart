@@ -1,6 +1,18 @@
 const capturarListCart = document.querySelector('.cart__items');
 const limparCarrinho = document.querySelector('.empty-cart');
 
+const telaDeCarregamento = () => {
+  const criandoTela = document.createElement('h1');
+  criandoTela.className = 'loading';
+  criandoTela.innerHTML = 'carregando...';
+  document.body.append(criandoTela);
+};
+
+const removerTelaCarregamento = () => {
+  const capturandoTelaL = document.querySelector('.loading');
+  capturandoTelaL.remove();
+};
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -74,10 +86,12 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 }
 // funçao que pega os produtod da API e e joga eles para a tela usando o createProductItemElement.
 const milagre = () => {
+  telaDeCarregamento();
   fetchProducts('computador').then((value) => {
   value.results.forEach((item) => {
     createProductItemElement(item);
   });
+  removerTelaCarregamento();
 });
 };
 
@@ -114,3 +128,5 @@ function limparListaCarrinho() {
 }
 
 limparCarrinho.addEventListener('click', limparListaCarrinho);
+
+// Com ajuda dos amigos Lucas Fernandes - Brunao - Danilo Meneguela - Leonardo Ferreira - Julia Barcelos - Renan Souza - Eduardo Miyazaki - Leandro Goerck - Guilherme Duarte, juntos em varios dias do projeto dando ideias unidos conseguimos chegar nos 100%

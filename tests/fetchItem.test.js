@@ -19,4 +19,12 @@ describe('2 - Teste a função fecthItem', () => {
     fetchItem('MLB1615760527');
     expect(fetch).toHaveBeenCalledWith(endpoint);
   })
+
+  it('Testa se o retorno da funcao fetchItem tem o tamanho do item da API', async () => {
+    const idTest = 'MLB1615760527';
+    const lengthItem = Object.keys(item).length;
+    const lengthReturnFunc = await fetchItem(idTest).then((data) => data);
+    expect(lengthItem).toEqual(Object.keys(lengthReturnFunc).length);
+    expect(item).toEqual(lengthReturnFunc);
+  })
 });

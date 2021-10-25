@@ -15,10 +15,29 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+const valuesSum = () => {
+  // ajuda do Brunão na sala do Zoom
+  const totalPrice = document.querySelector('.total-price');
+  const restoreStorage = getSavedCartItems();
+  if (ol.children.length > 0) {
+    const elemArrStorage = restoreStorage.split('PRICE: $');
+    elemArrStorage.shift();
+    const turnNumber = elemArrStorage.reduce((acc, curr) => {
+    acc.push(Number(curr.substring(0, curr.indexOf('<'))));
+    return acc;
+    }, []);
+    const finalResult = turnNumber.reduce((acc, value) => acc + value);
+    totalPrice.innerHTML = finalResult;
+  } else {
+    totalPrice.innerHTML = 0;
+  }  
+};
+
 // ajuda do miyazaki na sala do zoom
 function cartItemClickListener(event) {
   event.target.remove();
   saveCartItems(ol.innerHTML);
+  valuesSum();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -28,6 +47,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   ol.appendChild(li);
   saveCartItems(ol.innerHTML);
+  valuesSum();
 }
 
 const getID = async (sku) => {
@@ -89,4 +109,5 @@ window.onload = () => {
   loadProducts();
   if (ol.children.length === 0) restoreCart();
   resetRemoveClick();
+  valuesSum();
 };

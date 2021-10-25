@@ -5,12 +5,10 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
 function cartItemClickListener(event) {
   // coloque seu código aqui
+  const element = event.target;
+  element.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -28,7 +26,6 @@ async function handleClick(event) {
   const { title: name, price: salePrice } = itemInfo;
   const cartElement = createCartItemElement({ sku, name, salePrice });
   const cartList = document.getElementsByClassName('cart__items')[0];
-  console.log(cartList);
   cartList.appendChild(cartElement);
 }
 

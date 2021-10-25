@@ -43,7 +43,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 async function selectedItem(click) {
   const id = click.path[1].childNodes[0].innerHTML;
   const item = await fetchItem(id);
-  const section = document.querySelector('.cart');
+  const section = document.querySelector('.cart__items');
   
   const { id: sku, title: name, price: salePrice } = item;
 

@@ -7,11 +7,11 @@ function createProductImageElement(imageSource) {
 
 function updatePrice(price, operation) {
   const priceEl = document.getElementsByClassName('total-price')[0];
-  const prevPrice = parseInt(priceEl.innerText, 10);
+  const prevPrice = parseFloat(priceEl.innerText);
   let total = 0;
   if (operation === 'add') {
-    total = prevPrice + price;
-  } else total = prevPrice - price;
+    total = parseFloat(prevPrice + price).toFixed(2);
+  } else total = parseFloat(prevPrice - price).toFixed(2);
   priceEl.innerText = total;
   localStorage.setItem('price', total);
 }
@@ -106,7 +106,7 @@ window.onload = async () => {
   if (localStorage.getItem('cartItems') !== null) {
     getSavedCartItems();
     loadListners();
-    const price = parseInt(localStorage.getItem('price'), 10);
+    const price = parseFloat(localStorage.getItem('price'));
     updatePrice(price, 'add');
   }
 };

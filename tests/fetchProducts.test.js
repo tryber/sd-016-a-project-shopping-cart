@@ -24,7 +24,8 @@ describe('1 - Teste a função fecthProducts', () => {
     expect(await fetchProducts('computador')).toEqual(computadorSearch);
   })
   it('Verifica se função "fetchProducts", quando chamada sem argumentos, retorna o erro "You must provide an url"', async () => {
-    expect.assertions(1);
-    expect(await fetchProducts()).toEqual('You must provide an url');
+    const expectedError = new Error('You must provide an url');
+    const result = await fetchProducts();
+    expect(result).toEqual(expectedError);
   })
 });

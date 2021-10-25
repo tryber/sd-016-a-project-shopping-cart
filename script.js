@@ -1,3 +1,6 @@
+let sum = 0;
+const totalPrice = [];
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -14,9 +17,20 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
+  console.log(event);
   const cartOl = document.querySelector('.cart__items');
   cartOl.removeChild(event.target);
-  // console.log(event);
+}
+
+function subtractFromTotalPrice(totalPriceArray, itemSalePrice) {
+  let totalPriceSubtracted = totalPriceArray.reduce((acc, curr) => acc + curr);
+  let index = totalPriceArray.indexOf(itemSalePrice);
+  console.log(index);
+  if (index > -1) {
+    totalPriceArray.splice(index, 1); // splice rece o índice por onde começar a modificar o array, e o número de elementos para serem deletados.
+  }
+  console.log(totalPriceArray);
+  console.log(totalPriceSubtracted - itemSalePrice);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -24,6 +38,9 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', () => {
+    subtractFromTotalPrice(totalPrice, salePrice);
+  });
   return li;
 }
 
@@ -62,6 +79,23 @@ async function addItemstoPage() {
   });
 }
 
+async function addTotalPrice(totalPriceArray) {
+  const buttons = document.querySelectorAll('.item__add');
+  buttons.forEach((button) => {
+    button.addEventListener('click', async () => {
+      const sku = getSkuFromProductItem(button.parentNode);
+      const response = await fetch(`https://api.mercadolibre.com/items/${sku}`);
+      const data = await response.json();
+      const { price } = data;
+      totalPriceArray.push(price);
+      console.log(totalPriceArray);
+      let totalPriceAdded = totalPriceArray.reduce((acc, curr) => acc + curr);
+      console.log(totalPriceAdded);
+    });
+  });
+}
+
 window.onload = async () => {
   await addItemstoPage();
+  await addTotalPrice(totalPrice);
 };

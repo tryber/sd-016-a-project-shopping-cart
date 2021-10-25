@@ -1,6 +1,7 @@
 const cartItem = document.querySelector('.cart__items');
 const emptyCart = document.querySelector('.empty-cart');
 const loading = document.querySelector('.loading');
+const price = document.querySelector('.total-price');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -17,11 +18,32 @@ function createCustomElement(element, className, innerText) {
 }
 
 function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
+  const splitedName = item.innerText.split(' ');
+  return splitedName[1];
+}
+
+async function priceRemoveUpdater(id) {
+  const item = await fetchItem(id);
+
+  const totalPrice = parseFloat(price.innerText, 10) - parseFloat(item.price, 10);
+  price.innerText = totalPrice % 1 === 0 ? totalPrice.toFixed() : totalPrice.toFixed(1);  
+}
+
+async function priceUpdater(id) {
+  const item = await fetchItem(id);
+  if (price.innerText) {
+    const totalPrice = parseFloat(price.innerText, 10) + parseFloat(item.price, 10);
+    price.innerText = totalPrice % 1 === 0 ? totalPrice : totalPrice.toFixed(2);  
+  } else {
+    price.innerText = item.price;
+  }
 }
 
 function cartItemClickListener(event) {
- 
+  event.target.remove();
+  saveCartItems(cartItem.innerHTML);
+  const product = getSkuFromProductItem(event.target);
+  priceRemoveUpdater(product);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -77,3 +99,5 @@ async function products(product) {
 window.onload = () => {
   products('computador');
 };
+
+// Requisitos 3 e 5 feitos com auxilio de codereview do colega Carlos Dartora;

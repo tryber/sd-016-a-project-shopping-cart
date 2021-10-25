@@ -1,4 +1,3 @@
-let sum = 0;
 const totalPrice = [];
 
 function createProductImageElement(imageSource) {
@@ -17,20 +16,20 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
-  console.log(event);
   const cartOl = document.querySelector('.cart__items');
   cartOl.removeChild(event.target);
 }
 
 function subtractFromTotalPrice(totalPriceArray, itemSalePrice) {
-  let totalPriceSubtracted = totalPriceArray.reduce((acc, curr) => acc + curr);
-  let index = totalPriceArray.indexOf(itemSalePrice);
-  console.log(index);
+  const totalPriceSubtracted = totalPriceArray.reduce(
+    (acc, curr) => acc + curr,
+  );
+  const index = totalPriceArray.indexOf(itemSalePrice);
   if (index > -1) {
-    totalPriceArray.splice(index, 1); // splice rece o índice por onde começar a modificar o array, e o número de elementos para serem deletados.
+    totalPriceArray.splice(index, 1); // splice recebe o índice por onde começar a modificar o array, e o número de elementos à serem deletados.
   }
   console.log(totalPriceArray);
-  console.log(totalPriceSubtracted - itemSalePrice);
+  console.log((totalPriceSubtracted - itemSalePrice).toFixed(2));
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -89,8 +88,8 @@ async function addTotalPrice(totalPriceArray) {
       const { price } = data;
       totalPriceArray.push(price);
       console.log(totalPriceArray);
-      let totalPriceAdded = totalPriceArray.reduce((acc, curr) => acc + curr);
-      console.log(totalPriceAdded);
+      const totalPriceAdded = totalPriceArray.reduce((acc, curr) => acc + curr);
+      console.log(totalPriceAdded.toFixed(2));
     });
   });
 }

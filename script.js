@@ -53,10 +53,10 @@ function createProductItemElement({ sku, name, image }) {
 
 async function fetchProductsResults() {
   const sectionItens = document.querySelector('.items');
- sectionItens.innerHTML =  '<ol class="loading"><li>Carregando</li></ol>'
+ sectionItens.innerHTML = '<ol class="loading"><li>Carregando</li></ol>';
   setTimeout(async () => {
     const resultado = await fetchProducts('computador');
-    sectionItens.innerHTML =  ''
+    sectionItens.innerHTML = '';
     resultado.results.forEach((item) =>
       sectionItens.appendChild(
         createProductItemElement({ sku: item.id, name: item.title, image: item.thumbnail }),

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+    <title>Shopping cart</title>
     <link rel="stylesheet" href="style.css" />
     <script src="./helpers/fetchItem.js" defer></script>
     <script src="./helpers/fetchProducts.js" defer></script>
@@ -32,8 +32,10 @@
           <span class='loading'>carregando...</span>
         </section>
         <ol class="cart__items"></ol>
-        <p>Subtotal: <b>R$</b><span class='total-price' id='total'>0</span></p>
-        <button class="empty-cart">Esvaziar carrinho</button>
+        <section class="subtotal-and-empty-cart">
+          <p>Subtotal: <b>R$ <span class='total-price' id='total'>0</b></span></p>
+          <button class="empty-cart">Esvaziar carrinho</button>
+        </section>
       </section>
     </section>
   </body>

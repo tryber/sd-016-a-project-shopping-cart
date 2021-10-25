@@ -43,7 +43,9 @@ function cartItemClickListener(event) {
 function createCartItemElement({ sku, name, salePrice, image }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerHTML = `SKU: ${sku}<br> 
+   NAME: ${name}<br>
+   PRICE: $${salePrice}`;
   li.appendChild(createProductImageElement(image));
   li.addEventListener('click', cartItemClickListener); // pegar essa linha
   
@@ -59,13 +61,14 @@ const addItemToCart = async (item) => {
   saveCartItems(olItems.innerHTML);
 };
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ sku, name, image, price }) {
   const section = document.createElement('section');
   section.className = 'item';
 
+  section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('span', 'item__price', `R$ ${price}`));
   const buttonAdd = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   section.appendChild(buttonAdd);
   buttonAdd.addEventListener('click', () => addItemToCart(sku));
@@ -83,8 +86,8 @@ const serchProducts = async (product) => {
   const data = await fetchProducts(product);
   const section = document.querySelector('.items');
   data.results.forEach((item) => {
-    const { id: sku, title: name, thumbnail: image } = item;
-    const productItem = createProductItemElement({ sku, name, image });
+    const { id: sku, title: name, thumbnail: image, price } = item;
+    const productItem = createProductItemElement({ sku, name, image, price });
     section.appendChild(productItem);
   });
 };

@@ -40,6 +40,22 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+async function selectedItem(id) {
+  const item = await fetchItem(id);
+  const section = document.querySelector('.cart');
+  
+  const { id: sku, title: name, price: salePrice } = item;
+
+  const cartItem = {
+    sku,
+    name,
+    salePrice,
+  };
+
+  const result = createCartItemElement(cartItem);
+  section.appendChild(result);
+}
+
 async function searchProducts(product) {
   const searchData = await fetchProducts(product);
   const sectionProduct = document.querySelector('.items');
@@ -52,10 +68,12 @@ async function searchProducts(product) {
       image,
     };
     const productItem = createProductItemElement(productObj);
+    productItem.addEventListener('click', selectedItem);
     sectionProduct.appendChild(productItem);
   });
 }
 
 window.onload = () => {
   searchProducts('computador');
+  selectedItem('MLB1615760527');
 };

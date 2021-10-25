@@ -41,6 +41,6 @@ describe('2 - Teste a função fecthItem', () => {
       expect(error).toEqual(Error ('You must provide an url'));
     }
   });
-
+  
   fail('Teste vazio');
 });

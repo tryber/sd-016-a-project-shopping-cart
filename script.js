@@ -1,3 +1,4 @@
+// Projeto feito com ajuda de Rafael Santos e Emerson Moreira
 const ol = document.querySelector('.cart__items');
 
 function clearAll() {
@@ -23,7 +24,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function removeItemOfStorage(sku) {
+function removeItemOfStorage(sku) { // Função criada com ajuda de Rafael Santos e Emerson Moreira
   const storage = JSON.parse(localStorage.getItem('cartItems'));
   const cartProduct = storage.find((item) => item.sku === sku);
   const capthIndexOfProduct = storage.indexOf(cartProduct);
@@ -44,7 +45,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-async function captchFetch(sku) {
+async function captureFetch(sku) {
   const storage = JSON.parse(getSavedCartItems()) || [];
   const returnOfFetchItem = await fetchItem(sku);
   const { title: name, price: salePrice } = returnOfFetchItem;
@@ -62,20 +63,16 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createProductImageElement(image));
 
   const createButton = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
-  createButton.addEventListener('click', () => captchFetch(sku));
+  createButton.addEventListener('click', () => captureFetch(sku));
   section.appendChild(createButton);
 
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
 const itensSection = document.querySelector('.items');
 
 function createTagLoading() {
-  sectionOfItens = document.querySelector('.items');
+  const sectionOfItens = document.querySelector('.items');
   const tagLoading = document.createElement('span');
   tagLoading.className = 'loading';
   tagLoading.innerText = 'carregando...';
@@ -99,14 +96,14 @@ async function addProducts() {
   removeTagLoading();
 }
 
-function saveInStorage() {
+function saveInStorage() { // Código feito com ajuda de Rafael Santos
   const storage = JSON.parse(getSavedCartItems());
   storage.forEach((item) => ol.appendChild(createCartItemElement(item)));
 }
 
 window.onload = () => { 
   addProducts();
-  if (getSavedCartItems() === undefined || getSavedCartItems() === null) {
+  if (getSavedCartItems() === undefined || getSavedCartItems() === null) { // Código feito com ajuda de Rafael Santos
     return localStorage.setItem('cartItems', JSON.stringify([]));
   }
   saveInStorage();

@@ -1,3 +1,5 @@
+const cart = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -13,7 +15,6 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  const cart = document.querySelector('.cart__items');
   cart.removeChild(event.target);
 }
 
@@ -27,7 +28,6 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 async function addToCart(event) {
   const result = await fetchItem(event.target.id);
-  const cart = document.querySelector('.cart__items');
 
   const { id, title, price } = result;
   const object = { sku: id, name: title, salePrice: price };

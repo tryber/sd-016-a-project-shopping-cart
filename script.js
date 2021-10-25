@@ -1,7 +1,7 @@
 const getListCart = document.querySelector('.cart__items');
 const getClearButton = document.querySelector('.empty-cart');
 
-// Praticamente todo o código foi feito com a colaboração de [Josue gomes ribeiro, lucas fernandes, Brunão, Danilo Meneguela, Guilherme Duarte, Leonardo Ferreira, Leandro Goerck, Julia Barcelos, Renan Souza, Eduardo Miyazaki] na sala 3 do zoom vlw pessoal <3
+// Praticamente todo o código foi feito com a colaboração de [Josue gomes ribeiro, lucas fernandes, Brunão, Danilo Meneguela, Guilherme Duarte, Leonardo Ferreira, Leandro Goerck, Julia Barcelos, Renan Souza, Eduardo Miyazaki] na sala 3 do zoom vlw pessoal <3 
 
 const showLoadingText = () => {
   const createLoadingElement = document.createElement('p');

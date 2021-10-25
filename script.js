@@ -1,4 +1,5 @@
 const cartItems = '.cart__items';
+const list = [];
 const total = document.querySelector('.total-price');
 let totalPrice = 0;
 
@@ -16,9 +17,11 @@ function loaded() {
   section.removeChild(loading);
 }
 
-function getCartItemsUpdated() {
-  const cartItemsList = document.querySelector(cartItems);
-  saveCartItems(cartItemsList);
+// Lógica criada com a ajuda de Vitor Brandao, Renan Souza, Matheus Benini
+async function getStorageItems() {
+  const items = getSavedCartItems();
+  const cart = document.querySelector(cartItems);
+  cart.innerHTML = items;
 }
 
 function createProductImageElement(imageSource) {
@@ -38,7 +41,7 @@ function createCustomElement(element, className, innerText) {
 function cartItemClickListener(event) {
   const cartShopItems = document.querySelector(cartItems);
   cartShopItems.removeChild(event.target);
-  getCartItemsUpdated();
+  saveCartItems(cartShopItems.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) { 
@@ -62,6 +65,7 @@ async function addItemToCart(id) {
   await getTotalPrice(salePrice);
   const product = createCartItemElement({ sku, name, salePrice });
   cart.appendChild(product);
+  saveCartItems(cart.innerHTML);
 }
 
 // Código feito com a ajuda de Vitor Brandão, Renan Souza, Lucas Alves, Matheus Benini, Italo Moraes, Rafael Feliciano, Julia Barcelos
@@ -95,8 +99,8 @@ function cleanCartList() {
     }
     totalPrice = 0;
     total.innerText = `Total: R$${totalPrice}`;
+    saveCartItems([]);
   });
-  getCartItemsUpdated();
 }
 
 async function searchProducts(product) {
@@ -116,4 +120,6 @@ async function searchProducts(product) {
 window.onload = () => { 
   searchProducts('computador');
   cleanCartList();
+  getStorageItems();
+  getSavedCartItems();
 };

@@ -13,24 +13,27 @@
     <script src="./helpers/getSavedCartItems.js" defer></script>
   </head>
   <body>
-    <header>
-      <section class="search">
-          <input type="text" name="search-item" id="search-item" Placeholder="Buscar produtos, marcas e muito mais">
-          <button class='button-search' type="submit">Buscar</button>
-        </section>
+    <header class="header">
+      <section class="search-header">
+        <a href="#" class="title-header"><b>trybe</b>shopping</a>
+        <section class="search-input">
+            <input type="text" name="search-item" class="search-item" Placeholder="Buscar produtos, marcas e muito mais...">
+            <button class='button-search' type="submit">Buscar</button>
+          </section>
+      </section>
     </header>
     <section class="container">
       <section class="items">
         
       </section>
       <section class="cart">
+        <span class="cart__title">Carrinho de compras</span>
         <section class='while-charging'>
           <span class='loading'>carregando...</span>
         </section>
-        <span class="cart__title">Carrinho de compras</span>
-        <button class="empty-cart">Esvaziar carrinho</button>
         <ol class="cart__items"></ol>
         <p>Total da compra: <b>R$</b><span class='total-price' id='total'>0</span></p>
+        <button class="empty-cart">Esvaziar carrinho</button>
       </section>
     </section>
   </body>

@@ -3,7 +3,7 @@ const emptyCart = document.querySelector('.empty-cart');
 const totalPrice = document.querySelector('.total-price');
 const loading = document.querySelector('.loading');
 const items = document.querySelector('.items');
-const inputSearch = document.querySelector('#search-item');
+const inputSearch = document.querySelector('.search-item');
 const buttonSearch = document.querySelector('.button-search');
 
 function createProductImageElement(imageSource) {
@@ -99,10 +99,10 @@ const serchProducts = async (product) => {
 const saveCart = () => {
   olItems.innerHTML = getSavedCartItems();
   const li = document.querySelectorAll('.cart__item');
+  // help instructor Caique!
   li.forEach((item) => {
     item.addEventListener('click', cartItemClickListener);
   });
-  // li.addEventListener('click', cartItemClickListener); // help instructor Caique!
 };
 
 emptyCart.addEventListener('click', () => {
@@ -113,7 +113,6 @@ emptyCart.addEventListener('click', () => {
 
 window.onload = () => {
   serchProducts('computador');
-  // addItemToCart('MLB1615760527');
   getValueImput();
   saveCart();
 };

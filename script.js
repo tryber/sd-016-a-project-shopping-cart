@@ -65,7 +65,8 @@ function productItemToCart({ sku }) {
   getFetchItem(sku)
     .then((productItem) => {
       arrayToLocalStorage.push(productItem);
-      saveCartItems(arrayToLocalStorage);
+
+      saveCartItems(JSON.stringify(arrayToLocalStorage));
       return createCartItemElement(productItem);
     })
     .then((cartItem) => cartSection.appendChild(cartItem));

@@ -34,22 +34,12 @@ function getSkuFromProductItem(item) {
 
 const saveItems = () => saveCartItems(cart.innerHTML);
 
-function totalValue() {
-  const items = document.querySelectorAll('.cart__item');
-  value.innerText = 0;
-  items.forEach(async (item) => {
-    const itemValue = await fetchItem(item.id);
-    value.innerText = (parseFloat(value.innerText) + itemValue.price);
-  });
-}
-
 function cartItemClickListener() {
   const cartItems = document.querySelectorAll('.cart__item');
   cartItems.forEach((cartItem) => {
     cartItem.addEventListener('click', () => {
       cartItem.remove();
       saveItems();
-      totalValue();
     });
   });
 }
@@ -84,7 +74,6 @@ const addItemOnCart = async (itemId) => {
 
 const loadCartItems = () => {
   cart.innerHTML = localStorage.getItem('cartItems');
-  totalValue();
 };
 
 const addOnCartListeners = () => {

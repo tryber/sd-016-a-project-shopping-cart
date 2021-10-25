@@ -6,6 +6,7 @@ const emptyCardButton = document.querySelector('.empty-cart');
 const loadingMessage = document.querySelector('.loading');
 const searchInput = document.getElementById('search');
 const searchButton = document.getElementById('search-button');
+const cartPictures = document.querySelector('.cart__pictures');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -42,11 +43,48 @@ function cartItemClickListener(event) {
   // coloque seu código aqui
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
+function createProductText({ sku, name, salePrice }) {
+  const div = document.createElement('div');
+  const nameP = document.createElement('p');
+  const priceP = document.createElement('p');
+
+  const prePrice = document.createElement('p');
+  const skuP = document.createElement('p');
+
+  div.className = 'cart__text';
+  nameP.className = 'cart-item-name';
+  priceP.className = 'cart-item-price';
+
+  skuP.className = 'cart-item-no-display';
+  prePrice.className = 'cart-item-no-display';
+
+  nameP.innerText = name;
+  priceP.innerText = `$${salePrice}`;
+
+  skuP.innerText = `SKU: ${sku} | NAME: `;
+  prePrice.innerText = ' | PRICE: ';
+  
+  div.appendChild(skuP);
+  div.appendChild(nameP);
+  div.appendChild(prePrice);
+  div.appendChild(priceP);
+
+  return div;
+}
+
+function createCartItemElement({ sku, name, salePrice, image }) {
   const li = document.createElement('li');
+  const img = document.createElement('img');
+  const text = createProductText({ sku, name, salePrice });
+  
+  img.className = 'cart__image';
+  img.src = image;
+
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.appendChild(img);
+  li.appendChild(text);
   li.addEventListener('click', cartItemClickListener);
+
   return li;
 }
 
@@ -81,19 +119,18 @@ fetchProducts('computador')
   });
 
 const updateTotalPrice = () => {
-  const allCartItems = cartItems.childNodes;
-  if (allCartItems.length === 0) {
+  const allPrices = document.querySelectorAll('.cart-item-price');
+  if (allPrices.length === 0) {
     totalPrice.innerText = 0;
     totalPrice.parentElement.style.display = 'none';
   } else {
-    totalPrice.parentElement.style.display = 'block';
+    totalPrice.parentElement.style.display = 'block'
     const prices = [];
-    allCartItems.forEach((item) => {
-      const productText = item.innerText;
-      const pricePosition = productText.search(/PRICE/i);
-      const priceText = productText.substring(pricePosition, productText.length);
-      const price = parseFloat(priceText.match(/\d+/g).join('.'));
-      prices.push(price);
+    allPrices.forEach((price) => {
+      const fullPriceText = price.innerText;
+      const noDollarSign = fullPriceText.replace(/\$/g, '');
+      const priceValue = noDollarSign.replace(/R /g, '');
+      prices.push(parseFloat(priceValue));
     });
     const total = prices.reduce((acc, price) => acc + price);
     totalPrice.innerText = total;
@@ -101,8 +138,8 @@ const updateTotalPrice = () => {
 };
 
 const addToCart = (foundProduct) => {
-  const { id: sku, title: name, price: salePrice } = foundProduct;
-  const product = { sku, name, salePrice };
+  const { id: sku, title: name, price: salePrice, thumbnail: image } = foundProduct;
+  const product = { sku, name, salePrice, image };
   const item = createCartItemElement(product);
   cartItems.appendChild(item);
   saveCartItems(cartItems.innerHTML);
@@ -119,7 +156,18 @@ const getProduct = async (e) => {
 
 const removeFromCart = (e) => {
   const product = e.target;
-  cartItems.removeChild(product);
+
+  if (!product.classList.contains('cart__item')) {
+    const parent = product.parentElement;
+    if (product.classList.contains('cart__image')) {
+      cartItems.removeChild(parent);
+    } else {
+      const grandParent = parent.parentElement;
+      cartItems.removeChild(grandParent);
+    }
+  } else {
+    cartItems.removeChild(product);
+  }
 
   saveCartItems(cartItems.innerHTML);
   updateTotalPrice();
@@ -160,7 +208,10 @@ body.addEventListener('click', (e) => {
 });
 
 body.addEventListener('click', (e) => {
-  if (e.target.classList.contains('cart__item')) {
+  if (e.target.classList.contains('cart__item')
+      || e.target.classList.contains('cart__image')
+      || e.target.classList.contains('cart-item-name')
+      || e.target.classList.contains('cart-item-price')) {
     e.preventDefault();
     removeFromCart(e);
   }

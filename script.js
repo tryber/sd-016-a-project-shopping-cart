@@ -88,6 +88,18 @@ function loadListners() {
   }
 }
 
+function clearCart() {
+  const price = localStorage.getItem('price');
+  const list = document.getElementsByClassName('cart__items')[0];
+  while (list.firstChild) {
+    list.removeChild(list.firstChild);
+  }
+  localStorage.removeItem('cartItems');
+  updatePrice(price, 'remove');
+}
+const button = document.getElementsByClassName('empty-cart')[0];
+button.addEventListener('click', clearCart);
+
 window.onload = async () => {
   const products = await fetchProducts('computador');
   createProductList(products);

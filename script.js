@@ -1,6 +1,7 @@
+const cartItems = '.cart__items';
 function cartItemClickListener(e) {
-    document.querySelectorAll('.cart__items')[0].removeChild(e.target);  
-    saveCartItems(document.querySelectorAll('.cart__items')[0].innerHTML);
+    document.querySelectorAll(cartItems)[0].removeChild(e.target);  
+    saveCartItems(document.querySelectorAll(cartItems)[0].innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -8,7 +9,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  document.querySelectorAll('.cart__items')[0].appendChild(li);
+  document.querySelectorAll(cartItems)[0].appendChild(li);
 
   return li;
 }
@@ -48,7 +49,7 @@ const chamaFetchProducts = async () => {
   .then((data) =>
   createCartItemElement(({ sku: data.id, name: data.title, salePrice: data.price })))
   .then(() => {
-    saveCartItems(document.querySelectorAll('.cart__items')[0].innerHTML);
+    saveCartItems(document.querySelectorAll(cartItems)[0].innerHTML);
   }));
 }));
 };
@@ -60,13 +61,13 @@ function getSkuFromProductItem(item) {
 }
 
 function removeLocalStorEol(e) {
-  document.querySelectorAll('.cart__items')[0].removeChild(e.target);
-  saveCartItems(document.querySelectorAll('.cart__items')[0].innerHTML);
+  document.querySelectorAll(cartItems)[0].removeChild(e.target);
+  saveCartItems(document.querySelectorAll(cartItems)[0].innerHTML);
 }
 window.onload = () => {
-  document.querySelectorAll('.cart__items')[0].innerHTML = getSavedCartItems();
+  document.querySelectorAll(cartItems)[0].innerHTML = getSavedCartItems();
   fetch('https://api.mercadolibre.com/items/MLB1532308540').then((data) => {
-    for (cont = 0; cont < document.querySelectorAll('.cart__items')[0].children.length; cont += 1) {
+    for (cont = 0; cont < document.querySelectorAll(cartItems)[0].children.length; cont += 1) {
     document.querySelectorAll('.cart__item')[cont].addEventListener('click', removeLocalStorEol);
     }
   });

@@ -54,4 +54,21 @@
   flex-basis: 1;
   font-size: 16pt;
   text-align: center;
+  margin-top: 10px;
 }
+
+#price-div {
+  display: flex;
+}
+
+#price-p {
+  margin-right: 3px;
+}
+ .empty-cart {
+   background-color:red;
+   padding: 5px;
+   border-radius: 20px;
+   margin-top: 10px;
+   color: white;
+   font-weight: bolder;
+ }

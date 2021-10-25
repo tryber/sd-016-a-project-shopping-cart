@@ -1,5 +1,3 @@
-
-
 // cria os cards dos produtos
 function createProductImageElement(imageSource) {
   const conteiner = document.createElement('div');
@@ -67,6 +65,14 @@ async function addProductToCart(productID) {
 //   return p;
 // }
 
+function onLoadInfo() {
+  const pageLoad = document.querySelector('.items');
+  const p = document.createElement('p');
+  p.className = 'loading';
+  p.innerText = 'Carregando...';
+  pageLoad.appendChild(p);
+}
+
 function createProductItemElement({ sku, name, image, salePrice }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -80,15 +86,6 @@ function createProductItemElement({ sku, name, image, salePrice }) {
   section.appendChild(buttonItem);
   return section;
 }
-
-function onLoadInfo() {
-  const pageLoad = document.querySelector('.items');
-  const p = document.createElement('p');
-  p.className = 'loading';
-  p.innerText = 'Carregando...';
-  pageLoad.appendChild(p);
-}
-
 
 async function serchProducts(product) { // essa e uma funcao assincrona
   const searchData = await fetchProducts(product); // chamada da funcao fetchproduts.js
@@ -107,16 +104,7 @@ async function serchProducts(product) { // essa e uma funcao assincrona
   load.remove();
 }
 
-// const load = document.querySelector('.loading');
-// // console.log(load);
-
-// function getSkuFromProductItem(item) {
-//   // return item.querySelector('span.item__sku').innerText;
-// }
-
-
-
 window.onload = () => { 
-  serchProducts('frescobool');
+  serchProducts('computador');
   onLoadInfo();
 };

@@ -40,6 +40,17 @@ function removeLista(target) {
   const preçoAtual = target.getAttribute('data-price');
   totalpreço -= Number(preçoAtual);
   preçosalvo.innerHTML = totalpreço;
+  saveCartItems(target);
+}
+
+function escutarClick() {
+  const itensLi = document.querySelectorAll('.cart__item');
+itensLi.forEach((element) => {
+  element.addEventListener('click', (e) => {
+    console.log(e.target);
+    removeLista(e.target);
+  });
+});
 }
 
 function removerCarrinho() {
@@ -47,7 +58,9 @@ function removerCarrinho() {
   salvarCarro.innerHTML = '';
   totalpreço = 0;
   preçosalvo.innerHTML = totalpreço;
+  localStorage.clear();
 }
+  document.querySelector('.empty-cart').addEventListener('click', removerCarrinho);
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
@@ -83,7 +96,7 @@ const objetoCarrinho = (itemAtual) => ({
 
 async function searchProducts(product) {
   getSavedCartItems().forEach((element) => {
-    selectOl.innerHTML += `<li>${element}</li>`;
+    selectOl.innerHTML += `<li class='cart__item'>${element}</li>`;
   });
   const searchData = await fetchProducts(product);
   const sectionItens = document.querySelector('.items');
@@ -102,4 +115,7 @@ async function searchProducts(product) {
   });
 }
 
-window.onload = searchProducts('computador');
+window.onload = () => {
+  searchProducts('computador');
+  escutarClick(); 
+};

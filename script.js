@@ -17,9 +17,8 @@ function createCustomElement(element, className, innerText) {
 // }
 
 async function saveToStorage() {
-  // const cartList = document.querySelector('.cart__items');
-  // cartList.f
-  // saveCartItems(cartList.split('\n'));
+  const cartList = document.getElementById('cart-items').innerText;
+  saveCartItems(cartList.split('\n'));
 }
 
 function removeFromStorage() {

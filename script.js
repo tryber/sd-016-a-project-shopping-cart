@@ -1,6 +1,20 @@
 const getListCart = document.querySelector('.cart__items');
 const getClearButton = document.querySelector('.empty-cart');
 
+// Praticamente todo o código foi feito com a colaboração de [Josue gomes ribeiro, lucas fernandes, Brunão, Danilo Meneguela, Guilherme Duarte, Leonardo Ferreira, Leandro Goerck, Julia Barcelos, Renan Souza, Eduardo Miyazaki] na sala 3 do zoom vlw pessoal <3
+
+const showLoadingText = () => {
+  const createLoadingElement = document.createElement('p');
+  createLoadingElement.className = 'loading';
+  createLoadingElement.innerHTML = 'carregando...';
+  document.body.append(createLoadingElement);
+};
+
+const removeLoadingText = () => {
+  const searchLoadingText = document.querySelector('.loading');
+  searchLoadingText.remove();
+};
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -80,11 +94,13 @@ const cartItemsRestore = () => {
 };
 
 const getProducts = () => {
-fetchProducts('computador').then((response) => {
-  response.results.forEach((product) => {
-    createProductItemElement(product);
+  showLoadingText();
+  fetchProducts('computador').then((response) => {
+    response.results.forEach((product) => {
+      createProductItemElement(product);
+    });
+    removeLoadingText();
   });
-});
 };
 
 // ideia do Array.from retirado do link https://stackoverflow.com/questions/222841/most-efficient-way-to-convert-an-htmlcollection-to-an-array

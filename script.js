@@ -1,4 +1,5 @@
 const orderedList = document.querySelector('.cart__items');
+const clearButton = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -66,6 +67,11 @@ const restoreCart = () => {
   orderedList.innerHTML = getSavedCartItems();  
 };
 orderedList.addEventListener('click', cartItemClickListener);
+
+const clearCart = () => {
+  orderedList.innerHTML = '';
+};
+  clearButton.addEventListener('click', clearCart);
 
 window.onload = () => { 
   listProducts('computador');

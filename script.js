@@ -29,7 +29,8 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  return console.log(event);
+  const del = event;
+  return del.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {

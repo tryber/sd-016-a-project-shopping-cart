@@ -42,7 +42,7 @@ async function getSelectedItemInfo(selectedItem) {
   return acquiredData;
 }
 
-function updateCartList (newItem) {
+function updateCartList(newItem) {
   const cartItemsList = document.querySelector('.cart__items');
   cartItemsList.appendChild(newItem);
   saveCartItems(cartItemsList.innerHTML);

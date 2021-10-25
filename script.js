@@ -9,6 +9,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   document.querySelectorAll('.cart__items')[0].appendChild(li);
+
   return li;
 }
 

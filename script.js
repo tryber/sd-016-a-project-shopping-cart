@@ -1,5 +1,4 @@
-const cartItems = '.cart__items';
-const list = [];
+const cartItems = document.querySelector('.cart__items');
 const total = document.querySelector('.total-price');
 let totalPrice = 0;
 
@@ -17,11 +16,13 @@ function loaded() {
   section.removeChild(loading);
 }
 
-// Lógica criada com a ajuda de Vitor Brandao, Renan Souza, Matheus Benini
-async function getStorageItems() {
+// Lógica criada com a ajuda de Vitor Brandao, Renan Souza, Matheus Benini, Josué, Lucas Alves
+function getStorageItems() {
   const items = getSavedCartItems();
-  const cart = document.querySelector(cartItems);
-  cart.innerHTML = items;
+  cartItems.innerHTML = items;
+  Array.from(cartItems.children).forEach((item) => {
+    item.addEventListener('click', cartItemClickListener);
+  })
 }
 
 function createProductImageElement(imageSource) {
@@ -39,9 +40,8 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  const cartShopItems = document.querySelector(cartItems);
-  cartShopItems.removeChild(event.target);
-  saveCartItems(cartShopItems.innerHTML);
+  cartItems.removeChild(event.target);
+  saveCartItems(cartItems.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) { 
@@ -54,18 +54,17 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 async function getTotalPrice(price) {
   await price;
-  totalPrice += price;
-  total.innerText = `Total: R$${totalPrice}`;
+  totalPrice += parseFloat(price);
+  total.innerText = `${totalPrice}`;
 }
 
 async function addItemToCart(id) {
-  const cart = document.querySelector(cartItems);
   const data = await fetchItem(id);
   const { id: sku, title: name, price: salePrice } = await data;
   await getTotalPrice(salePrice);
   const product = createCartItemElement({ sku, name, salePrice });
-  cart.appendChild(product);
-  saveCartItems(cart.innerHTML);
+  cartItems.appendChild(product);
+  saveCartItems(cartItems.innerHTML);
 }
 
 // Código feito com a ajuda de Vitor Brandão, Renan Souza, Lucas Alves, Matheus Benini, Italo Moraes, Rafael Feliciano, Julia Barcelos
@@ -90,15 +89,14 @@ function createProductItemElement({ sku, name, image }) {
 }
 
 function cleanCartList() {
-  const cartList = document.querySelector(cartItems);
   const cleanCartListButton = document.querySelector('.empty-cart');
   cleanCartListButton.addEventListener('click', () => {
 // Lógica da repetição while vista em https://stackoverflow.com/questions/43317676/javascript-error-uncaught-typeerror-failed-to-execute-removechild-on-node
-    while (cartList.firstChild) {
-      cartList.removeChild(cartList.firstChild);
+    while (cartItems.firstChild) {
+      cartItems.removeChild(cartItems.firstChild);
     }
     totalPrice = 0;
-    total.innerText = `Total: R$${totalPrice}`;
+    total.innerText = `${totalPrice}`;
     saveCartItems([]);
   });
 }
@@ -119,7 +117,6 @@ async function searchProducts(product) {
 
 window.onload = () => { 
   searchProducts('computador');
-  cleanCartList();
   getStorageItems();
-  getSavedCartItems();
+  cleanCartList();
 };

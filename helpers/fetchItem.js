@@ -6,7 +6,7 @@ const fetchItem = async (ItemID) => {
     const json = await response.json();
     return json;
   } catch (error) {
-    return new Error(error);
+    return error;
   }
 };
 

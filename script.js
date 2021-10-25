@@ -30,6 +30,13 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 let array = [];
+let total;
+function totalPrice() {
+  const preco = document.querySelector('.total-price');
+  total = array.reduce((acc, atual) => acc + atual.price, 0);
+  preco.innerText = total;
+}
+
 function cartItemClickListener(event) {
   const { target } = event;
   target.remove();
@@ -70,6 +77,7 @@ const RequirementTwo = () => {
         array.push({ id, title, price });
         olCartItems.appendChild(cart);
         saveCartItems(array);
+        totalPrice();
       });
     }
   });
@@ -78,16 +86,16 @@ function RequirementThree() {
   const olCartItem = document.querySelector('.cart__items');
   olCartItem.addEventListener('click', (event) => {
     cartItemClickListener(event);
-    const string = event.target.innerText;
-    array.map((value, index) => {
-      const { id } = value;
-      if (string.indexOf(id)) {
+    array.map((item, index) => {
+      if (event.target.innerText.includes(item.id)) {
+        console.log('tem');
         array.splice(index, 1);
+        totalPrice();
         saveCartItems(array);
       }
-
       return true;
     });
+    console.log(event.target.innerText);
   });
 }
 function loadingData() {
@@ -103,6 +111,7 @@ function loadingData() {
       return true;
     });
   }
+  totalPrice();
 }
 
 const button = document.querySelector('.empty-cart');
@@ -110,6 +119,7 @@ button.addEventListener('click', () => {
   array.splice(0, array.length);
   saveCartItems(array);
   olCartItems.innerHTML = '';
+  totalPrice();
 });
 
 window.onload = () => {
@@ -117,4 +127,5 @@ window.onload = () => {
   RequirementOne();
   RequirementTwo();
   RequirementThree();
+  totalPrice();
 };

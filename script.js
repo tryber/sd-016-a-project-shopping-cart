@@ -101,6 +101,7 @@ const clearCart = () => {
   // ajuda do Leandro Goerck na sala
   ol.innerHTML = '';
   saveCartItems(ol.innerHTML);
+  valueSum();
 };
 
 clearAllBtn.addEventListener('click', clearCart);

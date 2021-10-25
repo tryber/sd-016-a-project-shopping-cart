@@ -114,7 +114,7 @@ async function serchProducts(product) { // essa e uma funcao assincrona
 }
 
 window.onload = () => { 
-  serchProducts('aspirador robo');
+  serchProducts('computador');
   onLoadInfo();
   emptyCart();
 };

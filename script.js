@@ -30,10 +30,10 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 async function addCartItem(id) {
   const request = await fetchItem(id);
-  const cartItems = document.querySelector('.cart__items');
+  // const cartItems = document.querySelector('.cart__items');
   const { id: sku, title: name, price: salePrice } = request;
   const cartList = createCartItemElement({ sku, name, salePrice }); 
-  cartItems.appendChild(cartList);
+  orderedList.appendChild(cartList);
   saveCartItems(orderedList.innerHTML);
 }
 

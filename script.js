@@ -96,8 +96,20 @@ async function products(product) {
   });
 }
 
+function loadCartItems() {
+  const storedCartItems = getSavedCartItems();
+  cartItem.innerHTML = storedCartItems;
+  Object.keys(cartItem.children)
+    .forEach((elem) => {
+      cartItem.children[elem].addEventListener('click', cartItemClickListener);
+      const elemSku = getSkuFromProductItem(cartItem.children[elem]);
+      priceUpdater(elemSku);
+    });
+}
+
 window.onload = () => {
   products('computador');
+  loadCartItems();
 };
 
 // Requisitos 3 e 5 feitos com auxilio de codereview do colega Carlos Dartora;

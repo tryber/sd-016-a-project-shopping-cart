@@ -1,7 +1,11 @@
 // Código só foi possívl graças à união da classe for(ever).
-// a União faz a força!
+// Agradecimento especial para Josué, Fabrício Martins, Julia Barcelos, Vitor Brandão e Brunão.
+
 const getOl = document.querySelector('.cart__items');
 const cartSection = document.querySelector('.cart');
+const total = document.querySelector('.total-price');
+let totalPrice = 0;
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -16,16 +20,28 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function sumProducts(price) {
+  totalPrice += parseFloat(price);
+  total.innerText = totalPrice;
+}
+
+function subProducts(price) {
+  totalPrice -= parseFloat(price);
+  total.innerText = totalPrice;
+}
+
 function cartItemClickListener(event) {
   event.target.remove();
   saveCartItems(getOl.innerHTML);
+  const selected = event.target.innerHTML.split('$');
+  subProducts(selected[1]);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  // li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
@@ -35,6 +51,7 @@ async function addToCart(id) {
   const cartList = createCartItemElement({ sku, name, salePrice });
   getOl.appendChild(cartList);
   saveCartItems(getOl.innerHTML);
+  sumProducts(salePrice);
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
@@ -72,14 +89,6 @@ async function listOfProducts(categoria) {
   unload();
 }
 
-// const listOfProducts = (categoria) => {
-//   load();
-//   fetchProducts(categoria)
-//   .then((value) =>
-//     value.forEach((product) => createProductItemElement(product))
-//     unload);
-// };
-
 function restoreCart() {
   getOl.innerHTML = getSavedCartItems();
 }
@@ -87,6 +96,8 @@ function restoreCart() {
 function clearCart() {
   getOl.innerHTML = '';
   saveCartItems(getOl.innerHTML);
+  total.innerText = 0;
+  totalPrice = 0;
 }
 
 getOl.addEventListener('click', cartItemClickListener);

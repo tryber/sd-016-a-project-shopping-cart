@@ -148,3 +148,17 @@ window.onload = () => {
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from
 
 // Function clearCart done with the solution of Leandro Goerck.
+
+/* 
+CONTRIBUTORS:
+Josue Gomes Ribeiro, 
+Lucas Fernandes, 
+Danilo Meneguela, 
+Leonardo Ferreira, 
+Leandro Goerck,
+Julia Barcelos,
+Renan Souza,
+Eduardo Miyazaki,
+Guilherme Duarte,
+Guilherme Augusto
+*/

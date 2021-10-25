@@ -15,11 +15,29 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+const contador = () => {
+  const capturarTotalPrice = document.querySelector('.total-price');
+  const caputarLocaStorage = getSavedCartItems();
+  if (capturarListCart.children.length) {
+    const arrayQUeVemDeLocalStorage = caputarLocaStorage.split('PRICE: $');
+    arrayQUeVemDeLocalStorage.shift();
+    const arrayTratado = arrayQUeVemDeLocalStorage.reduce((acc, curr) => {
+      acc.push(Number(curr.substring(0, curr.indexOf('<'))));
+      return acc;
+    }, []);
+    const resultado = arrayTratado.reduce((acc, curr) => acc + curr);
+    capturarTotalPrice.innerText = resultado;
+    return 1;// esta aqui para parar a funçao aqui.
+  }
+  capturarTotalPrice.innerText = 0;
+};
+
 function cartItemClickListener(event) {
   // coloque seu código aqui
   event.target.remove();
   saveCartItems(capturarListCart.innerHTML);
   // credito ao amigo Miyazaki
+  contador();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -29,6 +47,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   capturarListCart.appendChild(li);
   saveCartItems(capturarListCart.innerHTML);
+  contador();
 }
 
 const idDoProdutoclicadoParaCarrinho = async (sku) => {
@@ -53,7 +72,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 
   sectionPai.appendChild(section);
 }
-
+// funçao que pega os produtod da API e e joga eles para a tela usando o createProductItemElement.
 const milagre = () => {
   fetchProducts('computador').then((value) => {
   value.results.forEach((item) => {
@@ -84,12 +103,14 @@ window.onload = () => {
   milagre();
   if (capturarListCart.children.length === 0) restalrarCarrinho();
   restalrarListaCarrinho();
+  contador();
 };
 
 function limparListaCarrinho() {
-  // Leandro Goerck
+  //  ajuda do amigo Leandro Goerck
   capturarListCart.innerHTML = '';
   saveCartItems(capturarListCart.innerHTML);
+  contador();
 }
 
 limparCarrinho.addEventListener('click', limparListaCarrinho);

@@ -94,9 +94,24 @@ function listenerAdd() {
   });
 }
 
+function loadingItems() {
+  const sectionItems = document.querySelector('.items');
+  const loading = document.createElement('p');
+  loading.className = 'loading';
+  loading.innerText = 'Carregando...';
+  sectionItems.appendChild(loading);
+}
+
+function loaded() {
+  const loading = document.querySelector('.loading');
+  loading.remove();
+}
+
 async function currentProducts(product) {
+  loadingItems();
   const sectionItems = document.querySelector('.items');
   const listProducts = await fetchProducts(product);
+  loaded();
   listProducts.results.forEach((objectProduct) => {
     const itemProduct = {
       sku: objectProduct.id,

@@ -1,6 +1,7 @@
 const olItems = document.querySelector('.cart__items');
 const emptyCart = document.querySelector('.empty-cart');
 const totalPrice = document.querySelector('.total-price');
+const loading = document.querySelector('.loading');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -64,6 +65,7 @@ function createProductItemElement({ sku, name, image }) {
   const buttonAdd = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   section.appendChild(buttonAdd);
   buttonAdd.addEventListener('click', () => addItemToCart(sku));
+  loading.remove();
   
   return section;
 }

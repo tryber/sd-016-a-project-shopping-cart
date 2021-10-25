@@ -1,4 +1,4 @@
-// Código elaborado com a ajuda do Ricardo Carvalho, Laura Fumagalli, Carlos Dartora e João (Lenny) Victor.
+// Código elaborado com a ajuda do Ricardo Carvalho, Laura Fumagalli, Carlos Dartora e João (Lenny) Victor, da Turma 16A For(ever).
 
 const list = document.querySelector('.cart__items');
 const totalPrice = document.querySelector('.total-price');

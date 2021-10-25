@@ -1,5 +1,3 @@
-const { fetchProducts } = require('./helpers/fetchProducts');
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -26,18 +24,17 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-function itens() {
-  fetchProducts()
-  .then((response2) => response2.results)
-  .then((obj) => {
-    obj.forEarch((element) => {
-      const object = {
-        name: element.title,
-        sku: element.id,
-        image: element.thumbnail,
-      };
-      document.getElementsByClassName('items').appendChild(createProductItemElement(object));
-    });
+async function searchProducts(product) {
+  const data = await fetchProducts(product);
+  const section = document.querySelector('.items');
+  data.results.forEach((element) => {
+    const object = {
+      sku: element.id,
+      name: element.title,
+      image: element.thumbnail,
+    };
+    const produc = createProductItemElement(object);
+    section.appendChild(produc);
   });
 }
 
@@ -57,4 +54,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { itens(); };
+window.onload = () => {
+  searchProducts('computador');
+};

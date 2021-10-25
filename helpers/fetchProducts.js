@@ -2,7 +2,7 @@ const fetchProducts = async (parametro) => {
   try {
     const feth = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${parametro}`);
     const response = await feth.json();
-    return response;
+   return response;
   } catch (e) {
     return 'You must provide an url';
   }

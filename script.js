@@ -40,7 +40,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-async function selectedItem(id) {
+async function selectedItem(click) {
+  const id = click.path[1].childNodes[0].innerHTML;
   const item = await fetchItem(id);
   const section = document.querySelector('.cart');
   
@@ -75,5 +76,4 @@ async function searchProducts(product) {
 
 window.onload = () => {
   searchProducts('computador');
-  selectedItem('MLB1615760527');
 };

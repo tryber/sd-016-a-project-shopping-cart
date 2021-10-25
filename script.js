@@ -14,14 +14,32 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function getTotalPrice() {
+  const price = localStorage.getItem('price');
+  if (document.querySelector('.total-price')) {
+    document.querySelector('.total-price').innerText = parseFloat(price);
+  } else {
+    const carrinho = document.querySelector('.cart');
+    carrinho.appendChild(createCustomElement('p', 'total-price', parseFloat(price)));
+  }
+}
+
 function cartItemClickListener(event) {
   // coloque seu código aqui
+  const currTotalPrice = parseFloat(localStorage.getItem('price'));
+  event.target.classList.remove('cart__item');
+  const priceTarget = event.target.classList;
+  const newTotal = currTotalPrice - parseFloat(priceTarget);
+  localStorage.setItem('price', newTotal);
+  getTotalPrice();
   event.target.remove();
+  saveCartItems(cartList.innerHTML);
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
+  li.className += ` ${salePrice}`;
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
@@ -30,20 +48,10 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 function setTotalPriceItem(price) {
   if (localStorage.getItem('price')) {
     const prices = localStorage.getItem('price');
-    const total = parseInt(prices, 10) + price;
+    const total = parseFloat(prices) + price;
     localStorage.setItem('price', total);
   } else {
     localStorage.setItem('price', price);
-  }
-}
-
-function getTotalPrice() {
-  const price = localStorage.getItem('price');
-  if (document.querySelector('.total-price')) {
-    document.querySelector('.total-price').innerText = parseInt(price, 10);
-  } else {
-    const carrinho = document.querySelector('.cart');
-    carrinho.appendChild(createCustomElement('p', 'total-price', parseInt(price, 10)));
   }
 }
 

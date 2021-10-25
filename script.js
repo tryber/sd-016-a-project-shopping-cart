@@ -1,3 +1,5 @@
+const ol = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -12,8 +14,37 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function counter() {
+  const totalPrice = document.querySelector('.total-price');
+  const restoreLocalStorage = getSavedCartItems();
+  if (ol.children.length) {
+    const arrLocalStorage = restoreLocalStorage.split('PRICE: $');
+    arrLocalStorage.shift();
+    const arr = arrLocalStorage.reduce((acc, curr) => {
+      acc.push(Number(curr.substring(0, curr.indexOf('<'))));
+      return acc;
+    }, []);
+    const result = arr.reduce((acc, curr) => acc + curr);
+    totalPrice.innerText = result;
+    return 1;
+  }
+  totalPrice.innerText = 0;
+}
+
+function saveLocalStorage() {
+  saveCartItems(ol.innerHTML);
+  counter();
+}
+
 function cartItemClickListener(event) {
   event.target.remove();
+  saveLocalStorage();
+}
+
+function restoreCartItems() {
+  const cartItems = getSavedCartItems();
+  ol.innerHTML = cartItems;
+  ol.addEventListener('click', cartItemClickListener);
 }
 
 function createCartItemElement({
@@ -25,8 +56,9 @@ function createCartItemElement({
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  const ol = document.querySelector('.cart__items');
   ol.appendChild(li);
+  saveLocalStorage();
+  counter();
 }
 
 async function searchitem(itemId) {
@@ -82,4 +114,6 @@ async function searchProducts(product) {
 
 window.onload = () => {
   searchProducts('computador');
+  restoreCartItems();
+  counter();
 };

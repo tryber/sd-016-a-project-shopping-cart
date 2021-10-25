@@ -8,14 +8,16 @@
     <link rel="stylesheet" href="style.css" />
     <script src="./helpers/fetchItem.js" defer></script>
     <script src="./helpers/fetchProducts.js" defer></script>
-    <script src="script.js" defer></script>
     <script src="./helpers/saveCartItems.js" defer></script>
     <script src="./helpers/getSavedCartItems.js" defer></script>
+    <script src="script.js" defer></script>
   </head>
   <body>
     <section class="container">
+      <div class="loading" >loading</div>
       <section class="items"></section>
       <section class="cart">
+        <div class="total-price">0</div>
         <span class="cart__title">Carrinho de compras</span>
         <button class="empty-cart">Esvaziar carrinho</button>
         <ol class="cart__items"></ol>

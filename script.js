@@ -29,7 +29,6 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -48,7 +47,6 @@ function addToCartBtn(allCartAddBtns, allCartAddBtnsId) {
     btn.addEventListener('click', async () => {
       const getThisButtonId = btnsLoadedId[btnIndex].innerText;
       const fetchWithResult = await fetchItem(getThisButtonId);
-      console.log(fetchWithResult);
       const cartObj = {
         sku: fetchWithResult.id,
         name: fetchWithResult.title,

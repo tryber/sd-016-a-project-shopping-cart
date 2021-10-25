@@ -47,28 +47,20 @@ function createProductText({ sku, name, salePrice }) {
   const div = document.createElement('div');
   const nameP = document.createElement('p');
   const priceP = document.createElement('p');
-
   const prePrice = document.createElement('p');
   const skuP = document.createElement('p');
-
   div.className = 'cart__text';
   nameP.className = 'cart-item-name';
   priceP.className = 'cart-item-price';
-
   skuP.className = 'cart-item-no-display';
   prePrice.className = 'cart-item-no-display';
-
+  skuP.innerText = `SKU: ${sku} | NAME: `;
   nameP.innerText = name;
+  prePrice.innerText = ' | PRICE: ';
   priceP.innerText = `$${salePrice}`;
 
-  skuP.innerText = `SKU: ${sku} | NAME: `;
-  prePrice.innerText = ' | PRICE: ';
-  
-  div.appendChild(skuP);
-  div.appendChild(nameP);
-  div.appendChild(prePrice);
-  div.appendChild(priceP);
-
+  const elements = [skuP, nameP, prePrice, priceP];
+  elements.forEach((element) => div.appendChild(element));
   return div;
 }
 
@@ -124,7 +116,7 @@ const updateTotalPrice = () => {
     totalPrice.innerText = 0;
     totalPrice.parentElement.style.display = 'none';
   } else {
-    totalPrice.parentElement.style.display = 'block'
+    totalPrice.parentElement.style.display = 'block';
     const prices = [];
     allPrices.forEach((price) => {
       const fullPriceText = price.innerText;

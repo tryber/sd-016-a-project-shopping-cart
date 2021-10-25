@@ -8,6 +8,23 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+ function counter() {
+  const totalPrice = document.querySelector('.total-price');
+  const restoreLocalStorage = getSavedCartItems();
+  if (getListCart.children.length) {
+  const arrLocalStorage = restoreLocalStorage.split('PRICE: $');
+  arrLocalStorage.shift();
+  const newArr = arrLocalStorage.reduce((acc, curr) => {
+    acc.push(Number(curr.substring(0, curr.indexOf('<'))));
+    return acc;
+  }, []);
+  const sum = newArr.reduce((acc, curr) => acc + curr);
+  totalPrice.innerText = sum;
+  return 1; // utilidade do return é parar a função
+ }
+ totalPrice.innerHTML = 0;
+}
+
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -17,6 +34,8 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   event.target.remove(event);
+  saveCartItems(getListCart.innerHTML);
+  counter();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -26,6 +45,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   getListCart.appendChild(li);
   saveCartItems(getListCart.innerHTML);
+  counter();
 }
 
 const addItemIdToCart = async (sku) => {
@@ -33,6 +53,7 @@ const addItemIdToCart = async (sku) => {
   const { title: name, price: salePrice } = fetch;
   createCartItemElement({ sku, name, salePrice });
   saveCartItems(getListCart.innerHTML);
+  counter();
 };
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
@@ -45,6 +66,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const createEventButton = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   createEventButton.addEventListener('click', () => {
     saveCartItems(getListCart.innerHTML);
+    counter();
     addItemIdToCart(sku);
   });
   section.appendChild(createEventButton);
@@ -54,6 +76,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 const cartItemsRestore = () => {
   const localStorageRestore = getSavedCartItems();
   getListCart.innerHTML = localStorageRestore;
+  counter();
 };
 
 const getProducts = () => {
@@ -64,20 +87,19 @@ fetchProducts('computador').then((response) => {
 });
 };
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-// Array.from retirado do link https://stackoverflow.com/questions/222841/most-efficient-way-to-convert-an-htmlcollection-to-an-array
+// ideia do Array.from retirado do link https://stackoverflow.com/questions/222841/most-efficient-way-to-convert-an-htmlcollection-to-an-array
 const restoreEventListener = () => {
   const addRemoveAgain = Array.from(getListCart.children);
   addRemoveAgain.forEach((child) => {
     child.addEventListener('click', cartItemClickListener);
   });
+  counter();
 };
-
+// contribuição do Leandro Goerck
 function clearListButton() {
   getListCart.innerHTML = '';
   saveCartItems(getListCart.innerHTML);
+  counter();
 }
 
 getClearButton.addEventListener('click', clearListButton);
@@ -86,4 +108,5 @@ window.onload = () => {
   getProducts();
   if (getListCart.children.length === 0) cartItemsRestore();
   restoreEventListener();
+  counter();
  };

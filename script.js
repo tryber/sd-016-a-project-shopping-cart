@@ -1,3 +1,5 @@
+const ol = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -12,13 +14,14 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+// Implementado com a ajuda dos colegas Renan, Fabrício e Lucas.
+
 function cartItemClickListener(event) {
-  document.querySelector('.cart__items')
-  .removeChild(event.target);
+  event.target.remove();
+  saveCartItems(ol.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
-  const ol = document.querySelector('.cart__items');
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -30,26 +33,24 @@ async function addItemToCart(product) {
   const allItens = await fetchItem(product);
   const { id: sku, title: name, price: salePrice } = allItens;
   createCartItemElement({ sku, name, salePrice });
+  saveCartItems(ol.innerHTML);
 }
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   section.appendChild(button);
-  button.addEventListener('click', () => {
-    addItemToCart(sku);
-  });
+  button.addEventListener('click', () => addItemToCart(sku));
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+// // function getSkuFromProductItem(item) {
+// //   return item.querySelector('span.item__sku').innerText;
+// }
 
 async function searchProducts(product) {
   const searchData = await fetchProducts(product);
@@ -65,6 +66,12 @@ async function searchProducts(product) {
   });
 }
 
+function savedCart() {
+  ol.innerHTML = getSavedCartItems();
+}
+ol.addEventListener('click', cartItemClickListener);
+
 window.onload = () => {
   searchProducts('computador');
+  savedCart();
 };

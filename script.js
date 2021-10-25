@@ -1,3 +1,5 @@
+const { fetchProducts } = require('./helpers/fetchProducts');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -24,6 +26,21 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+function itens() {
+  fetchProducts()
+  .then((response2) => response2.results)
+  .then((obj) => {
+    obj.forEarch((element) => {
+      const object = {
+        name: element.title,
+        sku: element.id,
+        image: element.thumbnail,
+      };
+      document.getElementsByClassName('items').appendChild(createProductItemElement(object));
+    });
+  });
+}
+
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
@@ -40,4 +57,4 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+window.onload = () => { itens(); };

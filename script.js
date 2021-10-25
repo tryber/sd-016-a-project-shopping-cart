@@ -1,3 +1,5 @@
+// feito com a ajuda dos colegas Bruno Teixeira (Brunão), Cristiane Souza (Cris), e Fabiana Lopes (Fabi) 
+// da turma 16 tribo A em sala de estudos.
 const selectItem = document.querySelector('.cart__items');
 
 function createProductImageElement(imageSource) {

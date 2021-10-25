@@ -16,7 +16,7 @@ describe('1 - Teste a função fecthProducts', () => {
 
   test('Teste se, ao chamar a função fetchProducts com o argumento "computador", a função fetch utiliza o endpoint desejado', () => {
   const endPoint = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';  
-  fetchProducts('aaa');
+  fetchProducts('computador');
     expect(fetch).toHaveBeenCalledWith(endPoint);
   });
 

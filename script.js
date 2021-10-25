@@ -7,13 +7,12 @@ function createProductImageElement(imageSource) {
 
 function updatePrice(price, operation) {
   const priceEl = document.getElementsByClassName('total-price')[0];
-  const prevPrice = parseInt(priceEl.classList[1], 10);
+  const prevPrice = parseInt(priceEl.innerText, 10);
   let total = 0;
   if (operation === 'add') {
     total = prevPrice + price;
   } else total = prevPrice - price;
-  priceEl.className = `total-price ${total}`;
-  priceEl.innerText = `Subtotal: R$${total}`;
+  priceEl.innerText = total;
   localStorage.setItem('price', total);
 }
 

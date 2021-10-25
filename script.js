@@ -128,4 +128,4 @@ window.onload = () => {
 };
 
 // Projeto com a colaboração de:
-// Josue Gomes Ribeiro, Lucas Fernandes, Brunao, Leonardo Ferreira, Julia Barcelos, Renan Souza, Eduardo Miyazaki, Leandro Goerck, Guilherme Duarte
+// Josue Gomes Ribeiro, Lucas Fernandes, Brunão, Leonardo Ferreira, Julia Barcelos, Renan Souza, Eduardo Miyazaki, Leandro Goerck, Guilherme Duarte

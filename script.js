@@ -32,9 +32,20 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function subtractItemsPrice(price) {
+  totalPrice -= parseFloat(price);
+  if (totalPrice % 1 !== 0) {
+    total.innerHTML = totalPrice;
+    return;
+  }
+  total.innerHTML = totalPrice.toFixed(0);
+}
+
 function cartItemClickListener(event) {
   cartItems.removeChild(event.target);
+  const price = event.target.innerText.split('$');
   saveCartItems(cartItems.innerHTML);
+  subtractItemsPrice(price[1]);
 }
 
 function createCartItemElement({ sku, name, salePrice }) { 
@@ -45,16 +56,20 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-async function getTotalPrice(price) {
+async function sumItemsPrice(price) {
   await price;
   totalPrice += parseFloat(price);
-  total.innerText = `${totalPrice}`;
+  if (totalPrice % 1 !== 0) {
+    total.innerHTML = totalPrice;
+    return;
+  }
+  total.innerHTML = totalPrice.toFixed(0);
 }
 
 async function addItemToCart(id) {
   const data = await fetchItem(id);
   const { id: sku, title: name, price: salePrice } = await data;
-  await getTotalPrice(salePrice);
+  await sumItemsPrice(salePrice);
   const product = createCartItemElement({ sku, name, salePrice });
   cartItems.appendChild(product);
   saveCartItems(cartItems.innerHTML);

@@ -84,9 +84,7 @@ async function searchProduct(product) {
 const cartRestoration = () => {
   const localStorage = getSavedCartItems();
   getListCart.innerHTML = localStorage;
-};
-
-const restoreCartList = () => {
+  
   Array.from(getListCart.children).forEach((child) => {
     child.addEventListener('click', cartItemClickListener);
   });
@@ -94,10 +92,5 @@ const restoreCartList = () => {
 
 window.onload = () => { 
   searchProduct('computador');
-
-  if (getListCart.children.length === 0) {
-    cartRestoration();
-  } else {
-    restoreCartList();
-  }
+  cartRestoration();
 };

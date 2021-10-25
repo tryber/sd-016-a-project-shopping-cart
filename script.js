@@ -27,7 +27,7 @@ function createCustomElement(element, className, innerText) {
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: ${salePrice}`;
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
@@ -39,6 +39,22 @@ async function addProductToCart(productID) {
   const chartItem = createCartItemElement({ sku, name, salePrice });
   sectionItem.appendChild(chartItem);
 }
+
+// function createCartItemElement({ url, name, salePrice }) {
+//   const li = document.createElement('li');
+//   li.className = 'cart__item';
+//   li.innerText = `SKU: ${url} | NAME: ${name} | PRICE: ${salePrice}`;
+//   li.addEventListener('click', cartItemClickListener);
+//   return li;
+// }
+
+// async function addProductToCart(productID) {
+//   const itemData = await fetchItem(productID);
+//   const sectionItem = document.querySelector('.cart__items');
+//   const { thumbnail: url, title: name, price: salePrice } = itemData;
+//   const chartItem = createCartItemElement({ url, name, salePrice });
+//   sectionItem.appendChild(chartItem);
+// }
 
 function createProductItemElement({ sku, name, image, salePrice }) {
   const section = document.createElement('section');

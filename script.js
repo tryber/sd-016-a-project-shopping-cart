@@ -41,7 +41,7 @@ function cartItemClickListener(event) {
 }
 const createButtonForRemoveItem = () => {
   const buttonX = document.createElement('button');
-  buttonX.className = 'button-remove-item';
+  buttonX.className = 'item__button';
   buttonX.innerText = 'X';
   return buttonX;
 };
@@ -50,9 +50,11 @@ function createCartItemElement({ sku, name, salePrice, image }) {
   const li = document.createElement('li');
   const buttonX = createButtonForRemoveItem();
   li.className = 'cart__item';
-  li.innerHTML = `SKU: ${sku}<br> 
-  NAME: ${name}<br>
-  PRICE: $${salePrice}`;
+  li.innerHTML = `<section class ='title-item-cart'>
+  SKU: ${sku}<br> 
+  NAME: ${name}<br><br>
+  <span>PRICE: $${salePrice}</span>
+  </section>`;
   li.appendChild(createProductImageElement(image));
   li.appendChild(buttonX);
   buttonX.addEventListener('click', cartItemClickListener);
@@ -110,7 +112,7 @@ const serchProducts = async (product) => {
 
 const saveCart = () => {
   olItems.innerHTML = getSavedCartItems();
-  const buttonX = document.querySelectorAll('.button-remove-item');
+  const buttonX = document.querySelectorAll('.item__button');
   // help instructor Caique!
   buttonX.forEach((item) => {
     item.addEventListener('click', cartItemClickListener);

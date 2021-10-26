@@ -1,6 +1,7 @@
 const cartSection = document.querySelector('.cart__items');
 const total = document.querySelector('.total-price');
 let sum = 0;
+let arrayToLocalStorage = [];
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -32,26 +33,40 @@ function createProductItemElement({ sku, name, image }) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
 
-function renewLocalStorageData(index) {
+function sumPriceFromLocalStorage() {
   const storage = JSON.parse(getSavedCartItems());
-  storage.splice(index, 1);
-  localStorage.clear();
-  saveCartItems(JSON.stringify(storage));
+  if (storage !== null) {
+    sum = 0;
+    storage.forEach((item) => {
+      sum += item.salePrice;
+    });
+    total.innerText = sum;
+  }
+}
+
+function renewLocalStorageData(sku) {
+  // arrayToLocalStorage = [];
+  const storage = JSON.parse(getSavedCartItems());
+    if (storage !== null) {
+    const storageProduct = storage.find((product) => product.sku === sku);
+    const indexOfProduct = storage.indexOf(storageProduct);
+    const newProductsList = storage.splice(indexOfProduct, 1);
+    console.log(storageProduct);
+    console.log(indexOfProduct);
+    console.log(newProductsList);
+    // localStorage.clear(); 
+    
+    sum = 0;
+    saveCartItems(JSON.stringify(newProductsList));
+    sumPriceFromLocalStorage();
+  }
 }
 
 function cartItemClickListener(event) {
   const del = event;
   const value = del.target.innerText;
   const sku = value.slice(5, 18);
-  if (getSavedCartItems()) {
-    const storage = JSON.parse(getSavedCartItems());
-    const storageProduct = JSON.parse(getSavedCartItems()).find((product) => product.sku === sku);
-    const indexOfProduct = storage.indexOf(storageProduct);
-    sum -= storageProduct.salePrice;
-    renewLocalStorageData(indexOfProduct);
-  }
-  else total.innerHTML = 0;
-  total.innerHTML = sum;
+  renewLocalStorageData(sku);
   return del.target.remove();
 }
 
@@ -81,7 +96,6 @@ function getFetchItem(sku) {
   });
 }
 
-const arrayToLocalStorage = [];
 function productItemToCart({ sku }) {
   getFetchItem(sku)
   .then((productItem) => {
@@ -110,11 +124,10 @@ function getItemFromLocalStorage() {
   total.innerHTML = sum;
   if (cartItems) {
     cartItems.forEach((item) => {
-      sum += item.salePrice;
       arrayToLocalStorage.push(item);
       cartSection.appendChild(createCartItemElement(item));
-      total.innerHTML = sum;
     });
+    sumPriceFromLocalStorage();
   }
 }
 

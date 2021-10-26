@@ -24,13 +24,13 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
-// }
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
 
-// function cartItemClickListener(event) {
-//   // coloque seu código aqui
-// }
+function cartItemClickListener(event) {
+  event.target.remove();
+}
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -51,6 +51,7 @@ async function addProducts(click) {
     salePrice,
   };
   const item = createCartItemElement(newObject);
+  item.addEventListener('click', cartItemClickListener);
   oList.appendChild(item);
 }
 
@@ -75,3 +76,5 @@ async function searchProducts(product) {
 window.onload = () => {
   searchProducts('computador');
 };
+
+// resolvido com ajuda de Leandro Bastos, João Spinelli e Denilson Santuchi. 

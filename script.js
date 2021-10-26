@@ -14,8 +14,17 @@ function createCustomElement(element, className, innerText) {
 
 let localStorageArray = [];
 
+function updatePrice(salePrice, operation) {
+  const price = parseFloat(salePrice);
+  const totalPrice = document.getElementById('price');
+  if (operation === 'sum') {
+    totalPrice.innerText = (parseFloat(totalPrice.innerText) + price);
+  } else {
+    totalPrice.innerText = (parseFloat(totalPrice.innerText) - price);
+  }
+}
+
 function saveLocalStorageItems(id, operation) {
-  console.log(localStorageArray);
   fetchItem(id).then((values) => {
     if (operation === 'remove') {
       localStorageArray = JSON.parse(localStorage.getItem('cartItems'));
@@ -32,8 +41,10 @@ function saveLocalStorageItems(id, operation) {
 function cartItemClickListener(event) {
   const element = event.target;
   const elementId = element.innerText.split('SKU: ')[1].split(' |')[0];
+  const elementPrice = element.innerText.split('PRICE: $')[1];
   element.remove();
   saveLocalStorageItems(elementId, 'remove');
+  updatePrice(elementPrice, 'sub');
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -52,6 +63,7 @@ function createItemsOnClick(event) { // adiciona os itens no carrinho
     const { id: sku, title: name, price: salePrice } = values;
     listContainer.appendChild(createCartItemElement({ sku, name, salePrice }));
     saveLocalStorageItems(sku, 'add');
+    updatePrice(salePrice, 'sum');
   });
 }
 
@@ -87,6 +99,7 @@ function createTotalPriceElement() {
   const paragraph = document.createElement('p');
   const cart = document.getElementsByClassName('cart')[0];
   paragraph.className = 'total-price';
+  paragraph.id = 'price';
   paragraph.innerText = '0.00';
   paragraph.style.order = '-1';
   cart.appendChild(paragraph);
@@ -113,9 +126,19 @@ function clearCartItems() {
   });
 }
 
+function inicialPrice() {
+  const totalPriceElement = document.getElementsByClassName('total-price')[0];
+  if (localStorage.getItem('cartItems') !== null && localStorage.getItem('cartItems') !== '[]') {
+    const cartItems = JSON.parse(localStorage.getItem('cartItems'));
+    const cartItemsPrice = cartItems.map((item) => item.salePrice);
+    totalPriceElement.innerText = (cartItemsPrice.reduce((sum, current) => sum + current));
+  }
+}
+
 window.onload = () => {
   createItems();
   createTotalPriceElement();
   getLocalStorageItems();
   clearCartItems();
+  inicialPrice();
 };

@@ -1,4 +1,5 @@
 const olCartItems = document.querySelector('.cart__items');
+const sectionItens = document.querySelector('.items');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -13,6 +14,17 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
+
+const loadingTextMessageOn = () => {
+  const loadingMessage = document.createElement('span');
+  loadingMessage.className = 'loading';
+  loadingMessage.innerText = 'carregando...';
+  sectionItens.appendChild(loadingMessage);
+};
+
+const loadingTextMessageOff = () => {
+  document.querySelector('.loading').remove();
+};
 
 const clearCartListener = () => {
   const clearBtn = document.querySelector('.empty-cart');
@@ -102,7 +114,7 @@ function getSkuFromProductItem(item) {
 // req-01 com ajuda do Bê
 async function searchProducts(product) {
   const searchedData = await fetchProducts(product);
-  const sectionItens = document.querySelector('.items');
+  loadingTextMessageOff();
   searchedData.results.forEach((item) => {
     const productItemObject = {
       sku: item.id,
@@ -121,6 +133,7 @@ const loadCartItems = () => {
 };
 
 window.onload = () => { 
+    loadingTextMessageOn();
     searchProducts('computador');
     loadCartItems();
     clearCartListener();

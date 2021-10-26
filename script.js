@@ -49,7 +49,6 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 async function addProductToCart(productID) {
-  onLoadInfo();
   const itemData = await fetchItem(productID);
   const sectionItem = document.querySelector('.cart__items');
   const { id: sku, title: name, price: salePrice } = itemData;
@@ -128,7 +127,7 @@ async function serchProducts(product) { // essa e uma funcao assincrona
 }
 
 window.onload = () => { 
-  serchProducts('maldicao ');
+  serchProducts('Computador');
   onLoadInfo();
   emptyCart();
 };

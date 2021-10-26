@@ -35,19 +35,27 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  event.target.remove();  
+  event.target.parentNode.remove();  
   setCartPrice();
   saveCartItems(olItems.innerHTML);
 }
+const createButtonForRemoveItem = () => {
+  const buttonX = document.createElement('button');
+  buttonX.className = 'button-remove-item';
+  buttonX.innerText = 'X';
+  return buttonX;
+};
 
 function createCartItemElement({ sku, name, salePrice, image }) {
   const li = document.createElement('li');
+  const buttonX = createButtonForRemoveItem();
   li.className = 'cart__item';
   li.innerHTML = `SKU: ${sku}<br> 
-   NAME: ${name}<br>
-   PRICE: $${salePrice}`;
+  NAME: ${name}<br>
+  PRICE: $${salePrice}`;
   li.appendChild(createProductImageElement(image));
-  li.addEventListener('click', cartItemClickListener); // pegar essa linha
+  li.appendChild(buttonX);
+  buttonX.addEventListener('click', cartItemClickListener);
   
   return li;
 }
@@ -102,9 +110,9 @@ const serchProducts = async (product) => {
 
 const saveCart = () => {
   olItems.innerHTML = getSavedCartItems();
-  const li = document.querySelectorAll('.cart__item');
+  const buttonX = document.querySelectorAll('.button-remove-item');
   // help instructor Caique!
-  li.forEach((item) => {
+  buttonX.forEach((item) => {
     item.addEventListener('click', cartItemClickListener);
   });
 };

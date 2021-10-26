@@ -1,12 +1,14 @@
-const fetchProducts = (produto) => {
+const fetchProducts = (product) => {
   // seu código aqui
 
-  const promise = fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${produto}`);
-  
-  promise.then((response) => response.json());
-  promise.then((data) => data);
-  
-  return promise;
+  const mesageErro = new Error('You must provide an url');
+  if (!product) return mesageErro.message;
+  const promise = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
+  const result = fetch(promise)
+    .then((response) => response.json())
+    .then((data) => data);
+
+  return result;
 }
 
 if (typeof module !== 'undefined') {

@@ -70,6 +70,7 @@ function createProductItemElement({ sku, name, image }) {
 
 async function getProducts(param) {
   const search = await fetchProducts(param);
+  document.getElementById('loading').remove();
   const section = document.querySelector('.items');
   search.results.forEach((result) => {
     const obj = { sku: result.id, name: result.title, image: result.thumbnail };
@@ -96,9 +97,19 @@ const emptyCart = () => {
   list.innerHTML = '';
 };
 
+const loading = async () => {
+  const span = document.createElement('span');
+  span.id = 'loading';
+  span.className = 'loading';
+  const text = 'carregando...';
+  span.innerText = text;
+  document.body.appendChild(span);
+};
+
 document.getElementById('empty-cart').addEventListener('click', emptyCart);
 
 window.onload = () => {
+  loading();
   getProducts('computador');
   fillCartStorage();
 };

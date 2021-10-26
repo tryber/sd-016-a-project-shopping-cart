@@ -2,6 +2,19 @@
 // da turma 16 tribo A em sala de estudos.
 const selectItem = document.querySelector('.cart__items');
 
+const getProductValues = () => {
+  if (selectItem.innerHTML === '') return 0;
+  const getLocalStorageProducts = getSavedCartItems();
+  const lookForProductsValues = getLocalStorageProducts
+  .split('PRICE: $').reduce((acc, currValue) => {
+    acc.push(currValue.substring(0, currValue.indexOf('<')));
+    return acc;
+  }, []);
+  lookForProductsValues.shift();
+  const sumOfTotalValues = lookForProductsValues.reduce((acc, curr) => Number(acc) + Number(curr));
+  document.querySelector('.total-price').innerHTML = sumOfTotalValues;
+};
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -19,6 +32,7 @@ function createCustomElement(element, className, innerText) {
 function cartItemClickListener(event) {
  event.target.remove();
  saveCartItems(selectItem.innerHTML);
+ getProductValues();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -26,6 +40,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  getProductValues();
   return li;
 }
 
@@ -35,6 +50,15 @@ async function addItemsToCart(idProduct) {
   const getCartItems = createCartItemElement({ sku, name, salePrice });
   selectItem.appendChild(getCartItems);
   saveCartItems(selectItem.innerHTML);
+  getProductValues();
+}
+
+function clearCartItems() {
+  const getClassButton = document.querySelector('.empty-cart');
+  getClassButton.addEventListener('click', () => {
+    selectItem.innerHTML = '';
+  });
+  getProductValues();
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -49,7 +73,7 @@ function createProductItemElement({ sku, name, image }) {
     addItemsToCart(sku);
   });
   section.appendChild(createButton);
-
+  getProductValues();
   return section;
 }
 
@@ -74,18 +98,18 @@ async function searchProducts(product) {
 
 function restoreCartItems() {
 selectItem.innerHTML = getSavedCartItems();
-selectItem.addEventListener('click', cartItemClickListener);
+getProductValues();
 }
 
-function clearCartItems() {
-  const getClassButton = document.querySelector('.empty-cart');
-  getClassButton.addEventListener('click', () => {
-    selectItem.innerHTML = '';
-  });
-}
+const setupEventListener = () => {
+  selectItem.addEventListener('click', cartItemClickListener);
+  getProductValues();
+};
 
 window.onload = () => {
   searchProducts('computador');
   restoreCartItems();
+  setupEventListener();
   clearCartItems();
+  getProductValues();
 };

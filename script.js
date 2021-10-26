@@ -42,7 +42,7 @@ const sumPrices = async () => {
 async function cartItemClickListener(event) {
   event.target.remove();
   removeFromStorage();
-  sumPrices();
+  // sumPrices();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -110,7 +110,7 @@ const emptyCart = () => {
   list.innerHTML = '';
 };
 
-const loading = async () => {
+const loading = () => {
   const span = document.createElement('span');
   span.id = 'loading';
   span.className = 'loading';

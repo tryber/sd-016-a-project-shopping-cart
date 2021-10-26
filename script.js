@@ -70,6 +70,21 @@ function clearCart() {
   }
   });
 }
+function getElementReload() {
+  const arrayStringsLocalStorage = getSavedCartItems();
+  if (arrayStringsLocalStorage !== null) { 
+  const textProduct = arrayStringsLocalStorage.split('\n');
+  textProduct.forEach((textoLi) => {
+    const li = document.createElement('li');
+    li.innerText = textoLi;
+    li.addEventListener('click', () => {
+      li.remove();
+      addInLocalStorage();
+    });
+    ol.appendChild(li); 
+  });
+}
+}
 
 // function getSkuFromProductItem(item) {
 //   return item.querySelector('span.item__sku').innerText;
@@ -91,4 +106,5 @@ const searchProducts = async (argumento) => {
 window.onload = async () => { 
   searchProducts('computador'); 
   clearCart();
+  getElementReload();
 };

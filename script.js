@@ -30,13 +30,21 @@ function removeFromStorage() {
 
 const sumPrices = async () => {
   const priceTag = document.getElementById('total-price');
+  const regex = /[+-]?\d+(\.\d+)?/g;
   const items = getSavedCartItems();
-  const newString = [];
+  let newString;
+  let allValues = [];
   for (let i = 0; i < items.length; i += 1) {
-    newString.push(Number.parseFloat(items[i].slice(-10).replace(/\D/g, ''), 10));
+    newString = items[i]
+      .slice(-8)
+      .match(regex)
+      .map((num) => parseFloat(num));
+    allValues.push(newString);
   }
-  const newPrice = newString.reduce((acc, item) => acc + item);
-  priceTag.innerText = `${newPrice.toFixed(2)}`;
+  // console.log(allValues.flat());
+  allValues = allValues.flat();
+  const newPrice = allValues.reduce((acc, item) => acc + item);
+  priceTag.innerText = `${newPrice}`;
 };
 
 async function cartItemClickListener(event) {

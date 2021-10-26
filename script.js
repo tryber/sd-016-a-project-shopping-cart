@@ -12,17 +12,38 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  const btn = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  section.appendChild(btn);
+  const itens = document.querySelector('.items');
+  itens.appendChild(section);
 
   return section;
 }
+
+// Função para criar o texto de "Loading"
+const createLoadingText = (element, className, innerText) => 
+  document.body.appendChild(createCustomElement(element, className, innerText));
+
+// Função para remover o texto de "Loading"
+const removeLoadingText = () => {
+  const loading = document.querySelector('.loading');
+  loading.remove();
+};
+// Requisito 1
+const productsList = () => fetchProducts('computador')
+  .then((response) => {
+    response.results.forEach((products) => {
+      createProductItemElement(products);
+    });
+  })
+  .then(() => removeLoadingText());
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
@@ -40,4 +61,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+window.onload = () => { 
+  createLoadingText('h1', 'loading', 'carregando...');
+  productsList();
+};

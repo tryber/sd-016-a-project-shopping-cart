@@ -1,3 +1,5 @@
+const cartOl = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -28,38 +30,10 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function saveInLocalStorage() {
-  const listArray = [];
-
-  setTimeout(() => {
-    const li = document.querySelectorAll('.cart__item');
-
-    li.forEach((item) => listArray.push(item.innerText));
-    const result = JSON.stringify(listArray);
-    saveCartItems(result);
-  }, 500);
-}
-
 function cartItemClickListener(event) {
   // coloque seu código aqui
   event.target.remove();
-  saveInLocalStorage();
-}
-
-function loadLocalStorage() {
-  const ol = document.querySelector('.cart__items');
-  const items = getSavedCartItems();
-  const itemsUpdated = JSON.parse(items);
-  
-  if (itemsUpdated) {
-    itemsUpdated.forEach((item) => {
-      const li = document.createElement('li');
-      li.className = 'cart__item';
-      li.innerText = item;
-      li.addEventListener('click', cartItemClickListener);
-      ol.appendChild(li);
-    });
-  }
+  saveCartItems(cartOl.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -73,7 +47,6 @@ function createCartItemElement({ sku, name, salePrice }) {
 async function selectedItem(click) {
   const id = click.path[1].childNodes[0].innerHTML;
   const item = await fetchItem(id);
-  const section = document.querySelector('.cart__items');
   
   const { id: sku, title: name, price: salePrice } = item;
 
@@ -85,7 +58,8 @@ async function selectedItem(click) {
 
   const result = createCartItemElement(cartItem);
   result.addEventListener('click', cartItemClickListener);
-  section.appendChild(result);
+  cartOl.appendChild(result);
+  saveCartItems(cartOl.innerHTML);
 }
 
 async function searchProducts(product) {
@@ -104,10 +78,12 @@ async function searchProducts(product) {
   });
   const btn = document.querySelectorAll('.item__add');
   btn.forEach((item) => item.addEventListener('click', selectedItem));
-  btn.forEach((item) => item.addEventListener('click', saveInLocalStorage));
 }
 
 window.onload = () => {
   searchProducts('computador');
-  loadLocalStorage();
+  if (localStorage.getItem('cartItems')) {
+    cartOl.innerHTML = getSavedCartItems();
+    cartOl.childNodes.forEach((item) => item.addEventListener('click', cartItemClickListener));
+  }
 };

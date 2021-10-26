@@ -64,11 +64,12 @@
 #price-p {
   margin-right: 3px;
 }
- .empty-cart {
-   background-color:red;
-   padding: 5px;
-   border-radius: 20px;
-   margin-top: 10px;
-   color: white;
-   font-weight: bolder;
- }
+
+.empty-cart {
+  background-color:red;
+  padding: 5px;
+  border-radius: 20px;
+  margin-top: 10px;
+  color: white;
+  font-weight: bolder;
+}

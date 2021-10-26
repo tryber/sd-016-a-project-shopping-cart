@@ -42,12 +42,13 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 window.onload = async () => {
+  const para = 'computador'
 
-  const result = await fetchProducts()
+  const result = await fetchProducts(para)
   const sku = result.map((id)=>id.id)
   const name = result.map((name)=>name.title)
   const image = result.map((image)=>image.thumbnail)
-  console.log()
+  console.log(result)
 
   const ee = document.querySelector('.items');
   for (let i=0; i<result.length; i++) {

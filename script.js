@@ -51,13 +51,15 @@ function loadLocalStorage() {
   const items = getSavedCartItems();
   const itemsUpdated = JSON.parse(items);
   
-  itemsUpdated.forEach((item) => {
-    const li = document.createElement('li');
-    li.className = 'cart__item';
-    li.innerText = item;
-    li.addEventListener('click', cartItemClickListener);
-    ol.appendChild(li);
-  });
+  if (itemsUpdated) {
+    itemsUpdated.forEach((item) => {
+      const li = document.createElement('li');
+      li.className = 'cart__item';
+      li.innerText = item;
+      li.addEventListener('click', cartItemClickListener);
+      ol.appendChild(li);
+    });
+  }
 }
 
 function createCartItemElement({ sku, name, salePrice }) {

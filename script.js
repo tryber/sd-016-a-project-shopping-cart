@@ -12,6 +12,14 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
 async function addItemToCart(item) {
   const loadItem = await fetchItem(item);
   console.log(loadItem);
@@ -35,28 +43,13 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
 
-function cartItemClickListener(event) {
-  // https:github.com/tryber/sd-015-b-project-pixels-art/pull/113/commits/a9120a2955bfe5cd6974bd8a36a3e86e76b970e7
-    // for(i=0; i<selectColor.length; i+=1){
-    //   if(selectColor[i].classList.contains("selected")){
-    //     selectColor[i].classList.toggle("selected");
-    //   }
-    // }
-    // select.target.classList.toggle("selected");
+// function cartItemClickListener(event) {
   
-}
-
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
+// }
 
 async function searchProducts(product) {
   const searchData = await fetchProducts(product);

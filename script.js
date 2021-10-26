@@ -1,3 +1,12 @@
+const oList = document.querySelector('.cart__items');
+const buttonRemove = document.querySelector('.empty-cart');
+
+buttonRemove.addEventListener('click', () => {
+  oList.innerHTML = '';
+  saveCartItems(oList.innerHTML);
+  localStorage.clear();
+});
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -32,18 +41,26 @@ function cartItemClickListener(event) {
   event.target.remove();
 }
 
+function currentLi() {
+  const li = document.querySelectorAll('li');
+  li.forEach((item) => {
+    item.addEventListener('click', cartItemClickListener);
+  });
+}
+
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  oList.appendChild(li);
+  saveCartItems(oList.innerHTML);
   return li;
 }
 
 async function addProducts(click) {
   const id = click.path[1].childNodes[0].innerText;
   const getID = await fetchItem(id);
-  const oList = document.querySelector('.cart__items');
   const { id: sku, title: name, price: salePrice } = getID;
   const newObject = {
     sku,
@@ -73,8 +90,15 @@ async function searchProducts(product) {
   });
 }
 
+function verifyCart() {
+  const saved = getSavedCartItems();
+  oList.innerHTML = saved;
+}
+
 window.onload = () => {
   searchProducts('computador');
+  if (oList.children.length === 0) verifyCart();
+  currentLi();
 };
 
-// resolvido com ajuda de Leandro Bastos, João Spinelli e Denilson Santuchi. 
+// Resolvido com ajuda de Leandro Bastos, Fernando Mós, João Spinelli e Denilson Santuchi. 

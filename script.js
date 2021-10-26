@@ -57,9 +57,15 @@ function createCartItemElement({ sku, name, salePrice }) {
     priceAll.innerText = totalValue - clickValue;
     localStorage.setItem('totalPrice', JSON.stringify(totalV));
     e.target.remove(); 
+    const storage = JSON.parse(getSavedCartItems());
+    const indexOfProduct = storage.indexOf(e.target);
+    storage.splice(indexOfProduct, 1);
+    saveCartItems(JSON.stringify(storage));
   });
   return li;
 }
+// correção de bug. Ajuda Camila Silva - Turma For(ever)
+
 function addToCart(evt) {
   const { parentElement } = evt.target;
   const idFind = parentElement.childNodes[0].innerText;

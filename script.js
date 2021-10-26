@@ -1,3 +1,4 @@
+const emptyCart = document.querySelector('.empty-cart');
 const cartItems = document.querySelector('.cart__items');
 
 function createProductImageElement(imageSource) {
@@ -70,8 +71,41 @@ const getProduct = async (select) => {
   }
 };
 
+const delectAll = () => {
+  const li = document.querySelectorAll('.cart__item');
+  li.forEach((item) => item.remove());
+};
+
+// let sum = 0;
+// const sumPrice = async (select) => {
+//   if (select.target.classList.contains('item__add')) {
+//     const totalPrice = document.querySelector('.total-price');
+//     const product = await fetchItem(select.target.parentElement.firstChild.textContent);
+
+//     let productNumber = +product.price;
+//     sum += productNumber;
+
+//     console.log(Math.round(sum));
+//     totalPrice.innerText = `R$${sum.toFixed(2)}`;
+//   }
+// };
+
+// const subPrice = async (select) => {
+//   if (select.target.classList.contains('cart__item')) {
+//     const totalPrice = document.querySelector('.total-price');
+//     const product = await fetchItem(select.target.parentElement.firstChild.textContent);
+
+//     let productNumber = +product.price;
+//     sum -= productNumber;
+
+//     console.log(Math.round(sum));
+//     totalPrice.innerText = `R$${sum.toFixed(2)}`;
+//   }
+// };
+
 window.onload = () => {
   searchProduct('computador');
+  emptyCart.addEventListener('click', delectAll);
   document.addEventListener('click', getProduct);
   if (localStorage.getItem('cartItems')) {
     // Agradecimento especial ao Carlos(T16) e Fumagalli(T16) que me ajudaram a chegar a uma melhor conclusão.

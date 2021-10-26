@@ -33,7 +33,7 @@ const sumPrices = async () => {
   const items = getSavedCartItems();
   const newString = [];
   for (let i = 0; i < items.length; i += 1) {
-    newString.push(Number.parseFloat(items[i].replace(/\D/g, ''), 10));
+    newString.push(Number.parseFloat(items[i].slice(-10).replace(/\D/g, ''), 10));
   }
   const newPrice = newString.reduce((acc, item) => acc + item);
   priceTag.innerText = `${newPrice.toFixed(2)}`;

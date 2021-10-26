@@ -14,6 +14,22 @@ function createCustomElement(element, className, innerText) {
 
 let localStorageArray = [];
 
+function addLoadingItems() {
+  const itemBox = document.getElementsByClassName('items')[0];
+  const loadingLength = 15;
+  let currentLength = 1;
+  while (currentLength <= loadingLength) {
+    const span = document.createElement('span');
+    span.className = 'loading item';
+    span.style.height = '200px';
+    span.innerText = 'carregando...';
+    currentLength += 1;
+    itemBox.appendChild(span);
+  }
+}
+
+addLoadingItems();
+
 function updatePrice(salePrice, operation) {
   const price = parseFloat(salePrice);
   const totalPrice = document.getElementById('price');
@@ -86,12 +102,20 @@ function createProductItemElement({ sku, name, image }) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
 
+function removeLoadItems() {
+  const loadingItems = document.getElementsByClassName('loading');
+  do {
+    loadingItems[0].remove();
+  } while (loadingItems.length !== 0);
+}
+
 function createItems() {
   fetchProducts('computador').then((response) => {
     response.results.forEach((data) => {
       const { id: sku, title: name, thumbnail: image } = data;
       createProductItemElement({ sku, name, image });
     });
+    removeLoadItems();
   });
 }
 

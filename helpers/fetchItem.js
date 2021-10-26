@@ -1,6 +1,8 @@
-const fetchItem = () => {
-  // seu código aqui
-};
+function fetchItem(id) {
+  return fetch(`https://api.mercadolibre.com/items/${id}`)
+    .then((data) => data.json())
+    .catch((error) => error);
+}
 
 if (typeof module !== 'undefined') {
   module.exports = {

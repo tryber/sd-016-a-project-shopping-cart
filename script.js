@@ -69,6 +69,5 @@ async function searchProducts(product) {
 
 window.onload = () => {
   searchProducts('computador');
-  countItems();
-  createCartItemElement();
+ 
  };

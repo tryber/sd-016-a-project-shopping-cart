@@ -12,6 +12,15 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+async function addItemToCart(item) {
+  const loadItem = await fetchItem(item);
+  console.log(loadItem);
+  const olCartItems = document.querySelector('.cart__items');
+  const { id: sku, title: name, price: salePrice } = loadItem;
+  const li = createCartItemElement({ sku, name, salePrice });
+  olCartItems.appendChild(li);
+}
+
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -19,7 +28,9 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  const createButton = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  section.appendChild(createButton);
+  createButton.addEventListener('click', () => addItemToCart(sku));
 
   return section;
 }
@@ -29,7 +40,14 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  // https:github.com/tryber/sd-015-b-project-pixels-art/pull/113/commits/a9120a2955bfe5cd6974bd8a36a3e86e76b970e7
+    // for(i=0; i<selectColor.length; i+=1){
+    //   if(selectColor[i].classList.contains("selected")){
+    //     selectColor[i].classList.toggle("selected");
+    //   }
+    // }
+    // select.target.classList.toggle("selected");
+  
 }
 
 function createCartItemElement({ sku, name, salePrice }) {

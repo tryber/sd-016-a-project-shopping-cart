@@ -1,6 +1,5 @@
 const containerObj = [];
 const cartItem = document.querySelector('.cart__items');
-// const loading = document.querySelector('.loading');
 const buttonClear = document.querySelector('.empty-cart');
 const totalPrice = document.querySelector('.total-price');
 
@@ -43,17 +42,25 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   return li;
 }
-
 function addToCart(evt) {
   const { parentElement } = evt.target;
   const idFind = parentElement.childNodes[0].innerText;
   fetchItem(idFind).then((data) => {
     const { id: sku, title: name, price: salePrice } = data;
     const objResult = { sku, name, salePrice };
-      cartItem.appendChild(createCartItemElement(objResult));
-      containerObj.push(objResult);
-      saveCartItems(JSON.stringify(containerObj));
-  });
+    cartItem.appendChild(createCartItemElement(objResult));
+    containerObj.push(objResult);
+    saveCartItems(JSON.stringify(containerObj));
+    });
+}
+
+async function sumAllValue() {
+  const restore = await JSON.parse(getSavedCartItems());
+  if (!restore) {
+    totalPrice.innerText = 0.00;
+  }
+  // const result = restore.reduce((initial, current) => initial + current.salePrice, 0);
+  // totalPrice.innerText = result;
 }
 
 function removeToCart() {
@@ -70,7 +77,7 @@ function cartItemClickListener(event) {
 }
 
 async function searchProducts(product) {
-  const searchData = await fetchProducts(product);
+  const searchData = await fetchProducts(product).then((data) => data);
   const sectionItems = document.querySelector('.items');
   const { results } = searchData;
   results.forEach((item) => {
@@ -94,8 +101,13 @@ const recoveryData = () => {
      removeToCart();
     }
 };
-
+const body = document.querySelector('body');
+const loading = document.querySelector('.loading');
 window.onload = async () => { 
-  searchProducts('computador');
+  await searchProducts('computador').then((data) => {
+  body.removeChild(loading);
+  return data;
+  });
   recoveryData();
+  sumAllValue();
 };

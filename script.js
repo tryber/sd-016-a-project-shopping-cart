@@ -42,7 +42,6 @@ const sumPrices = async () => {
 async function cartItemClickListener(event) {
   event.target.remove();
   removeFromStorage();
-  // sumPrices();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -60,7 +59,7 @@ async function addToCart(itemID) {
   const itemElement = createCartItemElement(obj);
   ol.appendChild(itemElement);
   saveToStorage();
-  sumPrices();
+  await sumPrices();
 }
 
 function createProductItemElement({ sku, name, image }) {

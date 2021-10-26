@@ -27,10 +27,6 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
-// Função para criar o texto de "Loading"
-const createLoadingText = (element, className, innerText) => 
-  document.body.appendChild(createCustomElement(element, className, innerText));
-
 // Função para remover o texto de "Loading"
 const removeLoadingText = () => {
   const loading = document.querySelector('.loading');
@@ -61,7 +57,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { 
-  createLoadingText('h1', 'loading', 'carregando...');
+window.onload = () => {
   productsList();
 };

@@ -30,6 +30,6 @@ describe('1 - Teste a função fecthProducts', () => {
     const error = new Error ('You must provide an url');
     const result = await fetchProducts();
     expect(result).toEqual(error);
-  })
+  });
 
 });

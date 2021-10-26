@@ -1,3 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;900&family=Vollkorn:ital,wght@1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;900&display=swap');
+:root {
+  --main-bg-color: #EEECE4;
+  --dark-collor: #00323F;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+* , *:before , *:after {
+  box-sizing: inherit;
+  padding: 0;
+  margin: 0;
+}
+body {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  background: var(--main-bg-color) url(img/noisebg.png);
+}
 .container {
   display: flex;
   justify-content: space-around;
@@ -15,6 +36,7 @@
 
 .item {
   border: 2px solid blue;
+  padding: 10px;
   border-radius: 5px;
   box-sizing: border-box;
   display: flex;
@@ -23,6 +45,7 @@
   margin: 5px;
   width: 200px;
   align-items: center;
+  background-color: #fff;
 }
 
 .item .item__sku {
@@ -40,11 +63,19 @@
 }
 
 .item .item__add {
-  background-color: green;
+  /* background-color: green; */
+  background-color: var(--dark-collor);
+  color: var(--main-bg-color);
   border: 0;
   cursor: pointer;
   margin: 0;
   padding: 5px;
+  padding: 10px;
+  width: 90%;
+  border-radius: 5px;
+  font-size: 15px;
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 400;
 }
 
 .cart {
@@ -54,9 +85,12 @@
 }
 
 .cart .cart__title {
-  flex-basis: 1;
-  font-size: 16pt;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
   text-align: center;
+  margin: 40px 0 25px;
+  font-size: 18px;
 }
 
 
@@ -71,6 +105,28 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+.item__title {
+  font-size: 15px;
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 400;
+}
+.priceProduct{
+  font-family: 'Vollkorn', serif;
+  font-weight: 700;
+  font-style: italic;
+  color: #676767;
+  color: var(--dark-collor);
+  font-size: 25px;
+  position: relative;
+}
+
+.priceProduct::before {
+  content: 'R$';
+  position: absolute;
+  font-size: 14px;
+  left: -21px;
+  top: 10px;
 }
 
 p.loading {

@@ -12,8 +12,11 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+const olCartItems = document.querySelector('.cart__items');
+
 function cartItemClickListener(event) {
   event.target.remove();
+  saveCartItems(olCartItems.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -26,7 +29,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 async function addItemToCart(itemId) {
   const searchedItem = await fetchItem(itemId);
-  const sectionCartItens = document.querySelector('.cart__items');
+  // const sectionCartItens = document.querySelector('.cart__items');
   console.log(searchedItem);
   const productItemObject = {
     sku: searchedItem.id,
@@ -34,7 +37,8 @@ async function addItemToCart(itemId) {
     salePrice: searchedItem.price,
   };
   const liCartItem = createCartItemElement(productItemObject);
-  sectionCartItens.appendChild(liCartItem);
+  olCartItems.appendChild(liCartItem);
+  saveCartItems(olCartItems.innerHTML);
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -44,7 +48,6 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  // section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   const addToCartBtn = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   addToCartBtn.addEventListener('click', () => {
     addItemToCart(sku);
@@ -72,12 +75,24 @@ async function searchProducts(product) {
       image: item.thumbnail,
     };
     const productItemElement = createProductItemElement(productItemObject);
-    // const addItemToCartBtn = document.querySelector('button.item__add');
-    // addItemToCartBtn.addEventListener('click', addItemToCart);
     sectionItens.appendChild(productItemElement);
   });
 }
 
+const loadCartItems = () => {
+  // const olCartItems = document.querySelector('.cart__items');
+  olCartItems.innerHTML = getSavedCartItems();
+
+  const liCartItems = document.querySelectorAll('.cart__item');
+  liCartItems.forEach((item) => {
+    item.addEventListener('click', (event) => {
+      event.target.remove();
+      saveCartItems(olCartItems.innerHTML);
+    });
+  });
+};
+
 window.onload = () => { 
     searchProducts('computador');
+    loadCartItems();
 };

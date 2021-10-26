@@ -1,3 +1,11 @@
+body {
+  background-color: rgb(223, 223, 223);
+}
+
+li {
+  list-style: none;
+}
+
 .container {
   display: flex;
   justify-content: space-around;
@@ -12,7 +20,7 @@
 }
 
 .item {
-  border: 2px solid blue;
+  border: 1px solid rgb(199, 199, 204);
   border-radius: 5px;
   box-sizing: border-box;
   display: flex;
@@ -20,6 +28,7 @@
   height: auto;
   margin: 5px;
   width: 200px;
+  background-color: white;
 }
 
 .item .item__sku {
@@ -37,7 +46,8 @@
 }
 
 .item .item__add {
-  background-color: green;
+  background-color: rgb(56, 114, 190);
+  color: white;
   border: 0;
   cursor: pointer;
   margin: 0;
@@ -48,10 +58,17 @@
   display: flex;
   flex-basis: 30%;
   flex-flow: column wrap;
+  background-color: white;
+  margin-top: 5px;
 }
 
 .cart .cart__title {
   flex-basis: 1;
   font-size: 16pt;
   text-align: center;
+  margin-top: 5px;
+}
+
+.cart__item {
+  background-color: grey;
 }

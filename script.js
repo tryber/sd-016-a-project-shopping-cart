@@ -38,13 +38,16 @@ function createCustomElement(element, className, innerText) { // cria o elemento
   return e;
 }
 
-function createProductItemElement({ id: sku, title: name, thumbnail: image }) { // cria no html todos os produtos
+function createProductItemElement({ id: sku, title: name, thumbnail: image, price: salePrice }) { // cria no html todos os produtos
   const section = document.createElement('section');
   section.className = 'item';
 
+  section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
+
+  // section.appendChild(createCartItemElement('span','price__item', salePrice));
+  
   const botao = (createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   botao.addEventListener('click', () => { // adiciona escutador que busca o item e joga pro carrinho
     searchItem(sku);

@@ -18,7 +18,7 @@ function cartItemClickListener(event) {
   const help = event.target.parentElement;
   const selectitem = event.target;
   help.removeChild(selectitem);
-  localStorage.clear();
+  // localStorage.clear();
   saveCartItems(help.innerHTML);
   event.target.remove();
 }
@@ -81,7 +81,7 @@ function reload() {
 }
 
 function Limpar() {
-  localStorage.clear();
+  // localStorage.clear();
   CartList.innerHTML = '';
 }
 

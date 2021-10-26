@@ -36,12 +36,13 @@ const sumPrices = async () => {
   let allValues = [];
   for (let i = 0; i < items.length; i += 1) {
     newString = items[i]
-      .slice(-8)
+      .split('$').pop()
       .match(regex)
       .map((num) => parseFloat(num));
     allValues.push(newString);
   }
   allValues = allValues.flat();
+  console.log(allValues);
   const newPrice = allValues.reduce((acc, item) => acc + item);
   priceTag.innerText = `${newPrice}`;
 };

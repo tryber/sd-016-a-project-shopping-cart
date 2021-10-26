@@ -44,8 +44,8 @@ async function productsSearch(product) {
   const products = await fetchProducts(product);
   const queryItens = document.querySelector('.items');
 
-  products.results.forEach((product) => {
-    const { id: sku, title: name, thumbnail: image } = product;
+  products.results.forEach((produto) => {
+    const { id: sku, title: name, thumbnail: image } = produto;
     const objProduct = {
       sku,
       name,

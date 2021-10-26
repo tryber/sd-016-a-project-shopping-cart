@@ -1,3 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&family=Oxygen:wght@300;400;700&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #ebebeb;
+  font-family: 'Oxygen', sans-serif;
+  font-weight: 700;
+}
+
+.header {
+  background-color: #03342d;
+  display: flex;
+  width: 100%;
+  height: 67pt;
+  margin: auto;
+}
+
+.search-header {
+  display: flex;
+  width: 100%;
+  margin-left: 2%;  
+}
+
+.title-header {
+  color: rgb(83, 83, 83);
+  text-decoration: none;
+  font-size: 61px ;
+
+  display: flex;
+  justify-content: center;
+}
+
+.title-header b {
+  color: black;
+}
+
+.search-input {
+  display: flex;
+  align-items: center;
+  width: 32%;
+  margin-left: 2%;
+}
+
+.search-input .search-item, .button-search {
+  font-family: inherit;
+  font-size: 18px;
+  height: 50px;
+
+  border: none;
+}
+
+.search-input .search-item {
+  width: 100%;
+  border-radius: 5px 0 0 5px;
+}
+
+
+.search-input .button-search {
+  background-color: #d0cccc;
+
+  border-left: 1px solid #d4cbcbb0;
+  border-radius: 0 5px 5px 0;
+  padding: 10px;
+}
+
 .container {
   display: flex;
   justify-content: space-around;
@@ -12,14 +83,23 @@
 }
 
 .item {
-  border: 2px solid blue;
+  background-color: white;
+  color: #464e5c;
+
+  border: 2px solid #d4cbcbb0;
   border-radius: 5px;
   box-sizing: border-box;
+  
   display: flex;
   flex-direction: column;
+  
   height: auto;
   margin: 5px;
-  width: 200px;
+  width: 236px;
+}
+
+.item .item__image {
+  width: 100%;
 }
 
 .item .item__sku {
@@ -29,29 +109,115 @@
 .item .item__title {
   flex-grow: 1;
   padding: 10px;
-  text-align: center;
+  text-align: start;
 }
 
-.item .item__image {
-  width: 100%;
+.item .item__price {
+  color: black;
+  text-align: start;
+  font-size: 16pt;
+  padding: 10px;
 }
 
 .item .item__add {
-  background-color: green;
+  background-color: #25624c;
+  color: #f2e4e4;
+  font-size: 13pt;
+
   border: 0;
   cursor: pointer;
   margin: 0;
   padding: 5px;
+  transition: transform 117ms ease-in-out;
 }
 
+.item .item__add:hover{
+  transform: scale(1.03);
+}
 .cart {
   display: flex;
   flex-basis: 30%;
   flex-flow: column wrap;
+  margin: 0 24pt;
 }
 
 .cart .cart__title {
-  flex-basis: 1;
-  font-size: 16pt;
+  background-color: #0a764f;
+  font-size: 22pt;
   text-align: center;
+
+  flex-basis: 1;
+  margin-top: 10px;
+
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.cart .cart__item {
+  background-color: white;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+
+  border: 2px solid #d4cbcbb0;
+  border-radius: 5px;
+  box-sizing: border-box;
+  
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+
+  height: auto;
+  width: 100%;
+  margin: 5px auto;
+}
+
+.cart .item__image {
+  background-color: #25624c;
+
+  width: 20%;
+  height: 16%;
+  order: -1;
+  
+  border-radius: 50%;
+  padding: 10px;
+  margin: 10px;
+}
+
+
+.cart .title-item-cart {
+  width: 70%;
+}
+
+.cart .title-item-cart span{
+  color: #ad223b;
+}
+.cart .item__button {
+  background-color: #d0cccc;
+  text-align: center;
+  
+  border: none;
+  border-radius: 20px;
+  
+  width: 19pt;
+  height: 19pt;
+  margin: 10px;
+}
+
+.cart .subtotal-and-empty-cart {
+  font-size: 16pt;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 50px;
+}
+
+.cart .subtotal-and-empty-cart .empty-cart {
+  background-color: white;
+
+  height: 30px;
+  width: 200px;
+
+  border: 2px solid blue;
+  border-radius: 5px;
 }

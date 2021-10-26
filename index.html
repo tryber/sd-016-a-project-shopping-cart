@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+    <title>Shopping cart</title>
     <link rel="stylesheet" href="style.css" />
     <script src="./helpers/fetchItem.js" defer></script>
     <script src="./helpers/fetchProducts.js" defer></script>
@@ -13,12 +13,29 @@
     <script src="./helpers/getSavedCartItems.js" defer></script>
   </head>
   <body>
+    <header class="header">
+      <section class="search-header">
+        <a href="#" class="title-header"><b>trybe</b>shopping</a>
+        <section class="search-input">
+            <input type="text" name="search-item" class="search-item" Placeholder="Buscar produtos, marcas e muito mais...">
+            <button class='button-search' type="submit">Buscar</button>
+          </section>
+      </section>
+    </header>
     <section class="container">
-      <section class="items"></section>
+      <section class="items">
+        
+      </section>
       <section class="cart">
         <span class="cart__title">Carrinho de compras</span>
-        <button class="empty-cart">Esvaziar carrinho</button>
+        <section class='while-charging'>
+          <span class='loading'>carregando...</span>
+        </section>
         <ol class="cart__items"></ol>
+        <section class="subtotal-and-empty-cart">
+          <p>Subtotal: <b>R$ <span class='total-price' id='total'>0</b></span></p>
+          <button class="empty-cart">Esvaziar carrinho</button>
+        </section>
       </section>
     </section>
   </body>

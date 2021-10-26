@@ -14,10 +14,6 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-// function cartItemClickListener(event) {
-//   const bye = event.target;
-//   return bye.remove;
-// }
 function addInLocalStorage() {
   if (ol.childElementCount > 0) {
      saveCartItems(ol.innerText);
@@ -70,6 +66,7 @@ function clearCart() {
   }
   });
 }
+
 function getElementReload() {
   const arrayStringsLocalStorage = getSavedCartItems();
   if (arrayStringsLocalStorage !== null) { 
@@ -85,10 +82,6 @@ function getElementReload() {
   });
 }
 }
-
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
-// }
 
 // Precisei assistir ao vídeodo Bê para começar a fazer.
 
@@ -108,3 +101,14 @@ window.onload = async () => {
   clearCart();
   getElementReload();
 };
+
+// Não Utilizados: 
+
+// function cartItemClickListener(event) {
+//   const bye = event.target;
+//   return bye.remove;
+// }
+
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }

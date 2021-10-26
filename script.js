@@ -114,7 +114,7 @@ function emptyCart(cart) {
     cartItems.innerText = '';
     addSumPrices(cart);
   });
-  saveCartItems(cartItems);
+  saveCartItems(cartItems.innerHTML);
 }
 
 function restoreCart(cart) {

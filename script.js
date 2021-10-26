@@ -81,7 +81,10 @@ async function searchProducts(product) {
 
 const recoveryData = () => {
    const dataRecovery = JSON.parse(getSavedCartItems());
-   dataRecovery.forEach((product) => cartItem.appendChild(createCartItemElement(product)));
+   if (dataRecovery) {
+     dataRecovery.forEach((product) => cartItem.appendChild(createCartItemElement(product)));
+     removeToCart();
+    }
 };
 window.onload = () => { 
   searchProducts('computador');

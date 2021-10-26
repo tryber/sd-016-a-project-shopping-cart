@@ -67,6 +67,11 @@ const fetchObject = async () => {
   });
 };
 
+const buttonemptycart = document.querySelector('.empty-cart');
+buttonemptycart.addEventListener('click', () => {
+  ol.innerHTML = '';
+});
+
 window.onload = () => {
   fetchObject();
   addEvent();

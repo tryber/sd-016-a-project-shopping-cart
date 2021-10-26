@@ -79,9 +79,18 @@ async function queryProducts(QUERY) {
   addToCartBtn(btnsLocation, btnsIds);
 }
 
+function clearAll() {
+  const clearAllBtnLocation = document.querySelector('.empty-cart');
+  clearAllBtnLocation.addEventListener('click', () => {
+    cartLocation.innerHTML = '';
+    localStorage.removeItem('cartItems');
+  });
+}
+
 window.onload = () => {
   queryProducts('computador');
   cartLocation.innerHTML = getSavedCartItems();
+  clearAll();
   const cartLocationIndex = document.querySelectorAll('.cart__item');
   cartLocationIndex.forEach((cart) => {
     cart.addEventListener('click', cartItemClickListener);

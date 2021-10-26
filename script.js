@@ -1,3 +1,11 @@
+const oList = document.querySelector('.cart__items');
+const button = document.querySelector('.empty-cart');
+
+button.addEventListener('click', () => {
+  oList.innerHTML = '';
+  localStorage.clear();
+});
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -43,7 +51,6 @@ function createCartItemElement({ sku, name, salePrice }) {
 async function addProducts(click) {
   const id = click.path[1].childNodes[0].innerText;
   const getID = await fetchItem(id);
-  const oList = document.querySelector('.cart__items');
   const { id: sku, title: name, price: salePrice } = getID;
   const newObject = {
     sku,
@@ -67,7 +74,6 @@ async function searchProducts(product) {
     const productItem = createProductItemElement(itemObject);
     sectionItems.appendChild(productItem);
   });
-  const button = document.querySelectorAll('.item__add');
   button.forEach((item) => {
     item.addEventListener('click', addProducts);
   });

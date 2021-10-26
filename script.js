@@ -42,6 +42,7 @@ const sumPrices = async () => {
 async function cartItemClickListener(event) {
   event.target.remove();
   removeFromStorage();
+  sumPrices();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {

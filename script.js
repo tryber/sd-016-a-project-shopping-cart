@@ -36,7 +36,7 @@ const sumPrices = async () => {
     newString.push(Number.parseFloat(items[i].slice(-4), 10));
   }
   const newPrice = newString.reduce((acc, item) => acc + item);
-  priceTag.innerText = `Total: R$${newPrice.toFixed(2)}`;
+  priceTag.innerText = `${newPrice.toFixed(2)}`;
 };
 
 async function cartItemClickListener(event) {

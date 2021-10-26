@@ -1,25 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css" />
-    <script src="./helpers/fetchItem.js" defer></script>
-    <script src="./helpers/fetchProducts.js" defer></script>
-    <script src="script.js" defer></script>
-    <script src="./helpers/saveCartItems.js" defer></script>
-    <script src="./helpers/getSavedCartItems.js" defer></script>
-  </head>
-  <body>
-    <section class="container">
-      <section class="items"></section>
-      <section class="cart">
-        <span class="cart__title">Carrinho de compras</span>
-        <button class="empty-cart">Esvaziar carrinho</button>
-        <ol class="cart__items"></ol>
-      </section>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="./helpers/fetchItem.js" defer></script>
+  <script src="./helpers/fetchProducts.js" defer></script>
+  <script src="script.js" defer></script>
+  <script src="./helpers/saveCartItems.js" defer></script>
+  <script src="./helpers/getSavedCartItems.js" defer></script>
+</head>
+
+<body>
+  <header class="header">
+    <p><b>trybe</b>shopping</p>
+    <section class="header-cart">
+      <img src="shopping_cart.png" alt="ícone de carrinho." id="cart-icon">
+      <span class="cart__title">Meu carrinho</span>
     </section>
-  </body>
+  </header>
+  <section class="container">
+    <section class="items"></section>
+    <section class="cart">
+      <ol class="cart__items"></ol>
+      <h2>Subtotal:</h2><br>
+      <h2 class="total-price"></h2>
+      <button class="empty-cart">Esvaziar carrinho</button>
+    </section>
+  </section>
+</body>
+
 </html>

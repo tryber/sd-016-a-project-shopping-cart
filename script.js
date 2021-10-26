@@ -1,4 +1,5 @@
 const cartOl = document.querySelector('.cart__items');
+const btnEraseAll = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -26,9 +27,15 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
+
+function eraseAll() {
+  const li = document.querySelectorAll('ol li');
+  li.forEach((index) => index.remove());
 }
+btnEraseAll.addEventListener('click', eraseAll);
 
 function cartItemClickListener(event) {
   // coloque seu código aqui

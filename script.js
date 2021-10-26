@@ -1,3 +1,21 @@
+// Cria o conteiner para  inserir a soma
+function totalItem() {
+  const totalPrice = document.querySelector('.total');
+  const span = document.createElement('span');
+  span.className = 'total-price';
+  // div.innerHTML = `<p> Subtotal ${'total'} </p>`;
+  totalPrice.appendChild(span);
+}
+
+const sumAllPrices = () => {
+  let totalPrice = 0;
+  const currentCartItem = document.querySelectorAll('.cart__item');
+  const priceElement = document.querySelector('.total-price');
+  currentCartItem.forEach((item) => { totalPrice += parseFloat(item.innerText.split('$')[1]); });
+  priceElement.innerText = `${totalPrice}`;
+  // coloquei o ToFixed para limitar a duas casas decimais o valor .toFixed()
+};
+
 function onLoadInfo() {
   const pageLoad = document.querySelector('.items');
   const p = document.createElement('p');
@@ -12,20 +30,14 @@ function emptyCart() {
   const currentList = document.querySelector('.cart__items');
   emptyButton.addEventListener('click', () => {
     currentList.innerHTML = '';
+    sumAllPrices();
   });
-}
-
-function totalItem() {
-  const totalPrice = document.querySelector('.cart');
-  const div = document.createElement('div');
-  div.className = 'total-price';
-  div.innerHTML = '<p> Subtotal </p>';
-  totalPrice.appendChild(div);
 }
 
 function cartItemClickListener(event) {
   const li = event.target;
   li.remove();
+  sumAllPrices();
 }
 
 // cria os cards dos produtos
@@ -112,7 +124,10 @@ function createProductItemElement({ sku, name, image, salePrice }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createCustomElement('span', 'priceProduct', `${salePrice}`));
   const buttonItem = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
-  buttonItem.addEventListener('click', () => addProductToCart(sku));
+  buttonItem.addEventListener('click', async () => {
+    await addProductToCart(sku);
+    await sumAllPrices();
+  });
   section.appendChild(buttonItem);
   return section;
 }
@@ -135,8 +150,9 @@ async function serchProducts(product) { // essa e uma funcao assincrona
 }
 
 window.onload = () => { 
-  serchProducts('rainha vl');
+  serchProducts('Computador');
   onLoadInfo();
   emptyCart();
   totalItem();
+  sumAllPrices();
 };

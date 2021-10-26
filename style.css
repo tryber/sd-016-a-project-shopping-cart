@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;900&family=Vollkorn:ital,wght@1,600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;700;900&family=Vollkorn:ital,wght@1,600&family=Work+Sans:wght@300;900&display=swap');
 :root {
   --primary-color: #03342d;
   --primary-color2: #0a764f;
@@ -137,10 +136,18 @@ header {
   height: 100%;
   object-fit: contain;
 }
-.item__title, .cart__item {
+.item__title, .cart__item, .total{
   font-size: 15px;
   font-family: 'Titillium Web', sans-serif;
   font-weight: 400;
+}
+.total {
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.total span {
+  color: var(--primary-color2);
 }
 
 li.cart__item {

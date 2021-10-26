@@ -4,6 +4,8 @@ const computadorSearch = require('../mocks/search');
 
 window.fetch = jest.fn(fetchSimulator);
 
+//referência matchers da documentação no README do projeto: https://jestjs.io/pt-BR/docs/expect#tohavebeencalled
+
 describe('1 - Teste a função fecthProducts', () => {
   it('Se é uma função', () => {
     expect(typeof fetchProducts).toBe('function');

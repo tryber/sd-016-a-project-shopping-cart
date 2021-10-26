@@ -55,3 +55,8 @@
   font-size: 16pt;
   text-align: center;
 }
+
+.cart .total-price {
+  font-size: large;
+  text-align: center;
+}

@@ -55,6 +55,7 @@ async function itemClickListener(event) {
     const selectedItemCartElement = createCartItemElement({ sku, name, salePrice });
     updateCartList(selectedItemCartElement);
   }
+
   if (event.target.classList.contains('cart__item')) {
     const cartList = event.target.parentElement;
     const selectedItem = event.target;
@@ -80,9 +81,15 @@ function reloadCartList(storedData) {
   }
 }
 
+function emptyCartList() {
+  const cartList = document.querySelector('.cart__items');
+  cartList.innerHTML = '';
+}
+
 window.onload = () => {
   const storedData = getSavedCartItems();
   reloadCartList(storedData);
   getResultFromFetchProducts('computador');
   document.addEventListener('click', itemClickListener);
+  document.querySelector('.empty-cart').addEventListener('click', emptyCartList);
 };

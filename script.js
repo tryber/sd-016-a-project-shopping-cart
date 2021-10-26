@@ -1,4 +1,15 @@
-// requisito executado com o auxilio do vídeo de Bernando e mentoria de Humberto Castro
+// requisito executado com o auxilio do vídeo de Bernando, mentoria de Humberto Castro e Caique
+const requestList = document.querySelector('.cart_items');
+
+const countItems = () => {
+  if (requestList.innerHTML === '') return 0;
+  const result = getSaveCartItems().split('PRICE :$').reduce((acc, value) => {
+    acc.push(value.substring(0, value.indexOf('<')));
+    return acc;
+  }, []);
+  return result;
+};
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -20,17 +31,22 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  const addButton = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+    addButton.addEventListener('click', () => {
+      requestList(sku);
+  });
+  section.appendChild(addButton);
 
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  event.target.remove();
+  saveCartItems(requestList.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -53,4 +69,6 @@ async function searchProducts(product) {
 
 window.onload = () => {
   searchProducts('computador');
+  countItems();
+  createCartItemElement();
  };

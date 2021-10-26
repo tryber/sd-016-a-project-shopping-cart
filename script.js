@@ -30,7 +30,7 @@ function removeFromStorage() {
 
 const sumPrices = async () => {
   const priceTag = document.getElementById('total-price');
-  const items = await getSavedCartItems();
+  const items = getSavedCartItems();
   const newString = [];
   for (let i = 0; i < items.length; i += 1) {
     newString.push(Number.parseFloat(items[i].slice(-4), 10));

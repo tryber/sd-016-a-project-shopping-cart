@@ -86,13 +86,15 @@ function appendElement(elementClass, callback) {
 function getItemFromLocalStorage() {
   const cartSection = document.querySelector('.cart__items');
   const cartItems = JSON.parse(localStorage.getItem('cartItems'));
+  if (cartItems) {
   cartItems.forEach((item) => {
     arrayToLocalStorage.push(item);
     cartSection.appendChild(createCartItemElement(item));
-  });
+    });
+  }
 }
 
 window.onload = () => {
   appendElement('section .items', createProductItemElement);
-  if (localStorage) getItemFromLocalStorage();
+  getItemFromLocalStorage();
 };

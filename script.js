@@ -1,5 +1,6 @@
 let totalPrice = [];
 const totalPriceElement = document.querySelector('.total-price');
+const cartOl = document.querySelector('.cart__items');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -17,7 +18,6 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
-  const cartOl = document.querySelector('.cart__items');
   cartOl.removeChild(event.target);
 }
 
@@ -44,6 +44,9 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', () => {
     subtractFromTotalPrice(totalPrice, salePrice);
   });
+  li.addEventListener('click', () => {
+    saveCartItems(cartOl.innerHTML);
+  });
   return li;
 }
 
@@ -53,16 +56,13 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  const button = createCustomElement(
-    'button',
-    'item__add',
-    'Adicionar ao carrinho!',
-  );
+  const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   button.addEventListener('click', async () => {
     const formatedData = await fetchItem(sku);
     const cartElement = createCartItemElement(formatedData);
     const cart = document.querySelector('.cart__items');
     cart.appendChild(cartElement);
+    saveCartItems(cartOl.innerHTML);
   });
   section.appendChild(button);
   return section;
@@ -107,12 +107,22 @@ function deleteAllItemsFromCart() {
   });
   totalPriceElement.innerHTML = 0;
   totalPrice = [];
+  saveCartItems(cartOl.innerHTML);
 }
 
 window.onload = async () => {
+  cartOl.innerHTML = getSavedCartItems();
   await addItemstoPage();
   await addTotalPrice();
+
   document
     .querySelector('.empty-cart')
     .addEventListener('click', deleteAllItemsFromCart);
+
+  document.querySelectorAll('.cart__item').forEach((cartItem) => {
+    cartItem.addEventListener('click', () => {
+      cartItem.parentNode.removeChild(cartItem);
+      saveCartItems(cartOl.innerHTML);
+    });
+  });
 };

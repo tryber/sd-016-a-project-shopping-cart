@@ -1,11 +1,7 @@
+// Agradecimento especial ao Carlos(T16) e Fumagalli(T16) que me ajudaram a chegar a uma melhor conclusão.
 const saveCartItems = (save) => {
   // seu código aqui
-  const savedCart = [];
-  save.childNodes.forEach((item) => {
-    savedCart.push({ product: item.innerHTML });
-  });
-
-  localStorage.setItem('cartItems', JSON.stringify(savedCart));
+  localStorage.setItem('cartItems', save);
 };
 
 if (typeof module !== 'undefined') {

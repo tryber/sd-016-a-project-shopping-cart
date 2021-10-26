@@ -79,6 +79,7 @@ async function getProducts(param) {
 function fillCartStorage() {
   const cart = document.querySelector('.cart__items');
   const items = getSavedCartItems();
+  if (items === null) return;
   items.forEach((item) => {
     const li = document.createElement('li');
     li.innerText = item;

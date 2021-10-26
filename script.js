@@ -1,3 +1,5 @@
+const olCartItems = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -12,17 +14,40 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-const olCartItems = document.querySelector('.cart__items');
-
 const clearCartListener = () => {
-  const clearBtn = document.querySelector('.empty-cart')
+  const clearBtn = document.querySelector('.empty-cart');
   clearBtn.addEventListener('click', () => {
     olCartItems.innerHTML = '';
     saveCartItems(olCartItems.innerHTML);
   });
-} 
+};
+
+const cartPrice = () => {
+  const cartSection = document.querySelector('.cart');
+  const totalPrice = document.createElement('span');
+  totalPrice.className = 'total-price';
+  const cartList = document.querySelectorAll('.cart__item');
+  const priceArray = [];
+  let sumPrice = 0;
+  cartList.forEach((li, index) => {
+    priceArray.push(li.innerText.split('PRICE: $'));
+    sumPrice += parseFloat(priceArray[index][1]);
+  });
+  totalPrice.innerText = `Total: $${sumPrice}`;
+  cartSection.appendChild(totalPrice);
+};
+
+const updatePrice = (price) => {
+  const tagPrice = document.querySelector('.total-price');
+  const currentPrice = tagPrice.innerText.split('Total: $');
+  tagPrice.innerText = `Total: $${(parseFloat(currentPrice[1]) + parseFloat(price)).toFixed(2)}`;
+};
 
 function cartItemClickListener(event) {
+  let price = event.target.innerText.split('PRICE: $')[1];
+  price = parseFloat(price) - (2 * parseFloat(price));
+  console.log(price);
+  updatePrice(price);
   event.target.remove();
   saveCartItems(olCartItems.innerHTML);
 }
@@ -37,12 +62,12 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 async function addItemToCart(itemId) {
   const searchedItem = await fetchItem(itemId);
-  console.log(searchedItem);
   const productItemObject = {
     sku: searchedItem.id,
     name: searchedItem.title,
     salePrice: searchedItem.price,
   };
+  updatePrice(searchedItem.price);
   const liCartItem = createCartItemElement(productItemObject);
   olCartItems.appendChild(liCartItem);
   saveCartItems(olCartItems.innerHTML);
@@ -89,16 +114,12 @@ async function searchProducts(product) {
 const loadCartItems = () => {
   olCartItems.innerHTML = getSavedCartItems();
   const liCartItems = document.querySelectorAll('.cart__item');
-  liCartItems.forEach((item) => {
-    item.addEventListener('click', (event) => {
-      event.target.remove();
-      saveCartItems(olCartItems.innerHTML);
-    });
-  });
+  liCartItems.forEach((item) => item.addEventListener('click', cartItemClickListener));
 };
 
 window.onload = () => { 
     searchProducts('computador');
     loadCartItems();
     clearCartListener();
+    cartPrice();
 };

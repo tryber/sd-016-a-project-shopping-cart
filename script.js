@@ -18,9 +18,9 @@ function addInLocalStorage() {
   if (ol.childElementCount > 0) {
      saveCartItems(ol.innerText);
    } else {
-   localStorage.removeItem('cartItens');
+   localStorage.removeItem('cartItems');
   }
-  }
+  } // Caso ol tiver filhos (ex: li) >> Será Adicionado no local storage 
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -62,7 +62,7 @@ function clearCart() {
   const tamanho = ol.childElementCount;
   for (let i = tamanho; i > 0; i -= 1) {
     ol.lastChild.remove();
-    localStorage.removeItem('cartItens');
+    localStorage.removeItem('cartItems');
   }
   });
 }

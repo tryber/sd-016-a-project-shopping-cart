@@ -45,15 +45,13 @@ function sumPriceFromLocalStorage() {
 }
 
 function renewLocalStorageData(sku) {
+  // Camila Ranniele e Fernando Mós
   arrayToLocalStorage = [];
   const storage = JSON.parse(getSavedCartItems());
     if (storage !== null) {
     const storageProduct = storage.find((product) => product.sku === sku);
     const indexOfProduct = storage.indexOf(storageProduct);
     storage.splice(indexOfProduct, 1);
-    console.log(storageProduct);
-    console.log(indexOfProduct);
-    
     saveCartItems(JSON.stringify(storage));
     sumPriceFromLocalStorage();
   }

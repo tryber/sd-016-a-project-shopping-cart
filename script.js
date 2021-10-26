@@ -15,6 +15,14 @@ function emptyCart() {
   });
 }
 
+function totalItem() {
+  const totalPrice = document.querySelector('.cart');
+  const div = document.createElement('div');
+  div.className = 'total-price';
+  div.innerHTML = '<p> Subtotal </p>';
+  totalPrice.appendChild(div);
+}
+
 function cartItemClickListener(event) {
   const li = event.target;
   li.remove();
@@ -127,7 +135,8 @@ async function serchProducts(product) { // essa e uma funcao assincrona
 }
 
 window.onload = () => { 
-  serchProducts('Computador');
+  serchProducts('rainha vl');
   onLoadInfo();
   emptyCart();
+  totalItem();
 };

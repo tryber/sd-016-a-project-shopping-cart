@@ -7,7 +7,8 @@ Object.defineProperty(window, 'localStorage', {
 });
 
 describe('4 - Teste a função saveCartItems', () => {
-  // it('method is called', () => {
+  it('method is called', () => {
+    
 
-  // });
+  });
 });

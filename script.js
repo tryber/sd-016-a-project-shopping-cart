@@ -45,19 +45,16 @@ function sumPriceFromLocalStorage() {
 }
 
 function renewLocalStorageData(sku) {
-  // arrayToLocalStorage = [];
+  arrayToLocalStorage = [];
   const storage = JSON.parse(getSavedCartItems());
     if (storage !== null) {
     const storageProduct = storage.find((product) => product.sku === sku);
     const indexOfProduct = storage.indexOf(storageProduct);
-    const newProductsList = storage.splice(indexOfProduct, 1);
+    storage.splice(indexOfProduct, 1);
     console.log(storageProduct);
     console.log(indexOfProduct);
-    console.log(newProductsList);
-    // localStorage.clear(); 
     
-    sum = 0;
-    saveCartItems(JSON.stringify(newProductsList));
+    saveCartItems(JSON.stringify(storage));
     sumPriceFromLocalStorage();
   }
 }

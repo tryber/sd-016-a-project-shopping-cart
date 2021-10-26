@@ -40,9 +40,11 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createProductImageElement(image));
   Additem.addEventListener('click', () =>
     fetchItem(sku).then((item) => {
-      const { title: names, price: salePrice } = item;
+      // const { title: name, price: salePrice } = item;
       CartList.appendChild(   
-        createCartItemElement({ sku, names, salePrice }),
+        createCartItemElement({
+          sku: item.id, name: item.title, salePrice: item.price,
+        }),
       );
       saveCartItems(CartList.innerHTML);
     }));

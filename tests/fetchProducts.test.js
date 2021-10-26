@@ -12,7 +12,7 @@ describe('1 - Teste a função fecthProducts', () => {
     fetchProducts('computador');
     expect(fetch).toHaveBeenCalled();
   });
-  it('when called with argument computador, test if it was called woth the correct endpoit', () => {
+  it('when called with argument computador, test if it was called with the correct endpoit', () => {
     const test = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
     fetchProducts('computador');
     expect(fetch).toHaveBeenCalledWith(test);

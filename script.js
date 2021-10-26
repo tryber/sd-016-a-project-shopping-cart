@@ -31,22 +31,25 @@ const cartPrice = () => {
   let sumPrice = 0;
   cartList.forEach((li, index) => {
     priceArray.push(li.innerText.split('PRICE: $'));
-    sumPrice += parseFloat(priceArray[index][1]);
+    sumPrice += parseFloat(priceArray[index][1]) * 100;
   });
-  totalPrice.innerText = `Total: $${sumPrice}`;
+  totalPrice.innerText = `${(sumPrice / 100)}`;
+  const totalLabel = document.createElement('span');
+  totalLabel.innerText = 'Total:';
+  cartSection.appendChild(totalLabel);
   cartSection.appendChild(totalPrice);
 };
 
 const updatePrice = (price) => {
   const tagPrice = document.querySelector('.total-price');
-  const currentPrice = tagPrice.innerText.split('Total: $');
-  tagPrice.innerText = `Total: $${(parseFloat(currentPrice[1]) + parseFloat(price)).toFixed(2)}`;
+  const currentPrice = tagPrice.innerText;
+
+  tagPrice.innerText = `${(parseFloat(currentPrice) * 100 + parseFloat(price) * 100) / 100}`;
 };
 
 function cartItemClickListener(event) {
   let price = event.target.innerText.split('PRICE: $')[1];
   price = parseFloat(price) - (2 * parseFloat(price));
-  console.log(price);
   updatePrice(price);
   event.target.remove();
   saveCartItems(olCartItems.innerHTML);

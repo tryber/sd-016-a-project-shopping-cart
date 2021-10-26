@@ -69,6 +69,10 @@ header {
   width: 100%;
 }
 
+.item .price_item {
+  text-align: center; 
+}
+
 .item .item__add {
   background-color: rgb(56, 114, 190);
   color: white;

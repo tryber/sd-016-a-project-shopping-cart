@@ -94,5 +94,5 @@ function getItemFromLocalStorage() {
 
 window.onload = () => {
   appendElement('section .items', createProductItemElement);
-  getItemFromLocalStorage();
+  if (!localStorage === undefined) getItemFromLocalStorage();
 };

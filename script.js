@@ -33,13 +33,7 @@ const sumPrices = async () => {
   const items = getSavedCartItems();
   const newString = [];
   for (let i = 0; i < items.length; i += 1) {
-    if (items[i].slice(-4).length === 4) {
-      newString.push(Number.parseFloat(items[i].slice(-4), 10));
-    } else if (items[i].slice(-4).length === 5) {
-      newString.push(Number.parseFloat(items[i].slice(-5), 10));
-    } else {
-      newString.push(Number.parseFloat(items[i].slice(-6), 10));
-    }
+    newString.push(Number.parseFloat(items[i].replace(/\D/g, ''), 10));
   }
   const newPrice = newString.reduce((acc, item) => acc + item);
   priceTag.innerText = `${newPrice.toFixed(2)}`;

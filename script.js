@@ -30,7 +30,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', (event) => {
     cartItemClickListener(event);
     const subTotalPrice = +totalPrice.innerText - salePrice; // O + antes do totalPrice.innerText está transformando a minha string em número.
-    if (subTotalPrice >= 0) totalPrice.innerText = subTotalPrice.toFixed(2);
+    if (subTotalPrice >= 0) totalPrice.innerText = subTotalPrice;
     localStorageList.forEach((elementObj, index) => {
       if (elementObj.sku === sku) {
         localStorageList.splice(index, 1);
@@ -47,7 +47,7 @@ async function buildCarItem(sku) {
   list.appendChild(createCartItemElement({ sku, name, salePrice }));
   let sum = +totalPrice.innerHTML;
   sum += salePrice;
-  totalPrice.innerHTML = sum.toFixed(2);
+  totalPrice.innerHTML = sum;
 }
 
 function createProductItemElement({ sku, name, image }) {

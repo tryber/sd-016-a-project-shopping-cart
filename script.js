@@ -1,6 +1,8 @@
 const containerObj = [];
 const cartItem = document.querySelector('.cart__items');
+// const loading = document.querySelector('.loading');
 const buttonClear = document.querySelector('.empty-cart');
+const totalPrice = document.querySelector('.total-price');
 
 buttonClear.addEventListener('click', () => {
   cartItem.innerHTML = '';
@@ -92,7 +94,8 @@ const recoveryData = () => {
      removeToCart();
     }
 };
-window.onload = () => { 
+
+window.onload = async () => { 
   searchProducts('computador');
   recoveryData();
 };

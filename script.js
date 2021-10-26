@@ -85,7 +85,7 @@ function appendElement(elementClass, callback) {
 
 function getItemFromLocalStorage() {
   const cartSection = document.querySelector('.cart__items');
-  const cartItems = JSON.parse(getSavedCartItems('cartItems'));
+  const cartItems = JSON.parse(getSavedCartItems());
   if (cartItems) {
   cartItems.forEach((item) => {
     arrayToLocalStorage.push(item);

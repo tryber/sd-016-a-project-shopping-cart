@@ -1,3 +1,5 @@
+const cartLocation = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -29,7 +31,8 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  cartLocation.removeChild(event.target);
+  saveCartItems(cartLocation.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -40,4 +43,56 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+function addToCartBtn(allCartAddBtns, allCartAddBtnsId) {
+  const btnsLoadedId = allCartAddBtnsId;
+  const btnsLoaded = allCartAddBtns;
+  btnsLoaded.forEach((btn, btnIndex) => {
+    btn.addEventListener('click', async () => {
+      const getThisButtonId = btnsLoadedId[btnIndex].innerText;
+      const fetchWithResult = await fetchItem(getThisButtonId);
+      const cartObj = {
+        sku: fetchWithResult.id,
+        name: fetchWithResult.title,
+        salePrice: fetchWithResult.price,
+      };
+      const createCartItem = createCartItemElement(cartObj);
+      cartLocation.appendChild(createCartItem);
+      saveCartItems(cartLocation.innerHTML);
+    });
+  });
+}
+
+async function queryProducts(QUERY) {
+  const queryed = await fetchProducts(QUERY);
+  const itemLocation = document.querySelector('.items');
+  queryed.results.forEach((product) => {
+    const productFinded = {
+      sku: product.id,
+      name: product.title,
+      image: product.thumbnail,
+    };
+    const productBox = createProductItemElement(productFinded);
+    itemLocation.appendChild(productBox);
+  });
+  const btnsLocation = document.querySelectorAll('.item__add');
+  const btnsIds = document.querySelectorAll('.item__sku');
+  addToCartBtn(btnsLocation, btnsIds);
+}
+
+function clearAll() {
+  const clearAllBtnLocation = document.querySelector('.empty-cart');
+  clearAllBtnLocation.addEventListener('click', () => {
+    cartLocation.innerHTML = '';
+    localStorage.removeItem('cartItems');
+  });
+}
+
+window.onload = () => {
+  queryProducts('computador');
+  cartLocation.innerHTML = getSavedCartItems();
+  clearAll();
+  const cartLocationIndex = document.querySelectorAll('.cart__item');
+  cartLocationIndex.forEach((cart) => {
+    cart.addEventListener('click', cartItemClickListener);
+  });
+};

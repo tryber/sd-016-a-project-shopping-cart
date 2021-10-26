@@ -41,7 +41,6 @@ const sumPrices = async () => {
       .map((num) => parseFloat(num));
     allValues.push(newString);
   }
-  // console.log(allValues.flat());
   allValues = allValues.flat();
   const newPrice = allValues.reduce((acc, item) => acc + item);
   priceTag.innerText = `${newPrice}`;

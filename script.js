@@ -1,11 +1,13 @@
 // Projeto feito com ajuda de Rafael Santos e Emerson Moreira
 const ol = document.querySelector('.cart__items');
+const tagTotalValue = document.querySelector('.total-price');
 
 function clearAll() {
   const buttonClearAll = document.querySelector('.empty-cart');
   buttonClearAll.addEventListener('click', () => {
     localStorage.removeItem('cartItems');
     ol.innerHTML = '';
+    tagTotalValue.innerText = '0,00';
     });
   }
 clearAll();
@@ -24,12 +26,18 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function sumTheCart(storage) {
+  const value = storage.reduce((acc, item) => acc + item.salePrice, 0);
+  tagTotalValue.innerText = `${value}`;
+}
+
 function removeItemOfStorage(sku) { // Função criada com ajuda de Rafael Santos e Emerson Moreira
   const storage = JSON.parse(localStorage.getItem('cartItems'));
   const cartProduct = storage.find((item) => item.sku === sku);
   const capthIndexOfProduct = storage.indexOf(cartProduct);
   storage.splice(capthIndexOfProduct, 1);
   saveCartItems(JSON.stringify(storage));
+  sumTheCart(storage);
 }
 
 function cartItemClickListener(event, sku) {
@@ -52,6 +60,7 @@ async function captureFetch(sku) {
   ol.appendChild(createCartItemElement({ sku, name, salePrice }));
   storage.push({ sku, name, salePrice });
   saveCartItems(JSON.stringify(storage));
+  sumTheCart(storage);
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -103,8 +112,10 @@ function saveInStorage() { // Código feito com ajuda de Rafael Santos
 
 window.onload = () => { 
   addProducts();
+  tagTotalValue.innerText = '0,00';
   if (getSavedCartItems() === undefined || getSavedCartItems() === null) { // Código feito com ajuda de Rafael Santos
     return localStorage.setItem('cartItems', JSON.stringify([]));
   }
   saveInStorage();
+  sumTheCart(JSON.parse(localStorage.getItem('cartItems')));
 };

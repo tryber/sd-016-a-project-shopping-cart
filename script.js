@@ -1,4 +1,5 @@
-const totalPrice = [];
+let totalPrice = [];
+const totalPriceElement = document.querySelector('.total-price');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -31,7 +32,6 @@ function subtractFromTotalPrice(totalPriceArray, itemSalePrice) {
   console.log(totalPriceArray);
   console.log((totalPriceSubtracted - itemSalePrice).toFixed(2));
   const finalPrice = totalPriceSubtracted - itemSalePrice;
-  const totalPriceElement = document.querySelector('.total-price');
   const totalPriceTest = parseFloat(finalPrice.toFixed(2));
   totalPriceElement.innerHTML = totalPriceTest;
 }
@@ -82,7 +82,7 @@ async function addItemstoPage() {
   });
 }
 
-async function addTotalPrice(totalPriceArray) {
+async function addTotalPrice() {
   const buttons = document.querySelectorAll('.item__add');
   buttons.forEach((button) => {
     button.addEventListener('click', async () => {
@@ -90,11 +90,10 @@ async function addTotalPrice(totalPriceArray) {
       const response = await fetch(`https://api.mercadolibre.com/items/${sku}`);
       const data = await response.json();
       const { price } = data;
-      totalPriceArray.push(price);
-      console.log(totalPriceArray);
-      const totalPriceAdded = totalPriceArray.reduce((acc, curr) => acc + curr);
+      totalPrice.push(price);
+      console.log(totalPrice);
+      const totalPriceAdded = totalPrice.reduce((acc, curr) => acc + curr);
       console.log(totalPriceAdded.toFixed(2));
-      const totalPriceElement = document.querySelector('.total-price');
       const totalPriceTest = parseFloat(totalPriceAdded.toFixed(2));
       console.log(totalPriceTest);
       totalPriceElement.innerHTML = totalPriceTest;
@@ -102,7 +101,18 @@ async function addTotalPrice(totalPriceArray) {
   });
 }
 
+function deleteAllItemsFromCart() {
+  document.querySelectorAll('.cart__item').forEach((cartItem) => {
+    cartItem.parentNode.removeChild(cartItem);
+  });
+  totalPriceElement.innerHTML = 0;
+  totalPrice = [];
+}
+
 window.onload = async () => {
   await addItemstoPage();
-  await addTotalPrice(totalPrice);
+  await addTotalPrice();
+  document
+    .querySelector('.empty-cart')
+    .addEventListener('click', deleteAllItemsFromCart);
 };

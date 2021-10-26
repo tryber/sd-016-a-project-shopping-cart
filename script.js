@@ -72,6 +72,10 @@ const getProduct = async (select) => {
 
 window.onload = () => {
   searchProduct('computador');
-  getSavedCartItems(cartItemClickListener);
   document.addEventListener('click', getProduct);
+  if (localStorage.getItem('cartItems')) {
+    // Agradecimento especial ao Carlos(T16) e Fumagalli(T16) que me ajudaram a chegar a uma melhor conclusão.
+    cartItems.innerHTML = getSavedCartItems();
+    cartItems.childNodes.forEach((item) => item.addEventListener('click', cartItemClickListener));
+  }
 };

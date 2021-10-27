@@ -17,6 +17,7 @@ function createCustomElement(element, className, innerText) {
 // consultei código do Brunão
 function cartItemClickListener(event) {
   event.target.remove();
+  saveCartItems(classCartItems.innerHTML); // AQUIIIIIII
  } 
 
 function createCartItemElement({ sku, name, salePrice }) { 
@@ -33,6 +34,7 @@ const addToCart = async (id) => {
   const { id: sku, title: name, price: salePrice } = objectFechItem;
   const cartItemCreate = createCartItemElement({ sku, name, salePrice });
   classCartItems.appendChild(cartItemCreate);
+  saveCartItems(classCartItems.innerHTML); // AQUIIIIII
 };
 
 function createProductItemElement({ sku, name, image }) {
@@ -49,6 +51,10 @@ function createProductItemElement({ sku, name, image }) {
 
   return section;
 }
+
+/* function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+} */
 
 async function searchProducts(product) {
   const dataResult = await fetchProducts(product);
@@ -72,6 +78,21 @@ function buttonEmptyCart() {
 }
 buttonEmptyCart();
 
+// passar por todos os itens do carrinho e pegar a propriedade price, soma-la e mostrar no paragrafo:
+/* function sumItemsCart() {
+  const listPrice = Array.from(classCartItems.children);
+  listPrice.reduce((acc, currentValue) => {
+    console.log(currentValue);
+  }, []);
+} */
+
+function loadPage() { // AQUIIIIIIIIII
+  classCartItems.innerHTML = getSavedCartItems(); 
+  classCartItems.addEventListener('click', cartItemClickListener);
+} 
+
 window.onload = () => {
   searchProducts('computador');
+  // sumItemsCart();
+  loadPage();
  };

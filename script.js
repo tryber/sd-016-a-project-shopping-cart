@@ -90,7 +90,24 @@ async function searchProducts(produto) {
   });
 }
 
+function loadingData() {
+  if (getSavedCartItems() !== null) {
+    array = getSavedCartItems();
+    array.map(({ id, title, price }) => {
+      const cart = createCartItemElement({
+        sku: id,
+        name: title,
+        salePrice: price,
+      });
+      olCartItems.appendChild(cart);
+      return true;
+    });
+  }
+  totalPrice();
+}
+
 window.onload = () => { 
+  loadingData();
   searchProducts('computador');
   RequirementTwo();
 };

@@ -36,9 +36,23 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+function removeDecimals (price) {
+  return price.toFixed(0);
+}
+
 function updateTotalPriceElement() {
   const totalPriceElement = document.querySelector('.total-price').firstChild;
-  const totalPrice = localStorage.getItem('totalPrice');
+  let totalPrice = localStorage.getItem('totalPrice');
+  const totalPriceNumber = parseFloat(totalPrice);
+  if (totalPrice.includes('.00')) {
+    totalPrice = totalPriceNumber.toFixed(0);
+    totalPrice = totalPrice.toString();
+  } else if (totalPrice.includes('.')) {
+      if(totalPrice.endsWith('0')) {
+        totalPrice = totalPriceNumber.toFixed(1);
+        totalPrice = totalPrice.toString();
+      }
+  }
   totalPriceElement.innerText = totalPrice;
 }
 

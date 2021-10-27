@@ -1,6 +1,7 @@
 let totalValue = 0;
 const emptyCart = document.querySelector('.empty-cart');
 const cartItems = document.querySelector('.cart__items');
+const totalPrice = document.querySelector('.total-price');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -44,7 +45,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', (event) => {
     cartItemClickListener(event);
-    const totalPrice = document.querySelector('.total-price');
     const productNumber = +salePrice;
     totalValue -= productNumber;
     if (totalValue < 0) totalValue = 0;
@@ -69,7 +69,6 @@ const searchProduct = async (product) => {
 
 const getProduct = async (select) => {
   if (select.target.classList.contains('item__add')) {
-    const totalPrice = document.querySelector('.total-price');
     const product = await fetchItem(select.target.parentElement.firstChild.textContent);
     const { id: sku, title: name, price: salePrice } = product;
     const productNumber = +salePrice;
@@ -83,7 +82,6 @@ const getProduct = async (select) => {
 
 const delectAll = async () => {
   const li = document.querySelectorAll('.cart__item');
-  const totalPrice = document.querySelector('.total-price');
   totalPrice.innerHTML = 0;
   li.forEach((item) => item.remove());
   saveCartItems(cartItems.innerHTML);

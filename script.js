@@ -36,7 +36,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function removeDecimals (price) {
+function removeDecimals(price) {
   return price.toFixed(0);
 }
 
@@ -47,11 +47,9 @@ function updateTotalPriceElement() {
   if (totalPrice.includes('.00')) {
     totalPrice = totalPriceNumber.toFixed(0);
     totalPrice = totalPrice.toString();
-  } else if (totalPrice.includes('.')) {
-      if(totalPrice.endsWith('0')) {
-        totalPrice = totalPriceNumber.toFixed(1);
-        totalPrice = totalPrice.toString();
-      }
+  } else if (totalPrice.includes('.') && totalPrice.endsWith('0')) {
+      totalPrice = totalPriceNumber.toFixed(1);
+      totalPrice = totalPrice.toString();
   }
   totalPriceElement.innerText = totalPrice;
 }

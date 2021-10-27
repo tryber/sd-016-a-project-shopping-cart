@@ -19,9 +19,9 @@ describe('1 - Teste a função fecthProducts', () => {
 
   it('Testa se fetch utiliza o termo computador na endpoint', async () => {
     expect.assertions(1);
-    const endpointEx = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+    const expectedFetch = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
     await fetchProducts('computador');
-    expect(fetch).toHaveBeenCalledWith(endpointEx);
+    expect(fetch).toHaveBeenCalledWith(expectedFetch);
   });
 
   it('Testa se fetchProducts retorna a estrutura de dados correta', async () => {
@@ -31,9 +31,8 @@ describe('1 - Teste a função fecthProducts', () => {
   });
 
   it('Testa se ao chamar a função fetchProducts sem argumentos um erro pré-definido é lançado', async () => {
-    // expect.assertions(1);
+    expect.assertions(1);
     const throwTest = await fetchProducts();
-    console.log(throwTest);
     expect(throwTest).toEqual(new Error ('You must provide an url'));
   });
 });

@@ -1,3 +1,7 @@
+function readList() {
+  return document.querySelector('.cart__items');
+}
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -25,6 +29,37 @@ function createProductItemElement(sku, name, image) {
   return sectionOfItems.appendChild(section);
 }
 
+function cartItemClickListener(event) {
+  // coloque seu código aqui
+  event.target.remove();
+}
+
+function createCartItemElement(sku, name, salePrice) {
+  const cartList = readList();
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return cartList.appendChild(li);
+}
+
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+
+function eventClick() {
+  const cartButton = document.querySelectorAll('.item__add');
+  cartButton.forEach((button) => {
+    button.addEventListener('click', async (originEvent) => {
+      const recoverID = originEvent.target.parentElement;
+      const getSku = getSkuFromProductItem(recoverID);
+      const objProduct = await fetchItem(getSku);
+      const { id, title, price } = objProduct;
+      createCartItemElement(id, title, price);
+    });
+  });
+}
+
 async function trackMercadoLivreItems() {
   const itemsTracked = await fetchProducts('computador');
   const resultOfItems = await itemsTracked.results;
@@ -32,22 +67,8 @@ async function trackMercadoLivreItems() {
     const { id, title, thumbnail } = product;
     createProductItemElement(id, title, thumbnail);
   });
-}
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
-
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
+  eventClick();
 }
 
 window.onload = () => { 

@@ -1,3 +1,4 @@
+let totalValue = 0;
 const emptyCart = document.querySelector('.empty-cart');
 const cartItems = document.querySelector('.cart__items');
 
@@ -41,7 +42,14 @@ function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', (event) => {
+    cartItemClickListener(event);
+    const totalPrice = document.querySelector('.total-price');
+    const productNumber = +salePrice;
+    totalValue -= productNumber;
+    if (totalValue < 0) totalValue = 0;
+    totalPrice.innerHTML = totalValue;
+  });
   return li;
 }
 
@@ -61,47 +69,25 @@ const searchProduct = async (product) => {
 
 const getProduct = async (select) => {
   if (select.target.classList.contains('item__add')) {
+    const totalPrice = document.querySelector('.total-price');
     const product = await fetchItem(select.target.parentElement.firstChild.textContent);
-    const item = createCartItemElement({
-      sku: product.id, name: product.title, salePrice: product.price,
-    });
+    const { id: sku, title: name, price: salePrice } = product;
+    const productNumber = +salePrice;
 
-    cartItems.appendChild(item);
+    totalValue += productNumber;
+    totalPrice.innerHTML = totalValue;
+    cartItems.appendChild(createCartItemElement({ sku, name, salePrice }));
     saveCartItems(cartItems.innerHTML);
   }
 };
 
-const delectAll = () => {
+const delectAll = async () => {
   const li = document.querySelectorAll('.cart__item');
+  const totalPrice = document.querySelector('.total-price');
+  totalPrice.innerHTML = 0;
   li.forEach((item) => item.remove());
+  saveCartItems(cartItems.innerHTML);
 };
-
-// let sum = 0;
-// const sumPrice = async (select) => {
-//   if (select.target.classList.contains('item__add')) {
-//     const totalPrice = document.querySelector('.total-price');
-//     const product = await fetchItem(select.target.parentElement.firstChild.textContent);
-
-//     let productNumber = +product.price;
-//     sum += productNumber;
-
-//     console.log(Math.round(sum));
-//     totalPrice.innerText = `R$${sum.toFixed(2)}`;
-//   }
-// };
-
-// const subPrice = async (select) => {
-//   if (select.target.classList.contains('cart__item')) {
-//     const totalPrice = document.querySelector('.total-price');
-//     const product = await fetchItem(select.target.parentElement.firstChild.textContent);
-
-//     let productNumber = +product.price;
-//     sum -= productNumber;
-
-//     console.log(Math.round(sum));
-//     totalPrice.innerText = `R$${sum.toFixed(2)}`;
-//   }
-// };
 
 window.onload = () => {
   searchProduct('computador');

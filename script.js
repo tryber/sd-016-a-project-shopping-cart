@@ -71,7 +71,7 @@ const sumOfPricesOfItems = () => {
     itemsOfCart.forEach((item) => {
       const itemDescription = item.innerText;
       const localOfPrice = itemDescription
-      .slice(itemDescription.indexOf('PRICE: $') + 'PRICE:$'.length); 
+      .slice(itemDescription.indexOf('PRICE: $') + 'PRICE:$'.length); // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
       const price = parseFloat(localOfPrice); 
       prices.push(price);
     });

@@ -42,7 +42,7 @@ async function sendItemToCart(i) {
   const item = await fetchItem(i);
   const { id, title, price } = item;
   const element = { sku: id, name: title, salePrice: price };
-  const cartItems = getSavedCartItems() || [];
+  const cartItems = getSavedCartItems();
   saveCartItems([...cartItems, element]);
   cart.updateCartItems();
 }

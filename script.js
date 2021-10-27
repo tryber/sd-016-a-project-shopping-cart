@@ -1,3 +1,5 @@
+// Todo projeto foi desenvolvido com base no video do Bernardo Salgueiro fazendo o requisito 1 e em coloraboracao de Diego Mendes Turma 16B e Erik Duarte Turma 16B.
+
 const cartItemsQuerySelector = '.cart__items';
 
 function createProductImageElement(imageSource) {

@@ -49,6 +49,8 @@ function getSkuFromProductItem(item) {
 
 function eventClick() {
   const cartButton = document.querySelectorAll('.item__add');
+  const cartList = readList();
+
   cartButton.forEach((button) => {
     button.addEventListener('click', async (originEvent) => {
       const recoverID = originEvent.target.parentElement;
@@ -56,8 +58,16 @@ function eventClick() {
       const objProduct = await fetchItem(getSku);
       const { id, title, price } = objProduct;
       createCartItemElement(id, title, price);
+      saveCartItems(cartList.innerHTML);
     });
   });
+}
+
+function recoverItemsFromStorage() {
+  const olList = readList();
+  const storageSaved = getSavedCartItems();
+
+  olList.innerHTML = storageSaved;
 }
 
 async function trackMercadoLivreItems() {
@@ -73,4 +83,5 @@ async function trackMercadoLivreItems() {
 
 window.onload = () => { 
   trackMercadoLivreItems();
+  recoverItemsFromStorage();
 };

@@ -8,5 +8,10 @@ Object.defineProperty(window, 'localStorage', {
 
 describe('4 - Teste a função getSavedCartItems', () => {
   // implemente seus testes aqui
-  fail('Teste vazio');
+  it(`Testa se ao chamar getSavedCartItem a função localStorage.getItem é chamada, 
+  e se ela é chamada com o paramêtro cartItems`, () => {
+    getSavedCartItems();
+    expect(localStorage.getItem).toHaveBeenCalled();
+    expect(localStorage.getItem).toHaveBeenCalledWith('cartItems');
+  })
 });

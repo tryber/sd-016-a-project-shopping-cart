@@ -1,5 +1,9 @@
 const cart = document.querySelector('.cart__items');
 
+function clearCart() {
+  cart.innerHTML = '';
+}
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -86,4 +90,6 @@ function loadCart() {
 window.onload = () => {
   loadData('computador');
   loadCart();
+
+  document.querySelector('.empty-cart').addEventListener('click', clearCart);
 };

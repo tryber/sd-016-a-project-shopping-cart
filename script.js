@@ -36,10 +36,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function removeDecimals(price) {
-  return price.toFixed(0);
-}
-
 function updateTotalPriceElement() {
   const totalPriceElement = document.querySelector('.total-price').firstChild;
   let totalPrice = localStorage.getItem('totalPrice');

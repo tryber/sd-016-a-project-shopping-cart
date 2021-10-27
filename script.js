@@ -100,6 +100,8 @@ async function itemClickListener(event) {
 async function getResultFromFetchProducts(product) {
   const acquiredData = await fetchProducts(product);
   const itemsSection = document.querySelector('.items');
+  const loadingText = document.querySelector('.loading');
+  itemsSection.removeChild(loadingText);
   acquiredData.results.forEach((result) => {
     const { id: sku, title: name, thumbnail: image } = result;
     const returnedItemElement = createProductItemElement({ sku, name, image });

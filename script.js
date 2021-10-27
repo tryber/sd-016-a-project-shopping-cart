@@ -1,3 +1,5 @@
+const olCarItem = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -40,6 +42,19 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+async function addCarItem(click) {
+  // Retirado do repostório: https://github.com/tryber/sd-016-a-project-shopping-cart/blob/denilson-santuchi-shopping-cart/script.js
+  const id = click.path[1].childNodes[0].innerText;
+  const resultForCarItem = await fetchItem(id);
+  const objectCarItem = {
+    sku: resultForCarItem.id,
+    name: resultForCarItem.title,
+    salePrice: resultForCarItem.price,
+  };
+  const itemForCart = createCartItemElement(objectCarItem);
+  olCarItem.appendChild(itemForCart);
+}
+
 async function searchProducts(product) {
   const searchData = await fetchProducts(product);
   const sectionItens = document.querySelector('.items');
@@ -51,6 +66,10 @@ async function searchProducts(product) {
     };
     const productItem = createProductItemElement(itemObject);
     sectionItens.appendChild(productItem);
+  });
+  const buttonAddCart = document.querySelectorAll('.item__add');
+  buttonAddCart.forEach((item) => {
+    item.addEventListener('click', addCarItem);
   });
 }
 

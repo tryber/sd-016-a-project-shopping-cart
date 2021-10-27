@@ -29,9 +29,39 @@ function createProductItemElement({ sku, name, image, price }) {
 //  return item.querySelector('span.item__sku').innerText;
 // }
 
-// function cartItemClickListener(event) {
-//  removeLista(event.target);
-// }
+function cartItemClickListener(event) {
+  const { target } = event;
+  target.remove();
+}
+
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+ }
+
+ const items = document.querySelector('.items');
+const RequirementTwo = () => {
+  items.addEventListener('click', (event) => {
+    if (event.target.className === 'item__add') {
+      const getId = event.target.parentNode.firstChild.innerText;
+      fetchItem(getId).then(({ id, title, price }) => {
+        const data = { id, title, price };
+        const cart = createCartItemElement({
+          sku: data.id,
+          name: data.title,
+          salePrice: data.price,
+        });
+        array.push({ id, title, price });
+        olCartItems.appendChild(cart);
+        saveCartItems(array);
+        totalPrice();
+      });
+    }
+  });
+};
 
 // function createCartItemElement({ sku, name, salePrice }) {
 //  const li = document.createElement('li');
@@ -62,4 +92,5 @@ async function searchProducts(produto) {
 
 window.onload = () => { 
   searchProducts('computador');
+  RequirementTwo();
 };

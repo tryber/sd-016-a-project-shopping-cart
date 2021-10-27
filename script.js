@@ -1,34 +1,50 @@
 const list = document.querySelector('.cart__items');
 
-function totalPrice() {
-  const cartItems = document.querySelectorAll('.cart__item');
+function updateTotal() {
+  const cartItems = getSavedCartItems();
   let price = 0;
   cartItems.forEach((item) => {
-    price += item.price;
+    price += item.salePrice;
   });
   const total = document.querySelector('.total-price');
   total.innerHTML = price;
 }
 
-function cartItemClickListener() {
-  list.removeChild(this);
-  totalPrice();
-}
+class Cart {
+  cartItemClickListener(i) {
+    const savedItems = getSavedCartItems();
+    saveCartItems(savedItems.filter((item, index) => i !== index));
+    this.updateCartItems();
+  }
+  
+  createCartItemElement({ sku, name, salePrice }, i) {
+    const li = document.createElement('li');
+    li.className = 'cart__item';
+    li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+    li.addEventListener('click', () => this.cartItemClickListener(i));
+    return li;
+  }
+  
+  updateCartItems() {
+    while (list.firstChild) {
+      list.removeChild(list.firstChild);
+    }
+    getSavedCartItems().forEach( 
+      (savedItem, i) => list.appendChild(this.createCartItemElement(savedItem, i)),
+    );
+    updateTotal();
+  }
+} 
 
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.price = salePrice;
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
+const cart = new Cart();
 
 async function sendItemToCart(i) {
   const item = await fetchItem(i);
   const { id, title, price } = item;
-  list.appendChild(createCartItemElement({ sku: id, name: title, salePrice: price }));
-  totalPrice();
+  const element = { sku: id, name: title, salePrice: price };
+  const cartItems = getSavedCartItems() || [];
+  saveCartItems([...cartItems, element]);
+  cart.updateCartItems();
 }
 
 function getSkuFromProductItem() {
@@ -77,10 +93,8 @@ async function getProducts(product) {
 }
 
 function clearOnClick() {
-  while (list.firstChild) {
-    list.removeChild(list.firstChild);
-  }
-  totalPrice();
+  saveCartItems([]);
+  cart.updateCartItems();
 }
 
 function createCleanButton() {
@@ -96,4 +110,5 @@ function createCleanButton() {
 window.onload = () => {
   getProducts('computador');
   createCleanButton();
+  cart.updateCartItems();
 };

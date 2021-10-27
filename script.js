@@ -74,7 +74,16 @@ async function loadData(product) {
   });
 }
 
+function loadCart() {
+  document.querySelector('.cart__items').innerHTML = getSavedCartItems();
+  const list = document.querySelectorAll('.cart__item');
+
+  list.forEach((item) => {
+    item.addEventListener('click', cartItemClickListener);
+  });
+}
+
 window.onload = () => {
   loadData('computador');
-  document.querySelector('.cart__items').innerHTML = getSavedCartItems();
+  loadCart();
 };

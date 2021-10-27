@@ -1,3 +1,5 @@
+const list = document.querySelector('.cart__items');
+
 function totalPrice() {
   const cartItems = document.querySelectorAll('.cart__item');
   let price = 0;
@@ -9,14 +11,12 @@ function totalPrice() {
 }
 
 function cartItemClickListener() {
-  const list = document.querySelector('.cart__items');
   list.removeChild(this);
   totalPrice();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
-  li.sku = sku;
   li.price = salePrice;
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -27,7 +27,6 @@ function createCartItemElement({ sku, name, salePrice }) {
 async function sendItemToCart(i) {
   const item = await fetchItem(i);
   const { id, title, price } = item;
-  const list = document.querySelector('.cart__items');
   list.appendChild(createCartItemElement({ sku: id, name: title, salePrice: price }));
   totalPrice();
 }
@@ -77,6 +76,24 @@ async function getProducts(product) {
   });
 }
 
+function clearOnClick() {
+  while (list.firstChild) {
+    list.removeChild(list.firstChild);
+  }
+  totalPrice();
+}
+
+function createCleanButton() {
+  const parent = document.querySelector('.cart');
+  const button = document.createElement('button');
+  button.className = 'empty-cart';
+  button.innerHTML = 'Esvaziar carrinho';
+  button.addEventListener('click', clearOnClick);
+  parent.appendChild(button);
+  return button;
+}
+
 window.onload = () => {
   getProducts('computador');
+  createCleanButton();
 };

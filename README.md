@@ -460,7 +460,7 @@ Hora de testar a implementação da função `fetchProducts`. Dentro da pasta `t
 
 2 - Execute a função `fetchProducts` com o argumento "computador" e teste se `fetch` foi chamada;
 
-3 - Teste se, ao chamar a função `fetchProducts` com o argumento "computador", a função `fetch` utiliza o endpoint "https://api.mercadolibre.com/sites/MLB/search?q=computador";
+3 - Teste se, ao chamar a função `fetchProducts` com o argumento "computador", a função `fetch` utiliza o endpoint npm 
 
 4 - Teste se o retorno da função `fetchProducts` com o argumento "computador" é uma estrutura de dados igual ao objeto `computadorSearch`, que já está importado no arquivo.
 

@@ -15,7 +15,7 @@ function createCustomElement(element, className, innerText) {
 }
 
 function getTotalPrice() {
-  const price = localStorage.getItem('price');
+  const price = localStorage.getItem('price') ? localStorage.getItem('price') : 0;
   if (document.querySelector('.total-price')) {
     document.querySelector('.total-price').innerText = parseFloat(price);
   } else {
@@ -105,7 +105,18 @@ function restoreCart() {
   getTotalPrice();
 }
 
+function emptyCart() {
+  document.querySelector('.empty-cart').addEventListener('click', () => {
+    cartList.innerHTML = '';
+    saveCartItems(cartList.innerHTML);
+    localStorage.setItem('price', '0');
+    getTotalPrice();
+  });
+} 
+
 window.onload = () => {
   listProducts('computador');
   restoreCart();
+  getTotalPrice();
+  emptyCart();
 };

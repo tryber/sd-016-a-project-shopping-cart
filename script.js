@@ -83,7 +83,7 @@ async function searchProducts(product) {
 
 /**
  * Consultei o repositório da Cris Souza para resolver essa parte.
- * Link- https://github.com/tryber/sd-016-a-project-shopping-cart/pull/103/commits/f38badebf20f5af0f8f3594981dbe9f5d7e02cd7
+ * Link- https://github.com/tryber/sd-016-a-project-shopping-cart/pull/103/commits/de4a403641227f20bc8ccc62148eefac395c9008
  */
 
 const refreshPage = () => {
@@ -94,6 +94,14 @@ const refreshPage = () => {
 const restoreEventListener = () => {
   cartList.addEventListener('click', cartItemClickListener);
 };
+
+const clearButton = document.querySelector('.empty-cart');
+
+const actionClearButton = () => {
+  cartList.innerHTML = '';
+  saveCartItems(cartList.innerHTML);
+};
+  clearButton.addEventListener('click', actionClearButton);
 
 window.onload = () => {
   searchProducts('computador');

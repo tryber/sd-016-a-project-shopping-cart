@@ -1,3 +1,5 @@
+const sectionItems = document.querySelector('.items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -12,7 +14,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -42,15 +44,8 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 async function searchProduct(product) {
   const searchResponse = await fetchProducts(product);
-  const sectionItems = document.querySelector('.items');
   searchResponse.results.forEach((item) => {
-    const itemObject = {
-    sku: item.id,
-    name: item.title,
-    image: item.thumbnail,
-    };
-
-    const productItem = createProductItemElement(itemObject);
+    const productItem = createProductItemElement(item);
     sectionItems.appendChild(productItem);
   });
 }

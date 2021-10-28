@@ -1,3 +1,11 @@
+const olCarItem = document.querySelector('.cart__items');
+const buttonClear = document.querySelector('.empty-cart');
+
+buttonClear.addEventListener('click', () => {
+  olCarItem.innerHTML = '';
+  saveCartItems(olCarItem.innerHTML);
+});
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -29,7 +37,8 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  event.target.remove();
+  saveCartItems(olCarItem.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -40,4 +49,48 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+async function addCarItem(click) {
+  const id = getSkuFromProductItem(click.target.parentNode);
+  const resultForCarItem = await fetchItem(id);
+  const objectCarItem = {
+    sku: resultForCarItem.id,
+    name: resultForCarItem.title,
+    salePrice: resultForCarItem.price,
+  };
+  const itemForCart = createCartItemElement(objectCarItem);
+  olCarItem.appendChild(itemForCart);
+  saveCartItems(olCarItem.innerHTML);
+}
+
+async function searchProducts(product) {
+  const searchData = await fetchProducts(product);
+  const sectionItens = document.querySelector('.items');
+  searchData.results.forEach((item) => {
+    const itemObject = {
+      sku: item.id,
+      name: item.title,
+      image: item.thumbnail,
+    };
+    const productItem = createProductItemElement(itemObject);
+    sectionItens.appendChild(productItem);
+  });
+  const buttonAddCart = document.querySelectorAll('.item__add');
+  buttonAddCart.forEach((item) => {
+    item.addEventListener('click', addCarItem);
+  });
+}
+
+function savedCart() {
+  olCarItem.innerHTML = getSavedCartItems();
+  if (olCarItem.innerHTML !== '') {
+    const cartItem = document.querySelectorAll('.cart__item');
+    cartItem.forEach((item) => {
+      item.addEventListener('click', cartItemClickListener);
+    });
+  }
+}
+
+window.onload = () => {
+  searchProducts('computador');
+  savedCart();
+};

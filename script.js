@@ -40,9 +40,10 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-async function selectAdiciona(id) {
+async function selectAdiciona(event) {
+  const id = event.target.parentNode.firstChild.innerHTML;
   const produtos = await fetchItem(id);
-  const cart = document.querySelector('.cart');
+  const cart = document.querySelector('.cart__items');
 
   const { id: sku, title: name, price: salePrice } = produtos;
 
@@ -75,5 +76,4 @@ async function productsSearch(product) {
 
 window.onload = () => {
   productsSearch('computador');
-  selectAdiciona('MLB1341706310');
 };

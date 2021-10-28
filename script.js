@@ -57,17 +57,14 @@ async function searchProducts(product) {
   });
 }
 
-  async function addItem(id) {
-      const searchItem = await fetchItem(id);
-      console.log(searchItem);
-      const itemObject = {
-          sku: searchItem.id,
-          name: searchItem.title,
-          salePrice: searchItem.price,
-        };
-        const sectionCart = document.querySelector('.cart__item');
-        sectionCart.appendChild(createCartItemElement(searchItem));
-      }
+async function addItem(id) {
+  const searchItem = await fetchItem(id);
+  console.log(searchItem);
+  const { id: sku, title: name, price: salePrice } = searchItem;
+  const itemObject = createCartItemElement({ sku, name, salePrice });
+    const sectionCart = document.querySelector('.cart__items');
+    sectionCart.appendChild(itemObject);
+  }
 
       function clearCart() {
         const clearList = document.querySelector('.empty-cart');

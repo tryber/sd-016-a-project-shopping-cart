@@ -1,11 +1,12 @@
 const cartItems = '.cart__items';
 const cartItem = '.cart__item';
+const endPoint = 'https://api.mercadolibre.com/items/MLB1532308540';
 
 let divPrecoTotal;
 
 function precoTotalFunction() {
   let precoTotal = 0;    
-  fetch('https://api.mercadolibre.com/items/MLB1532308540').then(() => {
+  fetch(endPoint).then(() => {
   for (let cont = 0; cont < document.querySelectorAll(cartItems)[0].children.length; cont += 1) {
     console.log(document.querySelectorAll(cartItem)[cont].innerHTML);
     
@@ -18,6 +19,21 @@ function precoTotalFunction() {
    document.querySelector('.total-price').innerHTML = precoTotal;
   });
 }
+
+function apagaTodosCart() {
+  fetch(endPoint).then(() => {
+    document.querySelectorAll('.empty-cart')[0].addEventListener('click', () => {
+      localStorage.clear();
+      precoTotalFunction();
+      for (cont = 0; cont < document.querySelectorAll(cartItem).length; cont += 0) {
+      document.querySelectorAll('.cart__items')[0]
+      .removeChild(document.querySelectorAll(cartItem)[0]);
+      }
+    });
+  });
+}
+
+apagaTodosCart();
 
 function removeLocalStorEol(e) {
   document.querySelectorAll(cartItems)[0].removeChild(e.target);
@@ -91,7 +107,7 @@ function getSkuFromProductItem(item) {
 // eslint-disable-next-line max-lines-per-function
 window.onload = () => {
   document.querySelectorAll(cartItems)[0].innerHTML = getSavedCartItems();
-  fetch('https://api.mercadolibre.com/items/MLB1532308540').then((data) => {
+  fetch(endPoint).then(() => {
     for (cont = 0; cont < document.querySelectorAll(cartItems)[0].children.length; cont += 1) {
          document.querySelectorAll(cartItem)[cont].addEventListener('click', removeLocalStorEol);
     }

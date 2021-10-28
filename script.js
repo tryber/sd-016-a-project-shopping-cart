@@ -1,9 +1,36 @@
 const cartItems = '.cart__items';
-function cartItemClickListener(e) {
-    document.querySelectorAll(cartItems)[0].removeChild(e.target);  
-    saveCartItems(document.querySelectorAll(cartItems)[0].innerHTML);
+const cartItem = '.cart__item';
+
+let divPrecoTotal;
+
+function precoTotalFunction() {
+  let precoTotal = 0;    
+  fetch('https://api.mercadolibre.com/items/MLB1532308540').then(() => {
+  for (let cont = 0; cont < document.querySelectorAll(cartItems)[0].children.length; cont += 1) {
+    console.log(document.querySelectorAll(cartItem)[cont].innerHTML);
+    
+    precoTotal += parseFloat(document.querySelectorAll(cartItems)[0]
+    .children[cont].innerHTML.substring(
+      document.querySelectorAll(cartItem)[cont].innerHTML.indexOf('$') + 1,
+       document.querySelectorAll(cartItem)[cont].innerHTML.length,
+      ));
+   }
+   document.querySelector('.total-price').innerHTML = precoTotal;
+  });
 }
 
+function removeLocalStorEol(e) {
+  document.querySelectorAll(cartItems)[0].removeChild(e.target);
+  saveCartItems(document.querySelectorAll(cartItems)[0].innerHTML);
+
+  precoTotalFunction();
+}
+
+function cartItemClickListener(e) {
+  removeLocalStorEol(e);
+    precoTotalFunction();
+  }
+  
 function createCartItemElement({ sku, name, salePrice }) {
   li = document.createElement('li');
   li.className = 'cart__item';
@@ -43,13 +70,14 @@ const chamaFetchProducts = async () => {
   .forEach((element, index) => {
   obj = ({ sku: [element.id], name: [element.title], image: [element.thumbnail] });
   createProductItemElement(obj);
-  
+
   document.querySelectorAll('.item__add')[index].addEventListener('click', (e) =>
   fetchItem(e.target.parentNode.children[0].innerHTML)  
   .then((data) =>
   createCartItemElement(({ sku: data.id, name: data.title, salePrice: data.price })))
   .then(() => {
     saveCartItems(document.querySelectorAll(cartItems)[0].innerHTML);
+    precoTotalFunction();
   }));
 }));
 };
@@ -60,15 +88,24 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function removeLocalStorEol(e) {
-  document.querySelectorAll(cartItems)[0].removeChild(e.target);
-  saveCartItems(document.querySelectorAll(cartItems)[0].innerHTML);
-}
+// eslint-disable-next-line max-lines-per-function
 window.onload = () => {
   document.querySelectorAll(cartItems)[0].innerHTML = getSavedCartItems();
   fetch('https://api.mercadolibre.com/items/MLB1532308540').then((data) => {
     for (cont = 0; cont < document.querySelectorAll(cartItems)[0].children.length; cont += 1) {
-    document.querySelectorAll('.cart__item')[cont].addEventListener('click', removeLocalStorEol);
+         document.querySelectorAll(cartItem)[cont].addEventListener('click', removeLocalStorEol);
     }
+    let precoTotal = 0;
+    for (let cont = 0; cont < document.querySelectorAll(cartItems)[0].children.length; cont += 1) {
+      precoTotal += parseFloat(document.querySelectorAll(cartItems)[0]
+      .children[cont].innerHTML.substring(
+        document.querySelectorAll(cartItems)[0].children[cont].innerHTML.indexOf('$') + 1,
+         document.querySelectorAll(cartItems)[0].children[cont].innerHTML.length,
+        ));  
+        }
+    divPrecoTotal = document.createElement('div');
+    divPrecoTotal.classList.add('total-price');
+    divPrecoTotal.innerHTML = precoTotal;
+    document.body.appendChild(divPrecoTotal);  
   });
 };

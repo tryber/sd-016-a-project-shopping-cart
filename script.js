@@ -1,8 +1,8 @@
-const cartList = document.querySelector(".cart__items");
+const cartList = document.querySelector('.cart__items');
 
 function createProductImageElement(imageSource) {
-  const img = document.createElement("img");
-  img.className = "item__image";
+  const img = document.createElement('img');
+  img.className = 'item__image';
   img.src = imageSource;
   return img;
 }
@@ -19,10 +19,10 @@ function cartItemClickListener(event) {
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement("li");
-  li.className = "cart__item";
+  const li = document.createElement('li');
+  li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener("click", cartItemClickListener);
+  li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
@@ -39,27 +39,27 @@ async function itemToBuy(id) {
 }
 
 function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement("section");
-  section.className = "item";
-  section.appendChild(createCustomElement("span", "item__sku", sku));
-  section.appendChild(createCustomElement("span", "item__title", name));
+  const section = document.createElement('section');
+  section.className = 'item';
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   /**
    * Consultei o repositório da Cris Souza para resolver essa parte.
    * Link- https://github.com/tryber/sd-016-a-project-shopping-cart/pull/103/commits/f38badebf20f5af0f8f3594981dbe9f5d7e02cd7
    */
   const addCartButton = createCustomElement(
-    "button",
-    "item__add",
-    "Adicionar ao carrinho!"
+    'button',
+    'item__add',
+    'Adicionar ao carrinho!',
   );
-  addCartButton.addEventListener("click", () => itemToBuy(sku));
+  addCartButton.addEventListener('click', () => itemToBuy(sku));
   section.appendChild(addCartButton);
   return section;
 }
 
 function getSkuFromProductItem(item) {
-  return item.querySelector("span.item__sku").innerText;
+  return item.querySelector('span.item__sku').innerText;
 }
 
 /**
@@ -69,7 +69,7 @@ function getSkuFromProductItem(item) {
 
 async function searchProducts(product) {
   const searchData = await fetchProducts(product);
-  const sectionItems = document.querySelector(".items");
+  const sectionItems = document.querySelector('.items');
   searchData.results.forEach((item) => {
     const itemCatalog = {
       sku: item.id,
@@ -92,11 +92,11 @@ const refreshPage = () => {
 };
 
 const restoreEventListener = () => {
-  cartList.addEventListener("click", cartItemClickListener);
+  cartList.addEventListener('click', cartItemClickListener);
 };
 
 window.onload = () => {
-  searchProducts("computador");
+  searchProducts('computador');
   refreshPage();
   restoreEventListener();
 };

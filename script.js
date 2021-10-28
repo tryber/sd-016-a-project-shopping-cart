@@ -2,7 +2,7 @@
 o quão extenso e pouco prático o meu código estava ficando!!!! Muito obrigado pela ajuda! */
 const items = document.querySelector('.items');
 const cartItems = document.querySelector('.cart__items');
-const idTotal = document.querySelector('#cartTotal');
+const totalPrice = document.querySelector('.total-price');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -36,12 +36,18 @@ function cartItemClickListener(event) {
   event.target.remove();
   saveCartItems(cartItems.innerHTML);
 }
-
+let total = 0;
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', (event) => {
+    cartItemClickListener(event);
+    const priceProduct = +salePrice;
+    total -= priceProduct;
+    if (total < 0) total = 0;
+    totalPrice.innerHTML = `${total}`;
+  });
   return li;
 }
 
@@ -60,6 +66,9 @@ const catchProduct = async (element) => {
     const item = createCartItemElement({
       sku: product.id, name: product.title, salePrice: product.price,
     });
+    const priceProduct = +product.price;
+    total += priceProduct;
+    totalPrice.innerHTML = total;
     cartItems.appendChild(item);
     saveCartItems(cartItems.innerHTML);
   }
@@ -69,7 +78,7 @@ const clearCart = () => {
   localStorage.removeItem('cartItems');
   localStorage.removeItem('totalInCart');
   cartItems.innerHTML = '';
-  idTotal.innerHTML = 'Preço total: R$';
+  totalPrice.innerHTML = 'Seu carrinho está vazio :(';
 };
 
 const clearButton = document.querySelector('.empty-cart');

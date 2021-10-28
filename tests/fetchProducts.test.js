@@ -10,12 +10,12 @@ describe('1 - Teste a função fecthProducts', () => {
     expect(typeof fetchProducts).toBe('function');
   });
 
-  it('Testa se fetch foi chamada após execução da função fetchProducts', () => {
+  it('2 - Testa se fetch foi chamada após execução da função fetchProducts', () => {
     fetchProducts('computador');
     expect(fetch).toHaveBeenCalled();
   });
 
-  it('Testa se ao chamar a função fetchProducts com o argumento \'computador\' retorna o endpoint correto', () => {
+  it('3 - Testa se ao chamar a função fetchProducts com o argumento \'computador\' retorna o endpoint correto', () => {
     const correctEndPoint = "https://api.mercadolibre.com/sites/MLB/search?q=computador";
 
     fetchProducts('computador');

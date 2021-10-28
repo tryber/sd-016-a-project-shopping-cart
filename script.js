@@ -3,6 +3,7 @@ const buttonClear = document.querySelector('.empty-cart');
 
 buttonClear.addEventListener('click', () => {
   olCarItem.innerHTML = '';
+  saveCartItems(olCarItem.innerHTML);
 });
 
 function createProductImageElement(imageSource) {
@@ -37,6 +38,7 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   event.target.remove();
+  saveCartItems(olCarItem.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -48,8 +50,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 async function addCarItem(click) {
-  // Retirado do repostório: https://github.com/tryber/sd-016-a-project-shopping-cart/blob/denilson-santuchi-shopping-cart/script.js
-  const id = click.path[1].childNodes[0].innerText;
+  const id = getSkuFromProductItem(click.target.parentNode);
   const resultForCarItem = await fetchItem(id);
   const objectCarItem = {
     sku: resultForCarItem.id,
@@ -58,6 +59,7 @@ async function addCarItem(click) {
   };
   const itemForCart = createCartItemElement(objectCarItem);
   olCarItem.appendChild(itemForCart);
+  saveCartItems(olCarItem.innerHTML);
 }
 
 async function searchProducts(product) {
@@ -78,6 +80,11 @@ async function searchProducts(product) {
   });
 }
 
+function savedCart() {
+  olCarItem.innerHTML = getSavedCartItems();
+}
+
 window.onload = () => {
   searchProducts('computador');
+  savedCart();
 };

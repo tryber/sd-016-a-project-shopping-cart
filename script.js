@@ -68,6 +68,7 @@ async function addItem(id) {
 
       function clearCart() {
         const clearList = document.querySelector('.empty-cart');
+        const sectionCart = document.querySelector('.cart__items');
         clearList.addEventListener('click', () => {
           sectionCart.innerHTML = '';
           localStorage.removeItem('cartItems');

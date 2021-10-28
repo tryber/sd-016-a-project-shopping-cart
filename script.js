@@ -42,6 +42,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+// Referencias ao vídeo do Bê (Bernardo Salgueiro)
 async function searchProduct(product) {
   const searchResponse = await fetchProducts(product);
   searchResponse.results.forEach((item) => {

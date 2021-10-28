@@ -20,15 +20,11 @@ const sumPrices = () => {
   const currentCartItem = document.querySelectorAll('.cart__item');
   let totalPrice = 0;
   const priceElement = document.querySelector('.total-price');
-  currentCartItem.forEach((item) => { totalPrice += plarseFloat(item.innerText.split('$')[1]); });
-  priceElement.innerText = `Total: R$ ${totalPrice}`;
+  currentCartItem.forEach((item) => { totalPrice += parseFloat(item.innerText.split('$')[1]); });
+  priceElement.innerText = totalPrice;
 };
 
 const sectionItem = document.querySelector('.cart__items');
-// function saveItemsStorage() {
-//   const cartItemList = sectionItem.innerHTML;
-//   saveCartItems(cartItemList);
-// }
 
 async function cartItemClickListener(event) {
   const li = event.target;
@@ -44,7 +40,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  // saveItemsStorage();
   return li;
 }
 
@@ -53,7 +48,7 @@ async function itemProducts(itemsId) {
   const { id: sku, title: name, price: salePrice } = itemData;
   const itemLi = createCartItemElement({ sku, name, salePrice });
   sectionItem.appendChild(itemLi);
-  saveCartItems(sectionItem.innerHTML);
+  // saveCartItems(sectionItem.innerHTML);
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -94,7 +89,7 @@ function emptyCart() {
   const currentList = document.querySelector('.cart__items');
   emptyButton.addEventListener('click', () => {
     currentList.innerHTML = '';
-    saveCartItems(sectionItem.innerHTML);
+    saveCartItems(currentList.innerHTML);
     sumPrices();
   });
 }
@@ -103,13 +98,11 @@ emptyCart();
 const liItems = document.querySelectorAll('li');
 
 const getStorageCartItem = () => {
-  // const getSavedResult = getSavedCartItems();
   sectionItem.innerHTML = getSavedCartItems();
 
   if (liItems.length > 0) {
     Object.values(liItems).forEach((liItem) => {
       liItem.addEventListener('click', cartItemClickListener);
-      return liItem;
   });
   }
 };

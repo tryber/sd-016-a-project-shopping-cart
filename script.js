@@ -1,3 +1,6 @@
+// Variável utilizada para as funções "cartItemClickListener()" e "includeProductOnCart()""
+const cartItens = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -13,7 +16,7 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  cartItens.removeChild(event.target);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -26,7 +29,6 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 async function includeProductOnCart(id) {
   const includeProduct = await fetchItem(id);
-  const cartItens = document.querySelector('.cart__items');
   const itemOnCart = {
     sku: includeProduct.id,
     name: includeProduct.title,
@@ -71,5 +73,4 @@ async function searchProducts(product) {
 
 window.onload = () => { 
   searchProducts('computador');
-  includeProductOnCart(id);
 };

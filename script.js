@@ -1,5 +1,4 @@
-const ol1 = document.querySelector('.cart__items');
-// const ol2 = ol1.innerHTML;
+const ol = document.querySelector('.cart__items');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -16,22 +15,20 @@ function createCustomElement(element, className, innerText) {
 }
 
 function clearShoppingCart() {
-  const ol = document.querySelector('.cart__items');
+  // const ol = document.querySelector('.cart__items');
   ol.innerHTML = '';
-  saveCartItems(ol1.innerHTML);
+  saveCartItems(ol.innerHTML);
 }
 
 function cartItemClickListener(event) {
   event.target.remove();
-  saveCartItems(ol1.innerHTML);
+  saveCartItems(ol.innerHTML);
 }
-
 
 function replaceCart() {
-  ol1.innerHTML = getSavedCartItems();
-  ol1.addEventListener('click', cartItemClickListener);
+  ol.innerHTML = getSavedCartItems();
+  ol.addEventListener('click', cartItemClickListener);
 }
-
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -47,11 +44,10 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 async function addItemToCart(item) {
   const loadItem = await fetchItem(item);
-  const ol = document.querySelector('.cart__items');
   const { id: sku, title: name, price: salePrice } = loadItem;
   const li = createCartItemElement({ sku, name, salePrice });
   ol.appendChild(li);
-  saveCartItems(ol1.innerHTML);
+  saveCartItems(ol.innerHTML);
 }
 
 function createProductItemElement({ sku, name, image }) {

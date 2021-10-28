@@ -29,7 +29,9 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  event.target.remove();
+  const sectionCart = document.querySelector('.cart__item');
+  sectionCart.removeChild(event.target);
+  saveCartItems(sectionCart.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -55,13 +57,28 @@ async function searchProducts(product) {
   });
 }
 
-async function addId(sku) {
-  const searchId = await fetchItem(sku);
-  const { title: name, price: salePrice } = searchId;
-  const sectionCart = document.querySelector('.cart__item');
-    sectionCart.appendChild(createCartItemElement({ sku, name, salePrice }));
-  }
+  async function addItem(id) {
+      const searchItem = await fetchItem(id);
+      console.log(searchItem);
+      const itemObject = {
+          sku: searchItem.id,
+          name: searchItem.title,
+          salePrice: searchItem.price,
+        };
+        const sectionCart = document.querySelector('.cart__item');
+        sectionCart.appendChild(createCartItemElement(searchItem));
+      }
+
+      function clearCart() {
+        const clearList = document.querySelector('.empty-cart');
+        clearList.addEventListener('click', () => {
+          sectionCart.innerHTML = '';
+          localStorage.removeItem('cartItems');
+        });
+      }
 
 window.onload = () => {
   searchProducts('computador');
+  addItem('MLB1615760527');
+  clearCart();
  };

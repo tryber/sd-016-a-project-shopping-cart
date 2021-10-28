@@ -41,11 +41,9 @@ async function itemToBuy(id) {
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement("section");
   section.className = "item";
-
   section.appendChild(createCustomElement("span", "item__sku", sku));
   section.appendChild(createCustomElement("span", "item__title", name));
   section.appendChild(createProductImageElement(image));
-
   /**
    * Consultei o repositório da Cris Souza para resolver essa parte.
    * Link- https://github.com/tryber/sd-016-a-project-shopping-cart/pull/103/commits/f38badebf20f5af0f8f3594981dbe9f5d7e02cd7

@@ -29,7 +29,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -54,6 +54,21 @@ async function searchProducts(product) {
   });
 }
 
+async function addId(id) {
+  const searchId = await fetchItem(id);
+  const sectionCart = document.querySelector('.cart__item');
+  searchId.results.forEach((item) => {
+    const itemCart = {
+      sku: item.id,
+      name: item.title,
+      salePrice: item.price,
+    };
+    const productCart = createCartItemElement(itemCart);
+    sectionCart.appendChild(productCart);
+  });
+}
+
 window.onload = () => {
   searchProducts('computador');
+  addId('MLB1341706310');
  };

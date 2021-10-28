@@ -82,6 +82,12 @@ async function searchProducts(product) {
 
 function savedCart() {
   olCarItem.innerHTML = getSavedCartItems();
+  if (olCarItem.innerHTML !== '') {
+    const cartItem = document.querySelectorAll('.cart__item');
+    cartItem.forEach((item) => {
+      item.addEventListener('click', cartItemClickListener);
+    });
+  }
 }
 
 window.onload = () => {

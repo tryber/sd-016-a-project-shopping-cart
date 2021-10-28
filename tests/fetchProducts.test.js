@@ -17,13 +17,13 @@ describe('1 - Teste a função fecthProducts', () => {
     const endPoint = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
     expect(fetch).toHaveBeenCalledWith(endPoint);
   })
-  it('The return of fetchProducts with "computador" as argument must an object equal as "computadorSearch" ', async () => {
+  it('The return of fetchProducts with "computador" as argument must be an object equal as "computadorSearch" ', async () => {
     const resultsofFetch = await fetchProducts('computador');
     expect(resultsofFetch).toEqual(computadorSearch);
   })
   it('Calling fetchProducts without argument must return an error with message "you must provide an url"', async () => {
     const expectedError = new Error('You must provide an url');
-    const errorOfFetch = await fetchProducts();
-    expect(errorOfFetch).toEqual(expectedError);
+    const errorOfFetchProducts = await fetchProducts();
+    expect(errorOfFetchProducts).toEqual(expectedError);
   })
 });

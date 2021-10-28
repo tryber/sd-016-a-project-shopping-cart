@@ -12,22 +12,6 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
-  return section;
-}
-
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
 function cartItemClickListener(event) {
   // coloque seu código aqui
 }
@@ -38,6 +22,37 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
+}
+
+async function includeProductOnCart(id) {
+  const includeProduct = await fetchItem(id);
+  const cartItens = document.querySelector('.cart__items');
+  const itemOnCart = {
+    sku: includeProduct.id,
+    name: includeProduct.title,
+    salePrice: includeProduct.price,
+  };
+  cartItens.appendChild(createCartItemElement(itemOnCart)); 
+}
+
+function createProductItemElement({ sku, name, image }) {
+  const section = document.createElement('section');
+  section.className = 'item';
+
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  // Botão não fazia nada?? - Ajuda do Humberto: salvar o retorno deste section.appendChild numa variável para poder incluir um evento de escuta que traga a função de incluir o item no carrinho //
+  const Button = section
+  .appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  Button.addEventListener('click', () => includeProductOnCart(sku));
+  section.appendChild(Button);
+
+  return section;
+}
+
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
 }
 
 async function searchProducts(product) {
@@ -56,4 +71,5 @@ async function searchProducts(product) {
 
 window.onload = () => { 
   searchProducts('computador');
+  includeProductOnCart(id);
 };

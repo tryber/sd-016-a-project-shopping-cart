@@ -28,7 +28,7 @@ const sectionItem = document.querySelector('.cart__items');
 
 async function cartItemClickListener(event) {
   const li = event.target;
-  li.innerHTML = '';
+  // li.innerHTML = '';
   li.remove();
   await saveCartItems(sectionItem.innerHTML);
   await sumPrices();
@@ -95,11 +95,11 @@ function emptyCart() {
 }
 emptyCart();
 
-const liItems = document.querySelectorAll('li');
-
 const getStorageCartItem = () => {
   sectionItem.innerHTML = getSavedCartItems();
-
+  
+  const liItems = document.querySelectorAll('li');
+  
   if (liItems.length > 0) {
     Object.values(liItems).forEach((liItem) => {
       liItem.addEventListener('click', cartItemClickListener);

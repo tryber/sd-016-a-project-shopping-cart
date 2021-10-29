@@ -32,7 +32,6 @@ describe('1 - Teste a função fecthProducts', () => {
     const dados = await fetchProducts();
     expect(dados).toEqual(err);
   }
-   ) 
+   )  
   
-  //fail('Teste vazio');
 });

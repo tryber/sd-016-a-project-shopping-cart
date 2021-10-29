@@ -88,12 +88,12 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function listProducts(searchUser) {
-  return fetchProducts(searchUser)
-  .then((data) =>
-  data.results.forEach((product) => {
+async function listProducts(searchUser) {
+  const fetchReturn = await fetchProducts(searchUser);
+  document.querySelector('.items').removeChild(document.querySelector('.loading'));
+  fetchReturn.results.forEach((product) => {
   createProductItemElement(product);
-  }));
+  });
   /* Requisito feito durante uma sala de estudos.
    Auxiliado por: Renan Souza, Matheus Benini, Vitor Brandão, Fabrício Martins e Rafael Feliciano */
 }

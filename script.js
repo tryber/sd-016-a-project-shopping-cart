@@ -71,6 +71,12 @@ function savedCart() {
 }
 ol.addEventListener('click', cartItemClickListener);
 
+function clearList() {
+  ol.innerHTML = '';
+  localStorage.removeItem('cartItems');
+}
+document.querySelector('.empty-cart').addEventListener('click', clearList);
+
 window.onload = () => {
   searchProducts('computador');
   savedCart();

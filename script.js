@@ -10,17 +10,18 @@ async function updateCartPrice() {
     return 0;
   }
 
-  cartList.forEach(async (item) => {
-    const id = item.innerText.substring(5, 18);
-    const result = await fetchItem(id);
-    value += result.price;
-    cartPrice.innerText = value;
+  cartList.forEach((item) => {
+    const product = item.innerText.split('$');
+    value += parseFloat(product[1]);
   });
+
+  cartPrice.innerText = value;
 }
 
 function clearCart() {
   cart.innerHTML = '';
   cartPrice.innerText = 0;
+  saveCartItems(cart.innerHTML);
 }
 
 function createProductImageElement(imageSource) {
@@ -39,6 +40,7 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   cart.removeChild(event.target);
+  saveCartItems(cart.innerHTML);
   updateCartPrice();
 }
 

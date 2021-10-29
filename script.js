@@ -1,6 +1,7 @@
 const cartList = document.querySelector('.cart__items');
 const classPrice = '.total-price';
 const btnEmptyCart = document.querySelector('.empty-cart');
+const loading = document.querySelector('.loading');
 
 btnEmptyCart.addEventListener('click', () => {
   cartList.innerHTML = '';
@@ -8,6 +9,13 @@ btnEmptyCart.addEventListener('click', () => {
   price.innerHTML = 0;
   saveCartItems();
 });
+
+function createCustomElement(element, className, innerText) {
+  const e = document.createElement(element);
+  e.className = className;
+  e.innerText = innerText;
+  return e;
+}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -25,13 +33,6 @@ const createObj = (item) => {
   };
   return a;
 };
-
-function createCustomElement(element, className, innerText) {
-  const e = document.createElement(element);
-  e.className = className;
-  e.innerText = innerText;
-  return e;
-}
 
   // função construida com auxílio do site abaixo:
   // https://www.javascripttutorial.net/javascript-string-slice/
@@ -51,6 +52,10 @@ function cartItemClickListener(event) {
   lessPrice(event.target);
   event.target.remove();
   saveCartItems();
+}
+
+function endLoading() {
+  loading.remove();
 }
 
 async function addCartList(id, func) {
@@ -116,6 +121,7 @@ function getPriceSaved() {
 window.onload = () => {
   fetchProducts('computador')
     .then((data) => {
+      endLoading();
       data.forEach((e) => {
         const product = createObj(e);
       createProductItemElement(product);

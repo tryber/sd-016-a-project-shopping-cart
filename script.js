@@ -80,15 +80,6 @@ const allProducts = async () => {
   });
 };
 
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
-// }
-
-// async function setSavedCart() { 
-//   const memory = await getSavedCartItems();
-//   itemsElement.innerHTML = memory;
-// }
-
 const requireOl = document.querySelector('ol');
 
 async function recoverProductById(id) {
@@ -143,3 +134,5 @@ window.onload = async () => {
   // setSavedCart();
   setCartPrice();
 };
+
+// Reference and helped code(req. 5) by Júlia Barcelos

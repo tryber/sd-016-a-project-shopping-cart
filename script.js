@@ -12,18 +12,17 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function cartItemClickListener(sku) {  
-  let remo = document.querySelectorAll('li');
-  let tt = document.querySelector('.cart__items');  
-  for(let i = 0; i < remo.length; i++) {
-    if(remo[i].innerText.indexOf(sku) !== -1) {
+function cartItemClickListener(sku) {
+  const remo = document.querySelectorAll('li');
+  const tt = document.querySelector('.cart__items');  
+  for (let i = 0; i < remo.length; i += 1) {
+    if (remo[i].innerText.indexOf(sku) !== -1) {
       tt.removeChild(remo[i]);
     }
   }
 }
 
 function createCartItemElement(sku, name, salePrice) {
-  //console.log(salePrice)
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -32,12 +31,10 @@ function createCartItemElement(sku, name, salePrice) {
 }
 
 async function addcar(sku, name) {
-  localStorage.setItem(`${sku}`, `${name}`);
-  //console.log(localStorage.length);
+  localStorage.setItem(`${sku}`, `${name}`);  
   const result2 = await fetchItem(sku);
   const cariten = document.querySelector('.cart__items');
-  //console.log(parseInt(result2.price))
-  cariten.appendChild(createCartItemElement(sku, name, parseInt(result2.price)));
+  cariten.appendChild(createCartItemElement(sku, name, result2.price));
 }
 
 function createProductItemElement(sku, name, image) {
@@ -52,12 +49,6 @@ function createProductItemElement(sku, name, image) {
 
   return section;
 }
-
-/*
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-*/
 
 window.onload = async () => {
   const para = 'computador';

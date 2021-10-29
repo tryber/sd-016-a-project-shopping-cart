@@ -11,12 +11,7 @@ describe('1 - Teste a função fecthProducts', () => {
   it('testes se fecthProducts é uma função', () => {
     expect(typeof fetchProducts).toBe('function');
   })
-  /*it('testes a função fecthProducts com o agumento computador e teste se fetch foi chamado', async () => {    
-    const teste = fetchProducts('computador');
-    const sim = await fetchSimulator('computador');
-    expect(teste).toEqual(sim.json());
-  }  
-  )*/
+ 
   it('Teste a função fecthProducts com o argumento computador e teste se fetch foi chamado', async () => {    
     await fetchProducts('computador');
     expect(fetch).toHaveBeenCalled();

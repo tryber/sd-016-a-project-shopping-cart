@@ -12,22 +12,6 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
-  return section;
-}
-
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
 function cartItemClickListener(event) {
   const sectionCart = document.querySelector('.cart__item');
   sectionCart.removeChild(event.target);
@@ -40,6 +24,33 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
+}
+async function addItem(id) {
+  const searchItem = await fetchItem(id);
+  console.log(searchItem);
+  const { id: sku, title: name, price: salePrice } = searchItem;
+  const itemObject = createCartItemElement({ sku, name, salePrice });
+  const sectionCart = document.querySelector('.cart__items');
+  sectionCart.appendChild(itemObject);
+}
+
+function createProductItemElement({ sku, name, image }) {
+  const section = document.createElement('section');
+  section.className = 'item';
+
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  const addElement = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  addElement.addEventListener('click', () => {
+    addItem(sku);
+  });
+  section.appendChild(addElement);
+  return section;
+}
+
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
 }
 
 async function searchProducts(product) {
@@ -57,26 +68,16 @@ async function searchProducts(product) {
   });
 }
 
-async function addItem(id) {
-  const searchItem = await fetchItem(id);
-  console.log(searchItem);
-  const { id: sku, title: name, price: salePrice } = searchItem;
-  const itemObject = createCartItemElement({ sku, name, salePrice });
-    const sectionCart = document.querySelector('.cart__items');
-    sectionCart.appendChild(itemObject);
-  }
-
-      function clearCart() {
-        const clearList = document.querySelector('.empty-cart');
-        const sectionCart = document.querySelector('.cart__items');
-        clearList.addEventListener('click', () => {
-          sectionCart.innerHTML = '';
-          localStorage.removeItem('cartItems');
-        });
-      }
+function clearCart() {
+  const clearList = document.querySelector('.empty-cart');
+  const sectionCart = document.querySelector('.cart__items');
+  clearList.addEventListener('click', () => {
+    sectionCart.innerHTML = '';
+    localStorage.removeItem('cartItems');
+  });
+}
 
 window.onload = () => {
   searchProducts('computador');
-  addItem('MLB1615760527');
   clearCart();
  };

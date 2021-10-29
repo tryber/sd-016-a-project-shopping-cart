@@ -24,6 +24,18 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+async function createProductList(search) {
+  try {
+    const { results } = await fetchProducts(search);
+    results.forEach((element) => {
+      const { id, title, thumbnail } = element;
+      const info = { sku: [id], name: [title], image: thumbnail };
+      const items = document.querySelector('.items');
+      items.appendChild(createProductItemElement(info));
+    });
+  } catch (error) { console.log(`Algo deu errado :( \n${error}`); }
+}
+
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
@@ -40,4 +52,5 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+// createProductList('computador');
+window.onload = () => { createProductList('computador'); };

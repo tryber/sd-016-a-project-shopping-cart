@@ -12,35 +12,22 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function cartItemClickListener(sku, name, salePrice) {
-  // coloque seu código aqui
+function cartItemClickListener(sku) {  
   let remo = document.querySelectorAll('li');
-  console.log(remo.length);
-  
+  let tt = document.querySelector('.cart__items');  
   for(let i = 0; i < remo.length; i++) {
-    console.log(remo[i].innerText)
-    console.log(remo[i].innerText ==`SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`)
-    console.log(`SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`)
-    
-    /*if(remo[i].innerText == `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`){
-      console.log("teste")
-      remo.removeChild(remo[i]);
+    if(remo[i].innerText.indexOf(sku) !== -1) {
+      tt.removeChild(remo[i]);
     }
-    */
-
   }
-  
-
-
-
-
 }
 
 function createCartItemElement(sku, name, salePrice) {
+  //console.log(salePrice)
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', () => cartItemClickListener(sku, name, salePrice));
+  li.addEventListener('click', () => cartItemClickListener(sku));
   return li;
 }
 
@@ -49,6 +36,7 @@ async function addcar(sku, name) {
   //console.log(localStorage.length);
   const result2 = await fetchItem(sku);
   const cariten = document.querySelector('.cart__items');
+  //console.log(parseInt(result2.price))
   cariten.appendChild(createCartItemElement(sku, name, parseInt(result2.price)));
 }
 

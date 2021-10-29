@@ -3,11 +3,34 @@ const classPrice = '.total-price';
 const btnEmptyCart = document.querySelector('.empty-cart');
 const loading = document.querySelector('.loading');
 
+const setHei = () => {
+  // seu código aqui
+  const listJoe = document.querySelectorAll('.cart__item');
+  const a = [];
+  listJoe.forEach((e) => a.push(e.textContent));
+  saveCartItems(a);
+};
+
+const getJoe = (father, addEvent) => {
+  // seu código aqui
+  const local = getSavedCartItems();
+  const a = JSON.parse(local);
+  if (a !== null && a !== undefined) {
+    a.forEach((e) => {
+      const li = document.createElement('li');
+      li.className = 'cart__item';
+      li.innerText = e;
+      li.addEventListener('click', addEvent);
+      father.appendChild(li);
+    });
+  }
+};
+
 btnEmptyCart.addEventListener('click', () => {
   cartList.innerHTML = '';
   const price = document.querySelector(classPrice);
   price.innerHTML = 0;
-  saveCartItems();
+  setHei();
 });
 
 function createCustomElement(element, className, innerText) {
@@ -51,7 +74,7 @@ function cartItemClickListener(event) {
   // coloque seu código aqui
   lessPrice(event.target);
   event.target.remove();
-  saveCartItems();
+  setHei();
 }
 
 function endLoading() {
@@ -63,7 +86,7 @@ async function addCartList(id, func) {
   const a = await fetchItem(id);
   const b = createObj(a);
   func(b);
-  saveCartItems();
+  setHei();
 }
 
 function sumPrice(itemPrice) {
@@ -106,7 +129,7 @@ function getSkuFromProductItem(item) {
 }
 
 function getPriceSaved() {
-  const cartLength = localStorage.getItem('hei');
+  const cartLength = localStorage.getItem('cartItems');
   const totalPrice = document.querySelector(classPrice);
   if (cartLength !== null) {
     if (cartLength.length > 2) {
@@ -127,6 +150,6 @@ window.onload = () => {
       createProductItemElement(product);
       });
     });
-  getSavedCartItems(cartList, cartItemClickListener);
+  getJoe(cartList, cartItemClickListener);
   getPriceSaved();
 };

@@ -1,5 +1,13 @@
 const cartList = document.querySelector('.cart__items');
 const classPrice = '.total-price';
+const btnEmptyCart = document.querySelector('.empty-cart');
+
+btnEmptyCart.addEventListener('click', () => {
+  cartList.innerHTML = '';
+  const price = document.querySelector(classPrice);
+  price.innerHTML = 0;
+  saveCartItems();
+});
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');

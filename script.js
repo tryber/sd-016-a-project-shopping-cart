@@ -1,4 +1,5 @@
 const cartList = document.querySelector('.cart__items');
+const classPrice = '.total-price';
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -24,8 +25,22 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+  // função construida com auxílio do site abaixo:
+  // https://www.javascripttutorial.net/javascript-string-slice/
+function lessPrice(itemText) {
+  const totalPrice = (document.querySelector(classPrice));
+  let totalPriceNum = parseFloat(totalPrice.innerText);
+  const text = itemText.innerText;
+  const price = text.slice(text.indexOf('PRICE: $') + 'PRICE: $'.length);
+  const priceNum = parseFloat(price);
+  totalPriceNum -= priceNum;
+  totalPrice.innerText = totalPriceNum;
+  localStorage.setItem('totalPriceCart', totalPrice.innerText);
+}
+
 function cartItemClickListener(event) {
   // coloque seu código aqui
+  lessPrice(event.target);
   event.target.remove();
   saveCartItems();
 }
@@ -38,11 +53,21 @@ async function addCartList(id, func) {
   saveCartItems();
 }
 
+function sumPrice(itemPrice) {
+  const totalPrice = (document.querySelector(classPrice));
+  let totalPriceNum = parseFloat(totalPrice.innerText);
+  const itemPriceNum = parseFloat(itemPrice);
+  totalPriceNum += itemPriceNum;
+  totalPrice.innerText = totalPriceNum;
+  localStorage.setItem('totalPriceCart', totalPrice.innerText);
+}
+
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  sumPrice(salePrice);
   cartList.appendChild(li);
   return li;
 }
@@ -67,6 +92,19 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+function getPriceSaved() {
+  const cartLength = localStorage.getItem('hei');
+  const totalPrice = document.querySelector(classPrice);
+  if (cartLength !== null) {
+    if (cartLength.length > 2) {
+      const savedPrice = localStorage.getItem('totalPriceCart');
+      totalPrice.innerText = savedPrice;
+    } else {
+      totalPrice.innerText = 0;
+    }
+  }
+}
+
 window.onload = () => {
   fetchProducts('computador')
     .then((data) => {
@@ -76,4 +114,5 @@ window.onload = () => {
       });
     });
   getSavedCartItems(cartList, cartItemClickListener);
+  getPriceSaved();
 };

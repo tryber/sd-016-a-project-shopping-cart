@@ -1,5 +1,12 @@
 const itemsList = document.querySelector('.items');
 const cartList = document.querySelector('.cart__items');
+const priceValue = document.querySelector('#price-value');
+
+async function updatePrice(id, operation) { // TODO precisa ter precisão?
+  let { price } = await fetchItem(id);
+  if (operation === '-') price *= -1;
+  priceValue.innerHTML = parseInt(priceValue.innerHTML, 10) + Math.round(price * 100) / 100;
+}
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
@@ -9,6 +16,7 @@ function cartItemClickListener({ target }) {
   const parent = target.parentNode;
   parent.removeChild(target);
   saveCartItems(parent);
+  updatePrice(target.id, '-');
 }
 
 function createProductImageElement(imageSource) {
@@ -40,6 +48,7 @@ async function addItemToCart({ target }) {
   const cartItem = createCartItemElement({ sku: id, name: title, salePrice: price });
   cartList.appendChild(cartItem);
   saveCartItems(cartItem.parentElement);
+  updatePrice(id, '+');
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -73,6 +82,7 @@ const updateCartList = () => { // inspirado no trabalho do [Adson Gomes Oliveira
   const { children } = cartList;
   for (let i = 0; i < children.length; i += 1) {
     children[i].addEventListener('click', cartItemClickListener);
+    updatePrice(children[i].id);
   }
 };
 

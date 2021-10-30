@@ -12,29 +12,34 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function cartItemClickListener(sku) {
+function cartItemClickListener(id, sku, title, price) {
   const remo = document.querySelectorAll('li');
   const tt = document.querySelector('.cart__items');  
   for (let i = 0; i < remo.length; i += 1) {
-    if (remo[i].innerText.indexOf(sku) !== -1) {
+    if (remo[i].id == id) {
+      saveCartItems( id, sku, title, price);
       tt.removeChild(remo[i]);
+
     }
   }
 }
 
-function createCartItemElement(sku, name, salePrice) {
+function createCartItemElement(id, sku, name, salePrice) {
   const li = document.createElement('li');
+  li.id = id;
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', () => cartItemClickListener(sku));
+  li.addEventListener('click', () => cartItemClickListener(id, sku, name, salePrice));
   return li;
 }
 
-async function addcar(sku, name) {
-  localStorage.setItem(`${sku}`, `${name}`);  
+async function addcar(sku) {
+  const id = Math.floor(Math.random() *256);
   const result2 = await fetchItem(sku);
   const cariten = document.querySelector('.cart__items');
-  cariten.appendChild(createCartItemElement(sku, name, result2.price));
+  //console.log(result2)
+  saveCartItems( id, `${sku}`, `${result2.title}`, result2.price)
+  cariten.appendChild(createCartItemElement(id, sku, result2.title, result2.price));
 }
 
 function createProductItemElement(sku, name, image) {
@@ -46,7 +51,6 @@ function createProductItemElement(sku, name, image) {
   section.appendChild(createProductImageElement(image));
   proCar.addEventListener('click', () => addcar(sku, name));
   section.appendChild(proCar);
-
   return section;
 }
 
@@ -60,4 +64,6 @@ window.onload = async () => {
   for (let i = 0; i < result.length; i += 1) {
     ee.appendChild(createProductItemElement(sku[i], name[i], image[i]));    
   }
+  getSavedCartItems(localStorage.getItem('cartItems'), 
+   createCartItemElement)
 };

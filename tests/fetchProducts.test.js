@@ -30,5 +30,4 @@ describe('1 - Teste a função fecthProducts', () => {
   it('5 Testa se ao chamar a função fetchProducts, retorna um erro com a mensagem \'You must provide an url\'.', () => {
     expect(() => fetchProducts()).toThrow(/^You must provide an url$/);
   })
-
 });

@@ -124,10 +124,6 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
 function getPriceSaved() {
   const cartLength = localStorage.getItem('cartItems');
   const totalPrice = document.querySelector(classPrice);
@@ -145,7 +141,7 @@ window.onload = () => {
   fetchProducts('computador')
     .then((data) => {
       endLoading();
-      data.forEach((e) => {
+      data.results.forEach((e) => {
         const product = createObj(e);
       createProductItemElement(product);
       });

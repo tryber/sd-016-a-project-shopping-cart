@@ -54,6 +54,13 @@ async function searchProducts(product) {
   });
 }
 
+async function addCartItem(id) {
+  const carList = document.querySelector('.cary__items'); 
+  const x = await fetchItem(id);
+  carList.appendChild(x);
+}
+
 window.onload = () => { 
   searchProducts('computador');
+  addCartItem('MLB1341706310');
 };

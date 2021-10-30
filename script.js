@@ -1,6 +1,7 @@
 const itemsList = document.querySelector('.items');
 const cartList = document.querySelector('.cart__items');
 const priceValue = document.querySelector('#price-value');
+const clearButton = document.querySelector('.empty-cart');
 
 async function updatePrice(id, operation) { // TODO precisa ter precisão?
   let { price } = await fetchItem(id);
@@ -8,15 +9,27 @@ async function updatePrice(id, operation) { // TODO precisa ter precisão?
   priceValue.innerHTML = parseInt(priceValue.innerHTML, 10) + Math.round(price * 100) / 100;
 }
 
+function updateCart({ id, parentNode }, operation) {
+  updatePrice(id, operation);
+  saveCartItems(parentNode);
+}
+
+function clearCart() {
+  const { children } = cartList;
+  while (children.length !== 0) {
+    const next = children[0];
+    updateCart(next, '-');
+    next.remove();
+  }
+}
+
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
 function cartItemClickListener({ target }) {
-  const parent = target.parentNode;
-  parent.removeChild(target);
-  saveCartItems(parent);
-  updatePrice(target.id, '-');
+  updateCart(target, '-');
+  target.remove();
 }
 
 function createProductImageElement(imageSource) {
@@ -47,8 +60,7 @@ async function addItemToCart({ target }) {
   const { title, price } = await fetchItem(id);
   const cartItem = createCartItemElement({ sku: id, name: title, salePrice: price });
   cartList.appendChild(cartItem);
-  saveCartItems(cartItem.parentElement);
-  updatePrice(id, '+');
+  updateCart(cartItem, '+');
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -76,7 +88,7 @@ async function createProductList(search) {
   } catch (error) { console.log(error); }
 }
 
-const updateCartList = () => { // inspirado no trabalho do [Adson Gomes Oliveira] // apesar de horas de pesquisa, eu ainda não tinha a minima ideia de como resolver esse problema
+const downloadCartList = () => { // inspirado no trabalho do [Adson Gomes Oliveira] // apesar de horas de pesquisa, eu ainda não tinha a minima ideia de como resolver esse problema
   const listHtml = getSavedCartItems();
   cartList.innerHTML = listHtml; // foi essa linha que eu não consegue achar ou ver
   const { children } = cartList;
@@ -88,5 +100,6 @@ const updateCartList = () => { // inspirado no trabalho do [Adson Gomes Oliveira
 
 window.onload = () => { 
   createProductList('computador'); // retirar isso daki;
-  updateCartList();
+  downloadCartList();
+  clearButton.addEventListener('click', clearCart);
 }; 

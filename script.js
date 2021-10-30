@@ -5,9 +5,10 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  const { target } = event;
-  target.parentNode.removeChild(target);
+function cartItemClickListener({ target }) {
+  const parent = target.parentNode;
+  parent.removeChild(target);
+  saveCartItems(parent);
 }
 
 function createProductImageElement(imageSource) {
@@ -27,17 +28,18 @@ function createCustomElement(element, className, innerText) {
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
+  li.id = sku;
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
-async function addItemToCart(event) {
-  const { target } = event;
-  const targetId = getSkuFromProductItem(target.parentNode);
-  const { title, price } = await fetchItem(targetId);
-  const cartItem = createCartItemElement({ sku: targetId, name: title, salePrice: price });
+async function addItemToCart({ target }) {
+  const id = getSkuFromProductItem(target.parentNode);
+  const { title, price } = await fetchItem(id);
+  const cartItem = createCartItemElement({ sku: id, name: title, salePrice: price });
   cartList.appendChild(cartItem);
+  saveCartItems(cartItem.parentElement);
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -65,4 +67,16 @@ async function createProductList(search) {
   } catch (error) { console.log(error); }
 }
 
-window.onload = () => { createProductList('computador'); }; // retirar isso daki;
+const updateCartList = () => { // inspirado no trabalho do [Adson Gomes Oliveira] // apesar de horas de pesquisa, eu ainda não tinha a minima ideia de como resolver esse problema
+  const listHtml = getSavedCartItems();
+  cartList.innerHTML = listHtml; // foi essa linha que eu não consegue achar ou ver
+  const { children } = cartList;
+  for (let i = 0; i < children.length; i += 1) {
+    children[i].addEventListener('click', cartItemClickListener);
+  }
+};
+
+window.onload = () => { 
+  createProductList('computador'); // retirar isso daki;
+  updateCartList();
+}; 

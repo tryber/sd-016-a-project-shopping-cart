@@ -1,20 +1,5 @@
 const CartList = document.querySelector('.cart__items');
 
-/* 
-logica do brunao exemplo
-
-const createLoading = () => {
-  const loadingElement = document.createElement('h1');
-  loadingElement.classList.add('loading');
-  loadingElement.innerHTML = 'carregando';
-  document.body.append(loadingElement);
-};
-
-const removeLoading = () => {
-  const loadingElement = document.querySelector('.loading');
-  loadingElement.remove();
-};
- */
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -77,7 +62,7 @@ async function ProductData(product) {
   // logica com ajudinha do GRANDE BE
   const DataProducts = await fetchProducts(product);
   const items = document.querySelector('.items');
-  // createLoading();
+
   DataProducts.results.forEach((element) => {
     const { id, title, thumbnail } = element;
     const ProductsObj = {
@@ -88,7 +73,7 @@ async function ProductData(product) {
     const productItem = createProductItemElement(ProductsObj);
     items.appendChild(productItem);
   });
-  // removeLoading();
+
 }
 
 function reload() {

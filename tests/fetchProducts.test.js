@@ -7,7 +7,7 @@ window.fetch = jest.fn(fetchSimulator);
 describe('1 - Teste a função fecthProducts', () => {
   it('deve ser uma função', () => {
     expect(typeof fetchProducts).toBe('function');
-  })
+  });
   it('ao chamá-la com o argumento computador, testa se o fetch foi chamado', () => {
     fetchProducts('computador');
     expect(fetch).toHaveBeenCalled();
@@ -23,7 +23,7 @@ describe('1 - Teste a função fecthProducts', () => {
   });
   it('deve retornar um erro', async () => {
     const expectedError = new Error('You must provide an url');
-    result = await fetchProducts();
+    const result = await fetchProducts();
     expect(result).toEqual(expectedError);
   });
 });

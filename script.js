@@ -1,5 +1,5 @@
 let priceTotal = 0;
-const aque = document.querySelector('.cart__items');
+const aque = document.querySelector('.cart');
 localStorage.setItem('priceTotal', priceTotal);
 const tt = document.createElement('div');
 function createProductImageElement(imageSource) {

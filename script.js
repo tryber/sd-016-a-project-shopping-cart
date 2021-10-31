@@ -45,15 +45,13 @@ function sumPriceFromLocalStorage() {
 }
 
 function renewLocalStorageData(sku) {
+  // Camila Ranniele e Fernando Mós
   arrayToLocalStorage = [];
   const storage = JSON.parse(getSavedCartItems());
     if (storage !== null) {
     const storageProduct = storage.find((product) => product.sku === sku);
     const indexOfProduct = storage.indexOf(storageProduct);
     storage.splice(indexOfProduct, 1);
-    console.log(storageProduct);
-    console.log(indexOfProduct);
-    
     saveCartItems(JSON.stringify(storage));
     sumPriceFromLocalStorage();
   }
@@ -75,8 +73,21 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-const products = fetchProducts('computador').then((product) =>
-product.results.reduce((acc, item) => {
+function loading() {
+  const items = document.querySelector('.items');
+  const loadingTag = document.createElement('span');
+  loadingTag.className = 'loading';
+  loadingTag.innerText = 'carregando...';
+  items.appendChild(loadingTag);
+}
+
+function removeLoading() {
+  const loadingTag = document.querySelector('.loading');
+  loadingTag.remove();
+}
+
+const products = fetchProducts('computador').then((product) => product
+  .results.reduce((acc, item) => {
   acc.push({
     sku: item.id,
     name: item.title,
@@ -93,20 +104,20 @@ function getFetchItem(sku) {
   });
 }
 
-function productItemToCart({ sku }) {
-  getFetchItem(sku)
-  .then((productItem) => {
-    arrayToLocalStorage.push(productItem);
-    saveCartItems(JSON.stringify(arrayToLocalStorage));
-    sum += productItem.salePrice;
-    total.innerHTML = sum;
-    return createCartItemElement(productItem);
-  })
-  .then((cartItem) => cartSection.appendChild(cartItem));
-  return cartSection;
+async function productItemToCart() {
+  loading();
+  await fetchProducts('computador')
+    .then((data) => {
+      data.results.forEach((result) => {
+      const { id: sku, title: name, thumbnail: image } = result;
+      cartSection.appendChild(createProductItemElement({ sku, name, image }));
+    });
+  });
+  removeLoading();
 }
 
-function appendElement(elementClass, callback) {
+async function appendElement(elementClass, callback) {
+  loading();
   products.then((product) =>
   product.forEach((productItem, index) => {
     const sectionItems = document.querySelector(elementClass);
@@ -114,6 +125,7 @@ function appendElement(elementClass, callback) {
     const button = sectionItems.children[index].childNodes[3];
     button.addEventListener('click', () => productItemToCart(productItem));
   }));
+  removeLoading();
 }
 
 function getItemFromLocalStorage() {

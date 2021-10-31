@@ -1,6 +1,6 @@
 let priceTotal = 0;
+const aque = document.querySelector('.cart__items');
 localStorage.setItem('priceTotal', priceTotal);
-const ee = document.querySelector('.cart__items');
 const tt = document.createElement('div');
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -18,10 +18,9 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(id, sku, title, price) {
   const remo = document.querySelectorAll('li');
-  const itt = document.querySelector('.cart__items');
   for (let i = 0; i < remo.length; i += 1) {
     if (Number(remo[i].id) === id) {
-      itt.removeChild(remo[i]);
+      aque.removeChild(remo[i]);
       saveCartItems(id, sku, title, price);      
     }
   }
@@ -36,8 +35,8 @@ function createCartItemElement(id, sku, name, salePrice) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', () => {
-    cartItemClickListener(id, sku, name, salePrice);
-    priceTotal -= salePrice;
+    cartItemClickListener(id, sku, name, Math.round(salePrice));
+    priceTotal -= Math.round(salePrice);
     tt.innerText = priceTotal;
    });  
   return li;
@@ -46,14 +45,14 @@ function createCartItemElement(id, sku, name, salePrice) {
 async function addcar(sku) {
   const id = Math.floor(Math.random() * 256);
   const result2 = await fetchItem(sku);
-  const cariten = document.querySelector('.cart__items');
+  const cariten = aque;
   saveCartItems(id, `${sku}`, `${result2.title}`, result2.price);
   cariten.appendChild(createCartItemElement(id, sku, result2.title, result2.price));
 }
 
 function createProductItemElement(sku, name, image) {
   tt.className = 'total-price';
-  ee.appendChild(tt);
+  aque.appendChild(tt);
   const section = document.createElement('section');
   section.className = 'item';
   const proCar = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');

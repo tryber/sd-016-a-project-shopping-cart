@@ -1,7 +1,11 @@
-// Variável utilizada para as funções "cartItemClickListener()" e "includeProductOnCart()""
 const cartItens = document.querySelector('.cart__items');
 const totalItems = document.querySelector('.total-price');
 const removeItems = document.querySelector('.empty-cart');
+const loandingPage = document.querySelector('.container');
+
+function pageLoaded() {
+loandingPage.removeChild(loandingPage.firstElementChild);
+}
 
 function saveItemsOnNewPage() {
   const savedItens = getSavedCartItems();
@@ -72,7 +76,7 @@ async function includeProductOnCart(id) {
 }
 
 function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
+  const section = document.createElement('section'); 
   section.className = 'item';
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
@@ -81,7 +85,7 @@ function createProductItemElement({ sku, name, image }) {
   const Button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   Button.addEventListener('click', () => includeProductOnCart(sku));
   section.appendChild(Button);
-
+  
   return section;
 }
 
@@ -101,6 +105,7 @@ async function searchProducts(product) {
     const section = createProductItemElement(itemObject);
     sectionItens.appendChild(section);
   });
+  pageLoaded();
 }
 
 window.onload = () => { 

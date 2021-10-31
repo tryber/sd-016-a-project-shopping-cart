@@ -1,6 +1,6 @@
 let priceTotal = 0;
 localStorage.setItem('priceTotal', priceTotal);
-const ee = document.querySelector('.cart');
+const ee = document.querySelector('.cart__items');
 const tt = document.createElement('div');
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');

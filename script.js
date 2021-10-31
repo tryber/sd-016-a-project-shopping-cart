@@ -16,23 +16,30 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: R$${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
-async function cartItem(id) {
+// Referencia ao diretório do João Vitor Spala https://github.com/tryber/sd-016-a-project-shopping-cart/pull/115/commits/d5718252a8084033a8f1b701749b8d6beb0f9cc8
+async function cartItem(event) {
+  if (event.target.classList.contains('item__add')) {
+    const itemCard = event.target.parentElement;
+    const id = `${itemCard.firstElementChild.innerText}`.toString();
+
   const idResponse = await fetchItem(id);
-  cartItems.appendChild(createCartItemElement(idResponse));
+  const { id: sku, title: name, price: salePrice } = idResponse;
+  cartItems.appendChild(createCartItemElement({ sku, name, salePrice }));
+  }
 }
 
-function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
+function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -40,7 +47,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
-    .addEventListener('click', () => cartItem(sku));
+    .addEventListener('click', cartItem);
   
   return section;
 }
@@ -53,8 +60,9 @@ function getSkuFromProductItem(item) {
 async function searchProduct(product) {
   const searchResponse = await fetchProducts(product);
   searchResponse.results.forEach((item) => {
-    const productItem = createProductItemElement(item);
-    sectionItems.appendChild(productItem);
+    const { id: sku, title: name, thumbnail: image } = item;
+
+    sectionItems.appendChild(createProductItemElement({ sku, name, image }));
   });
 }
 

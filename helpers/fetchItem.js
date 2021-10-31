@@ -1,7 +1,7 @@
 const fetchItem = async (id) => (
   fetch(`https://api.mercadolibre.com/items/${id}`)
     .then((request) => request.json())
-    .catch((error) => console.log(error))
+    .catch((error) => error)
 );
 
 if (typeof module !== 'undefined') {

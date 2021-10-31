@@ -14,7 +14,7 @@ async function updatePrice(id, signal) {
 
 function updateCart(id, parentNode, operation) {
   updatePrice(id, operation);
-  saveCartItems(parentNode);
+  saveCartItems(parentNode.innerHTML);
 }
 
 function clearCart() {

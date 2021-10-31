@@ -1,7 +1,7 @@
 const saveCartItems = (id, sku, name, price) => {
   const obj = { id, sku, name, price };
   const rr = localStorage.getItem('cartItems');
-  if (rr === '') {
+  if (rr === null) {
     localStorage.setItem('cartItems', JSON.stringify([obj]));
   } else {    
   const iii = JSON.parse(rr);

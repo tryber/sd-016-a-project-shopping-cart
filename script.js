@@ -14,11 +14,11 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(id, sku, title, price) {
   const remo = document.querySelectorAll('li');
-  const tt = document.querySelector('.cart__items');  
+  const tt = document.querySelector('.cart__items');
   for (let i = 0; i < remo.length; i += 1) {
-    if (remo[i].id === id) {
-      saveCartItems(id, sku, title, price);
+    if (Number(remo[i].id) === id) {
       tt.removeChild(remo[i]);
+      saveCartItems(id, sku, title, price);      
     }
   }
 }

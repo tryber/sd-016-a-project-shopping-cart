@@ -1,3 +1,8 @@
+/* o requisito 4 foi feito com a ajuda dos colegas de turma. Algumas coisas não ficaram tão claras então
+dei checkout . e reiniciei algumas vezes. Por fim entrei em um monitoria que me ajudou a entender o requisito
+*/
+const cart = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -30,6 +35,7 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   event.target.remove();
+  saveCartItems(cart.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -43,7 +49,6 @@ function createCartItemElement({ sku, name, salePrice }) {
 async function selectAdiciona(event) {
   const id = event.target.parentNode.firstChild.innerHTML;
   const produtos = await fetchItem(id);
-  const cart = document.querySelector('.cart__items');
 
   const { id: sku, title: name, price: salePrice } = produtos;
 
@@ -55,6 +60,7 @@ async function selectAdiciona(event) {
 
   const createCartItem = createCartItemElement(objItem);
   cart.appendChild(createCartItem);
+  saveCartItems(cart.innerHTML);
 }
 
 async function productsSearch(product) {
@@ -76,4 +82,8 @@ async function productsSearch(product) {
 
 window.onload = () => {
   productsSearch('computador');
+  if (localStorage.getItem('cartItems')) {
+    cart.innerHTML = getSavedCartItems();
+    cart.childNodes.forEach((item) => item.addEventListener('click', cartItemClickListener));
+  }
 };

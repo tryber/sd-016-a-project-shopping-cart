@@ -16,10 +16,9 @@ function cartItemClickListener(id, sku, title, price) {
   const remo = document.querySelectorAll('li');
   const tt = document.querySelector('.cart__items');  
   for (let i = 0; i < remo.length; i += 1) {
-    if (remo[i].id == id) {
-      saveCartItems( id, sku, title, price);
+    if (remo[i].id === id) {
+      saveCartItems(id, sku, title, price);
       tt.removeChild(remo[i]);
-
     }
   }
 }
@@ -34,11 +33,10 @@ function createCartItemElement(id, sku, name, salePrice) {
 }
 
 async function addcar(sku) {
-  const id = Math.floor(Math.random() *256);
+  const id = Math.floor(Math.random() * 256);
   const result2 = await fetchItem(sku);
   const cariten = document.querySelector('.cart__items');
-  //console.log(result2)
-  saveCartItems( id, `${sku}`, `${result2.title}`, result2.price)
+  saveCartItems(id, `${sku}`, `${result2.title}`, result2.price);
   cariten.appendChild(createCartItemElement(id, sku, result2.title, result2.price));
 }
 
@@ -49,7 +47,7 @@ function createProductItemElement(sku, name, image) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  proCar.addEventListener('click', () => addcar(sku, name));
+  proCar.addEventListener('click', () => addcar(sku));
   section.appendChild(proCar);
   return section;
 }
@@ -65,5 +63,5 @@ window.onload = async () => {
     ee.appendChild(createProductItemElement(sku[i], name[i], image[i]));    
   }
   getSavedCartItems(localStorage.getItem('cartItems'), 
-   createCartItemElement)
+   createCartItemElement);
 };

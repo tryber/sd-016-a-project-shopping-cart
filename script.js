@@ -1,3 +1,7 @@
+let priceTotal = 0;
+localStorage.setItem('priceTotal', priceTotal);
+const ee = document.querySelector('.cart');
+const tt = document.createElement('div');
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -14,21 +18,28 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(id, sku, title, price) {
   const remo = document.querySelectorAll('li');
-  const tt = document.querySelector('.cart__items');
+  const itt = document.querySelector('.cart__items');
   for (let i = 0; i < remo.length; i += 1) {
     if (Number(remo[i].id) === id) {
-      tt.removeChild(remo[i]);
+      itt.removeChild(remo[i]);
       saveCartItems(id, sku, title, price);      
     }
   }
 }
 
 function createCartItemElement(id, sku, name, salePrice) {
+  priceTotal += Math.round(salePrice);
+  localStorage.setItem('priceTotal', priceTotal);
+  tt.innerText = priceTotal;
   const li = document.createElement('li');
   li.id = id;
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', () => cartItemClickListener(id, sku, name, salePrice));
+  li.addEventListener('click', () => {
+    cartItemClickListener(id, sku, name, salePrice);
+    priceTotal -= salePrice;
+    tt.innerText = priceTotal;
+   });  
   return li;
 }
 
@@ -41,6 +52,8 @@ async function addcar(sku) {
 }
 
 function createProductItemElement(sku, name, image) {
+  tt.className = 'total-price';
+  ee.appendChild(tt);
   const section = document.createElement('section');
   section.className = 'item';
   const proCar = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
@@ -58,10 +71,11 @@ window.onload = async () => {
   const sku = result.map((id) => id.id);
   const name = result.map((name2) => name2.title);
   const image = result.map((image2) => image2.thumbnail);
-  const ee = document.querySelector('.items');
+  const pp = document.querySelector('.items');
+  tt.innerText = priceTotal;
   for (let i = 0; i < result.length; i += 1) {
-    ee.appendChild(createProductItemElement(sku[i], name[i], image[i]));    
+    pp.appendChild(createProductItemElement(sku[i], name[i], image[i]));  
   }
   getSavedCartItems(localStorage.getItem('cartItems'), 
-   createCartItemElement);
+   createCartItemElement);   
 };

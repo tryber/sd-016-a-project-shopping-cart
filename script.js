@@ -15,7 +15,6 @@ function createCustomElement(element, className, innerText) {
 }
 
 function clearShoppingCart() {
-  // const ol = document.querySelector('.cart__items');
   ol.innerHTML = '';
   saveCartItems(ol.innerHTML);
 }
@@ -35,7 +34,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-
   const clearButton = document.querySelector('.empty-cart');
   clearButton.addEventListener('click', clearShoppingCart);
 
@@ -53,7 +51,6 @@ async function addItemToCart(item) {
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));

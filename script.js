@@ -2,6 +2,13 @@
 dei checkout . e reiniciei algumas vezes. Por fim entrei em um monitoria que me ajudou a entender o requisito
 */
 const cart = document.querySelector('.cart__items');
+const emptyCart = document.querySelector('.empty-cart');
+
+const clearAllProductCart = () => {
+  saveCartItems(cart.innerHTML = '');
+};
+
+emptyCart.addEventListener('click', clearAllProductCart);
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');

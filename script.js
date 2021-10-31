@@ -1,6 +1,7 @@
 // Variável utilizada para as funções "cartItemClickListener()" e "includeProductOnCart()""
 const cartItens = document.querySelector('.cart__items');
 const totalItems = document.querySelector('.total-price');
+const removeItems = document.querySelector('.empty-cart');
 
 function saveItemsOnNewPage() {
   const savedItens = getSavedCartItems();
@@ -20,6 +21,13 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
+
+function removeAllItens() {
+  cartItens.innerHTML = '';
+  totalItems.innerHTML = 0;
+}
+
+removeItems.addEventListener('click', removeAllItens);
 
 function sumCartItens() {
   const ItemsOnCart = cartItens.childNodes;

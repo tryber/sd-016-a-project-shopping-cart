@@ -85,15 +85,21 @@ function removeLoading() {
   const loadingTag = document.querySelector('.loading');
   loadingTag.remove();
 }
-const products = () => fetchProducts('computador').then((product) =>
-  product.results.reduce((acc, item) => {
-  acc.push({
-    sku: item.id,
-    name: item.title,
-    image: item.thumbnail,
-  });
-  return acc;
-}, []));
+async function products() {
+  // Camila Ranniele rainha da paciência. Me ajudou a entender o uso de await.
+  loading();
+  const result = await fetchProducts('computador').then((product) =>
+    product.results.reduce((acc, item) => {
+    acc.push({
+      sku: item.id,
+      name: item.title,
+      image: item.thumbnail,
+    });
+    return acc;
+  }, []));
+  removeLoading();
+  return result;
+} 
 
 function getFetchItem(sku) {
   return fetchItem(sku)
@@ -120,7 +126,7 @@ function productItemToCart({ sku }) {
 }
 
 async function appendElement(elementClass, callback) {
-  products.then((product) =>
+  products().then((product) =>
   product.forEach((productItem, index) => {
     const sectionItems = document.querySelector(elementClass);
     sectionItems.appendChild(callback(productItem));

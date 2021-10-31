@@ -1,29 +1,26 @@
 const fetchSimulator = require('../mocks/fetchSimulator');
-const { fetchProducts } = require('../helpers/fetchProducts');
-const computadorSearch = require('../mocks/search');
-
+const { fetchItem } = require('../helpers/fetchItem');
+const item = require('../mocks/item');
 window.fetch = jest.fn(fetchSimulator);
 
-describe('1 - Teste a função fecthProducts', () => {
-  it('deve ser uma funçao', () => {
-    expect(typeof fetchProducts).toBe('function');
+describe('2 - Teste a função fecthItem', () => {
+  it('Verifica se fetchItem é uma função', () => {
+    expect(typeof fetchItem).toBe('function');
   });
-  it('ao chamá-la com o argumento computador, testa se fetch foi chamada', () => {
-    fetchProducts('computador');
+  it('Verifica se fetch foi chamada ao executar a função fetchItem', async () => {
+    await fetchItem('MLB1615760527')
     expect(fetch).toHaveBeenCalled();
   });
-  it('ao chamá-la com o argumento computador, testa se fetch foi chamada com endpoint correto', () => {
-    const endpoint = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
-    fetchProducts('computador');
-    expect(fetch).toHaveBeenCalledWith(endpoint);
+  it('Verifica se, ao chamar fetchItem com o argumento "MLB1615760527", a função fetch utiliza o endpoint "https://api.mercadolibre.com/items/MLB1615760527', async () => {
+    await fetchItem('MLB1615760527');
+    expect(fetch).toHaveBeenCalledWith("https://api.mercadolibre.com/items/MLB1615760527")
   });
-  it('se o retorno da  funçao é um objeto igual a computadorSearch', async () => {
-    const results = await fetchProducts('computador');
-    expect(results).toEqual(computadorSearch);
+  it('Verifica se o retorno da função fetchItem com o argumento "MLB1615760527" é uma estrutura de dados igual ao objeto item', async () => {
+    expect(await fetchItem('MLB1615760527')).toEqual(item);
   });
-  it('deve retornar  um erro', async () => {
-    const expectedError = new Error('You must provide an url');
-    const result = await fetchProducts();
-    expect(result).toEqual(expectedError);
+  it('Verifica se ao chamar a função fetchItem sem argumentos retorna uma mensagem de erro', async () => {
+    fetchItem().catch((err) => {
+      expect(err).toThrow('You must provide an url');
+    });
   });
 });

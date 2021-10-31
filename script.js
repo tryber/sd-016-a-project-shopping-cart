@@ -1,5 +1,5 @@
 let priceTotal = 0;
-const aque = document.querySelector('.cart');
+const aque = document.querySelector('.cart__items');
 localStorage.setItem('priceTotal', priceTotal);
 const tt = document.createElement('div');
 function createProductImageElement(imageSource) {
@@ -27,7 +27,7 @@ function cartItemClickListener(id, sku, title, price) {
 }
 
 function createCartItemElement(id, sku, name, salePrice) {
-  priceTotal += Math.round(salePrice);
+  priceTotal += salePrice;
   localStorage.setItem('priceTotal', priceTotal);
   tt.innerText = priceTotal;
   const li = document.createElement('li');
@@ -35,8 +35,8 @@ function createCartItemElement(id, sku, name, salePrice) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', () => {
-    cartItemClickListener(id, sku, name, Math.round(salePrice));
-    priceTotal -= Math.round(salePrice);
+    cartItemClickListener(id, sku, name, salePrice);
+    priceTotal -= salePrice;
     tt.innerText = priceTotal;
    });  
   return li;
@@ -52,7 +52,7 @@ async function addcar(sku) {
 
 function createProductItemElement(sku, name, image) {
   tt.className = 'total-price';
-  aque.appendChild(tt);
+  document.querySelector('.cart').appendChild(tt);
   const section = document.createElement('section');
   section.className = 'item';
   const proCar = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');

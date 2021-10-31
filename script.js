@@ -1,15 +1,18 @@
 const itemsList = document.querySelector('.items');
 const cartList = document.querySelector('.cart__items');
-const priceValue = document.querySelector('#price-value');
+const totalPrice = document.querySelector('.total-price');
 const clearButton = document.querySelector('.empty-cart');
 
-async function updatePrice(id, operation) { // TODO precisa ter precisão?
-  let { price } = await fetchItem(id);
-  if (operation === '-') price *= -1;
-  priceValue.innerHTML = parseInt(priceValue.innerHTML, 10) + Math.round(price * 100) / 100;
+function roundToDecimals(number, decimals) {
+  return Math.round((number) * (10 ** decimals)) / (10 ** decimals);
 }
 
-function updateCart({ id, parentNode }, operation) {
+async function updatePrice(id, signal) {
+  const { price } = await fetchItem(id);
+  totalPrice.innerText = roundToDecimals(parseFloat(totalPrice.innerText, 10) + price * signal, 2);
+}
+
+function updateCart(id, parentNode, operation) {
   updatePrice(id, operation);
   saveCartItems(parentNode);
 }
@@ -17,9 +20,9 @@ function updateCart({ id, parentNode }, operation) {
 function clearCart() {
   const { children } = cartList;
   while (children.length !== 0) {
-    const next = children[0];
-    updateCart(next, '-');
-    next.remove();
+    const { id, parentNode } = children[0];
+    children[0].remove();
+    updateCart(id, parentNode, -1);
   }
 }
 
@@ -28,8 +31,9 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener({ target }) {
-  updateCart(target, '-');
+  const { id, parentNode } = target;
   target.remove();
+  updateCart(id, parentNode, -1);
 }
 
 function createProductImageElement(imageSource) {
@@ -60,7 +64,7 @@ async function addItemToCart({ target }) {
   const { title, price } = await fetchItem(id);
   const cartItem = createCartItemElement({ sku: id, name: title, salePrice: price });
   cartList.appendChild(cartItem);
-  updateCart(cartItem, '+');
+  updateCart(id, cartItem.parentNode, 1);
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -99,7 +103,7 @@ const downloadCartList = () => { // inspirado no trabalho do [Adson Gomes Olivei
 };
 
 window.onload = () => { 
-  createProductList('computador'); // retirar isso daki;
+  createProductList('computador'); // retirar isso daki depois?;
   downloadCartList();
   clearButton.addEventListener('click', clearCart);
 }; 

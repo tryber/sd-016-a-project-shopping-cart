@@ -1,8 +1,11 @@
+// O projeto de uma maneira geral, foi feito com a ajuda da Cris Souza e do Humberto Castro. A colaboração deles foi na ajuda de abstração de alguns pontos específicos, como as funções saveCartItems e a pageLoaded, bem como na colaboração e troca de idéias para elaboração do projeto como um todo.   
+
 const cartItens = document.querySelector('.cart__items');
 const totalItems = document.querySelector('.total-price');
 const removeItems = document.querySelector('.empty-cart');
 const loandingPage = document.querySelector('.container');
 
+// Função para remover o Node que contém o elemento com classe .loanding e a frase carregando. A função é chamada ao fim da função assíncrona de procurar os produtos na API, portanto some exatemente da tela uma vez tenha sido tudo carregado. Criada com a ajuda e orientação do colega Humberto de Castro o/.
 function pageLoaded() {
 loandingPage.removeChild(loandingPage.firstElementChild);
 }
@@ -87,10 +90,6 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(Button);
   
   return section;
-}
-
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
 }
 
 async function searchProducts(product) {

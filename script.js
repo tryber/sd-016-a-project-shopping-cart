@@ -1,5 +1,6 @@
 // Variável utilizada para as funções "cartItemClickListener()" e "includeProductOnCart()""
 const cartItens = document.querySelector('.cart__items');
+const totalItems = document.querySelector('.total-price');
 
 function saveItemsOnNewPage() {
   const savedItens = getSavedCartItems();
@@ -20,8 +21,21 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function sumCartItens() {
+  const ItemsOnCart = cartItens.childNodes;
+  let sumOfValue = 0;
+  for (let i = 0; i < ItemsOnCart.length; i += 1) {
+    const stringWithPriceOfItem = ItemsOnCart[i].innerText.split('PRICE: $')[1];
+    const priceOfItem = parseFloat(stringWithPriceOfItem);
+    sumOfValue += priceOfItem;
+  }
+  const priceTotal = sumOfValue;
+  totalItems.innerHTML = priceTotal;
+}
+
 function cartItemClickListener(event) {
   event.target.remove();
+  sumCartItens();
   saveCartItems(cartItens.innerHTML);
 }
 
@@ -45,6 +59,7 @@ async function includeProductOnCart(id) {
     salePrice: includeProduct.price,
   };
   cartItens.appendChild(createCartItemElement(itemOnCart));
+  sumCartItens();
   saveCartItems(cartItens.innerHTML);
 }
 

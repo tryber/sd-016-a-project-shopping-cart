@@ -1,6 +1,11 @@
 // Variável utilizada para as funções "cartItemClickListener()" e "includeProductOnCart()""
 const cartItens = document.querySelector('.cart__items');
 
+function saveItemsOnNewPage() {
+  const savedItens = getSavedCartItems();
+  cartItens.innerHTML = savedItens;
+}
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -16,7 +21,12 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  cartItens.removeChild(event.target);
+  event.target.remove();
+  saveCartItems(cartItens.innerHTML);
+}
+
+function restorePage() {
+  cartItens.addEventListener('click', cartItemClickListener);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -25,7 +35,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
-}
+  }
 
 async function includeProductOnCart(id) {
   const includeProduct = await fetchItem(id);
@@ -34,19 +44,18 @@ async function includeProductOnCart(id) {
     name: includeProduct.title,
     salePrice: includeProduct.price,
   };
-  cartItens.appendChild(createCartItemElement(itemOnCart)); 
+  cartItens.appendChild(createCartItemElement(itemOnCart));
+  saveCartItems(cartItens.innerHTML);
 }
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   // Botão não fazia nada?? - Ajuda do Humberto: salvar o retorno deste section.appendChild numa variável para poder incluir um evento de escuta que traga a função de incluir o item no carrinho //
-  const Button = section
-  .appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  const Button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   Button.addEventListener('click', () => includeProductOnCart(sku));
   section.appendChild(Button);
 
@@ -73,4 +82,6 @@ async function searchProducts(product) {
 
 window.onload = () => { 
   searchProducts('computador');
+  saveItemsOnNewPage();
+  restorePage();
 };

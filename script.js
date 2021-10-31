@@ -85,9 +85,8 @@ function removeLoading() {
   const loadingTag = document.querySelector('.loading');
   loadingTag.remove();
 }
-
-const products = fetchProducts('computador').then((product) => product
-  .results.reduce((acc, item) => {
+const products = () => fetchProducts('computador').then((product) =>
+  product.results.reduce((acc, item) => {
   acc.push({
     sku: item.id,
     name: item.title,
@@ -104,20 +103,23 @@ function getFetchItem(sku) {
   });
 }
 
-async function productItemToCart() {
+function productItemToCart({ sku }) {
   loading();
-  await fetchProducts('computador')
-    .then((data) => {
-      data.results.forEach((result) => {
-      const { id: sku, title: name, thumbnail: image } = result;
-      cartSection.appendChild(createProductItemElement({ sku, name, image }));
-    });
-  });
+  getFetchItem(sku)
+  .then((productItem) => {
+    arrayToLocalStorage.push(productItem);
+    saveCartItems(JSON.stringify(arrayToLocalStorage));
+    sum += productItem.salePrice;
+    total.innerHTML = sum;
+    
+    return createCartItemElement(productItem);
+  })
+  .then((cartItem) => cartSection.appendChild(cartItem));
   removeLoading();
+  return cartSection;
 }
 
 async function appendElement(elementClass, callback) {
-  loading();
   products.then((product) =>
   product.forEach((productItem, index) => {
     const sectionItems = document.querySelector(elementClass);
@@ -125,7 +127,6 @@ async function appendElement(elementClass, callback) {
     const button = sectionItems.children[index].childNodes[3];
     button.addEventListener('click', () => productItemToCart(productItem));
   }));
-  removeLoading();
 }
 
 function getItemFromLocalStorage() {

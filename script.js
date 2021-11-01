@@ -12,6 +12,19 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+// Elaborado com ajuda do Otávio Cantarelli
+
+function cartItemClickListener(event, sku) {
+  event.target.remove();
+  // console.log(shopCartSave, 1);
+  shopCartSave.forEach((element, index) => {
+    if (element.sku === sku) shopCartSave.splice(index, 1);
+  });
+  // console.log(shopCartSave, 2);
+  sumPrice(shopCartSave);
+  saveCartItems(JSON.stringify(shopCartSave));
+}
+
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';

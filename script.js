@@ -1,5 +1,5 @@
 // requisito executado com o auxilio do vídeo e mentoria de Bernando, mentoria de Humberto Castro
-const cartItemsList = document.querySelector('cart__items');
+// const cartItemsList = document.querySelector('cart__items');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -17,7 +17,6 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   event.target.remove();
-   saveCartItems(cartItemsList.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {

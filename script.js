@@ -65,6 +65,8 @@ function getSkuFromProductItem(item) {
 
 async function searchProducts(product) {
   const searchData = await fetchProducts(product);
+  const loading = document.querySelector('.loading');
+  loading.remove();
   const sectionItems = document.querySelector('.items');  
   searchData.results.forEach((element) => {
     itemObject = {

@@ -1,5 +1,4 @@
-// requisito executado com o auxilio do vídeo e mentoria de Bernando, mentoria de Humberto Castro
-// const cartItemsList = document.querySelector('.cart__items');
+// requisito executado com o auxilio do vídeo e mentoria de Bernando, mentoria de Humberto Castro, repositório de Brunão(requisito 7)
 
 const createLoading = () => {
   const loadingElement = document.createElement('h1');

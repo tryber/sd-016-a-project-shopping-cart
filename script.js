@@ -59,7 +59,8 @@ function createProductItemElement({ sku, name, image }) {
   const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   button.addEventListener('click', async () => {
     const formatedData = await fetchItem(sku);
-    const cartElement = createCartItemElement(formatedData);
+    const { id, title, price } = formatedData;
+    const cartElement = createCartItemElement({ sku: id, name: title, salePrice: price });
     const cart = document.querySelector('.cart__items');
     cart.appendChild(cartElement);
     saveCartItems(cartOl.innerHTML);

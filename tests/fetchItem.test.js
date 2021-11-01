@@ -6,5 +6,26 @@ window.fetch = jest.fn(fetchSimulator);
 
 describe('2 - Teste a função fecthItem', () => {
   // implemente seus testes aqui
-  fail('Teste vazio');
+  // fail('Teste vazio');
+  // 1 - Teste se fetchItem é uma função;
+  it('fetchItem must be a function', () => {
+    expect(typeof fetchItem).toBe('function');
+  });
+  // 2 - Execute a função fetchItem com o argumento do item "MLB1615760527" e teste se fetch foi chamada;
+  it('when fetchItem is called with argument, check if fetch was called', () => {
+    fetchItem('MLB1615760527');
+    expect(fetch).toHaveBeenCalled();
+  });
+  // 3 - Teste se, ao chamar a função fetchItem com o argumento do item "MLB1615760527", a função fetch utiliza o endpoint "https://api.mercadolibre.com/items/MLB1615760527";
+  it('message', () => {
+    fetchItem('MLB1615760527');
+    expect(fetch).toHaveBeenCalledWith(
+      'https://api.mercadolibre.com/items/MLB1615760527',
+    );
+  });
+  // 4 - Teste se o retorno da função fetchItem com o argumento do item "MLB1615760527" é uma estrutura de dados igual ao objeto item que já está importado no arquivo.
+  it('message', async () => {
+    const expectedData = await fetchItem('MLB1615760527');
+    expect(expectedData).toEqual(item);
+  });
 });

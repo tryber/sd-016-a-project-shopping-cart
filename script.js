@@ -18,6 +18,7 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   event.target.remove();
+  saveCartItems(cartItems.innerHTML);
 }
 
 body.addEventListener('click', (event) => {
@@ -41,6 +42,7 @@ const addToCart = (foundProduct) => {
   const product = { sku, name, salePrice };
   const item = createCartItemElement(product);
   cartItems.appendChild(item);
+  saveCartItems(cartItems.innerHTML);
 };
 
 const getProduct = async (e) => {
@@ -85,4 +87,5 @@ async function searchProduct(product) {
 
 window.onload = () => {
   searchProduct('computador');
+  cartItems.innerHTML = getSavedCartItems();
 };

@@ -1,5 +1,5 @@
 const getSavedCartItems = () => {
-  const savedItem = window.localStorage.getItem('cartItems');
+  const savedItem = localStorage.getItem('cartItems');
   console.log(savedItem);
   return JSON.parse(savedItem) || [];
 };

@@ -1,4 +1,5 @@
 const list = document.querySelector('.cart__items');
+const waitingSection = document.getElementById('waiting__api');
 
 function updateTotal() {
   const cartItems = getSavedCartItems();
@@ -81,7 +82,21 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+function loadingMessage() {
+  const p = document.createElement('p');
+  p.className = 'loading';
+  p.innerText = 'carregando...';
+  waitingSection.appendChild(p);
+  console.log(waitingSection);
+}
+
+function removeLoadingMessage() {
+  waitingSection.removeChild(waitingSection.firstChild);
+  console.log(waitingSection);
+}
+
 async function getProducts(product) {
+  loadingMessage();
   const productSearch = await fetchProducts(product);
   const sectionItems = document.querySelector('.items');
   productSearch.results.forEach((computer) => {
@@ -90,6 +105,7 @@ async function getProducts(product) {
     const appendProduct = createProductItemElement(eachComputer);
     sectionItems.appendChild(appendProduct);
   });
+  removeLoadingMessage();
 }
 
 function clearOnClick() {

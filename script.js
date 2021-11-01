@@ -1,5 +1,5 @@
 // requisito executado com o auxilio do vídeo e mentoria de Bernando, mentoria de Humberto Castro
-//  const cartItemsList = document.querySelector('cart__items');
+const cartItemsList = document.querySelector('cart__items');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -17,7 +17,7 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   event.target.remove();
-  // saveCartItems(cartItemsList.innerHTML);
+   saveCartItems(cartItemsList.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -51,6 +51,11 @@ function createProductItemElement({ sku, name, image }) {
    return section;
 }
 
+function removeLoading() {
+  const loading = document.querySelector('.loading');
+  loading.remove();
+}
+
 async function searchProducts(product) {
   const searchData = await fetchProducts(product);
   const sectionItems = document.querySelector('.items');
@@ -59,6 +64,7 @@ async function searchProducts(product) {
    const productCase = createProductItemElement(itemCase);
    sectionItems.appendChild(productCase);
   });
+  removeLoading();
 }
 
 function clearCart() {

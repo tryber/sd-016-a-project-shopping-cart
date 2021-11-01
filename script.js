@@ -62,7 +62,6 @@ async function ProductData(product) {
   // logica com ajudinha do GRANDE BE
   const DataProducts = await fetchProducts(product);
   const items = document.querySelector('.items');
-
   DataProducts.results.forEach((element) => {
     const { id, title, thumbnail } = element;
     const ProductsObj = {
@@ -73,7 +72,6 @@ async function ProductData(product) {
     const productItem = createProductItemElement(ProductsObj);
     items.appendChild(productItem);
   });
-
 }
 
 function reload() {

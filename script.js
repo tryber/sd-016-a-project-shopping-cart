@@ -1,3 +1,6 @@
+const cartItems = [];
+let sum = 0;
+
 // Com colaboração de Priscila Silva
 
 function createProductImageElement(imageSource) {
@@ -97,18 +100,17 @@ const getFromLocalStorage = () => {
 //  return item.querySelector('span.item__sku').innerText;
 // }
 
-// function createCartItemElement({ sku, name, salePrice }) {
-//  const li = document.createElement('li');
-//  li.className = 'cart__item';
-//  li.setAttribute('data-price', `${salePrice}`);
-// li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-// li.addEventListener('click', cartItemClickListener);
-//  const removeTudo = document.querySelector('.empty-cart');
-//  removeTudo.addEventListener('click', removerCarrinho);
-//  totalpreço += salePrice;
-//  preçosalvo.innerHTML = totalpreço;
-//  return li;
-// }
+const divTotalPrice = () => {
+  const divContainer = document.querySelector('.price');
+  const divPrice = document.createElement('div');
+  divPrice.classList.add('total-price');
+  divContainer.appendChild(divPrice);
+};
+
+const clearLocalStorage = () => {
+  localStorage.clear();
+  window.location.reload();
+};
 
 window.onload = () => {
   const btnClearCart = document.querySelector('.empty-cart');

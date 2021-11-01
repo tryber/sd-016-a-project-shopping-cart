@@ -9,7 +9,7 @@ const fetchProducts = (product) => {
     .then((data) => data);
 
   return result;
-}
+};
 
 if (typeof module !== 'undefined') {
   module.exports = {

@@ -18,7 +18,6 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(id, sku, title, price) {
-  console.log(id)
   const remo = document.querySelectorAll('li');
   for (let i = 0; i < remo.length; i += 1) {
     if (Number(remo[i].id) === id) {
@@ -69,36 +68,29 @@ function createProductItemElement(sku, name, image) {
 function remov() {
   const rr = localStorage.getItem('cartItems');
   const iii = JSON.parse(rr);
-  console.log('remov')
-  iii.map((ele) => (
-    cartItemClickListener(ele.id, ele.sku, ele.name, ele.price),
-  priceTotal = 0,
-  tt.innerText = priceTotal))
-}
+  for (let i = 0; i < iii.length; i += 1) {
+    cartItemClickListener(iii[i].id, iii[i].sku, iii[i].name, iii[i].price);
+  priceTotal = 0;
+  tt.innerText = priceTotal;
+  }
+ }
 
-function carr(loand){
+function carr(loand) {
   const pppp = document.querySelector('.items');
-  const uu = document.createElement('loading')
+  const uu = document.createElement('loading');
   
-  if (loand == false) {
-    
-    console.log('falseddd')
+  if (loand === false) {    
      const kk = document.querySelector('.loading');
-     const hh = document.querySelectorAll('loading')
-     console.log(kk)
-     //kk.innerHTML = ''
-     kk.remove()
+     kk.remove();
   } else {
-    console.log("ddggggg")
-    pppp.appendChild(uu) 
+    pppp.appendChild(uu); 
   uu.innerHTML = 'loading';
-uu.className = 'loading'}
-
+uu.className = 'loading';
+}
 }
 
 window.onload = async () => {
-  carr(true)
-
+  carr(true);
   const cri = document.querySelector('.items');
   const para = 'computador';
   const result = await fetchProducts(para);
@@ -108,11 +100,10 @@ window.onload = async () => {
   
   tt.innerText = priceTotal;
   for (let i = 0; i < result.length; i += 1) { 
-    cri.appendChild(createProductItemElement(sku[i], name[i], image[i]));
-     
+    cri.appendChild(createProductItemElement(sku[i], name[i], image[i]));     
   } 
-  carr(false) 
+  carr(false); 
   getSavedCartItems(localStorage.getItem('cartItems'), 
    createCartItemElement);
-   empt.addEventListener('click', remov)   
+   empt.addEventListener('click', remov);   
 };

@@ -1,3 +1,7 @@
+// Com colaboração de Priscila Silva
+
+const shopCartSave = [];
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';

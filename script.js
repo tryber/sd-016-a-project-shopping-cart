@@ -1,6 +1,17 @@
 // requisito executado com o auxilio do vídeo e mentoria de Bernando, mentoria de Humberto Castro
-// const cartItemsList = document.querySelector('cart__items');
+// const cartItemsList = document.querySelector('.cart__items');
 
+const createLoading = () => {
+  const loadingElement = document.createElement('h1');
+  loadingElement.classList.add('loading');
+  loadingElement.innerHTML = 'carregando';
+  document.body.append(loadingElement);
+};
+
+const removeLoading = () => {
+  const loadingElement = document.querySelector('.loading');
+  loadingElement.remove();
+};
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -46,9 +57,22 @@ function createProductItemElement({ sku, name, image }) {
   addButton.addEventListener('click', () => {
     addCartItem(sku);
   });
-  section.appendChild(addButton);
+   section.appendChild(addButton);
    return section;
 }
+const fetchProductsReturn = () => {
+  createLoading();
+  fetchProducts('computador').then((value) => {
+    value.results.forEach((product) => {
+      createProductItemElement(product);
+    });
+  removeLoading();
+  });
+};
+
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
 
 async function searchProducts(product) {
   const searchData = await fetchProducts(product);
@@ -69,7 +93,8 @@ function clearCart() {
   });
 }
 
-window.onload = () => {
+window.onload = async () => {
   searchProducts('computador');
+  fetchProductsReturn();
   clearCart();
 };

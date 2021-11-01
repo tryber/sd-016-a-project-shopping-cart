@@ -1,4 +1,4 @@
-const fetchItem = async (id) => (
+const fetchItem = (id) => (
   fetch(`https://api.mercadolibre.com/items/${id}`)
     .then((request) => request.json())
     .catch((error) => error)

@@ -1,7 +1,5 @@
 // Com colaboração de Priscila Silva
 
-const shopCartSave = [];
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -18,49 +16,51 @@ function createCustomElement(element, className, innerText) {
 
 // Elaborado com ajuda do Otávio Cantarelli
 
-function cartItemClickListener(event, sku) {
+function cartItemClickListener(event, sku, price) {
+  const div = document.querySelector('.total-price');
+  const findElement = cartItems.find((item) => item.sku === sku);
+  const findIndexOfElement = cartItems.indexOf(findElement);
+  cartItems.splice(findIndexOfElement, 1);
+  saveCartItems(JSON.stringify(cartItems));
+
+  div.innerText = (sum -= price).toPrecision();
   event.target.remove();
-  // console.log(shopCartSave, 1);
-  shopCartSave.forEach((element, index) => {
-    if (element.sku === sku) shopCartSave.splice(index, 1);
-  });
-  // console.log(shopCartSave, 2);
-  sumPrice(shopCartSave);
-  saveCartItems(JSON.stringify(shopCartSave));
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ sku, name, price }) {
+  const getOlItemElements = document.querySelector('.cart__items');
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', (event) => cartItemClickListener(event, sku));
-  listOl.appendChild(li);
-  return li;
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${price}`;
+  getOlItemElements.appendChild(li);
+
+  li.addEventListener('click', (event) => cartItemClickListener(event, sku, price));
 }
 
-const productById = async (idProduct) => {
-  const objProduct = await fetchItem(idProduct);
-  const { id: sku, title: name, price: salePrice } = objProduct;
-  const objParam = { sku, name, salePrice };
-  listOl.appendChild(createCartItemElement(objParam));
-  shopCartSave.push(objParam);
-  sumPrice(shopCartSave);
-  saveCartItems(JSON.stringify(shopCartSave));
+const addItemToCart = async (sku) => {
+  const allItens = await fetchItem(sku);
+  const { title: name, price } = allItens;
+  createCartItemElement({ sku, name, price });
 };
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ sku, name, image, price }) {
+  const buttonAddToCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   const section = document.createElement('section');
+  const productSection = document.querySelector('.items');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  const btn = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
-  btn.addEventListener('click', () => {
-    productById(sku);
-  });
-  section.appendChild(btn);
+  const div = document.querySelector('.total-price');
 
+  buttonAddToCart.addEventListener('click', () => {
+    addItemToCart(sku);
+    div.innerText = (sum += price).toPrecision();
+    cartItems.push({ sku, name, price });
+    saveCartItems(JSON.stringify(cartItems));
+  });
+  section.appendChild(buttonAddToCart);
+  productSection.appendChild(section);
   return section;
 }
 

@@ -51,11 +51,6 @@ function createProductItemElement({ sku, name, image }) {
    return section;
 }
 
-function removeLoading() {
-  const loading = document.querySelector('.loading');
-  loading.remove();
-}
-
 async function searchProducts(product) {
   const searchData = await fetchProducts(product);
   const sectionItems = document.querySelector('.items');
@@ -64,8 +59,7 @@ async function searchProducts(product) {
    const productCase = createProductItemElement(itemCase);
    sectionItems.appendChild(productCase);
   });
-  removeLoading();
-}
+ }
 
 function clearCart() {
   const clearList = document.querySelector('.empty-cart');

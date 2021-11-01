@@ -1,10 +1,10 @@
-const fetchProducts = async (query) => {
+const fetchProducts = (query) => {
   // seu código aqui
-  const response = await fetch(
-    `https://api.mercadolibre.com/sites/MLB/search?q=$${query}`,
-  );
-  const data = await response.json();
-  return data;
+  const url = `https://api.mercadolibre.com/sites/MLB/search?q=${query}`;
+  return fetch(url)
+    .then((response) => response.json())
+    .then((data) => data)
+    .catch((error) => error);
 };
 
 if (typeof module !== 'undefined') {

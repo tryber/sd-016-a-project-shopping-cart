@@ -54,6 +54,19 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+// Agradecimento especial a Fumagalli(T16) que me ajudou a chegar a uma melhor conclusão.
+const addLoad = () => {
+  const loading = document.createElement('p');
+  loading.classList = 'loading';
+  items.appendChild(loading).innerHTML = 'carregando...';
+};
+
+// Agradecimento especial a Fumagalli(T16) que me ajudou a chegar a uma melhor conclusão.
+const removeLoad = () => {
+  const loading = document.querySelector('.loading');
+  loading.remove();
+};
+
 // Agradecimento especial ao Bernardo Salgueiro(Instrutor - T16) por ter feito um video ajudando a desenrolar o requisito 1.
 const searchProduct = async (product) => {
   addLoad();
@@ -87,19 +100,6 @@ const delectAll = async () => {
   totalPrice.innerHTML = 0;
   li.forEach((item) => item.remove());
   saveCartItems(cartItems.innerHTML);
-};
-
-// Agradecimento especial a Fumagalli(T16) que me ajudou a chegar a uma melhor conclusão.
-const addLoad = () => {
-  const loading = document.createElement('p');
-  loading.classList = 'loading';
-  items.appendChild(loading).innerHTML = 'carregando...';
-};
-
-// Agradecimento especial a Fumagalli(T16) que me ajudou a chegar a uma melhor conclusão.
-const removeLoad = () => {
-  const loading = document.querySelector('.loading');
-  loading.remove();
 };
 
 window.onload = () => {

@@ -91,7 +91,7 @@ uu.className = 'loading';
 
 window.onload = async () => {
   carr(true);
-  const cri = document.querySelector('.items');
+  const crii = document.querySelector('.items');
   const para = 'computador';
   const result = await fetchProducts(para);
   const sku = result.map((id) => id.id);
@@ -100,7 +100,7 @@ window.onload = async () => {
   
   tt.innerText = priceTotal;
   for (let i = 0; i < result.length; i += 1) { 
-    cri.appendChild(createProductItemElement(sku[i], name[i], image[i]));     
+    crii.appendChild(createProductItemElement(sku[i], name[i], image[i]));     
   } 
   carr(false); 
   getSavedCartItems(localStorage.getItem('cartItems'), 

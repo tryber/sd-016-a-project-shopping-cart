@@ -1,29 +1,31 @@
 const fetchSimulator = require('../mocks/fetchSimulator');
 const { fetchProducts } = require('../helpers/fetchProducts');
 const computadorSearch = require('../mocks/search');
-
 window.fetch = jest.fn(fetchSimulator);
 
 describe('1 - Teste a função fecthProducts', () => {
-  it('deve ser uma funçao', () => {
+  it ('Testa se fetchProducts é uma função', async () => {
     expect(typeof fetchProducts).toBe('function');
   });
-  it('ao chamá-la com o argumento computador, testa se fetch foi chamada', () => {
-    fetchProducts('computador');
+
+  it ('Testa se fetch foi chamada, ao passar "computador" como argumento para fetchProducts', async () => {
+    await fetchProducts('computador');
     expect(fetch).toHaveBeenCalled();
   });
-  it('ao chamá-la com o argumento computador, testa se fetch foi chamada com endpoint correto', () => {
-    const endpoint = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
-    fetchProducts('computador');
-    expect(fetch).toHaveBeenCalledWith(endpoint);
+
+  it ('Testa se fetch recebe a url correta', async () => {
+    await fetchProducts('computador');
+    expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=computador');
   });
-  it('se o retorno da  funçao é um objeto igual a computadorSearch', async () => {
-    const results = await fetchProducts('computador');
-    expect(results).toEqual(computadorSearch);
+
+  it ('Testa se o retorno de fetchProducts("computador") é igual ao objeto computadorSearch', async () => {
+    const productData = await fetchProducts('computador');
+    expect(productData).toMatchObject(computadorSearch.results);
   });
-  it('deve retornar  um erro', async () => {
+
+  it ('Testa se ao chamar fetchProducts sem argumentos, retorna um erro', async () => {
     const expectedError = new Error('You must provide an url');
-    const result = await fetchProducts();
-    expect(result).toEqual(expectedError);
-  });
+    const productData = await fetchProducts();
+    expect(productData).toEqual(expectedError);
+  })
 });

@@ -1,5 +1,6 @@
 const sectionItems = document.querySelector('.items');
 const cartItems = document.querySelector('.cart__items');
+const body = document.querySelector('body');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -17,29 +18,44 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   event.target.remove();
-  saveCartItems(cartItems.innerHTML);
 }
+
+body.addEventListener('click', (event) => {
+  if (event.target.classList.contains('cart__item')) {
+    cartItemClickListener(event);
+  }
+});
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: R$${salePrice}`;
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
-// Referencia ao diretório do João Vitor Spala https://github.com/tryber/sd-016-a-project-shopping-cart/pull/115/commits/d5718252a8084033a8f1b701749b8d6beb0f9cc8
-async function cartItem(event) {
-  if (event.target.classList.contains('item__add')) {
-    const itemCard = event.target.parentElement;
-    const id = `${itemCard.firstElementChild.innerText}`.toString();
+// Referencia ao repositorio do Guilherme Augusto (linha 40 a 60)
+// https://github.com/tryber/sd-016-a-project-shopping-cart/pull/2/commits/3f747f8a5d0dc448bf818c2a1664b7b5c251640d
+const addToCart = (foundProduct) => {
+  const { id: sku, title: name, price: salePrice } = foundProduct;
+  const product = { sku, name, salePrice };
+  const item = createCartItemElement(product);
+  cartItems.appendChild(item);
+};
 
-  const idResponse = await fetchItem(id);
-  const { id: sku, title: name, price: salePrice } = idResponse;
-  cartItems.appendChild(createCartItemElement({ sku, name, salePrice }));
-  saveCartItems(cartItems.innerHTML);
+const getProduct = async (e) => {
+  const product = e.target.parentElement;
+  const productId = product.firstChild.innerText;
+  const findProduct = await fetchItem(productId);
+  addToCart(findProduct);
+};
+
+body.addEventListener('click', (e) => {
+  if (e.target.classList.contains('item__add')) {
+    e.preventDefault();
+    getProduct(e);
   }
-}
+});
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
@@ -69,5 +85,4 @@ async function searchProduct(product) {
 
 window.onload = () => {
   searchProduct('computador');
-  document.addEventListener('click', cartItem);
 };

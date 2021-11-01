@@ -1,5 +1,6 @@
 let priceTotal = 0;
 const aque = document.querySelector('.cart__items');
+const empt = document.querySelector('.empty-cart');
 localStorage.setItem('priceTotal', priceTotal);
 const tt = document.createElement('div');
 function createProductImageElement(imageSource) {
@@ -17,6 +18,7 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(id, sku, title, price) {
+  console.log(id)
   const remo = document.querySelectorAll('li');
   for (let i = 0; i < remo.length; i += 1) {
     if (Number(remo[i].id) === id) {
@@ -64,17 +66,53 @@ function createProductItemElement(sku, name, image) {
   return section;
 }
 
+function remov() {
+  const rr = localStorage.getItem('cartItems');
+  const iii = JSON.parse(rr);
+  console.log('remov')
+  iii.map((ele) => (
+    cartItemClickListener(ele.id, ele.sku, ele.name, ele.price),
+  priceTotal = 0,
+  tt.innerText = priceTotal))
+}
+
+function carr(loand){
+  const pppp = document.querySelector('.items');
+  const uu = document.createElement('loading')
+  
+  if (loand == false) {
+    
+    console.log('falseddd')
+     const kk = document.querySelector('.loading');
+     const hh = document.querySelectorAll('loading')
+     console.log(kk)
+     //kk.innerHTML = ''
+     kk.remove()
+  } else {
+    console.log("ddggggg")
+    pppp.appendChild(uu) 
+  uu.innerHTML = 'loading';
+uu.className = 'loading'}
+
+}
+
 window.onload = async () => {
+  carr(true)
+
+  const cri = document.querySelector('.items');
   const para = 'computador';
   const result = await fetchProducts(para);
   const sku = result.map((id) => id.id);
   const name = result.map((name2) => name2.title);
   const image = result.map((image2) => image2.thumbnail);
-  const pp = document.querySelector('.items');
+  
   tt.innerText = priceTotal;
-  for (let i = 0; i < result.length; i += 1) {
-    pp.appendChild(createProductItemElement(sku[i], name[i], image[i]));  
-  }
+  for (let i = 0; i < result.length; i += 1) { 
+    cri.appendChild(createProductItemElement(sku[i], name[i], image[i]));
+     
+  } 
+  carr(false) 
   getSavedCartItems(localStorage.getItem('cartItems'), 
-   createCartItemElement);   
+   createCartItemElement);
+   empt.addEventListener('click', remov)   
 };

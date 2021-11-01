@@ -55,8 +55,9 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 // Agradecimento especial ao Bernardo Salgueiro(Instrutor - T16) por ter feito um video ajudando a desenrolar o requisito 1.
 const searchProduct = async (product) => {
-  const search = await fetchProducts(product);
+  addLoad();
   const items = document.querySelector('.items');
+  const search = await fetchProducts(product);
 
   search.results.forEach((result) => {
     const item = createProductItemElement({
@@ -65,6 +66,19 @@ const searchProduct = async (product) => {
 
     items.appendChild(item);
   });
+  removeLoad();
+};
+
+const addLoad = () => {
+  const loading = document.createElement('p');
+  const items = document.querySelector('.items');
+  loading.classList = 'loading';
+  items.appendChild(loading).innerHTML = 'carregando...';
+};
+
+const removeLoad = () => {
+  const loading = document.querySelector('.loading');
+  loading.remove();
 };
 
 const getProduct = async (select) => {
@@ -86,6 +100,16 @@ const delectAll = async () => {
   li.forEach((item) => item.remove());
   saveCartItems(cartItems.innerHTML);
 };
+
+// const loading = async (product) => {
+//   
+//   while (!fetchProducts(product)) {
+
+
+//   }
+
+//   loading.remove();
+// };
 
 window.onload = () => {
   searchProduct('computador');

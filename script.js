@@ -14,7 +14,13 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   const itemCart = event.target;
+  localStorage.removeItem(itemCart.innerHTML);
   itemCart.parentNode.removeChild(itemCart);
+}
+
+function emptyCart() {
+  const list = document.querySelector('.cart__items');
+  list.innerHTML = '';
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -22,6 +28,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  const clearButton = document.querySelector('.empty-cart');
+  clearButton.addEventListener('click', emptyCart);
   
   return li;
 }
@@ -29,12 +37,14 @@ function createCartItemElement({ sku, name, salePrice }) {
 async function addItemToCart(item) {
   const dataCart = await fetchItem(item);
   const sectionItemsToCart = document.querySelector('.cart__items');
-  sectionItemsToCart.appendChild(createCartItemElement({
+  const product = {
     sku: dataCart.id,
     name: dataCart.title,
     salePrice: dataCart.price,
-}));
-  }
+  };
+  const element = sectionItemsToCart.appendChild(createCartItemElement(product));
+  localStorage.setItem(element.innerHTML, JSON.stringify(product));
+}
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');

@@ -1,5 +1,8 @@
 const sectionItems = document.querySelector('.items');
 const orderList = document.querySelector('.cart__items');
+const totalPrice = document.querySelector('.total-price');
+
+let totalValue = 0;
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -24,8 +27,16 @@ function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', (event) => {
+    cartItemClickListener(event);
+    const productPrice = +salePrice;
+    totalValue -= productPrice;
+    totalPrice.innerHTML = totalValue;
+  });
   return li;
+}
+function getAllCartItems(price) {
+  sumPrice(price);
 }
 
 const productById = async (idProduct) => {
@@ -34,12 +45,14 @@ const productById = async (idProduct) => {
   const paramItem = { sku, name, salePrice };
   orderList.appendChild(createCartItemElement(paramItem));
   saveCartItems(orderList.innerHTML);
+  const productPrice = +salePrice;
+  totalValue += productPrice;
+    totalPrice.innerHTML = totalValue;
 };
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));

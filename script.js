@@ -1,4 +1,5 @@
 const sectionItems = document.querySelector('.items');
+const orderList = document.querySelector('.cart__items');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -44,7 +45,7 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createProductImageElement(image));
   const result = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   result.addEventListener('click', () => {
-    productById(id);
+    productById(sku);
   });
   section.appendChild(result);
 
@@ -64,8 +65,8 @@ const fetchFunctions = (item) => {
 };
 
 function getSavedWithListenner() {
-  listOl.innerHTML = getSavedCartItems('lista');
-  if (listOl.innerHTML === null) return [];
+  orderList.innerHTML = getSavedCartItems('lista');
+  if (orderList.innerHTML === null) return [];
   document.querySelectorAll('li').forEach((listItem) => {
     listItem.addEventListener('click', cartItemClickListener);
   });

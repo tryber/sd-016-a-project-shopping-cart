@@ -39,5 +39,24 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+// Para carregar a página
+// async await -> Será uma função assícrona e vai esperar por algo
+async function searchProducts(product) {
+  const searchData = await fetchProducts(product);
+  const sectionItems = document.querySelector('.items');
+  searchData.results.forEach((item) => {
+    const itemObject = {
+      sku: item.id,
+      name: item.title,
+      image: item.thumbnail,
+    };
+    // Desestruturando:
+    // const { id: sku, title: name, thumbnail: image } = item;
+    const productItem = createProductItemElement(itemObject);
+    sectionItems.appendChild(productItem);
+  });
+}
 
-window.onload = () => { };
+window.onload = () => { 
+  searchProducts('computador');
+};

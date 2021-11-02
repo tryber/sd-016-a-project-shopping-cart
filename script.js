@@ -1,6 +1,7 @@
 const sectionItems = document.querySelector('.items');
 const orderList = document.querySelector('.cart__items');
 const totalPrice = document.querySelector('.total-price');
+const emptyCart = document.querySelector('.empty-cart');
 
 let totalValue = 0;
 
@@ -85,7 +86,13 @@ function getSavedWithListenner() {
   });
 }
 
+const cleanCart = () => {
+  const li = document.querySelectorAll('.cart__item');
+  li.forEach((item) => item.remove());
+};
+
 window.onload = () => {
   fetchFunctions('computador');
   getSavedWithListenner();
+  emptyCart.addEventListener('click', cleanCart);
 };

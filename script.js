@@ -5,6 +5,17 @@ const emptyCart = document.querySelector('.empty-cart');
 
 let totalValue = 0;
 
+const funcLoading = () => {
+  const loading = document.createElement('h1');
+  loading.classList = 'loading';
+  sectionItems.appendChild(loading).innerHTML = 'carregando...';
+};
+
+const removeLoad = () => {
+  const loading = document.querySelector('.loading');
+  loading.remove();
+};
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -41,6 +52,7 @@ function getAllCartItems(price) {
 }
 
 const productById = async (idProduct) => {
+  funcLoading();
   const itemObjeto = await fetchItem(idProduct);
   const { id: sku, title: name, price: salePrice } = itemObjeto;
   const paramItem = { sku, name, salePrice };
@@ -49,6 +61,7 @@ const productById = async (idProduct) => {
   const productPrice = +salePrice;
   totalValue += productPrice;
     totalPrice.innerHTML = totalValue;
+    removeLoading();
 };
 
 function createProductItemElement({ sku, name, image }) {

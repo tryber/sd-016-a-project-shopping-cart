@@ -17,7 +17,8 @@ describe('2 - Teste a função fecthItem', () => {
     expect(fetch).toHaveBeenCalledWith("https://api.mercadolibre.com/items/MLB1615760527")
   });
   it('Teste se o retorno da função fetchItem com o argumento "MLB1615760527" é uma estrutura de dados igual ao objeto item', async () => {
-    expect(await fetchItem('MLB1615760527')).toEqual(item);
+    const atual = await fetchItem('MLB1615760527');
+    expect(atual).toEqual(item);
   });
   it('Teste se ao chamar a função fetchItem sem argumentos retorna uma mensagem de erro', async () => {
     fetchItem().catch((erro) => {

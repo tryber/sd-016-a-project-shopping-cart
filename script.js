@@ -6,7 +6,7 @@ const emptyCart = document.querySelector('.empty-cart');
 let totalValue = 0;
 
 const funcLoading = () => {
-  const loading = document.createElement('h1');
+  const loading = document.createElement('p');
   loading.classList = 'loading';
   sectionItems.appendChild(loading).innerHTML = 'carregando...';
 };
@@ -47,12 +47,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   });
   return li;
 }
-function getAllCartItems(price) {
-  sumPrice(price);
-}
 
 const productById = async (idProduct) => {
-  funcLoading();
   const itemObjeto = await fetchItem(idProduct);
   const { id: sku, title: name, price: salePrice } = itemObjeto;
   const paramItem = { sku, name, salePrice };
@@ -60,8 +56,7 @@ const productById = async (idProduct) => {
   saveCartItems(orderList.innerHTML);
   const productPrice = +salePrice;
   totalValue += productPrice;
-    totalPrice.innerHTML = totalValue;
-    removeLoading();
+  totalPrice.innerHTML = totalValue;
 };
 
 function createProductItemElement({ sku, name, image }) {
@@ -79,16 +74,14 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
 const fetchFunctions = (item) => {
+  funcLoading();
   fetchProducts(item)
     .then((promisse) => promisse.forEach(({ id, title, thumbnail }) => {
       const obj = { sku: id, name: title, image: thumbnail };
       sectionItems.appendChild(createProductItemElement(obj));
     }));
+  removeLoad();
 };
 
 function getSavedWithListenner() {

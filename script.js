@@ -7,9 +7,10 @@ let totalValue = 0;
 
 const funcLoading = () => {
   const loading = document.createElement('p');
-  loading.classList = 'loading';
+  loading.classList.add('loading');
   sectionItems.appendChild(loading).innerHTML = 'carregando...';
 };
+funcLoading();
 
 const removeLoad = () => {
   const loading = document.querySelector('.loading');
@@ -75,13 +76,11 @@ function createProductItemElement({ sku, name, image }) {
 }
 
 const fetchFunctions = (item) => {
-  funcLoading();
   fetchProducts(item)
     .then((promisse) => promisse.forEach(({ id, title, thumbnail }) => {
       const obj = { sku: id, name: title, image: thumbnail };
       sectionItems.appendChild(createProductItemElement(obj));
-    }));
-  removeLoad();
+    })).then(() => removeLoad());
 };
 
 function getSavedWithListenner() {

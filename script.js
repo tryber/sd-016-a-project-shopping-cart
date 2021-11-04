@@ -87,10 +87,22 @@ fetchProducts('computador')
     addToCart(findProduct);
   };
   
+  const removeFromCart = (e) => {
+    const product = e.target;
+    cartItems.removeChild(product);
+  };
+
   body.addEventListener('click', (e) => {
     if (e.target.classList.contains('item__add')) {
       e.preventDefault();
       getProduct(e);
+    }
+  });
+
+  body.addEventListener('click', (e) => {
+    if (e.target.classList.contains('cart__item')) {
+      e.preventDefault();
+      removeFromCart(e);
     }
   });
 

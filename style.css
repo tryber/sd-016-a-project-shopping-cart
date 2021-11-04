@@ -1,4 +1,5 @@
 .container {
+  position: relative;
   display: flex;
   justify-content: space-around;
   width: 100%;
@@ -36,6 +37,11 @@
   width: 100%;
 }
 
+.item .item__price {
+  text-align: center;
+  padding: 7px 0;
+}
+
 .item .item__add {
   background-color: green;
   border: 0;
@@ -54,4 +60,22 @@
   flex-basis: 1;
   font-size: 16pt;
   text-align: center;
+}
+
+.sub-total {
+  text-align: center;
+  padding: 10px;
+  display: none;
+}
+
+.total-price {
+  padding-left: 2px;
+}
+
+.loading {
+  color: rgb(54, 54, 54);
+  border-radius: 1rem;
+  margin: auto;
+  position: fixed;
+  left: 32%;
 }

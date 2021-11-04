@@ -3,6 +3,7 @@ const items = document.querySelector('section .items');
 const cartItems = document.querySelector('section .cart__items');
 const totalPrice = document.querySelector('.sub-total .total-price');
 const emptyCardButton = document.querySelector('.empty-cart');
+const loadingMessage = document.querySelector('.loading');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -75,6 +76,7 @@ const setProducts = (products) => {
 fetchProducts('computador')
   .then((data) => {
     setProducts(data.results);
+    body.removeChild(loadingMessage);
   });
 
   const updateTotalPrice = () => {

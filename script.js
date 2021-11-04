@@ -1,3 +1,5 @@
+const itemElements = document.getElementsByClassName('cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -30,15 +32,16 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
-}
-// Essa
+}in
+// Requisito 2
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  return li;
+  itemElements.appendChild(li);
 }
+// Adicione o elemento retornado da função createCartItemElement(product) como filho do elemento <ol class="cart__items">.
 
 async function searchProducts(product) {
   const searchData = await fetchProducts(product);

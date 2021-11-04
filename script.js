@@ -2,6 +2,7 @@ const body = document.querySelector('body');
 const items = document.querySelector('section .items');
 const cartItems = document.querySelector('section .cart__items');
 const totalPrice = document.querySelector('.sub-total .total-price');
+const emptyCardButton = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -126,6 +127,12 @@ fetchProducts('computador')
     cartItems.innerHTML = inner;
   };
 
+  const emptyCard = () => {
+    cartItems.innerHTML = '';
+    saveCartItems('');
+    updateTotalPrice();
+  };
+
   body.addEventListener('click', (e) => {
     if (e.target.classList.contains('item__add')) {
       e.preventDefault();
@@ -139,6 +146,8 @@ fetchProducts('computador')
       removeFromCart(e);
     }
   });
+
+  emptyCardButton.addEventListener('click', emptyCard);
 
 window.onload = () => {
   setSavedCart();

@@ -20,9 +20,8 @@ describe('2 - Teste a função fecthItem', () => {
     expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/items/MLB1615760527');
   });
   it('testa se o retorno de fetchItem(MLB1615760527) é igual ao objeto item (presente no arquivo)', async () => {
-    const result = await fetchItem('MLB1615760527');
-    
-    expect(result).toEqual(item);
+
+    expect(await fetchItem('MLB1615760527')).toEqual(item);
   });
 
   it('se ao chamar fetchItem() retorna um erro com a mensagem: You must provide an url', async () => {

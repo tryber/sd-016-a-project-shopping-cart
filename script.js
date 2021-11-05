@@ -1,4 +1,4 @@
-const itemElements = document.getElementsByClassName('cart__items');
+const cartItens = document.getElementsByClassName('cart_item');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -21,7 +21,9 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  const btnAddCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  btnAddCart.addEventListener('click', () => addItemToCart(sku));
+  section.appendChild(btnAddCart);
 
   return section;
 }
@@ -32,16 +34,21 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
-}in
+}
 // Requisito 2
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  itemElements.appendChild(li);
+  return (li);
 }
 // Adicione o elemento retornado da função createCartItemElement(product) como filho do elemento <ol class="cart__items">.
+
+async function addItemShoppingCart(sku) {
+  const { title: name, price: salePrice } = await fetchItem(sku);
+  cartItens.appendChild(createCartItemElement({ sku, name, salePrice }));
+}
 
 async function searchProducts(product) {
   const searchData = await fetchProducts(product);

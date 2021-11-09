@@ -25,10 +25,10 @@ function cartItemClickListener(event) {
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
+  totalPrice.innerText = Number(totalPrice.innerText) + Number(salePrice);
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  totalPrice.innerText = Number(totalPrice.innerText) + Number(salePrice);
   return li;
 }
 

@@ -19,6 +19,8 @@ function createCustomElement(element, className, innerText) {
 function cartItemClickListener(event) {
   const item = event.target;
   item.remove();
+  const itemPrice = item.innerText.split('PRICE: $')[1];
+  totalPrice.innerText = (Number(totalPrice.innerText) - Number(itemPrice)).toFixed(2);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -26,7 +28,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  totalPrice.innerText = Number(totalPrice.innerText) + salePrice;
+  totalPrice.innerText = Number(totalPrice.innerText) + Number(salePrice);
   return li;
 }
 

@@ -1,5 +1,6 @@
 const ol = document.querySelector('.cart__items');
 const totalPrice = document.querySelector('.total-price');
+const emptyCart = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -74,6 +75,12 @@ async function searchProducts(product) {
     sectionItem.appendChild(productItem);
   });
 }
+
+function clearCart() {
+  ol.innerHTML = '';
+  totalPrice.innerHTML = 0;
+}
+emptyCart.addEventListener('click', clearCart);
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;

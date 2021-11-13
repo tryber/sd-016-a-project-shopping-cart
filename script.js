@@ -1,4 +1,4 @@
-// REQUISITO 2 FEITO NA SALA COM A FUMAGALLI(COM A INICIATIVA DE AJUDAS OS ALUNOS EM RECUPERAÇÃO <3)
+// REQUISITO 2 e 3 FEITO NA SALA COM A FUMAGALLI(COM A INICIATIVA DE AJUDAS OS ALUNOS EM RECUPERAÇÃO <3)
 
 const listOl = document.querySelector('ol');
 
@@ -10,8 +10,10 @@ function createProductImageElement(imageSource) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
-
+  // console.log(event.target)
+  // const removeCartItem = document.querySelector('li');
+  // removeCartItem.parentNode.removeChild( removeCartItem )
+  event.target.remove();
 }
 
 function createCustomElement(element, className, innerText) {

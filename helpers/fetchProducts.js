@@ -8,10 +8,13 @@
 const fetchProducts = (products) => {
   // Colocar endereço de onde vai tirar os dados,lista de produtos API com a fç fetch
   // ${products} -> Termo a ser buscado no motor de busca
-
-  return fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${products}`)
+  
+  const url = `https://api.mercadolibre.com/sites/MLB/search?q=${products}`;
+  return fetch(url)
+    
     // Resposta da API em arq de dados JSON
     // Pode ou não retornar um erro
+
     .then((data) => data.json()) // Espera o resultado da função e retorna json
     .catch((error) => error); // Se ocorre algum erro e recebe outra função como parâmetro
 };

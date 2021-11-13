@@ -26,7 +26,7 @@ describe('2 - Teste a função fecthItem', () => {
 
   it('se ao chamar fetchItem() retorna um erro com a mensagem: You must provide an url', async () => {
     const result = await fetchItem();
-    const error = 'You must provide an url'
+    const error = new Error ('You must provide an url');
 
     expect(result).toEqual(error);
   });

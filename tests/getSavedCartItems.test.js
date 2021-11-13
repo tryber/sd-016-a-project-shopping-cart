@@ -7,6 +7,17 @@ Object.defineProperty(window, 'localStorage', {
 });
 
 describe('4 - Teste a função getSavedCartItems', () => {
-  // implemente seus testes aqui
-  fail('Teste vazio');
+  const mockFn = jest.fn( localStorage.getItem );
+  localStorage.getItem = mockFn;
+
+  it( 'testa se localStorage.getItem é chamado', () => {
+    getSavedCartItems();
+    expect(mockFn).toHaveBeenCalled();
+  } );
+
+  it( 'testa se localStorage.getItem é chamado com os parâmetros corretos', () => {
+    getSavedCartItems();
+    expect(mockFn).toHaveBeenCalledWith('cartItems');
+  } );
 });
+

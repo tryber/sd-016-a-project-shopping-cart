@@ -3,7 +3,7 @@ const fetchItem = (itemId) => {
   const URL = `https://api.mercadolibre.com/items/${itemId}`;
 
    return fetch(URL)
-    .then((response) => response.json())
+    .then((response) => console.log(response.json()))
     .catch((error) => error);
   };
 

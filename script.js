@@ -34,6 +34,7 @@ function createProductItemElement({ sku, name, image }) {
     const result = await fetchItem(sku);
     const lista = await createCartItemElement(result);
     listaOl.appendChild(lista);
+    getSavedCartItems();
   });
 
   section.appendChild(btn);
@@ -60,8 +61,10 @@ async function searchProducts(product) {
     const productItem = createProductItemElement(itemObject);
     sectionItems.appendChild(productItem);
   });
+  document.querySelector('.loading').remove();
 }
 
 window.onload = () => {
   searchProducts('computador');
+  listaOl.innerHTML = getSavedCartItems();
 };

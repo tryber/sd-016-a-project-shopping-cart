@@ -4,6 +4,9 @@ function createProductImageElement(imageSource) {
   img.src = imageSource;
   return img;
 }
+function cartItemClickListener(event) {
+  // coloque seu código aqui
+}
 
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
@@ -11,7 +14,14 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
-
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+const listaOl = document.querySelector('ol');
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -19,8 +29,14 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  const btn = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  btn.addEventListener('click', async () => {
+    const result = await fetchItem(sku);
+    const lista = await createCartItemElement(result);
+    listaOl.appendChild(lista);
+  });
 
+  section.appendChild(btn);
   return section;
 }
 
@@ -28,17 +44,6 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
-
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
 // Para carregar a página
 // async await -> Será uma função assícrona e vai esperar por algo
 async function searchProducts(product) {
@@ -57,6 +62,6 @@ async function searchProducts(product) {
   });
 }
 
-window.onload = () => { 
+window.onload = () => {
   searchProducts('computador');
 };

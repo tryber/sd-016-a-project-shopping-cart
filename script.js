@@ -72,6 +72,12 @@ async function searchProducts(product) {
   return li;
 }
 
+const btnClear = document.querySelector('.empty-cart');
+btnClear.addEventListener('click', () => {
+  document.getElementsByClassName('total-price').innerHTML = 0;
+    newOl.innerHTML = '';
+});
+
 window.onload = () => { 
   searchProducts('computador');
 };

@@ -18,4 +18,13 @@ describe('1 - Teste a função fecthProducts', () => {
     fetchProducts('computador');
     expect(fetch).toHaveBeenCalledWith(endPoint);
   })
+  it('testa se o retorno de fetchProducts é igual ao objeto computadorSearch', async () => {
+    const result = await fetchProducts('computador');
+    expect(result).toEqual(computadorSearch);
+  })
+  it('Deve retornar o erro "You must provide an url"', async () => {
+    const expectedError = new Error ('You must provide an url');
+    const result = await fetchProducts();
+    expect(result).toEqual(expectedError);
+  })
 });

@@ -1,9 +1,10 @@
-const fetchItem = (item) => {
-  fetch(`https://api.mercadolibre.com/items/${item}`)
-  .then((data) => data.json);
+const fetchItem = async (item) => {
+  const API_URL = `https://api.mercadolibre.com/items/${item}`;
+  return fetch(API_URL)
+  .then((data) => data.json())
+  .then((value) => value)
+  .catch((error) => error);
 };
-
-fetchItem('MLB1341706310');
 
 if (typeof module !== 'undefined') {
   module.exports = {

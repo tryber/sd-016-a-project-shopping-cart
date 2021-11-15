@@ -48,13 +48,11 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   sectionElement.appendChild(section);
 }
 
-const fetchProductsReturn = () => {
-  return fetchProducts('computador').then((value) => {
+const fetchProductsReturn = () => fetchProducts('computador').then((value) => {
     value.results.forEach((product) => {
       createProductItemElement(product);
     });
   });
-};
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;

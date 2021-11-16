@@ -1,12 +1,9 @@
 /* A função saveCartItems deve salvar os itens do carrinho de compras no localStorage, em uma chave denominada cartItems. Todas as adições e remoções devem ser abordadas para que a lista esteja sempre atualizada. */
 
-const getSavedCartItems = (item) => {
-   // seu código aqui
-   localStorage.setItem('cartItems', item);
- };
+const getSavedCartItem = (item) => localStorage.setItem('cartItems', item);
  
 if (typeof module !== 'undefined') {
-  module.exports = getSavedCartItems;
+  module.exports = getSavedCartItem;
 }
 
 // localStorage.setItem("firstname", "Adam") //salva uma entrada com a key = "firstname" e value = "Adam"

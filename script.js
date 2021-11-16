@@ -66,5 +66,5 @@ async function searchProducts(product) {
 
 window.onload = () => {
   searchProducts('computador');
-  listaOl.innerHTML = getSavedCartItems();
+  listaOl.innerHTML = getSavedCartItems;
 };

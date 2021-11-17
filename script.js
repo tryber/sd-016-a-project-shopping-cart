@@ -1,4 +1,6 @@
 const getItems = document.querySelector('section .items');
+const body = document.querySelector('body');
+const cartItems = document.querySelector('section .cart__items');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -54,6 +56,27 @@ const getProducts = (products) => {
     getItems.appendChild(item);
   });
 };
+
+const addToCart = (foundProduct) => {
+  const { id: sku, title: name, price: salePrice } = foundProduct;
+  const product = { sku, name, salePrice };
+  const item = createCartItemElement(product);
+  cartItems.appendChild(item);
+};
+
+const getProduct = async (e) => {
+  const product = e.target.parentElement;
+  const productId = product.firstChild.innerText;
+  const findProduct = await fetchItem(productId);
+  addToCart(findProduct);
+};
+
+body.addEventListener('click', (e) => {
+  if (e.target.classList.contains('item__add')) {
+    e.preventDefault();
+    getProduct(e);
+  }
+});
 
 window.onload = () => {
   fetchProducts('computador').then((res) => {

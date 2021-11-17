@@ -44,6 +44,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+
 const getProducts = (products) => {
   products.forEach((product) => {
     const { id: sku, title: name, thumbnail: image } = product;
@@ -75,6 +76,18 @@ body.addEventListener('click', (e) => {
   if (e.target.classList.contains('item__add')) {
     e.preventDefault();
     getProduct(e);
+  }
+});
+
+const removeFromCart = (e) => {
+  const product = e.target;
+  cartItems.removeChild(product);
+};
+
+body.addEventListener('click', (e) => {
+  if (e.target.classList.contains('cart__item')) {
+    e.preventDefault();
+    removeFromCart(e);
   }
 });
 

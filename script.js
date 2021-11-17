@@ -44,7 +44,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-
 const getProducts = (products) => {
   products.forEach((product) => {
     const { id: sku, title: name, thumbnail: image } = product;
@@ -63,6 +62,7 @@ const addToCart = (foundProduct) => {
   const product = { sku, name, salePrice };
   const item = createCartItemElement(product);
   cartItems.appendChild(item);
+  saveCartItems(cartItems.innerHTML);
 };
 
 const getProduct = async (e) => {
@@ -82,6 +82,12 @@ body.addEventListener('click', (e) => {
 const removeFromCart = (e) => {
   const product = e.target;
   cartItems.removeChild(product);
+  saveCartItems(cartItems.innerHTML);
+};
+
+const setSavedCart = () => {
+  const inner = getSavedCartItems();
+  cartItems.innerHTML = inner;
 };
 
 body.addEventListener('click', (e) => {
@@ -95,4 +101,6 @@ window.onload = () => {
   fetchProducts('computador').then((res) => {
     getProducts(res.results);
   });
+
+  setSavedCart();
 };

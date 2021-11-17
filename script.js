@@ -2,6 +2,7 @@ const getItems = document.querySelector('section .items');
 const body = document.querySelector('body');
 const cartItems = document.querySelector('section .cart__items');
 const totalPrice = document.querySelector('.sub-total .total-price');
+const drainOutCart = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -119,6 +120,14 @@ body.addEventListener('click', (e) => {
     removeFromCart(e);
   }
 });
+
+const emptyCard = () => {
+  cartItems.innerHTML = '';
+  saveCartItems('');
+  sunTotalPrice();
+};
+
+drainOutCart.addEventListener('click', emptyCard);
 
 window.onload = () => {
   fetchProducts('computador').then((res) => {

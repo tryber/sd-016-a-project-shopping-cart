@@ -1,3 +1,5 @@
+const getItems = document.querySelector('section .items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -40,4 +42,21 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+const getProducts = (products) => {
+  products.forEach((product) => {
+    const { id: sku, title: name, thumbnail: image } = product;
+    const infos = {
+      sku,
+      name,
+      image,
+    };
+    const item = createProductItemElement(infos);
+    getItems.appendChild(item);
+  });
+};
+
+window.onload = () => {
+  fetchProducts('computador').then((res) => {
+    getProducts(res.results);
+  });
+};

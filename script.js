@@ -15,6 +15,7 @@ function createCustomElement(element, className, innerText) {
 function cartItemClickListener(event) {
   // coloque seu código aqui
   event.target.remove();
+  saveCartItems(olListCart.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -24,6 +25,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   olListCart.appendChild(li);
+  saveCartItems(olListCart.innerHTML);
 }
 
 const addCartItem = async (sku) => {

@@ -1,3 +1,5 @@
+const olListCart = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -19,7 +21,6 @@ function cartItemClickListener(event) {
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
-  const olListCart = document.querySelector('.cart__items');
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -50,7 +51,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   sectionElement.appendChild(section);
 }
 
-const fetchProductsRender = () => fetchProducts('computador').then((value) => {
+const fetchProductsReturn = () => fetchProducts('computador').then((value) => {
     value.results.forEach((product) => {
       createProductItemElement(product);
     });
@@ -72,7 +73,7 @@ const fetchProductsRender = () => fetchProducts('computador').then((value) => {
   };
 
 window.onload = () => {
-  fetchProductsRender();
+  fetchProductsReturn();
   if (olListCart.children.length === 0) cartItemsRestore();
   restoreEventListenerCartItem();
 };

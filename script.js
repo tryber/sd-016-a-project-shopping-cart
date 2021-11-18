@@ -14,10 +14,30 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+const priceCounter = () => {
+  const createCounter = document.querySelector('.total-price');
+  const localStorageRestore = getSavedCartItems();
+  if (olListCart.children.length) {
+    const counter = localStorageRestore.split('PRICE: $');
+    const result = counter.reduce((acc, data) => {
+      acc.push(data);
+      return acc;
+    }, []);
+    result.shift();
+    createCounter.innerText = result.reduce((handler, value) => {
+      handler.push(Number(value.substring(0, value.indexOf('<'))));
+      return handler;
+    }, []).reduce((gather, current) => gather + current);
+    return 0;
+  }
+  createCounter.innerHTML = 0;
+};
+
 function cartItemClickListener(event) {
   // coloque seu código aqui
   event.target.remove();
   saveCartItems(olListCart.innerHTML);
+  priceCounter();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -27,6 +47,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   olListCart.appendChild(li);
   saveCartItems(olListCart.innerHTML);
+  priceCounter();
 }
 
 const addCartItem = async (sku) => {
@@ -34,6 +55,7 @@ const addCartItem = async (sku) => {
   console.log(fetch);
   const { title: name, price: salePrice } = fetch;
   createCartItemElement({ sku, name, salePrice });
+  priceCounter();
 };
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
@@ -49,6 +71,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   });
   section.appendChild(createButtonEvent);
   sectionElement.appendChild(section);
+  priceCounter();
 }
 
 const fetchProductsReturn = () => fetchProducts('computador').then((value) => {
@@ -64,11 +87,13 @@ const fetchProductsReturn = () => fetchProducts('computador').then((value) => {
   const cartItemsRestore = () => {
     const localStorageRestore = getSavedCartItems();
     olListCart.innerHTML = localStorageRestore;
+    priceCounter();
   };
 
   const restoreEventListenerCartItem = () => {
     Array.from(olListCart.children).forEach((child) => {
       child.addEventListener('click', cartItemClickListener);
+      priceCounter();
     });
   };
 
@@ -76,4 +101,5 @@ window.onload = () => {
   fetchProductsReturn();
   if (olListCart.children.length === 0) cartItemsRestore();
   restoreEventListenerCartItem();
+  priceCounter();
 };

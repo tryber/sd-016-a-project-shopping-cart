@@ -1,4 +1,5 @@
 const olListCart = document.querySelector('.cart__items');
+const getClearButton = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -96,6 +97,13 @@ const fetchProductsReturn = () => fetchProducts('computador').then((value) => {
       priceCounter();
     });
   };
+
+  const clearCart = () => {
+    olListCart.innerHTML = '';
+    saveCartItems(olListCart.innerHTML);
+  };
+  
+  getClearButton.addEventListener('click', clearCart);
 
 window.onload = () => {
   fetchProductsReturn();

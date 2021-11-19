@@ -20,12 +20,12 @@ function cartItemClickListener(event) {
   const item = event.target;
   const itemPrice = item.innerText.split('PRICE: $')[1];
   item.remove();
-  totalPrice.innerText = (Number(totalPrice.innerText) - Number(itemPrice)).toFixed(2);
+  totalPrice.innerText = (Number(totalPrice.innerText) - Number(itemPrice));
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
-  totalPrice.innerText = (Number(totalPrice.innerText) + Number(salePrice)).toFixed(2);
+  totalPrice.innerText = (Number(totalPrice.innerText) + Number(salePrice));
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);

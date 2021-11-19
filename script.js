@@ -63,8 +63,22 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+function addLoadingElement() {
+  const element = document.createElement('h2');
+  element.innerHTML = 'carregando';
+  element.classList.add('loading');
+  document.body.appendChild(element);
+}
+
+function removeLoadingElement() {
+  const element = document.querySelector('.loading');
+  element.remove();
+}
+
 async function searchProducts(product) {
+  addLoadingElement();
   const searchData = await fetchProducts(product);
+  removeLoadingElement();
   const sectionItem = document.querySelector('.items');
   searchData.results.forEach((item) => {
     const itemObject = {

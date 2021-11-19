@@ -1,5 +1,10 @@
 const getSavedCartItems = () => {
-  // seu código aqui
+  const storageCart = localStorage.getItem('cartItems');
+  if (storageCart) {
+    JSON.parse(storageCart).cartItems.forEach((item) => {
+    addToCart(item.sku);
+    });
+  }
 };
 
 if (typeof module !== 'undefined') {

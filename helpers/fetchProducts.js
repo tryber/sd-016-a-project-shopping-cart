@@ -1,4 +1,4 @@
-/*  --------OUTRA FORMA DE FAZER fetchProducts---------
+ /* --------OUTRA FORMA DE FAZER fetchProducts---------
 const fetchProducts = (productToFind) => {
    return fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${productToFind}`)
     .then((response) => response.json())

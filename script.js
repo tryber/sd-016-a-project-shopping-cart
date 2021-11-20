@@ -13,7 +13,7 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
-
+// Requisito feito com ajuda do colega Mateus Turola.
 function sumPrice() {
   const prices = Array.from(document.querySelectorAll('.cart__item'));  
  
@@ -29,7 +29,7 @@ function cartItemClickListener(event) {
   event.target.remove();
   sumPrice();
 }
-
+// Requisito feito com ajuda da colega Fumagalli
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -39,7 +39,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   
   return li;
 }
-
+// Requisito feito com ajuda da colega Fumagalli
 function createProductItemElement(productItem) {
   const { sku, name, image } = productItem;
   const section = document.createElement('section');
@@ -65,6 +65,7 @@ function createProductItemElement(productItem) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
 
+// Requisito feito a partir do vídeo postado pelo especialista Bernardo
 async function searchProducts(product) {
   const searchData = await fetchProducts(product);
   const sectionItems = document.querySelector('.items');

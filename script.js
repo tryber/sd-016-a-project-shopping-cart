@@ -18,11 +18,10 @@ function sumPrice() {
   const prices = Array.from(document.querySelectorAll('.cart__item'));  
  
   const soma = prices.reduce((acc, crr) => (
-    acc + parseInt(crr.innerText.split('PRICE: $')[1], 10)
+    acc + parseFloat(crr.innerText.split('PRICE: $')[1])
   ), 0);
   const aleluia = document.querySelector('.total-price');
   aleluia.innerText = soma;
-  console.log(aleluia);
   return soma;
 }
 

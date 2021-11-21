@@ -1,3 +1,5 @@
+// Tive ajuda dos colegas Fumagalli, Brunão, Yamazaki, Gustavo Ellwanger todos da turma 16A
+
 const getSavedCartItems = require('../helpers/getSavedCartItems');
 
 Object.defineProperty(window, 'localStorage', {

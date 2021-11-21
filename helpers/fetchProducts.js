@@ -1,3 +1,5 @@
+// Tive ajuda dos colegas Fumagalli, Brunão, Yamazaki, Gustavo Ellwanger todos da turma 16A
+
 /* 
   fetch()-> Função Assíncrona, primária, baseada em promise usada em requisições http. Função primária, utilizada para fazer chamadas às URL's das APIs
   

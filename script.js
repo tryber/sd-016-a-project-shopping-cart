@@ -56,7 +56,8 @@ async function searchProducts(product) {
       name: item.title,
       image: item.thumbnail,
     };
-    // Desestruturando:
+    // Desestruturando: extrai dados de um array ou objetos em var distintas->
+    // MDN -> https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
     // const { id: sku, title: name, thumbnail: image } = item;
     const productItem = createProductItemElement(itemObject);
     sectionItems.appendChild(productItem);

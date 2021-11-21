@@ -1,3 +1,5 @@
+// Tive ajuda dos colegas Fumagalli, Brunão, Yamazaki, Gustavo Ellwanger todos da turma 16A
+
 const fetchSimulator = require('../mocks/fetchSimulator');
 const { fetchItem } = require('../helpers/fetchItem');
 const item = require('../mocks/item');

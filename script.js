@@ -66,7 +66,7 @@ async function productList(product) {
     const productItem = createProductItemElement(itemObject);
     sectionItens.appendChild(productItem);
   });
-  const addCardItem = document.querySelector('.item__add');
+  const addCardItem = document.querySelectorAll('.item__add');
   addCardItem.forEach((item) => {
     item.addEventListener('click', createCardItem);
   });

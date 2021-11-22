@@ -29,10 +29,10 @@ function createProductItemElement({ sku, name, image }) {
 // }
 
  function cartItemClickListener(event) {
-  
+
  }
 
-function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;

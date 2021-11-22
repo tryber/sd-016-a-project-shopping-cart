@@ -75,9 +75,16 @@ function addEvent() {
     li.addEventListener('click', cartItemClickListener);
   });
 }
+  function clearCart() {
+    const clearButton = document.querySelector('.empty-cart');
+    clearButton.addEventListener('click', () => {
+     listOl.innerHTML = '';
+    });
+  }
 
 window.onload = () => { 
   searchProduct('computador');
   listOl.innerHTML = getSavedCartItems();
   addEvent();
+  clearCart();
 };

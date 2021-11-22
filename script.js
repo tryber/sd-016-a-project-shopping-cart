@@ -3,7 +3,7 @@ const cart = {
   totalPrice: 0,
 };
 
-const cartItens = document.querySelector('.cart__items');
+const cartItems = document.querySelector('.cart__items');
 const totalItems = document.querySelector('.total-price');
 const removeItems = document.querySelector('.empty-cart');
 const loadingContainer = document.querySelector('.container');
@@ -92,14 +92,14 @@ async function searchProducts(product) {
     removeLoading();
 }
 
-function removeAllCartItens() {
-  cartItens.innerHTML = '';
+function removeAllCartItems() {
+  cartItems.innerHTML = '';
   cart.totalPrice = 0;
   totalItems.innerHTML = 0;
   localStorage.clear();
 }
 
-removeItems.addEventListener('click', removeAllCartItens);
+removeItems.addEventListener('click', removeAllCartItems);
 
 window.onload = () => {
   searchProducts('computador');

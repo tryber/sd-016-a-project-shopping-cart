@@ -1,3 +1,5 @@
+import { addToCart } from 'module';
+
 const getSavedCartItems = () => {
   const storageCart = localStorage.getItem('cartItems');
   if (storageCart) {

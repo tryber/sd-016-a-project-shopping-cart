@@ -1,4 +1,4 @@
-const cartList = document.querySelector(".cart__items");
+const cartList = document.querySelector('.cart__items');
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';

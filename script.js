@@ -46,6 +46,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 
 async function searchProducts(product) {
   const searchData = await fetchProducts(product);
+  document.querySelector('.loading').remove();
   const sectionItems = document.querySelector('.items');
   searchData.results.forEach((item) => {
     const itemObject = {

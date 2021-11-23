@@ -75,8 +75,23 @@ function clickMe() {
   });
 }
 
-window.onload = () => { 
-  searchProducts('computador');
-  clickMe();
+const iniciaLocalStorage = () => {
   listItem.innerHTML = getSavedCartItems();
+};  
+
+function addRemoveItem() {
+  const allItems = document.querySelectorAll('.cart__items li');
+  allItems.forEach((item) => {
+    item.addEventListener('click', cartItemClickListener);
+  });
+  console.log(allItems);
+}
+
+window.onload = () => { 
+  searchProducts('computador')
+  .then(() => iniciaLocalStorage())
+  .then(() => {
+    clickMe();
+    addRemoveItem();
+  });
 };

@@ -8,7 +8,7 @@ describe('2 - Teste a função fecthItem', () => {
   it('must be a function' , () => {
     expect (typeof fetchItem).toBe('funtion');
   });
-   it('ao chamá-la com o argumento computador, testa se fetch foi chamada', () => {
+   it('ao chamá-la com o argumento "MLB1615760527", testa se fetch foi chamada', () => {
      fetchItem('MLB1615760527');
      expect(fetch).toHaveBeenCalled();
    });

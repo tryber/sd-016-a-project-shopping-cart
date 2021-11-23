@@ -1,4 +1,5 @@
 // const { fetchItem } = require('./helpers/fetchItem');
+
 // Recebi ajuda do ilustre grupo do Front End
 const listItem = document.querySelector('.cart__items');
 
@@ -41,6 +42,7 @@ const createCartItems = async (sku) => {
     console.log(error); 
   }
 };
+
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -54,8 +56,16 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+function saveItems() {
+  // const button = document.querySelectorAll('.item_add');
+  listItem.addEventListener('click', () => {
+    saveCartItems(listItem.innerHTML);
+  });
+}
 async function searchProducts(product) {
   const searchData = await fetchProducts(product);
+  const loading = document.querySelector('.loading');
+  loading.remove();
   const sectionItems = document.querySelector('.items');
   searchData.results.forEach((item) => {
     const itemObject = {
@@ -68,6 +78,12 @@ async function searchProducts(product) {
   });
 }
 
+function getandSaveItems() {
+  listItem.innerHTML = getSavedCartItems();
+}
+
 window.onload = () => { 
-  searchProducts('computador');
+  searchProducts('computador')
+  .then(() => getandSaveItems())
+    .then(() => saveItems());
 };

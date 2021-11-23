@@ -32,7 +32,7 @@ function createProductItemElement({ sku, name, image }) {
   // coloque seu cód
 // }
 
-function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -55,14 +55,9 @@ async function searchProducts(product) {
 }
 
 async function experimento(product) {
-  const itemData = await fetchItem(product);
+  const itemData = await fetchItem(product.innerText);
   const listItem = document.querySelector('.cart__items');
-  const experimentObject = {
-    sku: itemData.id,
-    name: itemData.title,
-    salePrice: itemData.price,
-  };
-  const experimentItem = createCartItemElement(experimentObject);
+  const experimentItem = createCartItemElement(itemData);
   listItem.appendChild(experimentItem);
 }
 

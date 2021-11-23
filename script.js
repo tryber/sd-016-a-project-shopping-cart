@@ -103,5 +103,5 @@ removeItems.addEventListener('click', removeAllCartItems);
 
 window.onload = () => {
   searchProducts('computador');
-  getSavedCartItems(); 
+  getSavedCartItems(addToCart); 
 };

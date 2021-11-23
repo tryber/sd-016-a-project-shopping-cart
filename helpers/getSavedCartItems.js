@@ -1,6 +1,4 @@
-import { addToCart } from 'module';
-
-const getSavedCartItems = () => {
+const getSavedCartItems = (addToCart) => {
   const storageCart = localStorage.getItem('cartItems');
   if (storageCart) {
     JSON.parse(storageCart).cartItems.forEach((item) => {

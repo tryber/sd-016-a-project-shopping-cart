@@ -87,11 +87,20 @@ function addRemoveItem() {
   console.log(allItems);
 }
 
+function clearCartItems() {
+  const clearButton = document.querySelector('.empty-cart');
+  clearButton.addEventListener('click', () => {
+    listItem.innerHTML = '';
+    saveCartItems(listItem.innerHTML);
+  });
+}
+
 window.onload = () => { 
   searchProducts('computador')
   .then(() => iniciaLocalStorage())
   .then(() => {
     clickMe();
     addRemoveItem();
+    clearCartItems();
   });
 };

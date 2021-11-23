@@ -4,16 +4,25 @@ const totalPrice = document.querySelector('.total-price');
 const limpar = document.querySelector('.empty-cart');
 const listaOl = document.querySelector('ol');
 
+// Para está função recebi ajuda do Matheus Guedes em um 1:1
+function soma(price) {
+  total += price;
+  totalPrice.innerText = total;
+  console.log(totalPrice);
+}
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
   return img;
 }
+
 function cartItemClickListener(event) {
   event.target.remove();
   event.target.classList.remove('cart__item');
   soma(Number(-event.target.classList));
+  savedCartItem(listaOl);
 }
 
 function createCustomElement(element, className, innerText) {
@@ -22,6 +31,7 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
+
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -30,6 +40,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.classList.add(salePrice);
   return li;
 }
+
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -43,17 +54,11 @@ function createProductItemElement({ sku, name, image }) {
     const lista = await createCartItemElement(result);
     listaOl.appendChild(lista);
     soma(result.price);
-    getSavedCartItems();
+    savedCartItem(listaOl);
   });
 
   section.appendChild(btn);
   return section;
-}
-// Para está função recebi ajuda do Matheus Guedes em um 1:1
-function mauricio(price) {
-  total += price;
-  totalPrice.innerText = total;
-  console.log(totalPrice);
 }
 
 function getSkuFromProductItem(item) {
@@ -65,6 +70,14 @@ function limparCarrinho() {
   listaOl.innerHTML = '';
   total = 0;
   totalPrice.innerText = '0.00';
+  savedCartItem(listaOl);
+}
+
+// Ajuda sala de mentoria projeto Matheus Guedes
+function carregarCarrinho() {
+  const restaurar = getSavedCartItems();
+  listaOl.innerHTML = restaurar;
+  console.log(restaurar);
 }
 
 limpar.addEventListener('click', limparCarrinho);
@@ -91,5 +104,5 @@ async function searchProducts(product) {
 
 window.onload = () => {
   searchProducts('computador');
-  // listaOl.innerHTML = getSavedCartItems;
-};
+  carregarCarrinho();
+  };

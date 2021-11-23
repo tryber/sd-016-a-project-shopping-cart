@@ -42,7 +42,6 @@ function createProductItemElement({ sku, name, image }) {
     const result = await fetchItem(sku);
     const lista = await createCartItemElement(result);
     listaOl.appendChild(lista);
-    console.log(result.price);
     soma(result.price);
     getSavedCartItems();
   });
@@ -51,7 +50,7 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 // Para está função recebi ajuda do Matheus Guedes em um 1:1
-function soma(price) {
+function mauricio(price) {
   total += price;
   totalPrice.innerText = total;
   console.log(totalPrice);
@@ -60,6 +59,7 @@ function soma(price) {
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
+
 // Para está função recebi ajuda do Matheus Guedes em um 1:1
 function limparCarrinho() {
   listaOl.innerHTML = '';

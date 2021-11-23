@@ -80,8 +80,15 @@ async function productList(product) {
     item.addEventListener('click', createCardItem);
   });
 }
+function removeItemSaved() {
+  const cartItem = document.querySelectorAll('.cart__item');
+  cartItem.forEach((item) => {
+    item.addEventListener('click', cartItemClickListener);
+  });
+}
 
 window.onload = () => {
   productList('computador');
   cartList.innerHTML = getSavedCartItems();
+  removeItemSaved();
 };

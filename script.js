@@ -79,7 +79,7 @@ async function productList(product) {
   addCardItem.forEach((item) => {
     item.addEventListener('click', createCardItem);
   });
-};
+}
 
 window.onload = () => {
   productList('computador');

@@ -36,6 +36,20 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+function creatLoadingScrean() {
+  const cart = document.querySelector('.cart');
+  const loadingText = document.createElement('span');
+  loadingText.className = 'loading';
+  loadingText.innerText = 'carregando...';
+
+  cart.appendChild(loadingText);
+}
+
+function removeLoadingScrean() {
+  const loading = document.querySelector('.loading');
+  loading.remove();
+}
+
 function cartItemClickListener(event) {
   event.target.remove();
   saveCartItems(cartList.innerHTML);
@@ -64,6 +78,7 @@ async function createCardItem(click) {
 
 async function productList(product) {
   // codigo feito com auxilio dos membros do grupo 28 de online store
+  creatLoadingScrean();
   const searchProduct = await fetchProducts(product);
   const sectionItens = document.querySelector('.items');
   searchProduct.results.forEach((item) => {
@@ -79,6 +94,7 @@ async function productList(product) {
   addCardItem.forEach((item) => {
     item.addEventListener('click', createCardItem);
   });
+  removeLoadingScrean();
 }
 function removeItemSaved() {
   const cartItem = document.querySelectorAll('.cart__item');

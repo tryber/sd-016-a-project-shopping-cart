@@ -60,7 +60,7 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(btn);
   return section;
 }
-
+// Ajuda sala de mentoria projeto Matheus Guedes
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
@@ -102,6 +102,7 @@ async function searchProducts(product) {
   document.querySelector('.loading').remove();
 }
 
+// Ajuda sala de mentoria projeto Matheus Guedes
 window.onload = () => {
   searchProducts('computador');
   carregarCarrinho();

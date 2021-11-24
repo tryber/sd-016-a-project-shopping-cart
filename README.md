@@ -406,7 +406,7 @@ O retorno desse _endpoint_ será algo no formato `json`. Por exemplo, se for pes
                             "source": 1
                         }
                     ],
-                    "source": 1
+         console.log(fetchProducts('computador'));           "source": 1
                 },
                 {
                     "id": "MODEL",

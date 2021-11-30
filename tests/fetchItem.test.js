@@ -5,31 +5,27 @@ const item = require('../mocks/item');
 window.fetch = jest.fn(fetchSimulator);
 
 describe('2 - Teste a função fecthItem', () => {
-  
-  it ('Verifica se fecthItem é uma função', async () => {
-    await fetchItem();
-    expect(typeof fetchItem).toBe('function');
+  it('must be a function' , () => {
+    expect (typeof fetchItem).toBe('funtion');
   });
-
-  it ('Verifica se a função fetchItem recebe "id" como parametro', async () => {
-    await fetchItem('id');
-    expect(fetch).toHaveBeenCalled();
-  });
-
-  it ('Verifica se a função fetchItem foi chamada com um argumento específico', async () => {
-    await fetchItem('id');
-    expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/items/id')
-  });
-
-  it ('Verifica se a chamada da função fetchItem("id") retorna uma estrutura de dados igual ao objeto item', async () => {
-    const result = await fetchItem('MLB1615760527');
-    expect(result).toEqual(item);
-  });
-
-  it ('Verifica se a chamada da função fetchItem() retorna uma mensagem de erro', async () => {
-    const error = new Error ('You must provide an url');
-    const result = await fetchItem();
-    expect(result).toEqual(error);
-  });
-
-});
+   it('ao chamá-la com o argumento MLB1615760527 , testa se fetch foi chamada', () => {
+     fetchItem('MLB1615760527');
+     expect(fetch).toHaveBeenCalled();
+   });
+   it('teste se com argumento MLB1615760527, se fetch usou o endpoint correto', () => {
+     const endpoint ='https://api.mercadolibre.com/items/MLB1615760527';
+     fetchItem('MLB1615760527')
+     expect(fetch).toHaveBeenCalledWith(endpoint)
+   })
+   it ('testa se o retorno da função é um objeto igual a item' , async () => {
+     const results = await fetchItem('MLB1615760527')
+     expect(results).toEqual(item)
+   });
+   it ('testa se sem nenhum argumento retorna erro' , async () => {
+     const expectedError = new Error ('You must provide an url')
+     const result = await fetchItem ();
+     expect(result).toEqual(expectedError) 
+ 
+   })
+ });
+ 

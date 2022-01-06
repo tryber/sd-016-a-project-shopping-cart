@@ -2,3 +2,4 @@ cypress/
 mocks/
 tests/
 coverage/
+node_modules/

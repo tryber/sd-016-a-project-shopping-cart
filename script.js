@@ -28,6 +28,7 @@ function sumPrice() {
 function cartItemClickListener(event) {
   event.target.remove();
   sumPrice();
+  saveCartItems(newList);
 }
 // Requisito feito com ajuda da colega Fumagalli
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -48,13 +49,13 @@ function createProductItemElement(productItem) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  
   const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   button.addEventListener('click', async () => {
     const fetchItemSaved = await fetchItem(sku);
     const liCartItem = createCartItemElement(fetchItemSaved);
     newList.appendChild(liCartItem);
     sumPrice();
+    saveCartItems(newList);
   });
   
   section.appendChild(button);
@@ -82,12 +83,19 @@ async function searchProducts(product) {
   return li;
 }
 
+function loading() {
+  const savedItems = getSavedCartItems();
+  newList.innerHTML = savedItems;
+}
+
 const btnClear = document.querySelector('.empty-cart');
 btnClear.addEventListener('click', () => {
   document.querySelector('.total-price').innerHTML = 0;
     newList.innerHTML = '';
+    getSavedCartItems(newList);
 });
 
 window.onload = () => { 
   searchProducts('computador');
+  loading();
 };
